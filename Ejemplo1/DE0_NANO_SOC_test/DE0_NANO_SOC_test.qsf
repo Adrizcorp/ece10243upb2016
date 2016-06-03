@@ -1,0 +1,119 @@
+#============================================================
+# Build by Terasic System Builder
+#============================================================
+
+set_global_assignment -name FAMILY "Cyclone V"
+set_global_assignment -name DEVICE 5CSEMA4U23C6
+set_global_assignment -name TOP_LEVEL_ENTITY "DE0_NANO_SOC_test"
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION "14.1"
+set_global_assignment -name LAST_QUARTUS_VERSION "14.1"
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "18:56:30 MAY 10,2016"
+set_global_assignment -name DEVICE_FILTER_PACKAGE UFBGA
+set_global_assignment -name DEVICE_FILTER_PIN_COUNT 896
+set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 6
+set_global_assignment -name SDC_FILE DE0_NANO_SOC_test.SDC
+
+#============================================================
+# ADC
+#============================================================
+set_location_assignment PIN_U9 -to ADC_CONVST
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC_CONVST
+set_location_assignment PIN_V10 -to ADC_SCK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC_SCK
+set_location_assignment PIN_AC4 -to ADC_SDI
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC_SDI
+set_location_assignment PIN_AD4 -to ADC_SDO
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC_SDO
+
+#============================================================
+# ARDUINO
+#============================================================
+set_location_assignment PIN_AG13 -to ARDUINO_IO[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[0]
+set_location_assignment PIN_AF13 -to ARDUINO_IO[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[1]
+set_location_assignment PIN_AG10 -to ARDUINO_IO[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[2]
+set_location_assignment PIN_AG9 -to ARDUINO_IO[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[3]
+set_location_assignment PIN_U14 -to ARDUINO_IO[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[4]
+set_location_assignment PIN_U13 -to ARDUINO_IO[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[5]
+set_location_assignment PIN_AG8 -to ARDUINO_IO[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[6]
+set_location_assignment PIN_AH8 -to ARDUINO_IO[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[7]
+set_location_assignment PIN_AF17 -to ARDUINO_IO[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[8]
+set_location_assignment PIN_AE15 -to ARDUINO_IO[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[9]
+set_location_assignment PIN_AF15 -to ARDUINO_IO[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[10]
+set_location_assignment PIN_AG16 -to ARDUINO_IO[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[11]
+set_location_assignment PIN_AH11 -to ARDUINO_IO[12]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[12]
+set_location_assignment PIN_AH12 -to ARDUINO_IO[13]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[13]
+set_location_assignment PIN_AH9 -to ARDUINO_IO[14]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[14]
+set_location_assignment PIN_AG11 -to ARDUINO_IO[15]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[15]
+set_location_assignment PIN_AH7 -to ARDUINO_RESET_N
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_RESET_N
+
+#============================================================
+# CLOCK
+#============================================================
+set_location_assignment PIN_V11 -to FPGA_CLK1_50
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_CLK1_50
+set_location_assignment PIN_Y13 -to FPGA_CLK2_50
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_CLK2_50
+set_location_assignment PIN_E11 -to FPGA_CLK3_50
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_CLK3_50
+
+#============================================================
+# KEY
+#============================================================
+set_location_assignment PIN_AH17 -to KEY[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[0]
+set_location_assignment PIN_AH16 -to KEY[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[1]
+
+#============================================================
+# LED
+#============================================================
+set_location_assignment PIN_W15 -to LED[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[0]
+set_location_assignment PIN_AA24 -to LED[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[1]
+set_location_assignment PIN_V16 -to LED[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[2]
+set_location_assignment PIN_V15 -to LED[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[3]
+set_location_assignment PIN_AF26 -to LED[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[4]
+set_location_assignment PIN_AE26 -to LED[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[5]
+set_location_assignment PIN_Y16 -to LED[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[6]
+set_location_assignment PIN_AA23 -to LED[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[7]
+
+#============================================================
+# SW
+#============================================================
+set_location_assignment PIN_L10 -to SW[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[0]
+set_location_assignment PIN_L9 -to SW[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[1]
+set_location_assignment PIN_H6 -to SW[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[2]
+set_location_assignment PIN_H5 -to SW[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[3]
+
+#============================================================
+# End of pin assignments by Terasic System Builder
+#============================================================
+
