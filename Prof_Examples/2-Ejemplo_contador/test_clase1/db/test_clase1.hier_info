@@ -1,0 +1,50 @@
+|test_clase1
+FPGA_CLK1_50 => FPGA_CLK1_50.IN1
+FPGA_CLK2_50 => ~NO_FANOUT~
+FPGA_CLK3_50 => ~NO_FANOUT~
+KEY[0] => KEY[0].IN1
+KEY[1] => ~NO_FANOUT~
+LED[0] << contador:contador_inst.conteo
+LED[1] << contador:contador_inst.conteo
+LED[2] << contador:contador_inst.conteo
+LED[3] << contador:contador_inst.conteo
+LED[4] << contador:contador_inst.conteo
+LED[5] << contador:contador_inst.conteo
+LED[6] << contador:contador_inst.conteo
+LED[7] << contador:contador_inst.conteo
+SW[0] => SW[0].IN1
+SW[1] => SW[1].IN1
+SW[2] => ~NO_FANOUT~
+SW[3] => ~NO_FANOUT~
+
+
+|test_clase1|ejem_mux:multiplexor
+sel[0] => Equal0.IN1
+sel[0] => Equal1.IN0
+sel[0] => Equal2.IN1
+sel[1] => Equal0.IN0
+sel[1] => Equal1.IN1
+sel[1] => Equal2.IN0
+out[0] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[1] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[2] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[3] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[4] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[5] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[6] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[7] <= out.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|test_clase1|contador:contador_inst
+clk => ~NO_FANOUT~
+reset => ~NO_FANOUT~
+conteo[0] <= <GND>
+conteo[1] <= <GND>
+conteo[2] <= <GND>
+conteo[3] <= <GND>
+conteo[4] <= <GND>
+conteo[5] <= <GND>
+conteo[6] <= <GND>
+conteo[7] <= <GND>
+
+
