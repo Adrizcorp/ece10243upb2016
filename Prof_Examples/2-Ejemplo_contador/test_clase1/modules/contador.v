@@ -5,7 +5,7 @@ module contador(
 	);
 
 reg [7:0]conteito=8'd0;
-
+assign conteo[7:0]= conteito[7:0];
 always@(posedge clk, negedge reset)
 begin	
 	if(reset==0)

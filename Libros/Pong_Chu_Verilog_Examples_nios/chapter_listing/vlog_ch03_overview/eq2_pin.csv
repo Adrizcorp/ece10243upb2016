@@ -1,0 +1,6 @@
+From,To,Assignment Name,Value,Enabled
+    ,a[0],Location,PIN_L22,Yes        
+    ,a[1],Location,PIN_L21,Yes
+    ,b[0],Location,PIN_M22,Yes
+    ,b[1],Location,PIN_V12,Yes
+    ,aeqb,Location,PIN_R20,Yes

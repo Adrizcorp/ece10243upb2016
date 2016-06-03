@@ -1,0 +1,188 @@
+|test_clase1
+FPGA_CLK1_50 => FPGA_CLK1_50.IN1
+FPGA_CLK2_50 => ~NO_FANOUT~
+FPGA_CLK3_50 => ~NO_FANOUT~
+KEY[0] => KEY[0].IN1
+KEY[1] => ~NO_FANOUT~
+LED[0] <= contador:contador_inst.conteo
+LED[1] <= contador:contador_inst.conteo
+LED[2] <= contador:contador_inst.conteo
+LED[3] <= contador:contador_inst.conteo
+LED[4] <= contador:contador_inst.conteo
+LED[5] <= contador:contador_inst.conteo
+LED[6] <= contador:contador_inst.conteo
+LED[7] <= contador:contador_inst.conteo
+SW[0] => SW[0].IN2
+SW[1] => SW[1].IN2
+SW[2] => SW[2].IN1
+SW[3] => SW[3].IN1
+
+
+|test_clase1|ejem_mux:multiplexor
+sel[0] => Equal0.IN1
+sel[0] => Equal1.IN0
+sel[0] => Equal2.IN1
+sel[1] => Equal0.IN0
+sel[1] => Equal1.IN1
+sel[1] => Equal2.IN0
+out[0] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[1] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[2] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[3] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[4] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[5] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[6] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[7] <= out.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|test_clase1|romcita:romcita_inst
+sel[0] => Decoder0.IN3
+sel[0] => Decoder2.IN2
+sel[1] => Decoder0.IN2
+sel[1] => Decoder1.IN2
+sel[2] => Decoder0.IN1
+sel[2] => Decoder1.IN1
+sel[2] => Decoder2.IN1
+sel[2] => Decoder3.IN1
+sel[3] => Decoder0.IN0
+sel[3] => Decoder1.IN0
+sel[3] => Decoder2.IN0
+sel[3] => Decoder3.IN0
+data[0] <= Decoder3.DB_MAX_OUTPUT_PORT_TYPE
+data[1] <= <VCC>
+data[2] <= Decoder0.DB_MAX_OUTPUT_PORT_TYPE
+data[3] <= Decoder1.DB_MAX_OUTPUT_PORT_TYPE
+data[4] <= Decoder1.DB_MAX_OUTPUT_PORT_TYPE
+data[5] <= Decoder2.DB_MAX_OUTPUT_PORT_TYPE
+data[6] <= Decoder0.DB_MAX_OUTPUT_PORT_TYPE
+data[7] <= Decoder0.DB_MAX_OUTPUT_PORT_TYPE
+data[8] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+data[9] <= <GND>
+data[10] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+data[11] <= data.DB_MAX_OUTPUT_PORT_TYPE
+data[12] <= Decoder0.DB_MAX_OUTPUT_PORT_TYPE
+data[13] <= Decoder0.DB_MAX_OUTPUT_PORT_TYPE
+data[14] <= Decoder2.DB_MAX_OUTPUT_PORT_TYPE
+data[15] <= <GND>
+data[16] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+data[17] <= Decoder0.DB_MAX_OUTPUT_PORT_TYPE
+data[18] <= Decoder1.DB_MAX_OUTPUT_PORT_TYPE
+data[19] <= Decoder0.DB_MAX_OUTPUT_PORT_TYPE
+data[20] <= Decoder0.DB_MAX_OUTPUT_PORT_TYPE
+data[21] <= Decoder1.DB_MAX_OUTPUT_PORT_TYPE
+data[22] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+data[23] <= <GND>
+data[24] <= Decoder0.DB_MAX_OUTPUT_PORT_TYPE
+data[25] <= <GND>
+data[26] <= <GND>
+data[27] <= <GND>
+data[28] <= <GND>
+data[29] <= <GND>
+data[30] <= <GND>
+data[31] <= <GND>
+
+
+|test_clase1|div_freq:div_freq_inst
+clk => contadorcito[0].CLK
+clk => contadorcito[1].CLK
+clk => contadorcito[2].CLK
+clk => contadorcito[3].CLK
+clk => contadorcito[4].CLK
+clk => contadorcito[5].CLK
+clk => contadorcito[6].CLK
+clk => contadorcito[7].CLK
+clk => contadorcito[8].CLK
+clk => contadorcito[9].CLK
+clk => contadorcito[10].CLK
+clk => contadorcito[11].CLK
+clk => contadorcito[12].CLK
+clk => contadorcito[13].CLK
+clk => contadorcito[14].CLK
+clk => contadorcito[15].CLK
+clk => contadorcito[16].CLK
+clk => contadorcito[17].CLK
+clk => contadorcito[18].CLK
+clk => contadorcito[19].CLK
+clk => contadorcito[20].CLK
+clk => contadorcito[21].CLK
+clk => contadorcito[22].CLK
+clk => contadorcito[23].CLK
+clk => contadorcito[24].CLK
+clk => contadorcito[25].CLK
+clk => contadorcito[26].CLK
+clk => contadorcito[27].CLK
+clk => contadorcito[28].CLK
+clk => contadorcito[29].CLK
+clk => contadorcito[30].CLK
+clk => contadorcito[31].CLK
+clk => toggle.CLK
+in[0] => LessThan0.IN32
+in[1] => LessThan0.IN31
+in[2] => LessThan0.IN30
+in[3] => LessThan0.IN29
+in[4] => LessThan0.IN28
+in[5] => LessThan0.IN27
+in[6] => LessThan0.IN26
+in[7] => LessThan0.IN25
+in[8] => LessThan0.IN24
+in[9] => LessThan0.IN23
+in[10] => LessThan0.IN22
+in[11] => LessThan0.IN21
+in[12] => LessThan0.IN20
+in[13] => LessThan0.IN19
+in[14] => LessThan0.IN18
+in[15] => LessThan0.IN17
+in[16] => LessThan0.IN16
+in[17] => LessThan0.IN15
+in[18] => LessThan0.IN14
+in[19] => LessThan0.IN13
+in[20] => LessThan0.IN12
+in[21] => LessThan0.IN11
+in[22] => LessThan0.IN10
+in[23] => LessThan0.IN9
+in[24] => LessThan0.IN8
+in[25] => LessThan0.IN7
+in[26] => LessThan0.IN6
+in[27] => LessThan0.IN5
+in[28] => LessThan0.IN4
+in[29] => LessThan0.IN3
+in[30] => LessThan0.IN2
+in[31] => LessThan0.IN1
+div <= toggle.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|test_clase1|contador:contador_inst
+clk => conteito[0].CLK
+clk => conteito[1].CLK
+clk => conteito[2].CLK
+clk => conteito[3].CLK
+clk => conteito[4].CLK
+clk => conteito[5].CLK
+clk => conteito[6].CLK
+clk => conteito[7].CLK
+reset => conteito[0].ACLR
+reset => conteito[1].ACLR
+reset => conteito[2].ACLR
+reset => conteito[3].ACLR
+reset => conteito[4].ACLR
+reset => conteito[5].ACLR
+reset => conteito[6].ACLR
+reset => conteito[7].ACLR
+conteo[0] <= conteito[0].DB_MAX_OUTPUT_PORT_TYPE
+conteo[1] <= conteito[1].DB_MAX_OUTPUT_PORT_TYPE
+conteo[2] <= conteito[2].DB_MAX_OUTPUT_PORT_TYPE
+conteo[3] <= conteito[3].DB_MAX_OUTPUT_PORT_TYPE
+conteo[4] <= conteito[4].DB_MAX_OUTPUT_PORT_TYPE
+conteo[5] <= conteito[5].DB_MAX_OUTPUT_PORT_TYPE
+conteo[6] <= conteito[6].DB_MAX_OUTPUT_PORT_TYPE
+conteo[7] <= conteito[7].DB_MAX_OUTPUT_PORT_TYPE
+
+
+|test_clase1|syncro:syncro_inst
+async => q[0].CLK
+async => reset.IN1
+clock => q[1].CLK
+clock => q[2].CLK
+sync <= q[2].DB_MAX_OUTPUT_PORT_TYPE
+
+
