@@ -1,0 +1,88 @@
+Archive Project report for FSM
+Sat Jun 04 09:48:20 2016
+Quartus II 64-Bit Version 15.0.0 Build 145 04/22/2015 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Archive Project Summary
+  3. Archive Project Messages
+  4. Files Archived
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2015 Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus II License Agreement,
+the Altera MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Altera and sold by Altera or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++----------------------------------------------------------------+
+; Archive Project Summary                                        ;
++------------------------+---------------------------------------+
+; Archive Project Status ; Successful - Sat Jun 04 09:48:20 2016 ;
+; Revision Name          ; FSM                                   ;
+; Top-level Entity Name  ; FSM                                   ;
+; Family                 ; Cyclone V                             ;
++------------------------+---------------------------------------+
+
+
++--------------------------+
+; Archive Project Messages ;
++--------------------------+
+Info: File Set 'Source control' contains:
+    Info: Project source and settings files
+    Info: Automatically detected source files
+Info: Archive will store files relative to the closest common parent directory
+Info (13213): Using common directory D:/FPGAs/DE0nanoSOC/FSM/
+Info: ----------------------------------------------------------
+Info: ----------------------------------------------------------
+Info: Generated archive 'D:/FPGAs/DE0nanoSOC/FSM/FSM.qar'
+Info: ----------------------------------------------------------
+Info: ----------------------------------------------------------
+Info: Generated report 'FSM.archive.rpt'
+Info (23030): Evaluation of Tcl script c:/altera/15.0/quartus/common/tcl/apps/qpm/qar.tcl was successful
+Info: Quartus II 64-Bit Shell was successful. 0 errors, 0 warnings
+    Info: Peak virtual memory: 543 megabytes
+    Info: Processing ended: Sat Jun 04 09:48:20 2016
+    Info: Elapsed time: 00:00:02
+    Info: Total CPU time (on all processors): 00:00:02
+
+
++-----------------------------+
+; Files Archived              ;
++-----------------------------+
+; File Name                   ;
++-----------------------------+
+; FSM.qpf                     ;
+; FSM.qsf                     ;
+; FSM.SDC                     ;
+; FSM.sdc                     ;
+; fsm.v                       ;
+; FSM_assignment_defaults.qdf ;
+; modules/contador.v          ;
+; modules/div_freq.v          ;
+; modules/ejem_mux.v          ;
+; modules/fsm_secuencia.v     ;
+; modules/generate1.v         ;
+; modules/romcita.v           ;
+; modules/syncro.v            ;
++-----------------------------+
+
+

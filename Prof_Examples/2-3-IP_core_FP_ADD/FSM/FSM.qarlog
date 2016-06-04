@@ -1,0 +1,24 @@
+Quartus II Archive log --	D:/FPGAs/DE0nanoSOC/FSM/FSM.qarlog
+
+Archive:	D:/FPGAs/DE0nanoSOC/FSM/FSM.qar
+Date:		Sat Jun 04 09:48:20 2016
+Quartus II 64-Bit		15.0.0 Build 145 04/22/2015 SJ Web Edition
+
+	=========== Files Selected: ===========
+D:/FPGAs/DE0nanoSOC/FSM/FSM.SDC
+D:/FPGAs/DE0nanoSOC/FSM/FSM.qpf
+D:/FPGAs/DE0nanoSOC/FSM/FSM.qsf
+D:/FPGAs/DE0nanoSOC/FSM/FSM.sdc
+D:/FPGAs/DE0nanoSOC/FSM/FSM_assignment_defaults.qdf
+D:/FPGAs/DE0nanoSOC/FSM/fsm.v
+D:/FPGAs/DE0nanoSOC/FSM/modules/contador.v
+D:/FPGAs/DE0nanoSOC/FSM/modules/div_freq.v
+D:/FPGAs/DE0nanoSOC/FSM/modules/ejem_mux.v
+D:/FPGAs/DE0nanoSOC/FSM/modules/fsm_secuencia.v
+D:/FPGAs/DE0nanoSOC/FSM/modules/generate1.v
+D:/FPGAs/DE0nanoSOC/FSM/modules/romcita.v
+D:/FPGAs/DE0nanoSOC/FSM/modules/syncro.v
+	======= Total: 13 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.
