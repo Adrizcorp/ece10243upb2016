@@ -49,5 +49,12 @@ contador contador_inst
 	.conteo(LED[7:0]) 	// output [7:0] conteo_sig
 );
 
+syncro syncro_inst
+(
+	.async(async_sig) ,	// input  async_sig
+	.clock(clock_sig) ,	// input  clock_sig
+	.sync(sync_sig) 	// output  sync_sig
+);
+
 
 endmodule
