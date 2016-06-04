@@ -1,0 +1,54 @@
+module fsm_secuencia(
+					input clk,
+					input start,
+					input sw_0,
+					output finish,
+					output idle,
+					output [7:0]leds
+);
+							//finish____ idle______state, one hot 
+localparam	IDLE	=		8'b0_________1_________000001;
+localparam	STATE1=		8'b0_________0_________000010;
+localparam	STATE2=		8'b0_________0_________000100;
+localparam	STATE3=		8'b0_________0_________001000;
+localparam	STATE4=		8'b0_________0_________010000;
+localparam	FINISH=		8'b1_________0_________100000;
+
+reg [7:0]state=IDLE;
+reg [3:0]conteo=4'd0;
+assign finish=state[7];
+assign idle=state[6];
+
+always@(posedge clk)
+begin
+	case(state[7:0])
+	IDLE	:begin
+				state[7:0]<=STATE1;
+				conteo[3:0]<=4'd0;
+				if(!start)
+					begin
+						state[7:0]<=IDLE;
+					end
+			 end
+	STATE1:begin
+				state[7:0]<=STATE2;
+				conteo[3:0]<=4'd0;
+				if(!sw_0)
+					begin
+						state[7:0]<=STATE1;
+					end
+			 end
+	STATE2:begin
+			 end
+	STATE3:begin
+			 end
+	STATE4:begin
+			 end
+	FINISH:begin
+			 end
+	default:
+	endcase
+end
+
+
+endmodule

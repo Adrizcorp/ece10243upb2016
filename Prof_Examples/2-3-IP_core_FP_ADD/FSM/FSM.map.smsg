@@ -1,0 +1,4 @@
+Info (10281): Verilog HDL Declaration information at fsm_secuencia.v(6): object "idle" differs only in case from object "IDLE" in the same scope
+Info (10281): Verilog HDL Declaration information at fsm_secuencia.v(5): object "finish" differs only in case from object "FINISH" in the same scope
+Info (10281): Verilog HDL Declaration information at snes_decoder.v(6): object "idle" differs only in case from object "IDLE" in the same scope
+Info (10281): Verilog HDL Declaration information at snes_decoder.v(5): object "finish" differs only in case from object "FINISH" in the same scope
