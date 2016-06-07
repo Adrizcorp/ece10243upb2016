@@ -26,23 +26,18 @@
 //    8.1.2006  file created
 //////////////////////////////////////////////////////////////////////////////-
 
-
-
-// control
-// condiciones  C son las entradas, el microprocesador tiene 7 controles
-// los cuales son relojes de entradas, los eq son valores de comparacion, como a continuacion
-localparam if_c0_eq_0 = 4'b0000;   //  cuando el reloj 0 este en bajo haga
-localparam if_c0_eq_1 = 4'b1000;  //  cuando el reloj 0 este en alto haga
-localparam if_c1_eq_0 = 4'b0001;  //  cuando el reloj 1 este en bajo haga
-localparam if_c1_eq_1 = 4'b1001;  //  cuando el reloj 1 este en alto haga
+localparam if_c0_eq_0 = 4'b0000;
+localparam if_c0_eq_1 = 4'b1000;  
+localparam if_c1_eq_0 = 4'b0001;
+localparam if_c1_eq_1 = 4'b1001;  
 localparam if_c2_eq_0 = 4'b0010;
 localparam if_c2_eq_1 = 4'b1010;  
 localparam if_c3_eq_0 = 4'b0011;
 localparam if_c3_eq_1 = 4'b1011; 
 localparam if_c4_eq_0 = 4'b0100;
 localparam if_c4_eq_1 = 4'b1100; 
-localparam if_c5_eq_0 = 4'b0101;  //  cuando el reloj 5 este en bajo haga
-localparam if_c5_eq_1 = 4'b1101;  //  cuando el reloj 5 este en alto haga
+localparam if_c5_eq_0 = 4'b0101;
+localparam if_c5_eq_1 = 4'b1101; 
 localparam if_c6_eq_0 = 4'b0110;
 localparam if_c6_eq_1 = 4'b1110; 
 localparam if_c7_eq_0 = 4'b0111;
