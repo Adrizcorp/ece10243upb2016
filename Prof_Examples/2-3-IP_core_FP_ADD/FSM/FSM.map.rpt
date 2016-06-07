@@ -1,5 +1,9 @@
 Analysis & Synthesis report for FSM
+<<<<<<< HEAD
+Sat Jun 04 12:09:23 2016
+=======
 Sat Jun 04 12:09:36 2016
+>>>>>>> c671ef9b5c21d2413d034ad78f8742f3a4b05075
 Quartus II 64-Bit Version 15.0.0 Build 145 04/22/2015 SJ Web Edition
 
 
@@ -66,7 +70,11 @@ agreement for further details.
 +------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                 ;
 +---------------------------------+--------------------------------------------+
+<<<<<<< HEAD
+; Analysis & Synthesis Status     ; Successful - Sat Jun 04 12:09:23 2016      ;
+=======
 ; Analysis & Synthesis Status     ; Successful - Sat Jun 04 12:09:36 2016      ;
+>>>>>>> c671ef9b5c21d2413d034ad78f8742f3a4b05075
 ; Quartus II 64-Bit Version       ; 15.0.0 Build 145 04/22/2015 SJ Web Edition ;
 ; Revision Name                   ; FSM                                        ;
 ; Top-level Entity Name           ; FSM                                        ;
@@ -191,6 +199,37 @@ agreement for further details.
 +----------------------------+-------------+
 
 
+<<<<<<< HEAD
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                                                ;
++----------------------------------+-----------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                                                            ; Library ;
++----------------------------------+-----------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------+---------+
+; modules/syncro.v                 ; yes             ; User Verilog HDL File        ; C:/Users/usuario/Documents/GitHub/WM243984/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/modules/syncro.v        ;         ;
+; modules/div_freq.v               ; yes             ; User Verilog HDL File        ; C:/Users/usuario/Documents/GitHub/WM243984/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/modules/div_freq.v      ;         ;
+; modules/fsm_secuencia.v          ; yes             ; User Verilog HDL File        ; C:/Users/usuario/Documents/GitHub/WM243984/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/modules/fsm_secuencia.v ;         ;
+; fp_sum_res.v                     ; yes             ; User Wizard-Generated File   ; C:/Users/usuario/Documents/GitHub/WM243984/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/fp_sum_res.v            ;         ;
+; fsm.v                            ; yes             ; Auto-Found Verilog HDL File  ; C:/Users/usuario/Documents/GitHub/WM243984/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/fsm.v                   ;         ;
+; lpm_add_sub.tdf                  ; yes             ; Megafunction                 ; d:/diseño avanz sotw/quartus_15.0/quartus/libraries/megafunctions/lpm_add_sub.tdf                                       ;         ;
+; addcore.inc                      ; yes             ; Megafunction                 ; d:/diseño avanz sotw/quartus_15.0/quartus/libraries/megafunctions/addcore.inc                                           ;         ;
+; look_add.inc                     ; yes             ; Megafunction                 ; d:/diseño avanz sotw/quartus_15.0/quartus/libraries/megafunctions/look_add.inc                                          ;         ;
+; bypassff.inc                     ; yes             ; Megafunction                 ; d:/diseño avanz sotw/quartus_15.0/quartus/libraries/megafunctions/bypassff.inc                                          ;         ;
+; altshift.inc                     ; yes             ; Megafunction                 ; d:/diseño avanz sotw/quartus_15.0/quartus/libraries/megafunctions/altshift.inc                                          ;         ;
+; alt_stratix_add_sub.inc          ; yes             ; Megafunction                 ; d:/diseño avanz sotw/quartus_15.0/quartus/libraries/megafunctions/alt_stratix_add_sub.inc                               ;         ;
+; aglobal150.inc                   ; yes             ; Megafunction                 ; d:/diseño avanz sotw/quartus_15.0/quartus/libraries/megafunctions/aglobal150.inc                                        ;         ;
+; db/add_sub_d2i.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/usuario/Documents/GitHub/WM243984/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/db/add_sub_d2i.tdf      ;         ;
+; db/add_sub_poe.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/usuario/Documents/GitHub/WM243984/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/db/add_sub_poe.tdf      ;         ;
+; db/add_sub_rne.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/usuario/Documents/GitHub/WM243984/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/db/add_sub_rne.tdf      ;         ;
+; db/add_sub_c1i.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/usuario/Documents/GitHub/WM243984/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/db/add_sub_c1i.tdf      ;         ;
+; db/add_sub_cqh.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/usuario/Documents/GitHub/WM243984/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/db/add_sub_cqh.tdf      ;         ;
+; db/add_sub_hbh.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/usuario/Documents/GitHub/WM243984/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/db/add_sub_hbh.tdf      ;         ;
+; db/add_sub_18f.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/usuario/Documents/GitHub/WM243984/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/db/add_sub_18f.tdf      ;         ;
+; db/add_sub_agf.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/usuario/Documents/GitHub/WM243984/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/db/add_sub_agf.tdf      ;         ;
+; lpm_compare.tdf                  ; yes             ; Megafunction                 ; d:/diseño avanz sotw/quartus_15.0/quartus/libraries/megafunctions/lpm_compare.tdf                                       ;         ;
+; comptree.inc                     ; yes             ; Megafunction                 ; d:/diseño avanz sotw/quartus_15.0/quartus/libraries/megafunctions/comptree.inc                                          ;         ;
+; db/cmpr_e7g.tdf                  ; yes             ; Auto-Generated Megafunction  ; C:/Users/usuario/Documents/GitHub/WM243984/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/db/cmpr_e7g.tdf         ;         ;
++----------------------------------+-----------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------+---------+
+=======
 +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ; Analysis & Synthesis Source Files Read                                                                                                                                                                       ;
 +----------------------------------+-----------------+------------------------------+----------------------------------------------------------------------------------------------------------------+---------+
@@ -220,6 +259,7 @@ agreement for further details.
 ; comptree.inc                     ; yes             ; Megafunction                 ; c:/altera/15.0/quartus/libraries/megafunctions/comptree.inc                                                    ;         ;
 ; db/cmpr_e7g.tdf                  ; yes             ; Auto-Generated Megafunction  ; C:/Users/Usuario/Documents/GitHub/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/db/cmpr_e7g.tdf         ;         ;
 +----------------------------------+-----------------+------------------------------+----------------------------------------------------------------------------------------------------------------+---------+
+>>>>>>> c671ef9b5c21d2413d034ad78f8742f3a4b05075
 
 
 +------------------------------------------------------------------+
@@ -1614,7 +1654,11 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
+<<<<<<< HEAD
+; Top            ; 00:00:01     ;
+=======
 ; Top            ; 00:00:04     ;
+>>>>>>> c671ef9b5c21d2413d034ad78f8742f3a4b05075
 +----------------+--------------+
 
 
@@ -1624,7 +1668,11 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus II 64-Bit Analysis & Synthesis
     Info: Version 15.0.0 Build 145 04/22/2015 SJ Web Edition
+<<<<<<< HEAD
+    Info: Processing started: Sat Jun 04 12:08:59 2016
+=======
     Info: Processing started: Sat Jun 04 12:08:47 2016
+>>>>>>> c671ef9b5c21d2413d034ad78f8742f3a4b05075
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off FSM -c FSM
 Info (11104): Parallel Compilation has detected 4 hyper-threaded processors. However, the extra hyper-threaded processors will not be used by default. Parallel Compilation will use 2 of the 2 physical processors detected instead.
 Info (12021): Found 1 design units, including 1 entities, in source file modules/syncro.v
@@ -1794,7 +1842,11 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/cmpr
 Info (12128): Elaborating entity "cmpr_e7g" for hierarchy "fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_compare:trailing_zeros_limit_comparator|cmpr_e7g:auto_generated"
 Info (286030): Timing-Driven Synthesis is running
 Info (17049): 3 registers lost all their fanouts during netlist optimizations.
+<<<<<<< HEAD
+Info (144001): Generated suppressed messages file C:/Users/usuario/Documents/GitHub/WM243984/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/FSM.map.smsg
+=======
 Info (144001): Generated suppressed messages file C:/Users/Usuario/Documents/GitHub/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/FSM.map.smsg
+>>>>>>> c671ef9b5c21d2413d034ad78f8742f3a4b05075
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
 Warning (21074): Design contains 5 input pin(s) that do not drive logic
@@ -1808,15 +1860,26 @@ Info (21057): Implemented 467 device resources after synthesis - the final resou
     Info (21059): Implemented 8 output pins
     Info (21061): Implemented 450 logic cells
 Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 7 warnings
+<<<<<<< HEAD
+    Info: Peak virtual memory: 717 megabytes
+    Info: Processing ended: Sat Jun 04 12:09:23 2016
+    Info: Elapsed time: 00:00:24
+    Info: Total CPU time (on all processors): 00:00:49
+=======
     Info: Peak virtual memory: 773 megabytes
     Info: Processing ended: Sat Jun 04 12:09:36 2016
     Info: Elapsed time: 00:00:49
     Info: Total CPU time (on all processors): 00:01:26
+>>>>>>> c671ef9b5c21d2413d034ad78f8742f3a4b05075
 
 
 +------------------------------------------+
 ; Analysis & Synthesis Suppressed Messages ;
 +------------------------------------------+
+<<<<<<< HEAD
+The suppressed messages can be found in C:/Users/usuario/Documents/GitHub/WM243984/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/FSM.map.smsg.
+=======
 The suppressed messages can be found in C:/Users/Usuario/Documents/GitHub/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/FSM.map.smsg.
+>>>>>>> c671ef9b5c21d2413d034ad78f8742f3a4b05075
 
 

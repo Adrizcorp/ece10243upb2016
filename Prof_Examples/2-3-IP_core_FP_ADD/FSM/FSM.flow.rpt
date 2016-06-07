@@ -1,5 +1,9 @@
 Flow report for FSM
+<<<<<<< HEAD
+Sat Jun 04 12:09:23 2016
+=======
 Sat Jun 04 12:11:55 2016
+>>>>>>> c671ef9b5c21d2413d034ad78f8742f3a4b05075
 Quartus II 64-Bit Version 15.0.0 Build 145 04/22/2015 SJ Web Edition
 
 
@@ -41,25 +45,29 @@ agreement for further details.
 +------------------------------------------------------------------------------+
 ; Flow Summary                                                                 ;
 +---------------------------------+--------------------------------------------+
+<<<<<<< HEAD
+; Flow Status                     ; Successful - Sat Jun 04 12:09:23 2016      ;
+=======
 ; Flow Status                     ; Successful - Sat Jun 04 12:11:31 2016      ;
+>>>>>>> c671ef9b5c21d2413d034ad78f8742f3a4b05075
 ; Quartus II 64-Bit Version       ; 15.0.0 Build 145 04/22/2015 SJ Web Edition ;
 ; Revision Name                   ; FSM                                        ;
 ; Top-level Entity Name           ; FSM                                        ;
 ; Family                          ; Cyclone V                                  ;
 ; Device                          ; 5CSEMA4U23C6                               ;
 ; Timing Models                   ; Final                                      ;
-; Logic utilization (in ALMs)     ; 218 / 15,880 ( 1 % )                       ;
+; Logic utilization (in ALMs)     ; N/A                                        ;
 ; Total registers                 ; 367                                        ;
-; Total pins                      ; 17 / 314 ( 5 % )                           ;
+; Total pins                      ; 17                                         ;
 ; Total virtual pins              ; 0                                          ;
-; Total block memory bits         ; 0 / 2,764,800 ( 0 % )                      ;
-; Total DSP Blocks                ; 0 / 84 ( 0 % )                             ;
+; Total block memory bits         ; 0                                          ;
+; Total DSP Blocks                ; 0                                          ;
 ; Total HSSI RX PCSs              ; 0                                          ;
 ; Total HSSI PMA RX Deserializers ; 0                                          ;
 ; Total HSSI TX PCSs              ; 0                                          ;
 ; Total HSSI PMA TX Serializers   ; 0                                          ;
-; Total PLLs                      ; 0 / 5 ( 0 % )                              ;
-; Total DLLs                      ; 0 / 4 ( 0 % )                              ;
+; Total PLLs                      ; 0                                          ;
+; Total DLLs                      ; 0                                          ;
 +---------------------------------+--------------------------------------------+
 
 
@@ -68,7 +76,11 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
+<<<<<<< HEAD
+; Start date & time ; 06/04/2016 12:09:00 ;
+=======
 ; Start date & time ; 06/04/2016 12:08:49 ;
+>>>>>>> c671ef9b5c21d2413d034ad78f8742f3a4b05075
 ; Main task         ; Compilation         ;
 ; Revision Name     ; FSM                 ;
 +-------------------+---------------------+
@@ -79,7 +91,11 @@ agreement for further details.
 +-------------------------------------+---------------------------------------+---------------+-------------+------------+
 ; Assignment Name                     ; Value                                 ; Default Value ; Entity Name ; Section Id ;
 +-------------------------------------+---------------------------------------+---------------+-------------+------------+
+<<<<<<< HEAD
+; COMPILER_SIGNATURE_ID               ; 126133589899602.146506013906072       ; --            ; --          ; --         ;
+=======
 ; COMPILER_SIGNATURE_ID               ; 77950489795352.146506012910060        ; --            ; --          ; --         ;
+>>>>>>> c671ef9b5c21d2413d034ad78f8742f3a4b05075
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                    ; --            ; --          ; --         ;
 ; MIN_CORE_JUNCTION_TEMP              ; 0                                     ; --            ; --          ; --         ;
 ; MISC_FILE                           ; fp_sum_res_inst.v                     ; --            ; --          ; --         ;
@@ -92,6 +108,25 @@ agreement for further details.
 +-------------------------------------+---------------------------------------+---------------+-------------+------------+
 
 
+<<<<<<< HEAD
++--------------------------------------------------------------------------------------------------------------------------+
+; Flow Elapsed Time                                                                                                        ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Analysis & Synthesis ; 00:00:23     ; 1.0                     ; 713 MB              ; 00:00:48                           ;
+; Total                ; 00:00:23     ; --                      ; --                  ; 00:00:48                           ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
+
+
++-----------------------------------------------------------------------------------+
+; Flow OS Summary                                                                   ;
++----------------------+------------------+-----------+------------+----------------+
+; Module Name          ; Machine Hostname ; OS Name   ; OS Version ; Processor type ;
++----------------------+------------------+-----------+------------+----------------+
+; Analysis & Synthesis ; usuario-PC       ; Windows 7 ; 6.1        ; x86_64         ;
++----------------------+------------------+-----------+------------+----------------+
+=======
 +-------------------------------------------------------------------------------------------------------------------------------+
 ; Flow Elapsed Time                                                                                                             ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
@@ -115,15 +150,19 @@ agreement for further details.
 ; Assembler                 ; Usuario-PC       ; Windows 7 ; 6.2        ; x86_64         ;
 ; TimeQuest Timing Analyzer ; Usuario-PC       ; Windows 7 ; 6.2        ; x86_64         ;
 +---------------------------+------------------+-----------+------------+----------------+
+>>>>>>> c671ef9b5c21d2413d034ad78f8742f3a4b05075
 
 
 ------------
 ; Flow Log ;
 ------------
 quartus_map --read_settings_files=on --write_settings_files=off FSM -c FSM
+<<<<<<< HEAD
+=======
 quartus_fit --read_settings_files=off --write_settings_files=off FSM -c FSM
 quartus_asm --read_settings_files=off --write_settings_files=off FSM -c FSM
 quartus_sta FSM -c FSM
+>>>>>>> c671ef9b5c21d2413d034ad78f8742f3a4b05075
 
 
 
