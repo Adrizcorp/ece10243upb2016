@@ -1,5 +1,5 @@
 Fitter report for FSM
-Sat Jun 04 11:57:18 2016
+Sat Jun 04 12:11:03 2016
 Quartus II 64-Bit Version 15.0.0 Build 145 04/22/2015 SJ Web Edition
 
 
@@ -63,7 +63,7 @@ agreement for further details.
 +------------------------------------------------------------------------------+
 ; Fitter Summary                                                               ;
 +---------------------------------+--------------------------------------------+
-; Fitter Status                   ; Successful - Sat Jun 04 11:57:18 2016      ;
+; Fitter Status                   ; Successful - Sat Jun 04 12:11:03 2016      ;
 ; Quartus II 64-Bit Version       ; 15.0.0 Build 145 04/22/2015 SJ Web Edition ;
 ; Revision Name                   ; FSM                                        ;
 ; Top-level Entity Name           ; FSM                                        ;
@@ -150,14 +150,15 @@ agreement for further details.
 ; Processors                 ; Number      ;
 +----------------------------+-------------+
 ; Number detected on machine ; 4           ;
-; Maximum allowed            ; 4           ;
+; Maximum allowed            ; 2           ;
 ;                            ;             ;
-; Average used               ; 1.74        ;
-; Maximum used               ; 4           ;
+; Average used               ; 1.27        ;
+; Maximum used               ; 2           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processors 2-4         ;  24.6%      ;
+;     Processor 2            ;  26.6%      ;
+;     Processors 3-4         ;   0.0%      ;
 +----------------------------+-------------+
 
 
@@ -224,7 +225,7 @@ agreement for further details.
 +--------------+
 ; Pin-Out File ;
 +--------------+
-The pin-out file can be found in D:/FPGAs/DE0nanoSOC/FSM/FSM.pin.
+The pin-out file can be found in C:/Users/Usuario/Documents/GitHub/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/FSM.pin.
 
 
 +------------------------------------------------------------------------------------------+
@@ -234,12 +235,12 @@ The pin-out file can be found in D:/FPGAs/DE0nanoSOC/FSM/FSM.pin.
 +-------------------------------------------------------------+--------------------+-------+
 ; Logic utilization (ALMs needed / total ALMs on device)      ; 218 / 15,880       ; 1 %   ;
 ; ALMs needed [=A-B+C]                                        ; 218                ;       ;
-;     [A] ALMs used in final placement [=a+b+c+d]             ; 225 / 15,880       ; 1 %   ;
-;         [a] ALMs used for LUT logic and registers           ; 123                ;       ;
-;         [b] ALMs used for LUT logic                         ; 41                 ;       ;
-;         [c] ALMs used for registers                         ; 61                 ;       ;
+;     [A] ALMs used in final placement [=a+b+c+d]             ; 223 / 15,880       ; 1 %   ;
+;         [a] ALMs used for LUT logic and registers           ; 122                ;       ;
+;         [b] ALMs used for LUT logic                         ; 39                 ;       ;
+;         [c] ALMs used for registers                         ; 62                 ;       ;
 ;         [d] ALMs used for memory (up to half of total ALMs) ; 0                  ;       ;
-;     [B] Estimate of ALMs recoverable by dense packing       ; 7 / 15,880         ; < 1 % ;
+;     [B] Estimate of ALMs recoverable by dense packing       ; 5 / 15,880         ; < 1 % ;
 ;     [C] Estimate of ALMs unavailable [=a+b+c+d]             ; 0 / 15,880         ; 0 %   ;
 ;         [a] Due to location constrained logic               ; 0                  ;       ;
 ;         [b] Due to LAB-wide signal conflicts                ; 0                  ;       ;
@@ -248,8 +249,8 @@ The pin-out file can be found in D:/FPGAs/DE0nanoSOC/FSM/FSM.pin.
 ;                                                             ;                    ;       ;
 ; Difficulty packing design                                   ; Low                ;       ;
 ;                                                             ;                    ;       ;
-; Total LABs:  partially or completely used                   ; 29 / 1,588         ; 2 %   ;
-;     -- Logic LABs                                           ; 29                 ;       ;
+; Total LABs:  partially or completely used                   ; 25 / 1,588         ; 2 %   ;
+;     -- Logic LABs                                           ; 25                 ;       ;
 ;     -- Memory LABs (up to half of total LABs)               ; 0                  ;       ;
 ;                                                             ;                    ;       ;
 ; Combinational ALUT usage for logic                          ; 297                ;       ;
@@ -258,7 +259,7 @@ The pin-out file can be found in D:/FPGAs/DE0nanoSOC/FSM/FSM.pin.
 ;     -- 5 input functions                                    ; 50                 ;       ;
 ;     -- 4 input functions                                    ; 10                 ;       ;
 ;     -- <=3 input functions                                  ; 159                ;       ;
-; Combinational ALUT usage for route-throughs                 ; 64                 ;       ;
+; Combinational ALUT usage for route-throughs                 ; 62                 ;       ;
 ; Dedicated logic registers                                   ; 367                ;       ;
 ;     -- By type:                                             ;                    ;       ;
 ;         -- Primary logic registers                          ; 367 / 31,760       ; 1 %   ;
@@ -321,10 +322,10 @@ The pin-out file can be found in D:/FPGAs/DE0nanoSOC/FSM/FSM.pin.
 ; Impedance control blocks                                    ; 0 / 3              ; 0 %   ;
 ; Hard Memory Controllers                                     ; 0 / 2              ; 0 %   ;
 ; Average interconnect usage (total/H/V)                      ; 0.3% / 0.3% / 0.3% ;       ;
-; Peak interconnect usage (total/H/V)                         ; 6.4% / 7.0% / 4.3% ;       ;
+; Peak interconnect usage (total/H/V)                         ; 6.8% / 7.0% / 6.2% ;       ;
 ; Maximum fan-out                                             ; 367                ;       ;
 ; Highest non-global fan-out                                  ; 367                ;       ;
-; Total fan-out                                               ; 2326               ;       ;
+; Total fan-out                                               ; 2324               ;       ;
 ; Average fan-out                                             ; 3.05               ;       ;
 +-------------------------------------------------------------+--------------------+-------+
 
@@ -336,12 +337,12 @@ The pin-out file can be found in D:/FPGAs/DE0nanoSOC/FSM/FSM.pin.
 +-------------------------------------------------------------+---------------------+--------------------------------+
 ; Logic utilization (ALMs needed / total ALMs on device)      ; 218 / 15880 ( 1 % ) ; 0 / 15880 ( 0 % )              ;
 ; ALMs needed [=A-B+C]                                        ; 218                 ; 0                              ;
-;     [A] ALMs used in final placement [=a+b+c+d]             ; 225 / 15880 ( 1 % ) ; 0 / 15880 ( 0 % )              ;
-;         [a] ALMs used for LUT logic and registers           ; 123                 ; 0                              ;
-;         [b] ALMs used for LUT logic                         ; 41                  ; 0                              ;
-;         [c] ALMs used for registers                         ; 61                  ; 0                              ;
+;     [A] ALMs used in final placement [=a+b+c+d]             ; 223 / 15880 ( 1 % ) ; 0 / 15880 ( 0 % )              ;
+;         [a] ALMs used for LUT logic and registers           ; 122                 ; 0                              ;
+;         [b] ALMs used for LUT logic                         ; 39                  ; 0                              ;
+;         [c] ALMs used for registers                         ; 62                  ; 0                              ;
 ;         [d] ALMs used for memory (up to half of total ALMs) ; 0                   ; 0                              ;
-;     [B] Estimate of ALMs recoverable by dense packing       ; 7 / 15880 ( < 1 % ) ; 0 / 15880 ( 0 % )              ;
+;     [B] Estimate of ALMs recoverable by dense packing       ; 5 / 15880 ( < 1 % ) ; 0 / 15880 ( 0 % )              ;
 ;     [C] Estimate of ALMs unavailable [=a+b+c+d]             ; 0 / 15880 ( 0 % )   ; 0 / 15880 ( 0 % )              ;
 ;         [a] Due to location constrained logic               ; 0                   ; 0                              ;
 ;         [b] Due to LAB-wide signal conflicts                ; 0                   ; 0                              ;
@@ -350,8 +351,8 @@ The pin-out file can be found in D:/FPGAs/DE0nanoSOC/FSM/FSM.pin.
 ;                                                             ;                     ;                                ;
 ; Difficulty packing design                                   ; Low                 ; Low                            ;
 ;                                                             ;                     ;                                ;
-; Total LABs:  partially or completely used                   ; 29 / 1588 ( 2 % )   ; 0 / 1588 ( 0 % )               ;
-;     -- Logic LABs                                           ; 29                  ; 0                              ;
+; Total LABs:  partially or completely used                   ; 25 / 1588 ( 2 % )   ; 0 / 1588 ( 0 % )               ;
+;     -- Logic LABs                                           ; 25                  ; 0                              ;
 ;     -- Memory LABs (up to half of total LABs)               ; 0                   ; 0                              ;
 ;                                                             ;                     ;                                ;
 ; Combinational ALUT usage for logic                          ; 297                 ; 0                              ;
@@ -360,7 +361,7 @@ The pin-out file can be found in D:/FPGAs/DE0nanoSOC/FSM/FSM.pin.
 ;     -- 5 input functions                                    ; 50                  ; 0                              ;
 ;     -- 4 input functions                                    ; 10                  ; 0                              ;
 ;     -- <=3 input functions                                  ; 159                 ; 0                              ;
-; Combinational ALUT usage for route-throughs                 ; 64                  ; 0                              ;
+; Combinational ALUT usage for route-throughs                 ; 62                  ; 0                              ;
 ; Memory ALUT usage                                           ; 0                   ; 0                              ;
 ;     -- 64-address deep                                      ; 0                   ; 0                              ;
 ;     -- 32-address deep                                      ; 0                   ; 0                              ;
@@ -388,7 +389,7 @@ The pin-out file can be found in D:/FPGAs/DE0nanoSOC/FSM/FSM.pin.
 ;     -- Registered Output Connections                        ; 0                   ; 0                              ;
 ;                                                             ;                     ;                                ;
 ; Internal Connections                                        ;                     ;                                ;
-;     -- Total Connections                                    ; 2326                ; 0                              ;
+;     -- Total Connections                                    ; 2324                ; 0                              ;
 ;     -- Registered Connections                               ; 927                 ; 0                              ;
 ;                                                             ;                     ;                                ;
 ; External Connections                                        ;                     ;                                ;
@@ -1155,10 +1156,10 @@ Note: Pin directions (input, output or bidir) are based on device operating in u
 +-----------------------------------------------------------------------------+----------------------+----------------------------------+---------------------------------------------------+----------------------------------+----------------------+---------------------+---------------------------+---------------+-------------------+-------+------------+------+--------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
 ; Compilation Hierarchy Node                                                  ; ALMs needed [=A-B+C] ; [A] ALMs used in final placement ; [B] Estimate of ALMs recoverable by dense packing ; [C] Estimate of ALMs unavailable ; ALMs used for memory ; Combinational ALUTs ; Dedicated Logic Registers ; I/O Registers ; Block Memory Bits ; M10Ks ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                        ; Library Name ;
 +-----------------------------------------------------------------------------+----------------------+----------------------------------+---------------------------------------------------+----------------------------------+----------------------+---------------------+---------------------------+---------------+-------------------+-------+------------+------+--------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
-; |FSM                                                                        ; 218.0 (20.3)         ; 224.0 (20.8)                     ; 6.0 (0.5)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 297 (32)            ; 367 (0)                   ; 0 (0)         ; 0                 ; 0     ; 0          ; 17   ; 0            ; |FSM                                                                                                                                                                       ; work         ;
-;    |fp_sum_res:fp_sum_res_inst|                                             ; 197.7 (0.0)          ; 203.2 (0.0)                      ; 5.5 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 265 (0)             ; 367 (0)                   ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |FSM|fp_sum_res:fp_sum_res_inst                                                                                                                                            ; work         ;
-;       |fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component| ; 197.7 (104.1)        ; 203.2 (109.9)                    ; 5.5 (5.8)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 265 (83)            ; 367 (245)                 ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |FSM|fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component                                                                        ; work         ;
-;          |fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|                     ; 25.3 (25.3)          ; 25.3 (25.3)                      ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 38 (38)             ; 24 (24)                   ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |FSM|fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift                           ; work         ;
+; |FSM                                                                        ; 218.0 (20.3)         ; 222.5 (20.7)                     ; 4.5 (0.3)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 297 (32)            ; 367 (0)                   ; 0 (0)         ; 0                 ; 0     ; 0          ; 17   ; 0            ; |FSM                                                                                                                                                                       ; work         ;
+;    |fp_sum_res:fp_sum_res_inst|                                             ; 197.7 (0.0)          ; 201.8 (0.0)                      ; 4.2 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 265 (0)             ; 367 (0)                   ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |FSM|fp_sum_res:fp_sum_res_inst                                                                                                                                            ; work         ;
+;       |fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component| ; 197.7 (103.7)        ; 201.8 (108.1)                    ; 4.2 (4.4)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 265 (83)            ; 367 (245)                 ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |FSM|fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component                                                                        ; work         ;
+;          |fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|                     ; 25.2 (25.2)          ; 25.7 (25.7)                      ; 0.5 (0.5)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 38 (38)             ; 24 (24)                   ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |FSM|fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift                           ; work         ;
 ;          |fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|            ; 10.7 (10.7)          ; 10.7 (10.7)                      ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 14 (14)             ; 5 (5)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |FSM|fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt                  ; work         ;
 ;          |lpm_add_sub:add_sub4|                                             ; 2.3 (0.0)            ; 2.3 (0.0)                        ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 9 (0)               ; 0 (0)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |FSM|fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub4                                                   ; work         ;
 ;             |add_sub_rne:auto_generated|                                    ; 2.3 (2.3)            ; 2.3 (2.3)                        ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 9 (9)               ; 0 (0)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |FSM|fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub4|add_sub_rne:auto_generated                        ; work         ;
@@ -1204,7 +1205,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; LED[6]       ; Output   ; -- ; --   ; --   ; -- ; (0)  ; (31)  ; --     ; --                     ; --                       ;
 ; LED[7]       ; Output   ; -- ; --   ; --   ; -- ; (0)  ; (31)  ; --     ; --                     ; --                       ;
 ; SW[0]        ; Input    ; -- ; --   ; --   ; -- ; --   ; --    ; --     ; --                     ; --                       ;
-; SW[2]        ; Input    ; -- ; --   ; (0)  ; -- ; --   ; --    ; --     ; --                     ; --                       ;
+; SW[2]        ; Input    ; -- ; (0)  ; --   ; -- ; --   ; --    ; --     ; --                     ; --                       ;
 ; SW[3]        ; Input    ; -- ; --   ; (0)  ; -- ; --   ; --    ; --     ; --                     ; --                       ;
 ; FPGA_CLK1_50 ; Input    ; -- ; (0)  ; --   ; -- ; --   ; --    ; --     ; --                     ; --                       ;
 ; SW[1]        ; Input    ; -- ; (0)  ; --   ; -- ; --   ; --    ; --     ; --                     ; --                       ;
@@ -1222,14 +1223,14 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; KEY[1]                                                                                                                                                                         ;                   ;         ;
 ; SW[0]                                                                                                                                                                          ;                   ;         ;
 ; SW[2]                                                                                                                                                                          ;                   ;         ;
-;      - LED~0                                                                                                                                                                   ; 1                 ; 0       ;
-;      - LED~1                                                                                                                                                                   ; 1                 ; 0       ;
-;      - LED~2                                                                                                                                                                   ; 1                 ; 0       ;
-;      - LED~3                                                                                                                                                                   ; 1                 ; 0       ;
-;      - LED~4                                                                                                                                                                   ; 1                 ; 0       ;
-;      - LED~5                                                                                                                                                                   ; 1                 ; 0       ;
-;      - LED~6                                                                                                                                                                   ; 1                 ; 0       ;
-;      - LED~7                                                                                                                                                                   ; 1                 ; 0       ;
+;      - LED~0                                                                                                                                                                   ; 0                 ; 0       ;
+;      - LED~1                                                                                                                                                                   ; 0                 ; 0       ;
+;      - LED~2                                                                                                                                                                   ; 0                 ; 0       ;
+;      - LED~3                                                                                                                                                                   ; 0                 ; 0       ;
+;      - LED~4                                                                                                                                                                   ; 0                 ; 0       ;
+;      - LED~5                                                                                                                                                                   ; 0                 ; 0       ;
+;      - LED~6                                                                                                                                                                   ; 0                 ; 0       ;
+;      - LED~7                                                                                                                                                                   ; 0                 ; 0       ;
 ; SW[3]                                                                                                                                                                          ;                   ;         ;
 ;      - LED~0                                                                                                                                                                   ; 1                 ; 0       ;
 ;      - LED~1                                                                                                                                                                   ; 1                 ; 0       ;
@@ -1618,11 +1619,11 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------+--------------+--------+----------------------+------------------+---------------------------+
 ; FPGA_CLK1_50                                                                                                                                                                ; PIN_V11             ; 367     ; Clock        ; yes    ; Global Clock         ; GCLK6            ; --                        ;
 ; SW[1]                                                                                                                                                                       ; PIN_L9              ; 367     ; Clock enable ; no     ; --                   ; --               ; --                        ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_res_rounding_add_sub_lower|add_sub_18f:auto_generated|op_1~1 ; LABCELL_X54_Y14_N39 ; 12      ; Sync. load   ; no     ; --                   ; --               ; --                        ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[26]                                               ; FF_X42_Y15_N44      ; 30      ; Sync. load   ; no     ; --                   ; --               ; --                        ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_w[27]~0                                                          ; LABCELL_X40_Y13_N57 ; 28      ; Sync. load   ; no     ; --                   ; --               ; --                        ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_leading_zeros_dffe31[4]                                                  ; FF_X46_Y15_N8       ; 27      ; Sync. clear  ; no     ; --                   ; --               ; --                        ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_rounding_add_sub_result_reg[24]                                      ; FF_X51_Y16_N32      ; 24      ; Sync. load   ; no     ; --                   ; --               ; --                        ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_res_rounding_add_sub_lower|add_sub_18f:auto_generated|op_1~1 ; LABCELL_X65_Y14_N39 ; 12      ; Sync. load   ; no     ; --                   ; --               ; --                        ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[26]                                               ; FF_X58_Y16_N8       ; 30      ; Sync. load   ; no     ; --                   ; --               ; --                        ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_w[27]~0                                                          ; LABCELL_X59_Y16_N57 ; 28      ; Sync. load   ; no     ; --                   ; --               ; --                        ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_leading_zeros_dffe31[4]                                                  ; FF_X58_Y15_N35      ; 27      ; Sync. clear  ; no     ; --                   ; --               ; --                        ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_rounding_add_sub_result_reg[24]                                      ; FF_X63_Y15_N32      ; 24      ; Sync. load   ; no     ; --                   ; --               ; --                        ;
 +-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------+--------------+--------+----------------------+------------------+---------------------------+
 
 
@@ -1640,14 +1641,14 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +---------------------------------------------+-------------------------+
 ; Routing Resource Type                       ; Usage                   ;
 +---------------------------------------------+-------------------------+
-; Block interconnects                         ; 513 / 130,276 ( < 1 % ) ;
+; Block interconnects                         ; 477 / 130,276 ( < 1 % ) ;
 ; C12 interconnects                           ; 16 / 6,848 ( < 1 % )    ;
-; C2 interconnects                            ; 151 / 51,436 ( < 1 % )  ;
+; C2 interconnects                            ; 134 / 51,436 ( < 1 % )  ;
 ; C4 interconnects                            ; 55 / 25,120 ( < 1 % )   ;
 ; DQS bus muxes                               ; 0 / 19 ( 0 % )          ;
 ; DQS-18 I/O buses                            ; 0 / 19 ( 0 % )          ;
 ; DQS-9 I/O buses                             ; 0 / 19 ( 0 % )          ;
-; Direct links                                ; 60 / 130,276 ( < 1 % )  ;
+; Direct links                                ; 56 / 130,276 ( < 1 % )  ;
 ; Global clocks                               ; 1 / 16 ( 6 % )          ;
 ; HPS SDRAM PLL inputs                        ; 0 / 1 ( 0 % )           ;
 ; HPS SDRAM PLL outputs                       ; 0 / 1 ( 0 % )           ;
@@ -1703,12 +1704,12 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; HPS_INTERFACE_TPIU_TRACE_INPUTs             ; 0 / 2 ( 0 % )           ;
 ; HPS_INTERFACE_TPIU_TRACE_OUTPUTs            ; 0 / 33 ( 0 % )          ;
 ; Horizontal periphery clocks                 ; 0 / 12 ( 0 % )          ;
-; Local interconnects                         ; 133 / 31,760 ( < 1 % )  ;
+; Local interconnects                         ; 148 / 31,760 ( < 1 % )  ;
 ; Quadrant clocks                             ; 0 / 72 ( 0 % )          ;
-; R14 interconnects                           ; 14 / 6,046 ( < 1 % )    ;
-; R14/C12 interconnect drivers                ; 19 / 8,584 ( < 1 % )    ;
-; R3 interconnects                            ; 221 / 56,712 ( < 1 % )  ;
-; R6 interconnects                            ; 282 / 131,000 ( < 1 % ) ;
+; R14 interconnects                           ; 15 / 6,046 ( < 1 % )    ;
+; R14/C12 interconnect drivers                ; 18 / 8,584 ( < 1 % )    ;
+; R3 interconnects                            ; 183 / 56,712 ( < 1 % )  ;
+; R6 interconnects                            ; 239 / 131,000 ( < 1 % ) ;
 ; Spine clocks                                ; 1 / 150 ( < 1 % )       ;
 ; Wire stub REs                               ; 0 / 6,650 ( 0 % )       ;
 +---------------------------------------------+-------------------------+
@@ -1840,82 +1841,108 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +-----------------+----------------------+-------------------+
 ; Source Clock(s) ; Destination Clock(s) ; Delay Added in ns ;
 +-----------------+----------------------+-------------------+
-; FPGA_CLK1_50    ; FPGA_CLK1_50         ; 8.4               ;
+; FPGA_CLK1_50    ; FPGA_CLK1_50         ; 7.7               ;
 +-----------------+----------------------+-------------------+
 Note: For more information on problematic transfers, consider running the Fitter again with the Optimize hold timing option (Settings Menu) turned off.
 This will disable optimization of problematic paths and expose them for further analysis using the TimeQuest Timing Analyzer.
 
 
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Estimated Delay Added for Hold Timing Details                                                                                                                                                                                                                                                                                                                   ;
-+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
-; Source Register                                                                                                                                                   ; Destination Register                                                                                                                                                    ; Delay Added in ns ;
-+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[22]                                     ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[0] ; 0.578             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[23]                                     ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[0] ; 0.449             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub5|add_sub_c1i:auto_generated|pipeline_dffe[8]   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|infinite_res_dffe3                                                       ; 0.313             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[7]                                      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[0] ; 0.258             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[9]                                      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[0] ; 0.253             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_2comp_res_upper1|add_sub_hbh:auto_generated|dffe2  ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[15]                                           ; 0.246             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_2comp_res_upper0|add_sub_hbh:auto_generated|dffe11 ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[24]                                           ; 0.237             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_2comp_res_upper0|add_sub_hbh:auto_generated|dffe7  ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[20]                                           ; 0.237             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[8]                                                      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[22]            ; 0.233             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[6]                                      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[0] ; 0.220             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[25]                                     ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[0] ; 0.218             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[24]                                     ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[0] ; 0.218             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[18]                                     ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[0] ; 0.218             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[19]                                     ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[0] ; 0.218             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[20]                                     ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[0] ; 0.218             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[21]                                     ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[0] ; 0.218             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_add_sub_upper0|add_sub_hbh:auto_generated|dffe4    ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[17]                                           ; 0.206             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_add_sub_upper0|add_sub_hbh:auto_generated|dffe12   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[25]                                           ; 0.206             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[3]                                                      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.201             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub5|add_sub_c1i:auto_generated|pipeline_dffe[2]   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|denormal_res_dffe3                                                       ; 0.196             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[1]                                      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_not_zero_dffe23                                                  ; 0.194             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[5]                                                      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[24]            ; 0.191             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[8]                                      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[0] ; 0.187             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[6]                                                      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[24]            ; 0.185             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub5|add_sub_c1i:auto_generated|pipeline_dffe[6]   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|exp_res_dffe3[6]                                                         ; 0.168             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_add_sub_upper1|add_sub_hbh:auto_generated|dffe14   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_sign_dffe27                                              ; 0.154             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub5|add_sub_c1i:auto_generated|pipeline_dffe[4]   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|exp_res_dffe3[4]                                                         ; 0.153             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_2comp_res_upper1|add_sub_hbh:auto_generated|dffe9  ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[22]                                           ; 0.151             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[16]      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_rounding_add_sub_result_reg[15]                                  ; 0.148             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[5]                                      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[0] ; 0.147             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_2comp_res_upper0|add_sub_hbh:auto_generated|dffe10 ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[23]                                           ; 0.147             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[0]                                                      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[22]            ; 0.142             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_add_sub_upper0|add_sub_hbh:auto_generated|dffe6    ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[19]                                           ; 0.138             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_dffe4[6]                                                   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_out_dffe5[6]                                                         ; 0.135             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_dffe4[5]                                                   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_out_dffe5[5]                                                         ; 0.135             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_dffe4[21]                                                  ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_out_dffe5[21]                                                        ; 0.135             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_dffe4[7]                                                   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_out_dffe5[7]                                                         ; 0.132             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_dffe4[22]                                                  ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_out_dffe5[22]                                                        ; 0.132             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_dffe4[8]                                                   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_out_dffe5[8]                                                         ; 0.132             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[4]                                                      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[7]             ; 0.129             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_dffe4[4]                                                   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_out_dffe5[4]                                                         ; 0.115             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[7]                                                      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[7]             ; 0.092             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_leading_zeros_dffe31[0]                                        ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[7]             ; 0.092             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_leading_zeros_dffe31[1]                                        ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[7]             ; 0.092             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[3]                                      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[0] ; 0.070             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[2]                                      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[0] ; 0.070             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[4]                                      ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[0] ; 0.070             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|exp_res_dffe4[3]                                                   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|exp_out_dffe5[3]                                                         ; 0.049             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_add_sub_upper1|add_sub_hbh:auto_generated|dffe5    ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[18]                                           ; 0.040             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_2comp_res_lower|add_sub_cqh:auto_generated|dffe5   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[4]                                            ; 0.036             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[16]                                     ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[15]                                           ; 0.036             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub5|add_sub_c1i:auto_generated|pipeline_dffe[5]   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|denormal_res_dffe3                                                       ; 0.032             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[19]                                     ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[18]                                           ; 0.023             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_add_sub_upper0|add_sub_hbh:auto_generated|dffe13   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[26]                                           ; 0.022             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_2comp_res_lower|add_sub_cqh:auto_generated|dffe6   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[5]                                            ; 0.017             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub5|add_sub_c1i:auto_generated|pipeline_dffe[7]   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|denormal_res_dffe3                                                       ; 0.016             ;
-; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub5|add_sub_c1i:auto_generated|pipeline_dffe[3]   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|denormal_res_dffe3                                                       ; 0.016             ;
-+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
-Note: This table only shows the top 57 path(s) that have the largest delay added for hold.
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Estimated Delay Added for Hold Timing Details                                                                                                                                                                                                                                                                                                                         ;
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
+; Source Register                                                                                                                                                         ; Destination Register                                                                                                                                                    ; Delay Added in ns ;
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|round_bit_dffe3                                                          ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_rounding_add_sub_result_reg[7]                                   ; 0.358             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[1] ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub5|add_sub_c1i:auto_generated|pipeline_dffe[7]         ; 0.274             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_2comp_res_upper1|add_sub_hbh:auto_generated|dffe1        ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[14]                                           ; 0.244             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_leading_zeros_dffe31[2]                                              ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[9]             ; 0.244             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_2comp_res_upper1|add_sub_hbh:auto_generated|dffe13       ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[26]                                           ; 0.244             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_2comp_res_upper1|add_sub_hbh:auto_generated|dffe6        ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[19]                                           ; 0.239             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[2] ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub5|add_sub_c1i:auto_generated|pipeline_dffe[7]         ; 0.221             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_add_sub_upper0|add_sub_hbh:auto_generated|dffe4          ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[17]                                           ; 0.205             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub5|add_sub_c1i:auto_generated|pipeline_dffe[1]         ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|denormal_res_dffe3                                                       ; 0.188             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[9]                                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[21]            ; 0.185             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[8]                                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[21]            ; 0.185             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[7]                                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[21]            ; 0.185             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[6]                                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[21]            ; 0.185             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[5]                                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[21]            ; 0.185             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[4]                                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[21]            ; 0.185             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[3]                                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[21]            ; 0.185             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[2]                                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[21]            ; 0.185             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[1]                                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[21]            ; 0.185             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[0]                                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[21]            ; 0.185             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_leading_zeros_dffe31[0]                                              ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[21]            ; 0.185             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_leading_zeros_dffe31[1]                                              ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[21]            ; 0.185             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_leading_zeros_dffe31[4]                                              ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[21]            ; 0.185             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_leading_zeros_dffe31[3]                                              ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[21]            ; 0.185             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_add_sub_upper1|add_sub_hbh:auto_generated|dffe5          ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[18]                                           ; 0.184             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[1]                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_not_zero_dffe23                                                  ; 0.183             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_add_sub_upper1|add_sub_hbh:auto_generated|dffe3          ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[16]                                           ; 0.177             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_2comp_res_upper1|add_sub_hbh:auto_generated|dffe4        ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[17]                                           ; 0.176             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub5|add_sub_c1i:auto_generated|pipeline_dffe[7]         ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|infinite_res_dffe3                                                       ; 0.174             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[25]                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[25]                                           ; 0.173             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub5|add_sub_c1i:auto_generated|pipeline_dffe[0]         ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|denormal_res_dffe3                                                       ; 0.169             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_2comp_res_upper1|add_sub_hbh:auto_generated|dffe2        ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[15]                                           ; 0.166             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[24]                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[24]                                           ; 0.160             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub5|add_sub_c1i:auto_generated|pipeline_dffe[4]         ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|exp_res_dffe3[4]                                                         ; 0.158             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_add_sub_upper0|add_sub_hbh:auto_generated|dffe14         ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_sign_dffe27                                              ; 0.155             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub5|add_sub_c1i:auto_generated|pipeline_dffe[6]         ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|exp_res_dffe3[6]                                                         ; 0.152             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[16]            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_rounding_add_sub_result_reg[15]                                  ; 0.151             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_dffe4[20]                                                        ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_out_dffe5[20]                                                        ; 0.134             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_dffe4[11]                                                        ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_out_dffe5[11]                                                        ; 0.134             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[25]                                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.125             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[24]                                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.125             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[23]                                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.125             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[22]                                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.125             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[21]                                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.125             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[20]                                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.125             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[19]                                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.125             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[18]                                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.125             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[17]                                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.125             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[16]                                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.125             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[15]                                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.125             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[14]                                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.125             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[13]                                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.125             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[12]                                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.125             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[11]                                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.125             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_dffe31[10]                                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altbarrel_shift_ltd:lbarrel_shift|sbit_piper1d[25]            ; 0.125             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_dffe4[22]                                                        ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_out_dffe5[22]                                                        ; 0.124             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_dffe4[7]                                                         ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_out_dffe5[7]                                                         ; 0.121             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_dffe4[5]                                                         ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_out_dffe5[5]                                                         ; 0.114             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_dffe4[14]                                                        ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_out_dffe5[14]                                                        ; 0.077             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|exp_res_dffe4[7]                                                         ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|exp_out_dffe5[7]                                                         ; 0.072             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[25]                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[2] ; 0.069             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[24]                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[2] ; 0.069             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[22]                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[2] ; 0.069             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[23]                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[2] ; 0.069             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[18]                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[4] ; 0.066             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[19]                                           ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|fp_sum_res_altpriority_encoder_ou8:leading_zeroes_cnt|pipeline_q_dffe[4] ; 0.066             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|exp_res_dffe4[5]                                                         ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|exp_out_dffe5[5]                                                         ; 0.061             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_dffe4[12]                                                        ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_out_dffe5[12]                                                        ; 0.057             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_add_sub_upper1|add_sub_hbh:auto_generated|dffe4          ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[17]                                           ; 0.041             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_rounding_add_sub_result_reg[2]                                   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_dffe4[1]                                                         ; 0.039             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_2comp_res_lower|add_sub_cqh:auto_generated|dffe9         ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[8]                                            ; 0.030             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[3]                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_not_zero_dffe23                                                  ; 0.029             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[2]                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_not_zero_dffe23                                                  ; 0.029             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[4]                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_not_zero_dffe23                                                  ; 0.029             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[5]                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_not_zero_dffe23                                                  ; 0.029             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub5|add_sub_c1i:auto_generated|pipeline_dffe[5]         ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|denormal_res_dffe3                                                       ; 0.026             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:add_sub5|add_sub_c1i:auto_generated|pipeline_dffe[3]         ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|denormal_res_dffe3                                                       ; 0.026             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_add_sub_upper0|add_sub_hbh:auto_generated|dffe2          ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[15]                                           ; 0.022             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_rounding_add_sub_result_reg[3]                                   ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_dffe4[2]                                                         ; 0.019             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|lpm_add_sub:man_2comp_res_lower|add_sub_cqh:auto_generated|dffe1         ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe27[0]                                            ; 0.015             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[9]                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_not_zero_dffe23                                                  ; 0.014             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[6]                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_not_zero_dffe23                                                  ; 0.014             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[7]                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_not_zero_dffe23                                                  ; 0.014             ;
+; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_add_sub_res_mag_dffe21[8]                                            ; fp_sum_res:fp_sum_res_inst|fp_sum_res_altfp_add_sub_hjj:fp_sum_res_altfp_add_sub_hjj_component|man_res_not_zero_dffe23                                                  ; 0.014             ;
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
+Note: This table only shows the top 83 path(s) that have the largest delay added for hold.
 
 
 +-----------------+
 ; Fitter Messages ;
 +-----------------+
-Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (11104): Parallel Compilation has detected 4 hyper-threaded processors. However, the extra hyper-threaded processors will not be used by default. Parallel Compilation will use 2 of the 2 physical processors detected instead.
 Info (119006): Selected device 5CSEMA4U23C6 for design "FSM"
 Info (21077): Low junction temperature is 0 degrees C
 Info (21077): High junction temperature is 85 degrees C
@@ -1929,7 +1956,7 @@ Info (184021): Fitter periphery placement operations ending: elapsed time is 00:
 Info (176233): Starting register packing
 Info (176235): Finished register packing
     Extra Info (176219): No registers were packed into other blocks
-Info (11798): Fitter preparation operations ending: elapsed time is 00:00:17
+Info (11798): Fitter preparation operations ending: elapsed time is 00:00:19
 Info (332104): Reading SDC File: 'FSM.SDC'
 Warning (332174): Ignored filter at FSM.sdc(14): altera_reserved_tck could not be matched with a port or pin or register or keeper or net or combinational node or node
 Warning (332049): Ignored create_clock at FSM.sdc(14): Argument <targets> is not an object ID
@@ -1958,34 +1985,34 @@ Info (332111): Found 3 clocks
     Info (332111):   20.000 FPGA_CLK3_50
 Info (170189): Fitter placement preparation operations beginning
 Info (14951): The Fitter is using Advanced Physical Optimization.
-Info (170190): Fitter placement preparation operations ending: elapsed time is 00:00:05
+Info (170190): Fitter placement preparation operations ending: elapsed time is 00:00:06
 Info (170191): Fitter placement operations beginning
 Info (170137): Fitter placement was successful
-Info (170192): Fitter placement operations ending: elapsed time is 00:00:05
+Info (170192): Fitter placement operations ending: elapsed time is 00:00:07
 Info (170193): Fitter routing operations beginning
 Info (170195): Router estimated average interconnect usage is 0% of the available device resources
-    Info (170196): Router estimated peak interconnect usage is 4% of the available device resources in the region that extends from location X46_Y12 to location X56_Y23
-Info (170194): Fitter routing operations ending: elapsed time is 00:00:03
+    Info (170196): Router estimated peak interconnect usage is 5% of the available device resources in the region that extends from location X57_Y12 to location X68_Y23
+Info (170194): Fitter routing operations ending: elapsed time is 00:00:02
 Info (170199): The Fitter performed an Auto Fit compilation.  Optimizations were skipped to reduce compilation time.
     Info (170201): Optimizations that may affect the design's routability were skipped
     Info (170200): Optimizations that may affect the design's timing were skipped
-Info (11888): Total time spent on timing analysis during the Fitter is 1.23 seconds.
+Info (11888): Total time spent on timing analysis during the Fitter is 1.02 seconds.
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Info (11801): Fitter post-fit operations ending: elapsed time is 00:00:10
-Info (144001): Generated suppressed messages file D:/FPGAs/DE0nanoSOC/FSM/FSM.fit.smsg
+Info (144001): Generated suppressed messages file C:/Users/Usuario/Documents/GitHub/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/FSM.fit.smsg
 Info: Quartus II 64-Bit Fitter was successful. 0 errors, 14 warnings
-    Info: Peak virtual memory: 2133 megabytes
-    Info: Processing ended: Sat Jun 04 11:57:20 2016
-    Info: Elapsed time: 00:01:13
-    Info: Total CPU time (on all processors): 00:01:36
+    Info: Peak virtual memory: 1913 megabytes
+    Info: Processing ended: Sat Jun 04 12:11:05 2016
+    Info: Elapsed time: 00:01:24
+    Info: Total CPU time (on all processors): 00:01:55
 
 
 +----------------------------+
 ; Fitter Suppressed Messages ;
 +----------------------------+
-The suppressed messages can be found in D:/FPGAs/DE0nanoSOC/FSM/FSM.fit.smsg.
+The suppressed messages can be found in C:/Users/Usuario/Documents/GitHub/ece10243upb2016/Prof_Examples/2-3-IP_core_FP_ADD/FSM/FSM.fit.smsg.
 
 
