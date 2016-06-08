@@ -1,0 +1,1818 @@
+Model {
+  Name			  "DSPBA_design_template"
+  Version		  7.5
+  MdlSubVersion		  0
+  GraphicalInterface {
+    NumRootInports	    0
+    NumRootOutports	    0
+    ParameterArgumentNames  ""
+    ComputedModelVersion    "1.41"
+    NumModelReferences	    0
+    NumTestPointedSignals   0
+  }
+  SavedCharacterEncoding  "windows-1252"
+  PreLoadFcn		  "% Run the setup script when the model is opened\nsetup_DSPBA_design_template; "
+  SaveDefaultBlockParams  on
+  ScopeRefreshTime	  0.035000
+  OverrideScopeRefreshTime on
+  DisableAllScopes	  off
+  DataTypeOverride	  "UseLocalSettings"
+  MinMaxOverflowLogging	  "UseLocalSettings"
+  MinMaxOverflowArchiveMode "Overwrite"
+  MaxMDLFileLineLength	  120
+  InitFcn		  "% Run the setup script again just before the \n% model is run, so that any updates made\n% after opening"
+  " are applied. \nsetup_DSPBA_design_template; "
+  Created		  "Mon May 16 15:21:05 2011"
+  Creator		  "mjervis"
+  UpdateHistory		  "UpdateHistoryNever"
+  ModifiedByFormat	  "%<Auto>"
+  LastModifiedBy	  "mjervis"
+  ModifiedDateFormat	  "%<Auto>"
+  LastModifiedDate	  "Wed Sep 21 14:55:01 2011"
+  RTWModifiedTimeStamp	  238517683
+  ModelVersionFormat	  "1.%<AutoIncrement:41>"
+  ConfigurationManager	  "None"
+  SampleTimeColors	  off
+  SampleTimeAnnotations	  off
+  LibraryLinkDisplay	  "none"
+  WideLines		  on
+  ShowLineDimensions	  on
+  ShowPortDataTypes	  on
+  ShowLoopsOnError	  on
+  IgnoreBidirectionalLines off
+  ShowStorageClass	  off
+  ShowTestPointIcons	  on
+  ShowSignalResolutionIcons on
+  ShowViewerIcons	  on
+  SortedOrder		  off
+  ExecutionContextIcon	  off
+  ShowLinearizationAnnotations on
+  BlockNameDataTip	  off
+  BlockParametersDataTip  off
+  BlockDescriptionStringDataTip	off
+  ToolBar		  on
+  StatusBar		  on
+  BrowserShowLibraryLinks off
+  BrowserLookUnderMasks	  off
+  SimulationMode	  "normal"
+  LinearizationMsg	  "none"
+  Profile		  off
+  ParamWorkspaceSource	  "MATLABWorkspace"
+  AccelSystemTargetFile	  "accel.tlc"
+  AccelTemplateMakefile	  "accel_default_tmf"
+  AccelMakeCommand	  "make_rtw"
+  TryForcingSFcnDF	  off
+  RecordCoverage	  off
+  CovPath		  "/"
+  CovSaveName		  "covdata"
+  CovMetricSettings	  "dw"
+  CovNameIncrementing	  off
+  CovHtmlReporting	  on
+  CovForceBlockReductionOff on
+  covSaveCumulativeToWorkspaceVar on
+  CovSaveSingleToWorkspaceVar on
+  CovCumulativeVarName	  "covCumulativeData"
+  CovCumulativeReport	  off
+  CovReportOnPause	  on
+  CovModelRefEnable	  "Off"
+  CovExternalEMLEnable	  off
+  ExtModeBatchMode	  off
+  ExtModeEnableFloating	  on
+  ExtModeTrigType	  "manual"
+  ExtModeTrigMode	  "normal"
+  ExtModeTrigPort	  "1"
+  ExtModeTrigElement	  "any"
+  ExtModeTrigDuration	  1000
+  ExtModeTrigDurationFloating "auto"
+  ExtModeTrigHoldOff	  0
+  ExtModeTrigDelay	  0
+  ExtModeTrigDirection	  "rising"
+  ExtModeTrigLevel	  0
+  ExtModeArchiveMode	  "off"
+  ExtModeAutoIncOneShot	  off
+  ExtModeIncDirWhenArm	  off
+  ExtModeAddSuffixToVar	  off
+  ExtModeWriteAllDataToWs off
+  ExtModeArmWhenConnect	  on
+  ExtModeSkipDownloadWhenConnect off
+  ExtModeLogAll		  on
+  ExtModeAutoUpdateStatusClock on
+  BufferReuse		  on
+  ShowModelReferenceBlockVersion off
+  ShowModelReferenceBlockIO off
+  Array {
+    Type		    "Handle"
+    Dimension		    1
+    Simulink.ConfigSet {
+      $ObjectID		      1
+      Version		      "1.10.0"
+      Array {
+	Type			"Handle"
+	Dimension		8
+	Simulink.SolverCC {
+	  $ObjectID		  2
+	  Version		  "1.10.0"
+	  StartTime		  "0.0"
+	  StopTime		  "my_design.endTime"
+	  AbsTol		  "auto"
+	  FixedStep		  "auto"
+	  InitialStep		  "auto"
+	  MaxNumMinSteps	  "-1"
+	  MaxOrder		  5
+	  ZcThreshold		  "auto"
+	  ConsecutiveZCsStepRelTol "10*128*eps"
+	  MaxConsecutiveZCs	  "1000"
+	  ExtrapolationOrder	  4
+	  NumberNewtonIterations  1
+	  MaxStep		  "auto"
+	  MinStep		  "auto"
+	  MaxConsecutiveMinStep	  "1"
+	  RelTol		  "1e-3"
+	  SolverMode		  "Auto"
+	  Solver		  "FixedStepDiscrete"
+	  SolverName		  "FixedStepDiscrete"
+	  SolverJacobianMethodControl "auto"
+	  ShapePreserveControl	  "DisableAll"
+	  ZeroCrossControl	  "UseLocalSettings"
+	  ZeroCrossAlgorithm	  "Nonadaptive"
+	  AlgebraicLoopSolver	  "TrustRegion"
+	  SolverResetMethod	  "Fast"
+	  PositivePriorityOrder	  off
+	  AutoInsertRateTranBlk	  off
+	  SampleTimeConstraint	  "Unconstrained"
+	  InsertRTBMode		  "Whenever possible"
+	}
+	Simulink.DataIOCC {
+	  $ObjectID		  3
+	  Version		  "1.10.0"
+	  Decimation		  "1"
+	  ExternalInput		  "[t, u]"
+	  FinalStateName	  "xFinal"
+	  InitialState		  "xInitial"
+	  LimitDataPoints	  on
+	  MaxDataPoints		  "1000"
+	  LoadExternalInput	  off
+	  LoadInitialState	  off
+	  SaveFinalState	  off
+	  SaveCompleteFinalSimState off
+	  SaveFormat		  "Array"
+	  SaveOutput		  on
+	  SaveState		  off
+	  SignalLogging		  on
+	  DSMLogging		  on
+	  InspectSignalLogs	  off
+	  SaveTime		  on
+	  ReturnWorkspaceOutputs  off
+	  StateSaveName		  "xout"
+	  TimeSaveName		  "tout"
+	  OutputSaveName	  "yout"
+	  SignalLoggingName	  "logsout"
+	  DSMLoggingName	  "dsmout"
+	  OutputOption		  "RefineOutputTimes"
+	  OutputTimes		  "[]"
+	  ReturnWorkspaceOutputsName "out"
+	  Refine		  "1"
+	}
+	Simulink.OptimizationCC {
+	  $ObjectID		  4
+	  Version		  "1.10.0"
+	  Array {
+	    Type		    "Cell"
+	    Dimension		    7
+	    Cell		    "BooleansAsBitfields"
+	    Cell		    "PassReuseOutputArgsAs"
+	    Cell		    "PassReuseOutputArgsThreshold"
+	    Cell		    "ZeroExternalMemoryAtStartup"
+	    Cell		    "ZeroInternalMemoryAtStartup"
+	    Cell		    "OptimizeModelRefInitCode"
+	    Cell		    "NoFixptDivByZeroProtection"
+	    PropName		    "DisabledProps"
+	  }
+	  BlockReduction	  on
+	  BooleanDataType	  on
+	  ConditionallyExecuteInputs on
+	  InlineParams		  off
+	  UseIntDivNetSlope	  off
+	  InlineInvariantSignals  off
+	  OptimizeBlockIOStorage  on
+	  BufferReuse		  on
+	  EnhancedBackFolding	  off
+	  StrengthReduction	  off
+	  EnforceIntegerDowncast  on
+	  ExpressionFolding	  on
+	  BooleansAsBitfields	  off
+	  BitfieldContainerType	  "uint_T"
+	  EnableMemcpy		  on
+	  MemcpyThreshold	  64
+	  PassReuseOutputArgsAs	  "Structure reference"
+	  ExpressionDepthLimit	  2147483647
+	  FoldNonRolledExpr	  on
+	  LocalBlockOutputs	  on
+	  RollThreshold		  5
+	  SystemCodeInlineAuto	  off
+	  StateBitsets		  off
+	  DataBitsets		  off
+	  UseTempVars		  off
+	  ZeroExternalMemoryAtStartup on
+	  ZeroInternalMemoryAtStartup on
+	  InitFltsAndDblsToZero	  off
+	  NoFixptDivByZeroProtection off
+	  EfficientFloat2IntCast  off
+	  EfficientMapNaN2IntZero on
+	  OptimizeModelRefInitCode off
+	  LifeSpan		  "inf"
+	  MaxStackSize		  "Inherit from target"
+	  BufferReusableBoundary  on
+	  SimCompilerOptimization "Off"
+	  AccelVerboseBuild	  off
+	}
+	Simulink.DebuggingCC {
+	  $ObjectID		  5
+	  Version		  "1.10.0"
+	  RTPrefix		  "error"
+	  ConsistencyChecking	  "none"
+	  ArrayBoundsChecking	  "none"
+	  SignalInfNanChecking	  "none"
+	  SignalRangeChecking	  "none"
+	  ReadBeforeWriteMsg	  "UseLocalSettings"
+	  WriteAfterWriteMsg	  "UseLocalSettings"
+	  WriteAfterReadMsg	  "UseLocalSettings"
+	  AlgebraicLoopMsg	  "warning"
+	  ArtificialAlgebraicLoopMsg "warning"
+	  SaveWithDisabledLinksMsg "warning"
+	  SaveWithParameterizedLinksMsg	"warning"
+	  CheckSSInitialOutputMsg on
+	  UnderspecifiedInitializationDetection	"Classic"
+	  MergeDetectMultiDrivingBlocksExec "none"
+	  CheckExecutionContextPreStartOutputMsg off
+	  CheckExecutionContextRuntimeOutputMsg	off
+	  SignalResolutionControl "UseLocalSettings"
+	  BlockPriorityViolationMsg "warning"
+	  MinStepSizeMsg	  "warning"
+	  TimeAdjustmentMsg	  "none"
+	  MaxConsecutiveZCsMsg	  "error"
+	  SolverPrmCheckMsg	  "warning"
+	  InheritedTsInSrcMsg	  "none"
+	  DiscreteInheritContinuousMsg "warning"
+	  MultiTaskDSMMsg	  "error"
+	  MultiTaskCondExecSysMsg "error"
+	  MultiTaskRateTransMsg	  "error"
+	  SingleTaskRateTransMsg  "none"
+	  TasksWithSamePriorityMsg "warning"
+	  SigSpecEnsureSampleTimeMsg "warning"
+	  CheckMatrixSingularityMsg "none"
+	  IntegerOverflowMsg	  "warning"
+	  Int32ToFloatConvMsg	  "warning"
+	  ParameterDowncastMsg	  "error"
+	  ParameterOverflowMsg	  "error"
+	  ParameterUnderflowMsg	  "none"
+	  ParameterPrecisionLossMsg "warning"
+	  ParameterTunabilityLossMsg "warning"
+	  FixptConstUnderflowMsg  "none"
+	  FixptConstOverflowMsg	  "none"
+	  FixptConstPrecisionLossMsg "none"
+	  UnderSpecifiedDataTypeMsg "none"
+	  UnnecessaryDatatypeConvMsg "none"
+	  VectorMatrixConversionMsg "none"
+	  InvalidFcnCallConnMsg	  "error"
+	  FcnCallInpInsideContextMsg "Use local settings"
+	  SignalLabelMismatchMsg  "none"
+	  UnconnectedInputMsg	  "warning"
+	  UnconnectedOutputMsg	  "warning"
+	  UnconnectedLineMsg	  "warning"
+	  SFcnCompatibilityMsg	  "none"
+	  UniqueDataStoreMsg	  "none"
+	  BusObjectLabelMismatch  "warning"
+	  RootOutportRequireBusObject "warning"
+	  AssertControl		  "UseLocalSettings"
+	  EnableOverflowDetection off
+	  ModelReferenceIOMsg	  "none"
+	  ModelReferenceVersionMismatchMessage "none"
+	  ModelReferenceIOMismatchMessage "none"
+	  ModelReferenceCSMismatchMessage "none"
+	  UnknownTsInhSupMsg	  "warning"
+	  ModelReferenceDataLoggingMessage "warning"
+	  ModelReferenceSymbolNameMessage "warning"
+	  ModelReferenceExtraNoncontSigs "error"
+	  StateNameClashWarn	  "warning"
+	  SimStateInterfaceChecksumMismatchMsg "warning"
+	  StrictBusMsg		  "ErrorLevel1"
+	  BusNameAdapt		  "WarnAndRepair"
+	  NonBusSignalsTreatedAsBus "none"
+	  LoggingUnavailableSignals "error"
+	  BlockIODiagnostic	  "none"
+	}
+	Simulink.HardwareCC {
+	  $ObjectID		  6
+	  Version		  "1.10.0"
+	  ProdBitPerChar	  8
+	  ProdBitPerShort	  16
+	  ProdBitPerInt		  32
+	  ProdBitPerLong	  32
+	  ProdIntDivRoundTo	  "Undefined"
+	  ProdEndianess		  "Unspecified"
+	  ProdWordSize		  32
+	  ProdShiftRightIntArith  on
+	  ProdHWDeviceType	  "32-bit Generic"
+	  TargetBitPerChar	  8
+	  TargetBitPerShort	  16
+	  TargetBitPerInt	  32
+	  TargetBitPerLong	  32
+	  TargetShiftRightIntArith on
+	  TargetIntDivRoundTo	  "Undefined"
+	  TargetEndianess	  "Unspecified"
+	  TargetWordSize	  32
+	  TargetTypeEmulationWarnSuppressLevel 0
+	  TargetPreprocMaxBitsSint 32
+	  TargetPreprocMaxBitsUint 32
+	  TargetHWDeviceType	  "Specified"
+	  TargetUnknown		  off
+	  ProdEqTarget		  on
+	}
+	Simulink.ModelReferenceCC {
+	  $ObjectID		  7
+	  Version		  "1.10.0"
+	  UpdateModelReferenceTargets "IfOutOfDateOrStructuralChange"
+	  CheckModelReferenceTargetMessage "error"
+	  EnableParallelModelReferenceBuilds off
+	  ParallelModelReferenceMATLABWorkerInit "None"
+	  ModelReferenceNumInstancesAllowed "Multi"
+	  PropagateVarSize	  "Infer from blocks in model"
+	  ModelReferencePassRootInputsByReference on
+	  ModelReferenceMinAlgLoopOccurrences off
+	  PropagateSignalLabelsOutOfModel off
+	  SupportModelReferenceSimTargetCustomCode off
+	}
+	Simulink.SFSimCC {
+	  $ObjectID		  8
+	  Version		  "1.10.0"
+	  SFSimEnableDebug	  on
+	  SFSimOverflowDetection  on
+	  SFSimEcho		  on
+	  SimBlas		  on
+	  SimCtrlC		  on
+	  SimExtrinsic		  on
+	  SimIntegrity		  on
+	  SimUseLocalCustomCode	  off
+	  SimBuildMode		  "sf_incremental_build"
+	}
+	Simulink.RTWCC {
+	  $BackupClass		  "Simulink.RTWCC"
+	  $ObjectID		  9
+	  Version		  "1.10.0"
+	  Array {
+	    Type		    "Cell"
+	    Dimension		    6
+	    Cell		    "IncludeHyperlinkInReport"
+	    Cell		    "GenerateTraceInfo"
+	    Cell		    "GenerateTraceReport"
+	    Cell		    "GenerateTraceReportSl"
+	    Cell		    "GenerateTraceReportSf"
+	    Cell		    "GenerateTraceReportEml"
+	    PropName		    "DisabledProps"
+	  }
+	  SystemTargetFile	  "grt.tlc"
+	  GenCodeOnly		  off
+	  MakeCommand		  "make_rtw"
+	  GenerateMakefile	  on
+	  TemplateMakefile	  "grt_default_tmf"
+	  GenerateReport	  off
+	  SaveLog		  off
+	  RTWVerbose		  on
+	  RetainRTWFile		  off
+	  ProfileTLC		  off
+	  TLCDebug		  off
+	  TLCCoverage		  off
+	  TLCAssert		  off
+	  ProcessScriptMode	  "Default"
+	  ConfigurationMode	  "Optimized"
+	  ConfigAtBuild		  off
+	  RTWUseLocalCustomCode	  off
+	  RTWUseSimCustomCode	  off
+	  IncludeHyperlinkInReport off
+	  LaunchReport		  off
+	  TargetLang		  "C"
+	  IncludeBusHierarchyInRTWFileBlockHierarchyMap	off
+	  IncludeERTFirstTime	  off
+	  GenerateTraceInfo	  off
+	  GenerateTraceReport	  off
+	  GenerateTraceReportSl	  off
+	  GenerateTraceReportSf	  off
+	  GenerateTraceReportEml  off
+	  GenerateCodeInfo	  off
+	  RTWCompilerOptimization "Off"
+	  CheckMdlBeforeBuild	  "Off"
+	  CustomRebuildMode	  "OnUpdate"
+	  Array {
+	    Type		    "Handle"
+	    Dimension		    2
+	    Simulink.CodeAppCC {
+	      $ObjectID		      10
+	      Version		      "1.10.0"
+	      Array {
+		Type			"Cell"
+		Dimension		19
+		Cell			"IgnoreCustomStorageClasses"
+		Cell			"IgnoreTestpoints"
+		Cell			"InsertBlockDesc"
+		Cell			"SFDataObjDesc"
+		Cell			"SimulinkDataObjDesc"
+		Cell			"DefineNamingRule"
+		Cell			"SignalNamingRule"
+		Cell			"ParamNamingRule"
+		Cell			"InlinedPrmAccess"
+		Cell			"CustomSymbolStr"
+		Cell			"CustomSymbolStrGlobalVar"
+		Cell			"CustomSymbolStrType"
+		Cell			"CustomSymbolStrField"
+		Cell			"CustomSymbolStrFcn"
+		Cell			"CustomSymbolStrFcnArg"
+		Cell			"CustomSymbolStrBlkIO"
+		Cell			"CustomSymbolStrTmpVar"
+		Cell			"CustomSymbolStrMacro"
+		Cell			"ReqsInCode"
+		PropName		"DisabledProps"
+	      }
+	      ForceParamTrailComments off
+	      GenerateComments	      on
+	      IgnoreCustomStorageClasses on
+	      IgnoreTestpoints	      off
+	      IncHierarchyInIds	      off
+	      MaxIdLength	      31
+	      PreserveName	      off
+	      PreserveNameWithParent  off
+	      ShowEliminatedStatement off
+	      IncAutoGenComments      off
+	      SimulinkDataObjDesc     off
+	      SFDataObjDesc	      off
+	      IncDataTypeInIds	      off
+	      MangleLength	      1
+	      CustomSymbolStrGlobalVar "$R$N$M"
+	      CustomSymbolStrType     "$N$R$M"
+	      CustomSymbolStrField    "$N$M"
+	      CustomSymbolStrFcn      "$R$N$M$F"
+	      CustomSymbolStrFcnArg   "rt$I$N$M"
+	      CustomSymbolStrBlkIO    "rtb_$N$M"
+	      CustomSymbolStrTmpVar   "$N$M"
+	      CustomSymbolStrMacro    "$R$N$M"
+	      DefineNamingRule	      "None"
+	      ParamNamingRule	      "None"
+	      SignalNamingRule	      "None"
+	      InsertBlockDesc	      off
+	      SimulinkBlockComments   on
+	      EnableCustomComments    off
+	      InlinedPrmAccess	      "Literals"
+	      ReqsInCode	      off
+	      UseSimReservedNames     off
+	    }
+	    Simulink.GRTTargetCC {
+	      $BackupClass	      "Simulink.TargetCC"
+	      $ObjectID		      11
+	      Version		      "1.10.0"
+	      Array {
+		Type			"Cell"
+		Dimension		17
+		Cell			"GeneratePreprocessorConditionals"
+		Cell			"IncludeMdlTerminateFcn"
+		Cell			"CombineOutputUpdateFcns"
+		Cell			"SuppressErrorStatus"
+		Cell			"ERTCustomFileBanners"
+		Cell			"GenerateSampleERTMain"
+		Cell			"GenerateTestInterfaces"
+		Cell			"ModelStepFunctionPrototypeControlCompliant"
+		Cell			"CPPClassGenCompliant"
+		Cell			"MultiInstanceERTCode"
+		Cell			"PurelyIntegerCode"
+		Cell			"SupportNonFinite"
+		Cell			"SupportComplex"
+		Cell			"SupportAbsoluteTime"
+		Cell			"SupportContinuousTime"
+		Cell			"SupportNonInlinedSFcns"
+		Cell			"PortableWordSizes"
+		PropName		"DisabledProps"
+	      }
+	      TargetFcnLib	      "ansi_tfl_table_tmw.mat"
+	      TargetLibSuffix	      ""
+	      TargetPreCompLibLocation ""
+	      TargetFunctionLibrary   "ANSI_C"
+	      UtilityFuncGeneration   "Auto"
+	      ERTMultiwordTypeDef     "System defined"
+	      ERTCodeCoverageTool     "None"
+	      ERTMultiwordLength      256
+	      MultiwordLength	      2048
+	      GenerateFullHeader      on
+	      GenerateSampleERTMain   off
+	      GenerateTestInterfaces  off
+	      IsPILTarget	      off
+	      ModelReferenceCompliant on
+	      ParMdlRefBuildCompliant on
+	      CompOptLevelCompliant   on
+	      IncludeMdlTerminateFcn  on
+	      GeneratePreprocessorConditionals "Disable all"
+	      CombineOutputUpdateFcns off
+	      SuppressErrorStatus     off
+	      ERTFirstTimeCompliant   off
+	      IncludeFileDelimiter    "Auto"
+	      ERTCustomFileBanners    off
+	      SupportAbsoluteTime     on
+	      LogVarNameModifier      "rt_"
+	      MatFileLogging	      on
+	      MultiInstanceERTCode    off
+	      SupportNonFinite	      on
+	      SupportComplex	      on
+	      PurelyIntegerCode	      off
+	      SupportContinuousTime   on
+	      SupportNonInlinedSFcns  on
+	      SupportVariableSizeSignals off
+	      EnableShiftOperators    on
+	      ParenthesesLevel	      "Nominal"
+	      PortableWordSizes	      off
+	      ModelStepFunctionPrototypeControlCompliant off
+	      CPPClassGenCompliant    off
+	      AutosarCompliant	      off
+	      UseMalloc		      off
+	      ExtMode		      off
+	      ExtModeStaticAlloc      off
+	      ExtModeTesting	      off
+	      ExtModeStaticAllocSize  1000000
+	      ExtModeTransport	      0
+	      ExtModeMexFile	      "ext_comm"
+	      ExtModeIntrfLevel	      "Level1"
+	      RTWCAPISignals	      off
+	      RTWCAPIParams	      off
+	      RTWCAPIStates	      off
+	      GenerateASAP2	      off
+	    }
+	    PropName		    "Components"
+	  }
+	}
+	PropName		"Components"
+      }
+      Name		      "Configuration"
+      CurrentDlgPage	      "Solver"
+      ConfigPrmDlgPosition    " [ 360, 285, 1240, 915 ] "
+    }
+    PropName		    "ConfigurationSets"
+  }
+  Simulink.ConfigSet {
+    $PropName		    "ActiveConfigurationSet"
+    $ObjectID		    1
+  }
+  BlockDefaults {
+    ForegroundColor	    "black"
+    BackgroundColor	    "white"
+    DropShadow		    off
+    NamePlacement	    "normal"
+    FontName		    "Helvetica"
+    FontSize		    10
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+    ShowName		    on
+    BlockRotation	    0
+    BlockMirror		    off
+  }
+  AnnotationDefaults {
+    HorizontalAlignment	    "center"
+    VerticalAlignment	    "middle"
+    ForegroundColor	    "black"
+    BackgroundColor	    "white"
+    DropShadow		    off
+    FontName		    "Helvetica"
+    FontSize		    10
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+    UseDisplayTextAsClickCallback off
+  }
+  LineDefaults {
+    FontName		    "Helvetica"
+    FontSize		    9
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+  }
+  BlockParameterDefaults {
+    Block {
+      BlockType		      DataTypeConversion
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeMode	      "Inherit via back propagation"
+      OutDataType	      "fixdt(1,16,0)"
+      OutScaling	      "[]"
+      OutDataTypeStr	      "Inherit: Inherit via back propagation"
+      LockScale		      off
+      ConvertRealWorld	      "Real World Value (RWV)"
+      RndMeth		      "Zero"
+      SaturateOnIntegerOverflow	on
+      SampleTime	      "-1"
+    }
+    Block {
+      BlockType		      Inport
+      Port		      "1"
+      UseBusObject	      off
+      BusObject		      "BusObject"
+      BusOutputAsStruct	      off
+      PortDimensions	      "-1"
+      VarSizeSig	      "Inherit"
+      SampleTime	      "-1"
+      OutMin		      "[]"
+      OutMax		      "[]"
+      DataType		      "auto"
+      OutDataType	      "fixdt(1,16,0)"
+      OutScaling	      "[]"
+      OutDataTypeStr	      "Inherit: auto"
+      LockScale		      off
+      SignalType	      "auto"
+      SamplingMode	      "auto"
+      LatchByDelayingOutsideSignal off
+      LatchInputForFeedbackSignals off
+      Interpolate	      on
+    }
+    Block {
+      BlockType		      Outport
+      Port		      "1"
+      UseBusObject	      off
+      BusObject		      "BusObject"
+      BusOutputAsStruct	      off
+      PortDimensions	      "-1"
+      VarSizeSig	      "Inherit"
+      SampleTime	      "-1"
+      OutMin		      "[]"
+      OutMax		      "[]"
+      DataType		      "auto"
+      OutDataType	      "fixdt(1,16,0)"
+      OutScaling	      "[]"
+      OutDataTypeStr	      "Inherit: auto"
+      LockScale		      off
+      SignalType	      "auto"
+      SamplingMode	      "auto"
+      SourceOfInitialOutputValue "Dialog"
+      OutputWhenDisabled      "held"
+      InitialOutput	      "[]"
+    }
+    Block {
+      BlockType		      Scope
+      ModelBased	      off
+      TickLabels	      "OneTimeTick"
+      ZoomMode		      "on"
+      Grid		      "on"
+      TimeRange		      "auto"
+      YMin		      "-5"
+      YMax		      "5"
+      SaveToWorkspace	      off
+      SaveName		      "ScopeData"
+      LimitDataPoints	      on
+      MaxDataPoints	      "5000"
+      Decimation	      "1"
+      SampleInput	      off
+      SampleTime	      "-1"
+    }
+    Block {
+      BlockType		      SubSystem
+      ShowPortLabels	      "FromPortIcon"
+      Permissions	      "ReadWrite"
+      PermitHierarchicalResolution "All"
+      TreatAsAtomicUnit	      off
+      CheckFcnCallInpInsideContextMsg off
+      SystemSampleTime	      "-1"
+      RTWFcnNameOpts	      "Auto"
+      RTWFileNameOpts	      "Auto"
+      RTWMemSecFuncInitTerm   "Inherit from model"
+      RTWMemSecFuncExecute    "Inherit from model"
+      RTWMemSecDataConstants  "Inherit from model"
+      RTWMemSecDataInternal   "Inherit from model"
+      RTWMemSecDataParameters "Inherit from model"
+      SimViewingDevice	      off
+      DataTypeOverride	      "UseLocalSettings"
+      MinMaxOverflowLogging   "UseLocalSettings"
+    }
+  }
+  System {
+    Name		    "DSPBA_design_template"
+    Location		    [1833, 254, 2937, 846]
+    Open		    on
+    ModelBrowserVisibility  off
+    ModelBrowserWidth	    200
+    ScreenColor		    "white"
+    PaperOrientation	    "landscape"
+    PaperPositionMode	    "auto"
+    PaperType		    "A4"
+    PaperUnits		    "centimeters"
+    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
+    TiledPageScale	    1
+    ShowPageBoundaries	    off
+    ZoomFactor		    "118"
+    ReportName		    "simulink-default.rpt"
+    SIDHighWatermark	    57
+    Block {
+      BlockType		      Reference
+      Name		      "ChanView"
+      SID		      54
+      Ports		      [3, 2]
+      Position		      [680, 239, 780, 391]
+      ShowName		      off
+      LibraryVersion	      "1.112"
+      SourceBlock	      "DSPBABase/ChanView"
+      SourceType	      "DSP Builder Advanced Blockset Channel Viewer"
+      nchans		      "my_design.ChanCount"
+      chan_vector	      "[0:1]"
+      latency		      "2"
+      version		      "20090407"
+      Port {
+	PortNumber		1
+	Name			"channel 0"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
+      Port {
+	PortNumber		2
+	Name			"channel 1"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Control"
+      SID		      1
+      Ports		      []
+      Position		      [25, 110, 180, 175]
+      ShowName		      off
+      LibraryVersion	      "1.112"
+      SourceBlock	      "DSPBABase/Control"
+      SourceType	      "DSP Builder Advanced Blockset Control Block"
+      generate		      on
+      destination	      "./rtl"
+      language		      "VHDL"
+      autotestbench	      on
+      signaldepth	      "2"
+      coveragetestbench	      off
+      logs		      off
+      spacewidth	      "2"
+      spacenum		      "1"
+      addrwidth		      "10"
+      datawidth		      "16"
+      dataendian	      "Big Endian"
+      hierarchicalnames	      off
+      ramThresholdBits	      "-1"
+      distRamThresholdBits    "-1"
+      mlabThresholdBits	      "-1"
+      hardMultiplierThresholdLuts "-1"
+      version		      "20090407"
+    }
+    Block {
+      BlockType		      DataTypeConversion
+      Name		      "Convert Input to\nDesired Data-type"
+      SID		      24
+      Position		      [210, 254, 260, 276]
+      OutDataTypeMode	      "Specify via dialog"
+      OutDataType	      "fixdt(1,17,16)"
+      OutDataTypeStr	      "fixdt(1,17,16)"
+      RndMeth		      "Floor"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Create Channelized \nInput Data"
+      SID		      23
+      Ports		      [0, 3]
+      Position		      [25, 236, 125, 394]
+      LibraryVersion	      "1.18"
+      SourceBlock	      "DSPBAUtilities/Channelizer"
+      SourceType	      "DSPBA Utilities Channelizer"
+      ShowPortLabels	      "FromPortIcon"
+      SystemSampleTime	      "-1"
+      FunctionWithSeparateData off
+      RTWMemSecFuncInitTerm   "Inherit from model"
+      RTWMemSecFuncExecute    "Inherit from model"
+      RTWMemSecDataConstants  "Inherit from model"
+      RTWMemSecDataInternal   "Inherit from model"
+      RTWMemSecDataParameters "Inherit from model"
+      data_input	      "my_design.inputdata"
+      folding		      "my_design.Period"
+      samples_valid	      "my_design.ChanCycleCount"
+      samples_idle	      "my_design.Period-my_design.ChanCycleCount"
+      Port {
+	PortNumber		1
+	Name			"data signal"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
+      Port {
+	PortNumber		2
+	Name			"valid signal"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
+      Port {
+	PortNumber		3
+	Name			"channel count signal"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "EditParams"
+      SID		      53
+      Ports		      []
+      Position		      [830, 113, 879, 166]
+      BackgroundColor	      "[0.925490, 1.000000, 1.000000]"
+      ShowName		      off
+      LibraryVersion	      "1.112"
+      SourceBlock	      "DSPBABase/EditParams"
+      SourceType	      "DSP Builder Advanced Blockset Ignored Block"
+      ShowPortLabels	      "FromPortIcon"
+      SystemSampleTime	      "-1"
+      FunctionWithSeparateData off
+      RTWMemSecFuncInitTerm   "Inherit from model"
+      RTWMemSecFuncExecute    "Inherit from model"
+      RTWMemSecDataConstants  "Inherit from model"
+      RTWMemSecDataInternal   "Inherit from model"
+      RTWMemSecDataParameters "Inherit from model"
+      version		      "20090407"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Run Modelsim"
+      SID		      3
+      Ports		      []
+      Position		      [412, 110, 462, 157]
+      ShowName		      off
+      LibraryVersion	      "1.112"
+      SourceBlock	      "DSPBABase/Run Modelsim"
+      SourceType	      "DSP Builder Advanced Blockset Ignored Block"
+      ShowPortLabels	      "FromPortIcon"
+      SystemSampleTime	      "-1"
+      FunctionWithSeparateData off
+      RTWMemSecFuncInitTerm   "Inherit from model"
+      RTWMemSecFuncExecute    "Inherit from model"
+      RTWMemSecDataConstants  "Inherit from model"
+      RTWMemSecDataInternal   "Inherit from model"
+      RTWMemSecDataParameters "Inherit from model"
+      version		      "20090407"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Run QuartusII "
+      SID		      4
+      Ports		      []
+      Position		      [527, 111, 577, 158]
+      ShowName		      off
+      LibraryVersion	      "1.112"
+      SourceBlock	      "DSPBABase/Run Quartus II"
+      SourceType	      "DSP Builder Advanced Blockset Ignored Block"
+      ShowPortLabels	      "FromPortIcon"
+      SystemSampleTime	      "-1"
+      FunctionWithSeparateData off
+      RTWMemSecFuncInitTerm   "Inherit from model"
+      RTWMemSecFuncExecute    "Inherit from model"
+      RTWMemSecDataConstants  "Inherit from model"
+      RTWMemSecDataInternal   "Inherit from model"
+      RTWMemSecDataParameters "Inherit from model"
+      version		      "20090407"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "RunAllATBs"
+      SID		      47
+      Description	      "Run run_modelsim_atb for each automatic test-bench (atb) created for the model               "
+      "                                                                              \n                                "
+      "                                                                                                                "
+      "                           \nExample uses: run_all_atbs('demo_agc');                                            "
+      "                                                                                        \n                run_al"
+      "l_atbs('demo_agc', true);                                                                                       "
+      "                                     \n                run_all_atbs('demo_agc', false, true);                   "
+      "                                                                                                  \n            "
+      "    run_all_atbs('demo_agc', true,  true);                                                                      "
+      "                                               \n                                                               "
+      "                                                                                                            \nPa"
+      "rameters: 	                                                                                                     "
+      "                                                         \nmodel - name (string) of mdl file                    "
+      "         run_simulation	- run the simulation first?                                                             "
+      "      \nrun_fit - run Quartus II?                                                                               "
+      "                                                                   \n                                           "
+      "                                                                                                                "
+      "                \nReturns 1 if all tests were successful, 0 otherwise                                           "
+      "                                                                             \n                                 "
+      "                                                                                                                "
+      "                          \n For the last option, when Quartus is run, it will tell you whether the fMax was met"
+      " e.g.                                                                                  \n       \"Met FMax Requi"
+      "rement (FMax(220.17) >= Required(200))\"                                                                        "
+      "                                      \n                                                                        "
+      "                                                                                                   \nOutput is w"
+      "ritten to the Matlab Command window. In addition the results are written  to results.txt. An example results.txt"
+      ", (which includes a failure for illustration) is\n                                                              "
+      "                                                                                                             \nS"
+      "tarting demo_ifft_4096_natural Tests at 2008-12-23 15:32:52                                                     "
+      "                                                          \ndemo_ifft:  demo_ifft/FFT_4K_n/BitReverseCore hardwa"
+      "re matches simulation (atb#1): PASSED                                                                           "
+      "       \ndemo_ifft:  demo_ifft/FFT_4K_n/FFT_4K_Natural_BR hardware mismatches simulation (atb#2): FAILED        "
+      "                                                                    \ndemo_ifft:  Quartus II compilation was suc"
+      "cessful. (Directory=../quartus_demo_ifft_FFT_4K_n_1): PASSED                                                    "
+      "                 \ndemo_ifft:  Met FMax Requirement (FMax(220.17) >= Required(200)): PASSED                     "
+      "                                                                              \nFinished demo_ifft Tests at 2008"
+      "-12-23 15:45:45 (4 Tests, 3 Passes, 0 Skipped, 0 Failed (fmax), 1 Failed (non-fmax)                             "
+      "                           "
+      Ports		      []
+      Position		      [640, 111, 747, 141]
+      BackgroundColor	      "[0.925490, 1.000000, 1.000000]"
+      ShowName		      off
+      LibraryVersion	      "1.18"
+      SourceBlock	      "DSPBAUtilities/RunAllATBs"
+      SourceType	      "DSP Builder Advanced Blockset Run All Testbenches"
+      ShowPortLabels	      "FromPortIcon"
+      SystemSampleTime	      "-1"
+      FunctionWithSeparateData off
+      RTWMemSecFuncInitTerm   "Inherit from model"
+      RTWMemSecFuncExecute    "Inherit from model"
+      RTWMemSecDataConstants  "Inherit from model"
+      RTWMemSecDataInternal   "Inherit from model"
+      RTWMemSecDataParameters "Inherit from model"
+      version		      "20090407"
+      runAllATBs	      off
+      runSimulation	      off
+      runFit		      on
+      runDeviceLevelATB	      off
+      openUI		      off
+      warnOnChanMismatch      off
+      warnOnGPIOMismatch      on
+      runQuickModelCheck      off
+      exportDeviceOutput      on
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Scope\nDeserialized\nOutputs"
+      SID		      55
+      Ports		      [2]
+      Position		      [855, 244, 895, 391]
+      Floating		      off
+      Location		      [367, 311, 988, 959]
+      Open		      off
+      NumInputPorts	      "2"
+      ZoomMode		      "xonly"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+	axes2			"%<SignalLabel>"
+      }
+      TimeRange		      "100"
+      YMin		      "-0.2~-0.25"
+      YMax		      "0.5~0.25"
+      SaveName		      "ScopeData2"
+      DataFormat	      "Array"
+      LimitDataPoints	      off
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Scope Design Inputs"
+      SID		      48
+      Ports		      [3]
+      Position		      [309, 430, 351, 460]
+      BlockRotation	      270
+      BlockMirror	      on
+      NamePlacement	      "alternate"
+      Floating		      off
+      Location		      [540, 360, 1141, 959]
+      Open		      off
+      NumInputPorts	      "3"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+	axes2			"%<SignalLabel>"
+	axes3			"%<SignalLabel>"
+      }
+      TimeRange		      "100"
+      YMin		      "-1~0~0"
+      YMax		      "1~2~3"
+      SaveName		      "ScopeData1"
+      DataFormat	      "Array"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Scope Design Outputs"
+      SID		      19
+      Ports		      [3]
+      Position		      [605, 430, 645, 460]
+      BlockRotation	      270
+      BlockMirror	      on
+      Floating		      off
+      Location		      [367, 311, 988, 959]
+      Open		      off
+      NumInputPorts	      "3"
+      ZoomMode		      "xonly"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+	axes2			"%<SignalLabel>"
+	axes3			"%<SignalLabel>"
+      }
+      TimeRange		      "100"
+      YMin		      "0~0~-0.4"
+      YMax		      "1~1~0.6"
+      DataFormat	      "Array"
+      LimitDataPoints	      off
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Signals"
+      SID		      2
+      Ports		      []
+      Position		      [225, 110, 361, 174]
+      ShowName		      off
+      LibraryVersion	      "1.112"
+      SourceBlock	      "DSPBABase/Signals"
+      SourceType	      "DSP Builder Advanced Blockset Signals Block"
+      ShowPortLabels	      "FromPortIcon"
+      SystemSampleTime	      "-1"
+      FunctionWithSeparateData off
+      RTWMemSecFuncInitTerm   "Inherit from model"
+      RTWMemSecFuncExecute    "Inherit from model"
+      RTWMemSecDataConstants  "Inherit from model"
+      RTWMemSecDataInternal   "Inherit from model"
+      RTWMemSecDataParameters "Inherit from model"
+      clk		      "clk"
+      freq		      "my_design.ClockRate"
+      margin		      "my_design.ClockMargin"
+      rst		      "areset"
+      rstactive		      "High"
+      bus		      "bus"
+      enbusclock	      off
+      busfreq		      "200"
+      bussync		      off
+      version		      "20090407"
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "Synthesizable Subsystem"
+      SID		      5
+      Ports		      [3, 3]
+      Position		      [395, 239, 525, 391]
+      BackgroundColor	      "yellow"
+      MinAlgLoopOccurrences   off
+      PropExecContextOutsideSubsystem off
+      RTWSystemCode	      "Auto"
+      FunctionWithSeparateData off
+      Opaque		      off
+      RequestExecContextInheritance off
+      MaskHideContents	      off
+      Port {
+	PortNumber		1
+	Name			"data out"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
+      Port {
+	PortNumber		2
+	Name			"valid out"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
+      Port {
+	PortNumber		3
+	Name			"channel out"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
+      System {
+	Name			"Synthesizable Subsystem"
+	Location		[714, 300, 1416, 772]
+	Open			on
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"132"
+	Block {
+	  BlockType		  Inport
+	  Name			  "data"
+	  SID			  9
+	  Position		  [35, 202, 55, 218]
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "valid"
+	  SID			  7
+	  Position		  [35, 237, 55, 253]
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "channel"
+	  SID			  8
+	  Position		  [35, 272, 55, 288]
+	  Port			  "3"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Device"
+	  SID			  15
+	  Ports			  []
+	  Position		  [35, 25, 134, 121]
+	  BackgroundColor	  "[0.843137, 0.839216, 0.666667]"
+	  ShowName		  off
+	  LibraryVersion	  "1.112"
+	  SourceBlock		  "DSPBABase/Device"
+	  SourceType		  "DSP Builder Advanced Blockset Device Block"
+	  ShowPortLabels	  "FromPortIcon"
+	  SystemSampleTime	  "-1"
+	  FunctionWithSeparateData off
+	  RTWMemSecFuncInitTerm	  "Inherit from model"
+	  RTWMemSecFuncExecute	  "Inherit from model"
+	  RTWMemSecDataConstants  "Inherit from model"
+	  RTWMemSecDataInternal	  "Inherit from model"
+	  RTWMemSecDataParameters "Inherit from model"
+	  family		  "Stratix V"
+	  deviceMember		  "Stratix V GX"
+	  stratix4device	  "Stratix IV E"
+	  hardcopy4device	  "HardCopy IV E"
+	  stratix5device	  "Stratix V GX"
+	  device		  "AUTO"
+	  speed			  "-3"
+	  stratixSpeed		  "-5"
+	  stratix2Speed		  "-3"
+	  stratix3Speed		  "-2"
+	  stratix4gxSpeed	  "-2"
+	  stratix4gtSpeed	  "-1"
+	  cyclone2Speed		  "-6"
+	  cyclone3Speed		  "-7"
+	  arria2Speed		  "-4"
+	  cyclone4eSpeed	  "-8"
+	  stratix5Speed		  "-3"
+	  arria5Speed		  "-4"
+	  arriaSpeed		  "-6"
+	  cyclone3lsSpeed	  "-7"
+	  cyclone5Speed		  "-6"
+	  ecp2Speed		  "-7"
+	  hardcopycompat	  off
+	  version		  "20110729"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "ModelIP"
+	  SID			  45
+	  Ports			  [3, 3]
+	  Position		  [295, 189, 400, 301]
+	  ShowName		  off
+	  LibraryVersion	  "1.33"
+	  SourceBlock		  "DSPBAFilters/InterpolatingFIR"
+	  SourceType		  "DSP Builder Advanced Blockset Interpolating FIR"
+	  nInputRate		  "my_design.filter1.SampleRate"
+	  interp		  "my_design.filter1.Interpolation"
+	  nchan			  "my_design.ChanCount"
+	  symmetry		  "Symmetrical"
+	  coef			  "fi(fir1(my_design.filter1.FilterLength, 0.5 ),1,16,15) "
+	  addr			  "512"
+	  rwmode		  "Write"
+	  nband			  "Use All Taps"
+	  latency		  "6"
+	  version		  "20090407"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "Primitive_Subsystem"
+	  SID			  38
+	  Ports			  [3, 3]
+	  Position		  [125, 190, 225, 300]
+	  BackgroundColor	  "lightBlue"
+	  ShowName		  off
+	  MinAlgLoopOccurrences	  off
+	  PropExecContextOutsideSubsystem off
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  Opaque		  off
+	  RequestExecContextInheritance	off
+	  MaskHideContents	  off
+	  System {
+	    Name		    "Primitive_Subsystem"
+	    Location		    [109, 212, 894, 744]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "A4"
+	    PaperUnits		    "centimeters"
+	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "120"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "data"
+	      SID		      39
+	      Position		      [45, 257, 65, 273]
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "valid"
+	      SID		      40
+	      Position		      [45, 137, 65, 153]
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "channel"
+	      SID		      42
+	      Position		      [45, 197, 65, 213]
+	      Port		      "3"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "ChannelIn"
+	      SID		      6
+	      Ports		      [3, 3]
+	      Position		      [140, 115, 190, 295]
+	      ShowName		      off
+	      LibraryVersion	      "1.341"
+	      SourceBlock	      "DSPBAPrim/ChannelIn"
+	      SourceType	      "DSP Builder Advanced Blockset primitive"
+	      primtype		      "channelin"
+	      nInputs		      "dspba_internal_get_channel_ports(gcb)"
+	      nOutputs		      "dspba_internal_get_channel_ports(gcb)"
+	      omode		      "Inherit via internal rule"
+	      otype		      "sfix(16)"
+	      scale		      "2^-15"
+	      rndmethod		      "Unbiased"
+	      factor		      "1"
+	      satmethod		      "Symmetric"
+	      shift_vec		      "[0 1 2 -1]"
+	      value		      "1"
+	      inPortNames	      "['v'; 'c'; '0'; '1'; '2'; '3'; '4'; '5'; '6'; '7'; '8'; '9'; 'A'; 'B'; 'D'; 'E'; 'F'; 'G'; '"
+	      "H'; 'I'; 'J'; 'K'; 'L'; 'M'; 'N'; 'O'; 'P'; 'Q'; 'R'; 'S'; 'T'; 'U'; 'W'; 'X'; 'Y'; 'Z']"
+	      outPortNames	      "['v'; 'c'; '0'; '1'; '2'; '3'; '4'; '5'; '6'; '7'; '8'; '9'; 'A'; 'B'; 'D'; 'E'; 'F'; 'G'; "
+	      "'H'; 'I'; 'J'; 'K'; 'L'; 'M'; 'N'; 'O'; 'P'; 'Q'; 'R'; 'S'; 'T'; 'U'; 'W'; 'X'; 'Y'; 'Z']"
+	      dspbaimage	      "dspba_prim.jpg"
+	      text		      "fprintf('In');"
+	      style		      "Optimised"
+	      dataSignals	      "1"
+	      foldingEnabled	      off
+	      channels		      "1"
+	      sampleRate	      "200"
+	      visibilities	      "dspba_ChannelInVis(gcb)"
+	      version		      "20090408"
+	      Port {
+		PortNumber		1
+		Name			"valid"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	      Port {
+		PortNumber		2
+		Name			"channel count"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	      Port {
+		PortNumber		3
+		Name			"data signal(s)"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "ChannelOut"
+	      SID		      10
+	      Ports		      [3, 3]
+	      Position		      [460, 113, 520, 297]
+	      ShowName		      off
+	      LibraryVersion	      "1.341"
+	      SourceBlock	      "DSPBAPrim/ChannelOut"
+	      SourceType	      "DSP Builder Advanced Blockset primitive"
+	      primtype		      "channelout"
+	      nInputs		      "dspba_internal_get_channel_ports(gcb)"
+	      nOutputs		      "dspba_internal_get_channel_ports(gcb)"
+	      omode		      "Inherit via internal rule"
+	      otype		      "sfix(16)"
+	      scale		      "2^-15"
+	      rndmethod		      "Unbiased"
+	      factor		      "1"
+	      satmethod		      "Symmetric"
+	      shift_vec		      "[0 1 2 -1]"
+	      value		      "1"
+	      inPortNames	      "['v'; 'c'; '0'; '1'; '2'; '3'; '4'; '5'; '6'; '7'; '8'; '9'; 'A'; 'B'; 'D'; 'E'; 'F'; 'G'; '"
+	      "H'; 'I'; 'J'; 'K'; 'L'; 'M'; 'N'; 'O'; 'P'; 'Q'; 'R'; 'S'; 'T'; 'U'; 'W'; 'X'; 'Y'; 'Z']"
+	      outPortNames	      "['v'; 'c'; '0'; '1'; '2'; '3'; '4'; '5'; '6'; '7'; '8'; '9'; 'A'; 'B'; 'D'; 'E'; 'F'; 'G'; "
+	      "'H'; 'I'; 'J'; 'K'; 'L'; 'M'; 'N'; 'O'; 'P'; 'Q'; 'R'; 'S'; 'T'; 'U'; 'W'; 'X'; 'Y'; 'Z']"
+	      dspbaimage	      "dspba_prim.jpg"
+	      text		      "fprintf('Out%s', AdvDSPBChannelOutDisplay(latency));"
+	      style		      "Optimised"
+	      dataSignals	      "1"
+	      foldingEnabled	      off
+	      channels		      "1"
+	      sampleRate	      "200"
+	      visibilities	      "dspba_ChannelOutVis(gcb)"
+	      latency		      "0"
+	      version		      "20090408"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "SynthesisInfo"
+	      SID		      46
+	      Ports		      []
+	      Position		      [55, 20, 155, 50]
+	      ShowName		      off
+	      LibraryVersion	      "1.341"
+	      SourceBlock	      "DSPBAPrim/SynthesisInfo"
+	      SourceType	      "DSP Builder Advanced Blockset primitive"
+	      primtype		      "synthinfo"
+	      nInputs		      "0"
+	      nOutputs		      "0"
+	      omode		      "Inherit via internal rule"
+	      otype		      "sfix(16)"
+	      scale		      "2^-15"
+	      rndmethod		      "Truncate"
+	      factor		      "1"
+	      satmethod		      "Symmetric"
+	      shift_vec		      "[0 1 2 -1]"
+	      value		      "99"
+	      inPortNames	      "[' '; ' ';]"
+	      outPortNames	      "[' ']"
+	      dspbaimage	      "dspba_prim_ctrl.jpg"
+	      text		      "fprintf('Style=%s', style);"
+	      style		      "Scheduled"
+	      visibilities	      "32768"
+	      constraintInUse	      off
+	      constraintRelation      ">"
+	      constraintLimit	      "2"
+	      version		      "20090407"
+	    }
+	    Block {
+	      BlockType		      SubSystem
+	      Name		      "subsys"
+	      SID		      50
+	      Ports		      [1, 1]
+	      Position		      [290, 235, 380, 295]
+	      BackgroundColor	      "cyan"
+	      ShowName		      off
+	      MinAlgLoopOccurrences   off
+	      PropExecContextOutsideSubsystem off
+	      RTWSystemCode	      "Auto"
+	      FunctionWithSeparateData off
+	      Opaque		      off
+	      RequestExecContextInheritance off
+	      MaskHideContents	      off
+	      System {
+		Name			"subsys"
+		Location		[303, 582, 1158, 970]
+		Open			off
+		ModelBrowserVisibility	off
+		ModelBrowserWidth	200
+		ScreenColor		"white"
+		PaperOrientation	"landscape"
+		PaperPositionMode	"auto"
+		PaperType		"A4"
+		PaperUnits		"centimeters"
+		TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+		TiledPageScale		1
+		ShowPageBoundaries	off
+		ZoomFactor		"100"
+		Block {
+		  BlockType		  Inport
+		  Name			  "In"
+		  SID			  51
+		  Position		  [50, 113, 80, 127]
+		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  Outport
+		  Name			  "Out"
+		  SID			  52
+		  Position		  [770, 113, 800, 127]
+		  IconDisplay		  "Port number"
+		}
+		Line {
+		  SrcBlock		  "In"
+		  SrcPort		  1
+		  DstBlock		  "Out"
+		  DstPort		  1
+		}
+		Annotation {
+		  Name			  "Add Your Primitive Design Here"
+		  Position		  [405, 142]
+		}
+	      }
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "data_out"
+	      SID		      44
+	      Position		      [590, 257, 610, 273]
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "valid_out"
+	      SID		      41
+	      Position		      [590, 137, 610, 153]
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "channel_out"
+	      SID		      43
+	      Position		      [590, 197, 610, 213]
+	      Port		      "3"
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      SrcBlock		      "ChannelOut"
+	      SrcPort		      3
+	      DstBlock		      "data_out"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "ChannelOut"
+	      SrcPort		      2
+	      DstBlock		      "channel_out"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "ChannelOut"
+	      SrcPort		      1
+	      DstBlock		      "valid_out"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "data"
+	      SrcPort		      1
+	      DstBlock		      "ChannelIn"
+	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "channel"
+	      SrcPort		      1
+	      DstBlock		      "ChannelIn"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "valid"
+	      SrcPort		      1
+	      DstBlock		      "ChannelIn"
+	      DstPort		      1
+	    }
+	    Line {
+	      Name		      "valid"
+	      Labels		      [0, 0]
+	      SrcBlock		      "ChannelIn"
+	      SrcPort		      1
+	      DstBlock		      "ChannelOut"
+	      DstPort		      1
+	    }
+	    Line {
+	      Name		      "channel count"
+	      Labels		      [0, 0]
+	      SrcBlock		      "ChannelIn"
+	      SrcPort		      2
+	      DstBlock		      "ChannelOut"
+	      DstPort		      2
+	    }
+	    Line {
+	      Name		      "data signal(s)"
+	      Labels		      [0, 0]
+	      SrcBlock		      "ChannelIn"
+	      SrcPort		      3
+	      DstBlock		      "subsys"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "subsys"
+	      SrcPort		      1
+	      DstBlock		      "ChannelOut"
+	      DstPort		      3
+	    }
+	    Annotation {
+	      Name		      "\n Primitive Subsystem Top Level\n                                                                "
+	      "  ."
+	      Position		      [470, 45]
+	      BackgroundColor	      "lightBlue"
+	      DropShadow	      on
+	      FontName		      "Arial"
+	      FontSize		      16
+	      FontWeight	      "bold"
+	    }
+	    Annotation {
+	      Name		      "ChannelIn Block\nActs As Scheduling \nBoundary For Signals\nThat Have To Remain\nScheduled Togethe"
+	      "r And\nRecords Inputs For HDL \nTest-Bench"
+	      Position		      [167, 339]
+	    }
+	    Annotation {
+	      Name		      "Further Subsystems Containing\nPrimitive Blocks Can Be Included"
+	      Position		      [333, 310]
+	    }
+	    Annotation {
+	      Name		      "ChannelOut Block\nActs As Scheduling \nBoundary For Signals\nThat Have To Remain\nScheduled Togeth"
+	      "er,\nRecords Outputs For HDL \nTest-Bench, And Compensates\nIn Simulation For Pipelining\nAdded During HDL Gene"
+	      "ration "
+	      Position		      [488, 354]
+	    }
+	    Annotation {
+	      Name		      "Required SynthesisInfo \nBlock Indicates Primitive\nSubsystem "
+	      Position		      [108, 72]
+	    }
+	    Annotation {
+	      Name		      "These signal can \nbe used in the \nprimitive design too"
+	      Position		      [318, 177]
+	    }
+	    Annotation {
+	      Name		      "k"
+	      Position		      [375, 155]
+	      FontName		      "Wingdings 3"
+	      FontSize		      20
+	      FontWeight	      "bold"
+	    }
+	    Annotation {
+	      Name		      "m"
+	      Position		      [375, 195]
+	      FontName		      "Wingdings 3"
+	      FontSize		      20
+	      FontWeight	      "bold"
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "data_out"
+	  SID			  13
+	  Position		  [490, 202, 510, 218]
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "valid_out"
+	  SID			  11
+	  Position		  [490, 237, 510, 253]
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "channel_out"
+	  SID			  12
+	  Position		  [490, 272, 510, 288]
+	  Port			  "3"
+	  IconDisplay		  "Port number"
+	}
+	Line {
+	  SrcBlock		  "data"
+	  SrcPort		  1
+	  DstBlock		  "Primitive_Subsystem"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "valid"
+	  SrcPort		  1
+	  DstBlock		  "Primitive_Subsystem"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Primitive_Subsystem"
+	  SrcPort		  2
+	  DstBlock		  "ModelIP"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "channel"
+	  SrcPort		  1
+	  DstBlock		  "Primitive_Subsystem"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "Primitive_Subsystem"
+	  SrcPort		  3
+	  DstBlock		  "ModelIP"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "Primitive_Subsystem"
+	  SrcPort		  1
+	  DstBlock		  "ModelIP"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "ModelIP"
+	  SrcPort		  1
+	  DstBlock		  "data_out"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "ModelIP"
+	  SrcPort		  2
+	  DstBlock		  "valid_out"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "ModelIP"
+	  SrcPort		  3
+	  DstBlock		  "channel_out"
+	  DstPort		  1
+	}
+	Annotation {
+	  Name			  "\n Synthesizable System Top Level\n                                                                  ."
+	  Position		  [330, 50]
+	  BackgroundColor	  "yellow"
+	  DropShadow		  on
+	  FontName		  "Arial"
+	  FontSize		  16
+	  FontWeight		  "bold"
+	}
+	Annotation {
+	  Name			  "Device Block Indicates\nTop Level of Synthesizable\nSystem"
+	  Position		  [86, 141]
+	}
+	Annotation {
+	  Name			  "ModelIP Block - used \noutside of Primitive\nSubsystems"
+	  Position		  [347, 318]
+	}
+	Annotation {
+	  Name			  "Primitive Subsystem -\nSeparated Hierarchy for\nModelPrim blocks"
+	  Position		  [175, 321]
+	}
+      }
+    }
+    Line {
+      Name		      "valid out"
+      Labels		      [0, 0]
+      SrcBlock		      "Synthesizable Subsystem"
+      SrcPort		      2
+      Points		      [80, 0]
+      Branch {
+	DstBlock		"Scope Design Outputs"
+	DstPort			1
+      }
+      Branch {
+	DstBlock		"ChanView"
+	DstPort			2
+      }
+    }
+    Line {
+      Name		      "channel out"
+      Labels		      [0, 0]
+      SrcBlock		      "Synthesizable Subsystem"
+      SrcPort		      3
+      Points		      [95, 0; 0, 0]
+      Branch {
+	DstBlock		"Scope Design Outputs"
+	DstPort			2
+      }
+      Branch {
+	DstBlock		"ChanView"
+	DstPort			3
+      }
+    }
+    Line {
+      Name		      "data out"
+      Labels		      [0, 0]
+      SrcBlock		      "Synthesizable Subsystem"
+      SrcPort		      1
+      Points		      [110, 0]
+      Branch {
+	DstBlock		"Scope Design Outputs"
+	DstPort			3
+      }
+      Branch {
+	Points			[0, 0]
+	DstBlock		"ChanView"
+	DstPort			1
+      }
+    }
+    Line {
+      Name		      "data signal"
+      Labels		      [0, 0]
+      SrcBlock		      "Create Channelized \nInput Data"
+      SrcPort		      1
+      DstBlock		      "Convert Input to\nDesired Data-type"
+      DstPort		      1
+    }
+    Line {
+      Name		      "valid signal"
+      Labels		      [0, 0]
+      SrcBlock		      "Create Channelized \nInput Data"
+      SrcPort		      2
+      Points		      [200, 0]
+      Branch {
+	DstBlock		"Synthesizable Subsystem"
+	DstPort			2
+      }
+      Branch {
+	DstBlock		"Scope Design Inputs"
+	DstPort			2
+      }
+    }
+    Line {
+      Name		      "channel count signal"
+      Labels		      [0, 0]
+      SrcBlock		      "Create Channelized \nInput Data"
+      SrcPort		      3
+      Points		      [215, 0]
+      Branch {
+	DstBlock		"Synthesizable Subsystem"
+	DstPort			3
+      }
+      Branch {
+	DstBlock		"Scope Design Inputs"
+	DstPort			3
+      }
+    }
+    Line {
+      SrcBlock		      "Convert Input to\nDesired Data-type"
+      SrcPort		      1
+      Points		      [50, 0]
+      Branch {
+	DstBlock		"Synthesizable Subsystem"
+	DstPort			1
+      }
+      Branch {
+	DstBlock		"Scope Design Inputs"
+	DstPort			1
+      }
+    }
+    Line {
+      Name		      "channel 0"
+      Labels		      [0, 0]
+      SrcBlock		      "ChanView"
+      SrcPort		      1
+      DstBlock		      "Scope\nDeserialized\nOutputs"
+      DstPort		      1
+    }
+    Line {
+      Name		      "channel 1"
+      Labels		      [0, 0]
+      SrcBlock		      "ChanView"
+      SrcPort		      2
+      DstBlock		      "Scope\nDeserialized\nOutputs"
+      DstPort		      2
+    }
+    Annotation {
+      Name		      "h"
+      Position		      [280, 15]
+      FontName		      "Wingdings 3"
+      FontSize		      20
+      FontWeight	      "bold"
+    }
+    Annotation {
+      Name		      "Start Simulation and \nHDL Generation"
+      Position		      [278, 38]
+    }
+    Annotation {
+      Name		      "Control and Run All \nTest-benches: Device \nLevel and Individual \nModelIP Blocks and \nPrimitive "
+      "Subsystems"
+      Position		      [693, 173]
+    }
+    Annotation {
+      Name		      "\nModel Top Level\n                                              ."
+      Position		      [755, 45]
+      DropShadow	      on
+      FontName		      "Arial"
+      FontSize		      20
+      FontWeight	      "bold"
+    }
+    Annotation {
+      Name		      "Control Block To Set Output\nDirectory and Default Thresholds"
+      Position		      [102, 192]
+    }
+    Annotation {
+      Name		      "Signals Block to Set System\nand Bus Clock rates"
+      Position		      [295, 192]
+    }
+    Annotation {
+      Name		      "Run Modelsim\nBlock - Click to run\nHDL Test-bench After\nHDL Generation"
+      Position		      [436, 188]
+    }
+    Annotation {
+      Name		      "Run Quartus II \nBlock - Click to Open \nQuartus Project After \nHDL Generation"
+      Position		      [553, 188]
+    }
+    Annotation {
+      Name		      "Click to Edit a Main Parameters\nScript - Which is Set to Run in the \nPreLoadFnc and the InitFnc"
+      Position		      [851, 192]
+    }
+    Annotation {
+      Name		      "h"
+      Position		      [565, 405]
+      FontName		      "Wingdings 3"
+      FontSize		      20
+      FontWeight	      "bold"
+    }
+    Annotation {
+      Name		      "Named Signals\nAre Labelled In \nScope Displays"
+      Position		      [543, 433]
+    }
+    Annotation {
+      Name		      "Deserialize Channel\nData For Viewing"
+      Position		      [714, 407]
+    }
+  }
+}
