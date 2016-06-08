@@ -1,0 +1,776 @@
+TimeQuest Timing Analyzer report for Pico_ctrl
+Wed Jun 08 11:07:19 2016
+Quartus II 64-Bit Version 15.0.0 Build 145 04/22/2015 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. TimeQuest Timing Analyzer Summary
+  3. Parallel Compilation
+  4. SDC File List
+  5. Clocks
+  6. Slow 1100mV 85C Model Fmax Summary
+  7. Timing Closure Recommendations
+  8. Slow 1100mV 85C Model Setup Summary
+  9. Slow 1100mV 85C Model Hold Summary
+ 10. Slow 1100mV 85C Model Recovery Summary
+ 11. Slow 1100mV 85C Model Removal Summary
+ 12. Slow 1100mV 85C Model Minimum Pulse Width Summary
+ 13. Clock to Output Times
+ 14. Minimum Clock to Output Times
+ 15. Slow 1100mV 85C Model Metastability Summary
+ 16. Slow 1100mV 0C Model Fmax Summary
+ 17. Slow 1100mV 0C Model Setup Summary
+ 18. Slow 1100mV 0C Model Hold Summary
+ 19. Slow 1100mV 0C Model Recovery Summary
+ 20. Slow 1100mV 0C Model Removal Summary
+ 21. Slow 1100mV 0C Model Minimum Pulse Width Summary
+ 22. Clock to Output Times
+ 23. Minimum Clock to Output Times
+ 24. Slow 1100mV 0C Model Metastability Summary
+ 25. Fast 1100mV 85C Model Setup Summary
+ 26. Fast 1100mV 85C Model Hold Summary
+ 27. Fast 1100mV 85C Model Recovery Summary
+ 28. Fast 1100mV 85C Model Removal Summary
+ 29. Fast 1100mV 85C Model Minimum Pulse Width Summary
+ 30. Clock to Output Times
+ 31. Minimum Clock to Output Times
+ 32. Fast 1100mV 85C Model Metastability Summary
+ 33. Fast 1100mV 0C Model Setup Summary
+ 34. Fast 1100mV 0C Model Hold Summary
+ 35. Fast 1100mV 0C Model Recovery Summary
+ 36. Fast 1100mV 0C Model Removal Summary
+ 37. Fast 1100mV 0C Model Minimum Pulse Width Summary
+ 38. Clock to Output Times
+ 39. Minimum Clock to Output Times
+ 40. Fast 1100mV 0C Model Metastability Summary
+ 41. Multicorner Timing Analysis Summary
+ 42. Clock to Output Times
+ 43. Minimum Clock to Output Times
+ 44. Board Trace Model Assignments
+ 45. Input Transition Times
+ 46. Signal Integrity Metrics (Slow 1100mv 0c Model)
+ 47. Signal Integrity Metrics (Slow 1100mv 85c Model)
+ 48. Signal Integrity Metrics (Fast 1100mv 0c Model)
+ 49. Signal Integrity Metrics (Fast 1100mv 85c Model)
+ 50. Setup Transfers
+ 51. Hold Transfers
+ 52. Report TCCS
+ 53. Report RSKM
+ 54. Unconstrained Paths
+ 55. TimeQuest Timing Analyzer Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2015 Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus II License Agreement,
+the Altera MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Altera and sold by Altera or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++-------------------------------------------------------------------------+
+; TimeQuest Timing Analyzer Summary                                       ;
++--------------------+----------------------------------------------------+
+; Quartus II Version ; Version 15.0.0 Build 145 04/22/2015 SJ Web Edition ;
+; Revision Name      ; Pico_ctrl                                          ;
+; Device Family      ; Cyclone V                                          ;
+; Device Name        ; 5CSEMA4U23C6                                       ;
+; Timing Models      ; Final                                              ;
+; Delay Model        ; Combined                                           ;
+; Rise/Fall Delays   ; Enabled                                            ;
++--------------------+----------------------------------------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 4           ;
+; Maximum allowed            ; 2           ;
+;                            ;             ;
+; Average used               ; 1.06        ;
+; Maximum used               ; 2           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;   5.6%      ;
+;     Processors 3-4         ;   0.0%      ;
++----------------------------+-------------+
+
+
++---------------------------------------------------+
+; SDC File List                                     ;
++---------------+--------+--------------------------+
+; SDC File Path ; Status ; Read at                  ;
++---------------+--------+--------------------------+
+; Pico_ctrl.SDC ; OK     ; Wed Jun 08 11:07:05 2016 ;
++---------------+--------+--------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Clocks                                                                                                                                                                                     ;
++--------------+------+--------+-----------+-------+--------+------------+-----------+-------------+-------+--------+-----------+------------+----------+--------+--------+------------------+
+; Clock Name   ; Type ; Period ; Frequency ; Rise  ; Fall   ; Duty Cycle ; Divide by ; Multiply by ; Phase ; Offset ; Edge List ; Edge Shift ; Inverted ; Master ; Source ; Targets          ;
++--------------+------+--------+-----------+-------+--------+------------+-----------+-------------+-------+--------+-----------+------------+----------+--------+--------+------------------+
+; FPGA_CLK1_50 ; Base ; 20.000 ; 50.0 MHz  ; 0.000 ; 10.000 ;            ;           ;             ;       ;        ;           ;            ;          ;        ;        ; { FPGA_CLK1_50 } ;
+; FPGA_CLK2_50 ; Base ; 20.000 ; 50.0 MHz  ; 0.000 ; 10.000 ;            ;           ;             ;       ;        ;           ;            ;          ;        ;        ; { FPGA_CLK2_50 } ;
+; FPGA_CLK3_50 ; Base ; 20.000 ; 50.0 MHz  ; 0.000 ; 10.000 ;            ;           ;             ;       ;        ;           ;            ;          ;        ;        ; { FPGA_CLK3_50 } ;
++--------------+------+--------+-----------+-------+--------+------------+-----------+-------------+-------+--------+-----------+------------+----------+--------+--------+------------------+
+
+
++----------------------------------------------------+
+; Slow 1100mV 85C Model Fmax Summary                 ;
++------------+-----------------+--------------+------+
+; Fmax       ; Restricted Fmax ; Clock Name   ; Note ;
++------------+-----------------+--------------+------+
+; 242.84 MHz ; 242.84 MHz      ; FPGA_CLK1_50 ;      ;
++------------+-----------------+--------------+------+
+This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
+
+
+----------------------------------
+; Timing Closure Recommendations ;
+----------------------------------
+HTML report is unavailable in plain text report export.
+
+
++---------------------------------------+
+; Slow 1100mV 85C Model Setup Summary   ;
++--------------+--------+---------------+
+; Clock        ; Slack  ; End Point TNS ;
++--------------+--------+---------------+
+; FPGA_CLK1_50 ; 15.882 ; 0.000         ;
++--------------+--------+---------------+
+
+
++--------------------------------------+
+; Slow 1100mV 85C Model Hold Summary   ;
++--------------+-------+---------------+
+; Clock        ; Slack ; End Point TNS ;
++--------------+-------+---------------+
+; FPGA_CLK1_50 ; 0.306 ; 0.000         ;
++--------------+-------+---------------+
+
+
+------------------------------------------
+; Slow 1100mV 85C Model Recovery Summary ;
+------------------------------------------
+No paths to report.
+
+
+-----------------------------------------
+; Slow 1100mV 85C Model Removal Summary ;
+-----------------------------------------
+No paths to report.
+
+
++---------------------------------------------------+
+; Slow 1100mV 85C Model Minimum Pulse Width Summary ;
++--------------+-------+----------------------------+
+; Clock        ; Slack ; End Point TNS              ;
++--------------+-------+----------------------------+
+; FPGA_CLK1_50 ; 9.223 ; 0.000                      ;
++--------------+-------+----------------------------+
+
+
++-------------------------------------------------------------------------+
+; Clock to Output Times                                                   ;
++-----------+--------------+-------+-------+------------+-----------------+
+; Data Port ; Clock Port   ; Rise  ; Fall  ; Clock Edge ; Clock Reference ;
++-----------+--------------+-------+-------+------------+-----------------+
+; LED[*]    ; FPGA_CLK1_50 ; 7.380 ; 7.539 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[0]   ; FPGA_CLK1_50 ; 7.255 ; 7.345 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[1]   ; FPGA_CLK1_50 ; 7.277 ; 7.383 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[2]   ; FPGA_CLK1_50 ; 7.235 ; 7.367 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[3]   ; FPGA_CLK1_50 ; 7.086 ; 7.136 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[4]   ; FPGA_CLK1_50 ; 7.380 ; 7.539 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[5]   ; FPGA_CLK1_50 ; 7.253 ; 7.374 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[6]   ; FPGA_CLK1_50 ; 7.253 ; 7.383 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[7]   ; FPGA_CLK1_50 ; 7.141 ; 7.234 ; Rise       ; FPGA_CLK1_50    ;
++-----------+--------------+-------+-------+------------+-----------------+
+
+
++-------------------------------------------------------------------------+
+; Minimum Clock to Output Times                                           ;
++-----------+--------------+-------+-------+------------+-----------------+
+; Data Port ; Clock Port   ; Rise  ; Fall  ; Clock Edge ; Clock Reference ;
++-----------+--------------+-------+-------+------------+-----------------+
+; LED[*]    ; FPGA_CLK1_50 ; 6.617 ; 6.663 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[0]   ; FPGA_CLK1_50 ; 6.760 ; 6.823 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[1]   ; FPGA_CLK1_50 ; 6.788 ; 6.871 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[2]   ; FPGA_CLK1_50 ; 6.737 ; 6.833 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[3]   ; FPGA_CLK1_50 ; 6.617 ; 6.663 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[4]   ; FPGA_CLK1_50 ; 6.881 ; 7.025 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[5]   ; FPGA_CLK1_50 ; 6.782 ; 6.896 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[6]   ; FPGA_CLK1_50 ; 6.759 ; 6.865 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[7]   ; FPGA_CLK1_50 ; 6.678 ; 6.767 ; Rise       ; FPGA_CLK1_50    ;
++-----------+--------------+-------+-------+------------+-----------------+
+
+
+-----------------------------------------------
+; Slow 1100mV 85C Model Metastability Summary ;
+-----------------------------------------------
+No synchronizer chains to report.
+
+
++----------------------------------------------------+
+; Slow 1100mV 0C Model Fmax Summary                  ;
++------------+-----------------+--------------+------+
+; Fmax       ; Restricted Fmax ; Clock Name   ; Note ;
++------------+-----------------+--------------+------+
+; 245.58 MHz ; 245.58 MHz      ; FPGA_CLK1_50 ;      ;
++------------+-----------------+--------------+------+
+This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
+
+
++---------------------------------------+
+; Slow 1100mV 0C Model Setup Summary    ;
++--------------+--------+---------------+
+; Clock        ; Slack  ; End Point TNS ;
++--------------+--------+---------------+
+; FPGA_CLK1_50 ; 15.928 ; 0.000         ;
++--------------+--------+---------------+
+
+
++--------------------------------------+
+; Slow 1100mV 0C Model Hold Summary    ;
++--------------+-------+---------------+
+; Clock        ; Slack ; End Point TNS ;
++--------------+-------+---------------+
+; FPGA_CLK1_50 ; 0.289 ; 0.000         ;
++--------------+-------+---------------+
+
+
+-----------------------------------------
+; Slow 1100mV 0C Model Recovery Summary ;
+-----------------------------------------
+No paths to report.
+
+
+----------------------------------------
+; Slow 1100mV 0C Model Removal Summary ;
+----------------------------------------
+No paths to report.
+
+
++--------------------------------------------------+
+; Slow 1100mV 0C Model Minimum Pulse Width Summary ;
++--------------+-------+---------------------------+
+; Clock        ; Slack ; End Point TNS             ;
++--------------+-------+---------------------------+
+; FPGA_CLK1_50 ; 9.297 ; 0.000                     ;
++--------------+-------+---------------------------+
+
+
++-------------------------------------------------------------------------+
+; Clock to Output Times                                                   ;
++-----------+--------------+-------+-------+------------+-----------------+
+; Data Port ; Clock Port   ; Rise  ; Fall  ; Clock Edge ; Clock Reference ;
++-----------+--------------+-------+-------+------------+-----------------+
+; LED[*]    ; FPGA_CLK1_50 ; 7.159 ; 7.304 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[0]   ; FPGA_CLK1_50 ; 7.020 ; 7.102 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[1]   ; FPGA_CLK1_50 ; 7.050 ; 7.148 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[2]   ; FPGA_CLK1_50 ; 7.021 ; 7.132 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[3]   ; FPGA_CLK1_50 ; 6.867 ; 6.909 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[4]   ; FPGA_CLK1_50 ; 7.159 ; 7.304 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[5]   ; FPGA_CLK1_50 ; 7.044 ; 7.142 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[6]   ; FPGA_CLK1_50 ; 7.026 ; 7.136 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[7]   ; FPGA_CLK1_50 ; 6.944 ; 7.018 ; Rise       ; FPGA_CLK1_50    ;
++-----------+--------------+-------+-------+------------+-----------------+
+
+
++-------------------------------------------------------------------------+
+; Minimum Clock to Output Times                                           ;
++-----------+--------------+-------+-------+------------+-----------------+
+; Data Port ; Clock Port   ; Rise  ; Fall  ; Clock Edge ; Clock Reference ;
++-----------+--------------+-------+-------+------------+-----------------+
+; LED[*]    ; FPGA_CLK1_50 ; 6.425 ; 6.463 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[0]   ; FPGA_CLK1_50 ; 6.555 ; 6.613 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[1]   ; FPGA_CLK1_50 ; 6.592 ; 6.673 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[2]   ; FPGA_CLK1_50 ; 6.551 ; 6.627 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[3]   ; FPGA_CLK1_50 ; 6.425 ; 6.463 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[4]   ; FPGA_CLK1_50 ; 6.691 ; 6.819 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[5]   ; FPGA_CLK1_50 ; 6.598 ; 6.689 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[6]   ; FPGA_CLK1_50 ; 6.562 ; 6.655 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[7]   ; FPGA_CLK1_50 ; 6.505 ; 6.575 ; Rise       ; FPGA_CLK1_50    ;
++-----------+--------------+-------+-------+------------+-----------------+
+
+
+----------------------------------------------
+; Slow 1100mV 0C Model Metastability Summary ;
+----------------------------------------------
+No synchronizer chains to report.
+
+
++---------------------------------------+
+; Fast 1100mV 85C Model Setup Summary   ;
++--------------+--------+---------------+
+; Clock        ; Slack  ; End Point TNS ;
++--------------+--------+---------------+
+; FPGA_CLK1_50 ; 17.587 ; 0.000         ;
++--------------+--------+---------------+
+
+
++--------------------------------------+
+; Fast 1100mV 85C Model Hold Summary   ;
++--------------+-------+---------------+
+; Clock        ; Slack ; End Point TNS ;
++--------------+-------+---------------+
+; FPGA_CLK1_50 ; 0.179 ; 0.000         ;
++--------------+-------+---------------+
+
+
+------------------------------------------
+; Fast 1100mV 85C Model Recovery Summary ;
+------------------------------------------
+No paths to report.
+
+
+-----------------------------------------
+; Fast 1100mV 85C Model Removal Summary ;
+-----------------------------------------
+No paths to report.
+
+
++---------------------------------------------------+
+; Fast 1100mV 85C Model Minimum Pulse Width Summary ;
++--------------+-------+----------------------------+
+; Clock        ; Slack ; End Point TNS              ;
++--------------+-------+----------------------------+
+; FPGA_CLK1_50 ; 9.103 ; 0.000                      ;
++--------------+-------+----------------------------+
+
+
++-------------------------------------------------------------------------+
+; Clock to Output Times                                                   ;
++-----------+--------------+-------+-------+------------+-----------------+
+; Data Port ; Clock Port   ; Rise  ; Fall  ; Clock Edge ; Clock Reference ;
++-----------+--------------+-------+-------+------------+-----------------+
+; LED[*]    ; FPGA_CLK1_50 ; 4.470 ; 4.628 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[0]   ; FPGA_CLK1_50 ; 4.428 ; 4.527 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[1]   ; FPGA_CLK1_50 ; 4.384 ; 4.501 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[2]   ; FPGA_CLK1_50 ; 4.385 ; 4.513 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[3]   ; FPGA_CLK1_50 ; 4.302 ; 4.364 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[4]   ; FPGA_CLK1_50 ; 4.470 ; 4.628 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[5]   ; FPGA_CLK1_50 ; 4.416 ; 4.534 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[6]   ; FPGA_CLK1_50 ; 4.426 ; 4.557 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[7]   ; FPGA_CLK1_50 ; 4.310 ; 4.402 ; Rise       ; FPGA_CLK1_50    ;
++-----------+--------------+-------+-------+------------+-----------------+
+
+
++-------------------------------------------------------------------------+
+; Minimum Clock to Output Times                                           ;
++-----------+--------------+-------+-------+------------+-----------------+
+; Data Port ; Clock Port   ; Rise  ; Fall  ; Clock Edge ; Clock Reference ;
++-----------+--------------+-------+-------+------------+-----------------+
+; LED[*]    ; FPGA_CLK1_50 ; 4.079 ; 4.135 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[0]   ; FPGA_CLK1_50 ; 4.189 ; 4.264 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[1]   ; FPGA_CLK1_50 ; 4.150 ; 4.246 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[2]   ; FPGA_CLK1_50 ; 4.146 ; 4.245 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[3]   ; FPGA_CLK1_50 ; 4.079 ; 4.135 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[4]   ; FPGA_CLK1_50 ; 4.227 ; 4.370 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[5]   ; FPGA_CLK1_50 ; 4.190 ; 4.302 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[6]   ; FPGA_CLK1_50 ; 4.187 ; 4.297 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[7]   ; FPGA_CLK1_50 ; 4.092 ; 4.179 ; Rise       ; FPGA_CLK1_50    ;
++-----------+--------------+-------+-------+------------+-----------------+
+
+
+-----------------------------------------------
+; Fast 1100mV 85C Model Metastability Summary ;
+-----------------------------------------------
+No synchronizer chains to report.
+
+
++---------------------------------------+
+; Fast 1100mV 0C Model Setup Summary    ;
++--------------+--------+---------------+
+; Clock        ; Slack  ; End Point TNS ;
++--------------+--------+---------------+
+; FPGA_CLK1_50 ; 17.799 ; 0.000         ;
++--------------+--------+---------------+
+
+
++--------------------------------------+
+; Fast 1100mV 0C Model Hold Summary    ;
++--------------+-------+---------------+
+; Clock        ; Slack ; End Point TNS ;
++--------------+-------+---------------+
+; FPGA_CLK1_50 ; 0.168 ; 0.000         ;
++--------------+-------+---------------+
+
+
+-----------------------------------------
+; Fast 1100mV 0C Model Recovery Summary ;
+-----------------------------------------
+No paths to report.
+
+
+----------------------------------------
+; Fast 1100mV 0C Model Removal Summary ;
+----------------------------------------
+No paths to report.
+
+
++--------------------------------------------------+
+; Fast 1100mV 0C Model Minimum Pulse Width Summary ;
++--------------+-------+---------------------------+
+; Clock        ; Slack ; End Point TNS             ;
++--------------+-------+---------------------------+
+; FPGA_CLK1_50 ; 9.066 ; 0.000                     ;
++--------------+-------+---------------------------+
+
+
++-------------------------------------------------------------------------+
+; Clock to Output Times                                                   ;
++-----------+--------------+-------+-------+------------+-----------------+
+; Data Port ; Clock Port   ; Rise  ; Fall  ; Clock Edge ; Clock Reference ;
++-----------+--------------+-------+-------+------------+-----------------+
+; LED[*]    ; FPGA_CLK1_50 ; 4.161 ; 4.282 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[0]   ; FPGA_CLK1_50 ; 4.096 ; 4.172 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[1]   ; FPGA_CLK1_50 ; 4.079 ; 4.168 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[2]   ; FPGA_CLK1_50 ; 4.058 ; 4.156 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[3]   ; FPGA_CLK1_50 ; 3.981 ; 4.025 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[4]   ; FPGA_CLK1_50 ; 4.161 ; 4.282 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[5]   ; FPGA_CLK1_50 ; 4.101 ; 4.185 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[6]   ; FPGA_CLK1_50 ; 4.097 ; 4.196 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[7]   ; FPGA_CLK1_50 ; 4.004 ; 4.071 ; Rise       ; FPGA_CLK1_50    ;
++-----------+--------------+-------+-------+------------+-----------------+
+
+
++-------------------------------------------------------------------------+
+; Minimum Clock to Output Times                                           ;
++-----------+--------------+-------+-------+------------+-----------------+
+; Data Port ; Clock Port   ; Rise  ; Fall  ; Clock Edge ; Clock Reference ;
++-----------+--------------+-------+-------+------------+-----------------+
+; LED[*]    ; FPGA_CLK1_50 ; 3.766 ; 3.805 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[0]   ; FPGA_CLK1_50 ; 3.867 ; 3.923 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[1]   ; FPGA_CLK1_50 ; 3.852 ; 3.928 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[2]   ; FPGA_CLK1_50 ; 3.828 ; 3.902 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[3]   ; FPGA_CLK1_50 ; 3.766 ; 3.805 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[4]   ; FPGA_CLK1_50 ; 3.930 ; 4.038 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[5]   ; FPGA_CLK1_50 ; 3.883 ; 3.960 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[6]   ; FPGA_CLK1_50 ; 3.866 ; 3.951 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[7]   ; FPGA_CLK1_50 ; 3.792 ; 3.854 ; Rise       ; FPGA_CLK1_50    ;
++-----------+--------------+-------+-------+------------+-----------------+
+
+
+----------------------------------------------
+; Fast 1100mV 0C Model Metastability Summary ;
+----------------------------------------------
+No synchronizer chains to report.
+
+
++------------------------------------------------------------------------------+
+; Multicorner Timing Analysis Summary                                          ;
++------------------+--------+-------+----------+---------+---------------------+
+; Clock            ; Setup  ; Hold  ; Recovery ; Removal ; Minimum Pulse Width ;
++------------------+--------+-------+----------+---------+---------------------+
+; Worst-case Slack ; 15.882 ; 0.168 ; N/A      ; N/A     ; 9.066               ;
+;  FPGA_CLK1_50    ; 15.882 ; 0.168 ; N/A      ; N/A     ; 9.066               ;
+; Design-wide TNS  ; 0.0    ; 0.0   ; 0.0      ; 0.0     ; 0.0                 ;
+;  FPGA_CLK1_50    ; 0.000  ; 0.000 ; N/A      ; N/A     ; 0.000               ;
++------------------+--------+-------+----------+---------+---------------------+
+
+
++-------------------------------------------------------------------------+
+; Clock to Output Times                                                   ;
++-----------+--------------+-------+-------+------------+-----------------+
+; Data Port ; Clock Port   ; Rise  ; Fall  ; Clock Edge ; Clock Reference ;
++-----------+--------------+-------+-------+------------+-----------------+
+; LED[*]    ; FPGA_CLK1_50 ; 7.380 ; 7.539 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[0]   ; FPGA_CLK1_50 ; 7.255 ; 7.345 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[1]   ; FPGA_CLK1_50 ; 7.277 ; 7.383 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[2]   ; FPGA_CLK1_50 ; 7.235 ; 7.367 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[3]   ; FPGA_CLK1_50 ; 7.086 ; 7.136 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[4]   ; FPGA_CLK1_50 ; 7.380 ; 7.539 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[5]   ; FPGA_CLK1_50 ; 7.253 ; 7.374 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[6]   ; FPGA_CLK1_50 ; 7.253 ; 7.383 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[7]   ; FPGA_CLK1_50 ; 7.141 ; 7.234 ; Rise       ; FPGA_CLK1_50    ;
++-----------+--------------+-------+-------+------------+-----------------+
+
+
++-------------------------------------------------------------------------+
+; Minimum Clock to Output Times                                           ;
++-----------+--------------+-------+-------+------------+-----------------+
+; Data Port ; Clock Port   ; Rise  ; Fall  ; Clock Edge ; Clock Reference ;
++-----------+--------------+-------+-------+------------+-----------------+
+; LED[*]    ; FPGA_CLK1_50 ; 3.766 ; 3.805 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[0]   ; FPGA_CLK1_50 ; 3.867 ; 3.923 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[1]   ; FPGA_CLK1_50 ; 3.852 ; 3.928 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[2]   ; FPGA_CLK1_50 ; 3.828 ; 3.902 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[3]   ; FPGA_CLK1_50 ; 3.766 ; 3.805 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[4]   ; FPGA_CLK1_50 ; 3.930 ; 4.038 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[5]   ; FPGA_CLK1_50 ; 3.883 ; 3.960 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[6]   ; FPGA_CLK1_50 ; 3.866 ; 3.951 ; Rise       ; FPGA_CLK1_50    ;
+;  LED[7]   ; FPGA_CLK1_50 ; 3.792 ; 3.854 ; Rise       ; FPGA_CLK1_50    ;
++-----------+--------------+-------+-------+------------+-----------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Board Trace Model Assignments                                                                                                                                                                                                                                                                                                                                                                             ;
++--------+--------------+-------------------+-------------------------+-------------------------+---------------+---------------------+----------------+------------------+--------+------------------+------------------------+------------------------+--------------+---------------+-----------------+-------+---------------------+--------------------+---------------+-----------------+-------------+
+; Pin    ; I/O Standard ; Near Tline Length ; Near Tline L per Length ; Near Tline C per Length ; Near Series R ; Near Differential R ; Near Pull-up R ; Near Pull-down R ; Near C ; Far Tline Length ; Far Tline L per Length ; Far Tline C per Length ; Far Series R ; Far Pull-up R ; Far Pull-down R ; Far C ; Termination Voltage ; Far Differential R ; EBD File Name ; EBD Signal Name ; EBD Far-end ;
++--------+--------------+-------------------+-------------------------+-------------------------+---------------+---------------------+----------------+------------------+--------+------------------+------------------------+------------------------+--------------+---------------+-----------------+-------+---------------------+--------------------+---------------+-----------------+-------------+
+; LED[0] ; 3.3-V LVTTL  ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
+; LED[1] ; 3.3-V LVTTL  ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
+; LED[2] ; 3.3-V LVTTL  ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
+; LED[3] ; 3.3-V LVTTL  ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
+; LED[4] ; 3.3-V LVTTL  ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
+; LED[5] ; 3.3-V LVTTL  ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
+; LED[6] ; 3.3-V LVTTL  ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
+; LED[7] ; 3.3-V LVTTL  ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
++--------+--------------+-------------------+-------------------------+-------------------------+---------------+---------------------+----------------+------------------+--------+------------------+------------------------+------------------------+--------------+---------------+-----------------+-------+---------------------+--------------------+---------------+-----------------+-------------+
+
+
++-----------------------------------------------------------------+
+; Input Transition Times                                          ;
++--------------+--------------+-----------------+-----------------+
+; Pin          ; I/O Standard ; 10-90 Rise Time ; 90-10 Fall Time ;
++--------------+--------------+-----------------+-----------------+
+; FPGA_CLK2_50 ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; FPGA_CLK3_50 ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; KEY[0]       ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; KEY[1]       ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; SW[0]        ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; SW[1]        ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; SW[2]        ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; SW[3]        ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; FPGA_CLK1_50 ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
++--------------+--------------+-----------------+-----------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Signal Integrity Metrics (Slow 1100mv 0c Model)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ;
++--------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+; Pin    ; I/O Standard ; Board Delay on Rise ; Board Delay on Fall ; Steady State Voh at FPGA Pin ; Steady State Vol at FPGA Pin ; Voh Max at FPGA Pin ; Vol Min at FPGA Pin ; Ringback Voltage on Rise at FPGA Pin ; Ringback Voltage on Fall at FPGA Pin ; 10-90 Rise Time at FPGA Pin ; 90-10 Fall Time at FPGA Pin ; Monotonic Rise at FPGA Pin ; Monotonic Fall at FPGA Pin ; Steady State Voh at Far-end ; Steady State Vol at Far-end ; Voh Max at Far-end ; Vol Min at Far-end ; Ringback Voltage on Rise at Far-end ; Ringback Voltage on Fall at Far-end ; 10-90 Rise Time at Far-end ; 90-10 Fall Time at Far-end ; Monotonic Rise at Far-end ; Monotonic Fall at Far-end ;
++--------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+; LED[0] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 2.62e-07 V                   ; 3.1 V               ; -0.153 V            ; 0.035 V                              ; 0.31 V                               ; 4.23e-10 s                  ; 1.59e-10 s                  ; Yes                        ; No                         ; 3.08 V                      ; 2.62e-07 V                  ; 3.1 V              ; -0.153 V           ; 0.035 V                             ; 0.31 V                              ; 4.23e-10 s                 ; 1.59e-10 s                 ; Yes                       ; No                        ;
+; LED[1] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.35e-07 V                   ; 3.14 V              ; -0.258 V            ; 0.13 V                               ; 0.399 V                              ; 4.27e-10 s                  ; 1.5e-10 s                   ; Yes                        ; No                         ; 3.08 V                      ; 3.35e-07 V                  ; 3.14 V             ; -0.258 V           ; 0.13 V                              ; 0.399 V                             ; 4.27e-10 s                 ; 1.5e-10 s                  ; Yes                       ; No                        ;
+; LED[2] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.5e-07 V                    ; 3.14 V              ; -0.195 V            ; 0.158 V                              ; 0.394 V                              ; 4.46e-10 s                  ; 1.64e-10 s                  ; Yes                        ; No                         ; 3.08 V                      ; 3.5e-07 V                   ; 3.14 V             ; -0.195 V           ; 0.158 V                             ; 0.394 V                             ; 4.46e-10 s                 ; 1.64e-10 s                 ; Yes                       ; No                        ;
+; LED[3] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 2.62e-07 V                   ; 3.1 V               ; -0.153 V            ; 0.035 V                              ; 0.31 V                               ; 4.23e-10 s                  ; 1.59e-10 s                  ; Yes                        ; No                         ; 3.08 V                      ; 2.62e-07 V                  ; 3.1 V              ; -0.153 V           ; 0.035 V                             ; 0.31 V                              ; 4.23e-10 s                 ; 1.59e-10 s                 ; Yes                       ; No                        ;
+; LED[4] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.35e-07 V                   ; 3.14 V              ; -0.258 V            ; 0.13 V                               ; 0.399 V                              ; 4.27e-10 s                  ; 1.5e-10 s                   ; Yes                        ; No                         ; 3.08 V                      ; 3.35e-07 V                  ; 3.14 V             ; -0.258 V           ; 0.13 V                              ; 0.399 V                             ; 4.27e-10 s                 ; 1.5e-10 s                  ; Yes                       ; No                        ;
+; LED[5] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.35e-07 V                   ; 3.14 V              ; -0.257 V            ; 0.13 V                               ; 0.399 V                              ; 4.27e-10 s                  ; 1.5e-10 s                   ; Yes                        ; No                         ; 3.08 V                      ; 3.35e-07 V                  ; 3.14 V             ; -0.257 V           ; 0.13 V                              ; 0.399 V                             ; 4.27e-10 s                 ; 1.5e-10 s                  ; Yes                       ; No                        ;
+; LED[6] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.5e-07 V                    ; 3.14 V              ; -0.195 V            ; 0.158 V                              ; 0.394 V                              ; 4.46e-10 s                  ; 1.64e-10 s                  ; Yes                        ; No                         ; 3.08 V                      ; 3.5e-07 V                   ; 3.14 V             ; -0.195 V           ; 0.158 V                             ; 0.394 V                             ; 4.46e-10 s                 ; 1.64e-10 s                 ; Yes                       ; No                        ;
+; LED[7] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.35e-07 V                   ; 3.14 V              ; -0.257 V            ; 0.13 V                               ; 0.399 V                              ; 4.27e-10 s                  ; 1.5e-10 s                   ; Yes                        ; No                         ; 3.08 V                      ; 3.35e-07 V                  ; 3.14 V             ; -0.257 V           ; 0.13 V                              ; 0.399 V                             ; 4.27e-10 s                 ; 1.5e-10 s                  ; Yes                       ; No                        ;
++--------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Signal Integrity Metrics (Slow 1100mv 85c Model)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ;
++--------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+; Pin    ; I/O Standard ; Board Delay on Rise ; Board Delay on Fall ; Steady State Voh at FPGA Pin ; Steady State Vol at FPGA Pin ; Voh Max at FPGA Pin ; Vol Min at FPGA Pin ; Ringback Voltage on Rise at FPGA Pin ; Ringback Voltage on Fall at FPGA Pin ; 10-90 Rise Time at FPGA Pin ; 90-10 Fall Time at FPGA Pin ; Monotonic Rise at FPGA Pin ; Monotonic Fall at FPGA Pin ; Steady State Voh at Far-end ; Steady State Vol at Far-end ; Voh Max at Far-end ; Vol Min at Far-end ; Ringback Voltage on Rise at Far-end ; Ringback Voltage on Fall at Far-end ; 10-90 Rise Time at Far-end ; 90-10 Fall Time at Far-end ; Monotonic Rise at Far-end ; Monotonic Fall at Far-end ;
++--------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+; LED[0] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 2.61e-05 V                   ; 3.09 V              ; -0.0638 V           ; 0.034 V                              ; 0.099 V                              ; 5.12e-10 s                  ; 2.97e-10 s                  ; Yes                        ; Yes                        ; 3.08 V                      ; 2.61e-05 V                  ; 3.09 V             ; -0.0638 V          ; 0.034 V                             ; 0.099 V                             ; 5.12e-10 s                 ; 2.97e-10 s                 ; Yes                       ; Yes                       ;
+; LED[1] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.19e-05 V                   ; 3.1 V               ; -0.133 V            ; 0.025 V                              ; 0.169 V                              ; 4.92e-10 s                  ; 3.13e-10 s                  ; Yes                        ; No                         ; 3.08 V                      ; 3.19e-05 V                  ; 3.1 V              ; -0.133 V           ; 0.025 V                             ; 0.169 V                             ; 4.92e-10 s                 ; 3.13e-10 s                 ; Yes                       ; No                        ;
+; LED[2] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.32e-05 V                   ; 3.09 V              ; -0.11 V             ; 0.031 V                              ; 0.155 V                              ; 5.43e-10 s                  ; 3.14e-10 s                  ; Yes                        ; Yes                        ; 3.08 V                      ; 3.32e-05 V                  ; 3.09 V             ; -0.11 V            ; 0.031 V                             ; 0.155 V                             ; 5.43e-10 s                 ; 3.14e-10 s                 ; Yes                       ; Yes                       ;
+; LED[3] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 2.61e-05 V                   ; 3.09 V              ; -0.0638 V           ; 0.034 V                              ; 0.099 V                              ; 5.12e-10 s                  ; 2.97e-10 s                  ; Yes                        ; Yes                        ; 3.08 V                      ; 2.61e-05 V                  ; 3.09 V             ; -0.0638 V          ; 0.034 V                             ; 0.099 V                             ; 5.12e-10 s                 ; 2.97e-10 s                 ; Yes                       ; Yes                       ;
+; LED[4] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.19e-05 V                   ; 3.1 V               ; -0.133 V            ; 0.025 V                              ; 0.169 V                              ; 4.92e-10 s                  ; 3.13e-10 s                  ; Yes                        ; No                         ; 3.08 V                      ; 3.19e-05 V                  ; 3.1 V              ; -0.133 V           ; 0.025 V                             ; 0.169 V                             ; 4.92e-10 s                 ; 3.13e-10 s                 ; Yes                       ; No                        ;
+; LED[5] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.19e-05 V                   ; 3.1 V               ; -0.136 V            ; 0.025 V                              ; 0.167 V                              ; 4.92e-10 s                  ; 3.12e-10 s                  ; Yes                        ; No                         ; 3.08 V                      ; 3.19e-05 V                  ; 3.1 V              ; -0.136 V           ; 0.025 V                             ; 0.167 V                             ; 4.92e-10 s                 ; 3.12e-10 s                 ; Yes                       ; No                        ;
+; LED[6] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.32e-05 V                   ; 3.09 V              ; -0.11 V             ; 0.031 V                              ; 0.155 V                              ; 5.43e-10 s                  ; 3.14e-10 s                  ; Yes                        ; Yes                        ; 3.08 V                      ; 3.32e-05 V                  ; 3.09 V             ; -0.11 V            ; 0.031 V                             ; 0.155 V                             ; 5.43e-10 s                 ; 3.14e-10 s                 ; Yes                       ; Yes                       ;
+; LED[7] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.19e-05 V                   ; 3.1 V               ; -0.136 V            ; 0.025 V                              ; 0.167 V                              ; 4.92e-10 s                  ; 3.12e-10 s                  ; Yes                        ; No                         ; 3.08 V                      ; 3.19e-05 V                  ; 3.1 V              ; -0.136 V           ; 0.025 V                             ; 0.167 V                             ; 4.92e-10 s                 ; 3.12e-10 s                 ; Yes                       ; No                        ;
++--------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Signal Integrity Metrics (Fast 1100mv 0c Model)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ;
++--------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+; Pin    ; I/O Standard ; Board Delay on Rise ; Board Delay on Fall ; Steady State Voh at FPGA Pin ; Steady State Vol at FPGA Pin ; Voh Max at FPGA Pin ; Vol Min at FPGA Pin ; Ringback Voltage on Rise at FPGA Pin ; Ringback Voltage on Fall at FPGA Pin ; 10-90 Rise Time at FPGA Pin ; 90-10 Fall Time at FPGA Pin ; Monotonic Rise at FPGA Pin ; Monotonic Fall at FPGA Pin ; Steady State Voh at Far-end ; Steady State Vol at Far-end ; Voh Max at Far-end ; Vol Min at Far-end ; Ringback Voltage on Rise at Far-end ; Ringback Voltage on Fall at Far-end ; 10-90 Rise Time at Far-end ; 90-10 Fall Time at Far-end ; Monotonic Rise at Far-end ; Monotonic Fall at Far-end ;
++--------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+; LED[0] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 3.63e-06 V                   ; 3.64 V              ; -0.326 V            ; 0.091 V                              ; 0.479 V                              ; 3.83e-10 s                  ; 1.5e-10 s                   ; Yes                        ; No                         ; 3.63 V                      ; 3.63e-06 V                  ; 3.64 V             ; -0.326 V           ; 0.091 V                             ; 0.479 V                             ; 3.83e-10 s                 ; 1.5e-10 s                  ; Yes                       ; No                        ;
+; LED[1] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 4.72e-06 V                   ; 3.7 V               ; -0.49 V             ; 0.117 V                              ; 0.622 V                              ; 3.84e-10 s                  ; 1.48e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 4.72e-06 V                  ; 3.7 V              ; -0.49 V            ; 0.117 V                             ; 0.622 V                             ; 3.84e-10 s                 ; 1.48e-10 s                 ; Yes                       ; No                        ;
+; LED[2] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 4.94e-06 V                   ; 3.69 V              ; -0.414 V            ; 0.134 V                              ; 0.585 V                              ; 4.19e-10 s                  ; 1.53e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 4.94e-06 V                  ; 3.69 V             ; -0.414 V           ; 0.134 V                             ; 0.585 V                             ; 4.19e-10 s                 ; 1.53e-10 s                 ; Yes                       ; No                        ;
+; LED[3] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 3.63e-06 V                   ; 3.64 V              ; -0.326 V            ; 0.091 V                              ; 0.479 V                              ; 3.83e-10 s                  ; 1.5e-10 s                   ; Yes                        ; No                         ; 3.63 V                      ; 3.63e-06 V                  ; 3.64 V             ; -0.326 V           ; 0.091 V                             ; 0.479 V                             ; 3.83e-10 s                 ; 1.5e-10 s                  ; Yes                       ; No                        ;
+; LED[4] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 4.72e-06 V                   ; 3.7 V               ; -0.49 V             ; 0.117 V                              ; 0.622 V                              ; 3.84e-10 s                  ; 1.48e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 4.72e-06 V                  ; 3.7 V              ; -0.49 V            ; 0.117 V                             ; 0.622 V                             ; 3.84e-10 s                 ; 1.48e-10 s                 ; Yes                       ; No                        ;
+; LED[5] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 4.72e-06 V                   ; 3.7 V               ; -0.49 V             ; 0.117 V                              ; 0.621 V                              ; 3.84e-10 s                  ; 1.48e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 4.72e-06 V                  ; 3.7 V              ; -0.49 V            ; 0.117 V                             ; 0.621 V                             ; 3.84e-10 s                 ; 1.48e-10 s                 ; Yes                       ; No                        ;
+; LED[6] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 4.94e-06 V                   ; 3.69 V              ; -0.414 V            ; 0.134 V                              ; 0.585 V                              ; 4.19e-10 s                  ; 1.53e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 4.94e-06 V                  ; 3.69 V             ; -0.414 V           ; 0.134 V                             ; 0.585 V                             ; 4.19e-10 s                 ; 1.53e-10 s                 ; Yes                       ; No                        ;
+; LED[7] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 4.72e-06 V                   ; 3.7 V               ; -0.49 V             ; 0.117 V                              ; 0.621 V                              ; 3.84e-10 s                  ; 1.48e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 4.72e-06 V                  ; 3.7 V              ; -0.49 V            ; 0.117 V                             ; 0.621 V                             ; 3.84e-10 s                 ; 1.48e-10 s                 ; Yes                       ; No                        ;
++--------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Signal Integrity Metrics (Fast 1100mv 85c Model)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ;
++--------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+; Pin    ; I/O Standard ; Board Delay on Rise ; Board Delay on Fall ; Steady State Voh at FPGA Pin ; Steady State Vol at FPGA Pin ; Voh Max at FPGA Pin ; Vol Min at FPGA Pin ; Ringback Voltage on Rise at FPGA Pin ; Ringback Voltage on Fall at FPGA Pin ; 10-90 Rise Time at FPGA Pin ; 90-10 Fall Time at FPGA Pin ; Monotonic Rise at FPGA Pin ; Monotonic Fall at FPGA Pin ; Steady State Voh at Far-end ; Steady State Vol at Far-end ; Voh Max at Far-end ; Vol Min at Far-end ; Ringback Voltage on Rise at Far-end ; Ringback Voltage on Fall at Far-end ; 10-90 Rise Time at Far-end ; 90-10 Fall Time at Far-end ; Monotonic Rise at Far-end ; Monotonic Fall at Far-end ;
++--------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+; LED[0] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 0.000184 V                   ; 3.64 V              ; -0.19 V             ; 0.019 V                              ; 0.425 V                              ; 4.44e-10 s                  ; 1.91e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 0.000184 V                  ; 3.64 V             ; -0.19 V            ; 0.019 V                             ; 0.425 V                             ; 4.44e-10 s                 ; 1.91e-10 s                 ; Yes                       ; No                        ;
+; LED[1] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 0.000229 V                   ; 3.65 V              ; -0.316 V            ; 0.041 V                              ; 0.53 V                               ; 4.29e-10 s                  ; 1.87e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 0.000229 V                  ; 3.65 V             ; -0.316 V           ; 0.041 V                             ; 0.53 V                              ; 4.29e-10 s                 ; 1.87e-10 s                 ; Yes                       ; No                        ;
+; LED[2] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 0.000238 V                   ; 3.64 V              ; -0.254 V            ; 0.052 V                              ; 0.543 V                              ; 4.59e-10 s                  ; 1.96e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 0.000238 V                  ; 3.64 V             ; -0.254 V           ; 0.052 V                             ; 0.543 V                             ; 4.59e-10 s                 ; 1.96e-10 s                 ; Yes                       ; No                        ;
+; LED[3] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 0.000184 V                   ; 3.64 V              ; -0.19 V             ; 0.019 V                              ; 0.425 V                              ; 4.44e-10 s                  ; 1.91e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 0.000184 V                  ; 3.64 V             ; -0.19 V            ; 0.019 V                             ; 0.425 V                             ; 4.44e-10 s                 ; 1.91e-10 s                 ; Yes                       ; No                        ;
+; LED[4] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 0.000229 V                   ; 3.65 V              ; -0.316 V            ; 0.041 V                              ; 0.53 V                               ; 4.29e-10 s                  ; 1.87e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 0.000229 V                  ; 3.65 V             ; -0.316 V           ; 0.041 V                             ; 0.53 V                              ; 4.29e-10 s                 ; 1.87e-10 s                 ; Yes                       ; No                        ;
+; LED[5] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 0.000229 V                   ; 3.65 V              ; -0.319 V            ; 0.041 V                              ; 0.528 V                              ; 4.29e-10 s                  ; 1.87e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 0.000229 V                  ; 3.65 V             ; -0.319 V           ; 0.041 V                             ; 0.528 V                             ; 4.29e-10 s                 ; 1.87e-10 s                 ; Yes                       ; No                        ;
+; LED[6] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 0.000238 V                   ; 3.64 V              ; -0.254 V            ; 0.052 V                              ; 0.543 V                              ; 4.59e-10 s                  ; 1.96e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 0.000238 V                  ; 3.64 V             ; -0.254 V           ; 0.052 V                             ; 0.543 V                             ; 4.59e-10 s                 ; 1.96e-10 s                 ; Yes                       ; No                        ;
+; LED[7] ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 0.000229 V                   ; 3.65 V              ; -0.319 V            ; 0.041 V                              ; 0.528 V                              ; 4.29e-10 s                  ; 1.87e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 0.000229 V                  ; 3.65 V             ; -0.319 V           ; 0.041 V                             ; 0.528 V                             ; 4.29e-10 s                 ; 1.87e-10 s                 ; Yes                       ; No                        ;
++--------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+
+
++-------------------------------------------------------------------------+
+; Setup Transfers                                                         ;
++--------------+--------------+----------+----------+----------+----------+
+; From Clock   ; To Clock     ; RR Paths ; FR Paths ; RF Paths ; FF Paths ;
++--------------+--------------+----------+----------+----------+----------+
+; FPGA_CLK1_50 ; FPGA_CLK1_50 ; 1896     ; 0        ; 0        ; 0        ;
++--------------+--------------+----------+----------+----------+----------+
+Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
+
+
++-------------------------------------------------------------------------+
+; Hold Transfers                                                          ;
++--------------+--------------+----------+----------+----------+----------+
+; From Clock   ; To Clock     ; RR Paths ; FR Paths ; RF Paths ; FF Paths ;
++--------------+--------------+----------+----------+----------+----------+
+; FPGA_CLK1_50 ; FPGA_CLK1_50 ; 1896     ; 0        ; 0        ; 0        ;
++--------------+--------------+----------+----------+----------+----------+
+Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
+
+
+---------------
+; Report TCCS ;
+---------------
+No dedicated SERDES Transmitter circuitry present in device or used in design
+
+
+---------------
+; Report RSKM ;
+---------------
+No non-DPA dedicated SERDES Receiver circuitry present in device or used in design
+
+
++------------------------------------------------+
+; Unconstrained Paths                            ;
++---------------------------------+-------+------+
+; Property                        ; Setup ; Hold ;
++---------------------------------+-------+------+
+; Illegal Clocks                  ; 0     ; 0    ;
+; Unconstrained Clocks            ; 0     ; 0    ;
+; Unconstrained Input Ports       ; 0     ; 0    ;
+; Unconstrained Input Port Paths  ; 0     ; 0    ;
+; Unconstrained Output Ports      ; 8     ; 8    ;
+; Unconstrained Output Port Paths ; 8     ; 8    ;
++---------------------------------+-------+------+
+
+
++------------------------------------+
+; TimeQuest Timing Analyzer Messages ;
++------------------------------------+
+Info: *******************************************************************
+Info: Running Quartus II 64-Bit TimeQuest Timing Analyzer
+    Info: Version 15.0.0 Build 145 04/22/2015 SJ Web Edition
+    Info: Processing started: Wed Jun 08 11:06:55 2016
+Info: Command: quartus_sta Pico_ctrl -c Pico_ctrl
+Info: qsta_default_script.tcl version: #11
+Info (11104): Parallel Compilation has detected 4 hyper-threaded processors. However, the extra hyper-threaded processors will not be used by default. Parallel Compilation will use 2 of the 2 physical processors detected instead.
+Info (21077): Low junction temperature is 0 degrees C
+Info (21077): High junction temperature is 85 degrees C
+Info (332104): Reading SDC File: 'Pico_ctrl.SDC'
+Warning (332174): Ignored filter at Pico_ctrl.sdc(14): altera_reserved_tck could not be matched with a port or pin or register or keeper or net or combinational node or node
+Warning (332049): Ignored create_clock at Pico_ctrl.sdc(14): Argument <targets> is not an object ID
+    Info (332050): create_clock -name {altera_reserved_tck} -period 40 {altera_reserved_tck}
+Warning (332174): Ignored filter at Pico_ctrl.sdc(15): altera_reserved_tdi could not be matched with a port
+Warning (332174): Ignored filter at Pico_ctrl.sdc(15): altera_reserved_tck could not be matched with a clock
+Warning (332049): Ignored set_input_delay at Pico_ctrl.sdc(15): Argument <targets> is an empty collection
+    Info (332050): set_input_delay -clock altera_reserved_tck -clock_fall 3 [get_ports altera_reserved_tdi]
+Warning (332049): Ignored set_input_delay at Pico_ctrl.sdc(15): Argument -clock is not an object ID
+Warning (332174): Ignored filter at Pico_ctrl.sdc(16): altera_reserved_tms could not be matched with a port
+Warning (332049): Ignored set_input_delay at Pico_ctrl.sdc(16): Argument <targets> is an empty collection
+    Info (332050): set_input_delay -clock altera_reserved_tck -clock_fall 3 [get_ports altera_reserved_tms]
+Warning (332049): Ignored set_input_delay at Pico_ctrl.sdc(16): Argument -clock is not an object ID
+Warning (332174): Ignored filter at Pico_ctrl.sdc(17): altera_reserved_tdo could not be matched with a port
+Warning (332049): Ignored set_output_delay at Pico_ctrl.sdc(17): Argument <targets> is an empty collection
+    Info (332050): set_output_delay -clock altera_reserved_tck 3 [get_ports altera_reserved_tdo]
+Warning (332049): Ignored set_output_delay at Pico_ctrl.sdc(17): Argument -clock is not an object ID
+Info (332151): Clock uncertainty is not calculated until you update the timing netlist.
+Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in TimeQuest to see clock uncertainties.
+Info: Found TIMEQUEST_REPORT_SCRIPT_INCLUDE_DEFAULT_ANALYSIS = ON
+Info: Analyzing Slow 1100mV 85C Model
+Info (332146): Worst-case setup slack is 15.882
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    15.882               0.000 FPGA_CLK1_50 
+Info (332146): Worst-case hold slack is 0.306
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.306               0.000 FPGA_CLK1_50 
+Info (332140): No Recovery paths to report
+Info (332140): No Removal paths to report
+Info (332146): Worst-case minimum pulse width slack is 9.223
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     9.223               0.000 FPGA_CLK1_50 
+Info: Analyzing Slow 1100mV 0C Model
+Info (334003): Started post-fitting delay annotation
+Info (334004): Delay annotation completed successfully
+Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in TimeQuest to see clock uncertainties.
+Info (332146): Worst-case setup slack is 15.928
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    15.928               0.000 FPGA_CLK1_50 
+Info (332146): Worst-case hold slack is 0.289
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.289               0.000 FPGA_CLK1_50 
+Info (332140): No Recovery paths to report
+Info (332140): No Removal paths to report
+Info (332146): Worst-case minimum pulse width slack is 9.297
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     9.297               0.000 FPGA_CLK1_50 
+Info: Analyzing Fast 1100mV 85C Model
+Info (334003): Started post-fitting delay annotation
+Info (334004): Delay annotation completed successfully
+Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in TimeQuest to see clock uncertainties.
+Info (332146): Worst-case setup slack is 17.587
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    17.587               0.000 FPGA_CLK1_50 
+Info (332146): Worst-case hold slack is 0.179
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.179               0.000 FPGA_CLK1_50 
+Info (332140): No Recovery paths to report
+Info (332140): No Removal paths to report
+Info (332146): Worst-case minimum pulse width slack is 9.103
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     9.103               0.000 FPGA_CLK1_50 
+Info: Analyzing Fast 1100mV 0C Model
+Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in TimeQuest to see clock uncertainties.
+Info (332146): Worst-case setup slack is 17.799
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    17.799               0.000 FPGA_CLK1_50 
+Info (332146): Worst-case hold slack is 0.168
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.168               0.000 FPGA_CLK1_50 
+Info (332140): No Recovery paths to report
+Info (332140): No Removal paths to report
+Info (332146): Worst-case minimum pulse width slack is 9.066
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     9.066               0.000 FPGA_CLK1_50 
+Info (332102): Design is not fully constrained for setup requirements
+Info (332102): Design is not fully constrained for hold requirements
+Info: Quartus II 64-Bit TimeQuest Timing Analyzer was successful. 0 errors, 12 warnings
+    Info: Peak virtual memory: 968 megabytes
+    Info: Processing ended: Wed Jun 08 11:07:19 2016
+    Info: Elapsed time: 00:00:24
+    Info: Total CPU time (on all processors): 00:00:24
+
+
