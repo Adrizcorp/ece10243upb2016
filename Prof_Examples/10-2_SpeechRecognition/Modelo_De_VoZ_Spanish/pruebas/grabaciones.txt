@@ -1,0 +1,8 @@
+abajo
+adelante
+arriba
+atras
+derecha
+hola
+holguer
+izquierda

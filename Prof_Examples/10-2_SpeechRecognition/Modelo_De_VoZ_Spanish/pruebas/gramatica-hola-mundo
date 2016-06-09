@@ -1,0 +1,4 @@
+#JSGF V1.0;
+grammar isolated_phrases;
+<destinatario> = (abajo | adelante | arriba | atrás | derecha | hola | holguer | izquierda | útil);
+public <grammar> = <destinatario>;

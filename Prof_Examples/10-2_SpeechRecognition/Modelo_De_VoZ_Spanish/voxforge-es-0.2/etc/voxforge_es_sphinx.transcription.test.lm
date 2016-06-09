@@ -1,0 +1,2731 @@
+
+\data\
+ngram 1=881
+ngram 2=1752
+ngram 3=84
+
+
+\1-grams:
+-1.0418 </s> 0.0000
+-99.0000 <s> -0.1093
+-1.6848 a -0.1443
+-3.3183 abandonar -0.0404
+-3.3183 abaratamiento -0.0301
+-3.3183 abarca -0.0561
+-3.3183 abierto -0.0150
+-3.0172 abrir -0.0479
+-3.3183 abstracción -0.0150
+-3.3183 abstracto -0.0150
+-3.3183 accesibilidad -0.0472
+-3.3183 accionariado -0.0301
+-3.3183 aceite -0.0527
+-3.3183 aceptar -0.0150
+-3.3183 acogían -0.0561
+-3.3183 acompasado -0.0546
+-3.3183 acompañado -0.0483
+-3.3183 acompañándola -0.0561
+-3.3183 actualizar -0.0561
+-3.3183 acústico -0.0530
+-3.3183 adelante -0.0483
+-3.3183 además -0.0301
+-3.3183 adherían -0.0472
+-3.3183 adjetivo -0.0494
+-3.3183 adornaba -0.0472
+-3.3183 adornos -0.0301
+-3.3183 adquirir -0.0404
+-3.3183 advierten -0.0494
+-3.3183 afirmación -0.0561
+-3.3183 agrandados -0.0527
+-3.3183 agrietado -0.0150
+-3.0172 agrupábanse -0.1520
+-3.3183 agua -0.0561
+-3.3183 aguas -0.0561
+-3.0172 ahora -0.0551
+-3.3183 aislamiento -0.0561
+-2.1142 al -0.0519
+-3.0172 algo -0.0481
+-3.3183 aliño -0.0301
+-3.0172 allá -0.1275
+-3.3183 almacén -0.0150
+-3.0172 alrededor -0.1275
+-2.8412 alto -0.0071
+-3.3183 altura -0.0561
+-3.3183 alzar -0.0555
+-3.3183 amanece -0.0532
+-3.3183 amarilla -0.0301
+-3.3183 amarillento -0.0483
+-3.3183 ambiente -0.0553
+-3.3183 amigos -0.0523
+-3.0172 ampollas -0.1533
+-3.3183 amé -0.0553
+-3.3183 anchas -0.0561
+-3.3183 anda -0.0404
+-3.3183 anillos -0.0150
+-3.3183 animal -0.0561
+-3.3183 animar -0.0430
+-3.3183 anterior -0.0530
+-3.0172 antes -0.0299
+-3.3183 antílope -0.0150
+-3.3183 anuncio -0.0559
+-3.3183 anzuelo -0.0150
+-3.0172 aparecer -0.1478
+-3.3183 aparición -0.0527
+-3.3183 aprender -0.0561
+-3.3183 aprieta -0.0150
+-3.3183 aproximadamente -0.0555
+-3.3183 aquí -0.0559
+-3.3183 archipiélago -0.0561
+-2.8412 arcos -0.2179
+-3.3183 armadura -0.0546
+-3.3183 arriesgado -0.0150
+-3.3183 arte -0.0561
+-3.3183 artesanales -0.0150
+-3.3183 artificial -0.0561
+-3.3183 artificiales -0.0561
+-3.3183 artillería -0.0561
+-3.3183 asalariado -0.0504
+-3.3183 asia -0.0150
+-3.3183 asientos -0.0561
+-3.3183 asno -0.0504
+-3.3183 aspa -0.0559
+-3.3183 aspecto -0.0553
+-3.3183 atar -0.0472
+-3.3183 atmósfera -0.0301
+-3.3183 aula -0.0561
+-3.3183 autentificar -0.0555
+-3.3183 autoridades -0.0561
+-3.3183 autónomo -0.0150
+-3.3183 avanzó -0.0404
+-3.3183 avería -0.0404
+-3.0172 ayuda -0.0050
+-3.0172 ayudar -0.1446
+-2.8412 azul -0.0213
+-3.3183 azulada -0.0494
+-3.3183 azules -0.0150
+-3.0172 años -0.1124
+-3.3183 aúllan -0.0523
+-3.3183 baile -0.0561
+-3.3183 bajo -0.0430
+-3.0172 balanceo -0.0508
+-3.3183 balón -0.0150
+-3.3183 bambú -0.0561
+-3.3183 bandeja -0.0483
+-3.3183 bandejas -0.0150
+-3.3183 barco -0.0150
+-3.3183 bastante -0.0561
+-3.3183 bastoncillo -0.0150
+-3.0172 bebida -0.0559
+-3.3183 bilbao -0.0150
+-3.3183 bisagra -0.0561
+-3.3183 biselados -0.0150
+-3.3183 blanco -0.0561
+-3.0172 blancura -0.0299
+-3.3183 blanqueaban -0.0546
+-3.3183 boca -0.0561
+-3.3183 bonita -0.0561
+-3.3183 botones -0.0561
+-3.3183 botón -0.0561
+-3.0172 buen -0.0559
+-3.3183 buena -0.0561
+-3.0172 buenas -0.0559
+-3.3183 buenos -0.0561
+-3.3183 buey -0.0530
+-3.3183 burbujeo -0.0301
+-3.3183 bustos -0.0301
+-3.3183 caballo -0.0483
+-3.3183 cabeza -0.0150
+-3.0172 cabezas -0.1533
+-3.3183 caja -0.0483
+-3.3183 caliente -0.0150
+-3.3183 callaba -0.0483
+-3.3183 calle -0.0150
+-2.8412 cama -0.2028
+-2.8412 camareros -0.1179
+-3.3183 cambio -0.0301
+-3.3183 camino -0.0150
+-3.3183 camión -0.0561
+-3.3183 campestre -0.0494
+-3.3183 campo -0.0561
+-3.3183 canalizos -0.0301
+-3.3183 canción -0.0150
+-3.3183 cantar -0.0511
+-3.3183 caperucita -0.0559
+-3.3183 capitalismo -0.0150
+-3.3183 capitán -0.0561
+-3.3183 cara -0.0150
+-3.3183 caramelos -0.0150
+-3.3183 carlos -0.0555
+-3.3183 caro -0.0483
+-3.3183 carro -0.0546
+-3.3183 cartera -0.0538
+-3.0172 casi -0.1533
+-2.8412 caso -0.0485
+-3.3183 catorce -0.0483
+-3.3183 catálogo -0.0561
+-3.3183 centímetros -0.0150
+-3.3183 cercanas -0.0472
+-3.3183 cero -0.0551
+-3.3183 cerraban -0.0430
+-3.0172 cerrar -0.0131
+-3.3183 cerámico -0.0301
+-3.3183 chaqueta -0.0557
+-3.3183 charolado -0.0150
+-3.3183 chica -0.0494
+-3.3183 chico -0.0561
+-3.3183 china -0.0150
+-3.3183 chincheta -0.0150
+-3.3183 chino -0.0150
+-3.3183 choque -0.0301
+-3.3183 chorizo -0.0150
+-3.3183 chufas -0.0150
+-3.3183 chuleta -0.0150
+-3.3183 cien -0.0553
+-3.0172 ciento -0.0559
+-3.0172 cierto -0.1531
+-2.7162 cinco -0.0542
+-2.8412 cincuenta -0.0059
+-3.3183 clases -0.0301
+-3.3183 clavó -0.0404
+-3.3183 cobrizas -0.0561
+-3.0172 coca -0.1529
+-3.3183 coche -0.0546
+-2.7162 cola -0.0455
+-3.3183 colcha -0.0301
+-3.3183 colección -0.0301
+-3.3183 color -0.0555
+-3.3183 coloreado -0.0472
+-3.3183 columna -0.0561
+-3.3183 coma -0.0559
+-3.3183 comer -0.0561
+-3.3183 comienza -0.0472
+-2.4152 como -0.0560
+-3.3183 compactas -0.0559
+-3.3183 compatibilidad -0.0504
+-3.3183 compañía -0.0555
+-3.3183 complicado -0.0150
+-3.3183 comí -0.0561
+-1.8711 con -0.0784
+-3.3183 concha -0.0561
+-3.3183 concienciar -0.0472
+-3.3183 confundidos -0.0504
+-3.3183 conseguir -0.0561
+-3.3183 contacto -0.0561
+-3.3183 contados -0.0150
+-3.3183 contar -0.0504
+-3.3183 contiene -0.0532
+-3.3183 contrahecho -0.0150
+-3.3183 contraseña -0.0559
+-3.3183 conversaciones -0.0504
+-3.3183 corazón -0.0150
+-3.3183 correo -0.0561
+-3.0172 corros -0.1533
+-3.3183 corta -0.0561
+-3.3183 cosa -0.0301
+-2.8412 cosas -0.0410
+-3.3183 cretona -0.0483
+-3.3183 criadas -0.0561
+-3.3183 crisis -0.0557
+-2.8412 cristales -0.0519
+-3.3183 cristo -0.0150
+-3.3183 crujido -0.0301
+-3.3183 cuando -0.0404
+-3.3183 cuarenta -0.0557
+-2.7162 cuatro -0.1523
+-3.3183 cubata -0.0557
+-3.0172 cubierto -0.0263
+-3.3183 cubiertos -0.0530
+-3.3183 cuello -0.0561
+-3.3183 cuentan -0.0504
+-3.3183 cuento -0.0301
+-3.3183 cuerdas -0.0150
+-3.3183 cuerpo -0.0504
+-3.3183 culo -0.0150
+-3.3183 culín -0.0301
+-3.3183 cura -0.0557
+-3.3183 cuyas -0.0561
+-3.0172 cuál -0.0494
+-3.3183 círculos -0.0150
+-3.3183 código -0.0561
+-3.3183 dados -0.0559
+-3.3183 dando -0.0150
+-3.3183 danza -0.0150
+-3.3183 dar -0.0555
+-1.2319 de -0.1367
+-3.0172 debes -0.0559
+-3.0172 decir -0.0073
+-3.3183 decoración -0.0404
+-3.3183 dedo -0.0544
+-3.0172 dedos 0.0140
+-3.3183 dejaba -0.0559
+-2.0878 del -0.0815
+-3.3183 dentro -0.0527
+-3.3183 derecha -0.0150
+-3.3183 descendían -0.0561
+-3.3183 describe -0.0504
+-3.3183 desden -0.0150
+-3.3183 deslizaban -0.0301
+-3.3183 después -0.0301
+-2.8412 destacábanse -0.0756
+-3.3183 detrás -0.0301
+-3.0172 dicho -0.1468
+-3.3183 diez -0.0559
+-3.3183 dijo -0.0561
+-3.3183 dime -0.0559
+-3.3183 dio -0.0546
+-3.0172 dios -0.0555
+-3.3183 divisaba -0.0511
+-3.3183 doce -0.0561
+-3.3183 docena -0.0301
+-3.3183 donante -0.0301
+-3.0172 donde -0.0494
+-3.3183 dorados -0.0561
+-2.4732 dos -0.1242
+-3.3183 dote -0.0559
+-3.3183 doy -0.0561
+-3.3183 dura -0.0150
+-3.3183 durmiendo -0.0150
+-3.3183 durmió -0.0150
+-3.0172 día -0.0204
+-3.3183 días -0.0150
+-3.3183 edición -0.0301
+-1.4432 el -0.0131
+-3.0172 eléctricas -0.0525
+-3.3183 emancipan -0.0472
+-3.3183 embadurnar -0.0150
+-3.3183 empañándolos -0.0504
+-1.7385 en -0.2124
+-3.3183 enana -0.0559
+-3.3183 encogía -0.0483
+-3.3183 encontraba -0.0561
+-3.3183 encuadraban -0.0404
+-3.3183 energía -0.0150
+-3.3183 enrejados -0.0150
+-3.3183 ensalada -0.0561
+-3.3183 ente -0.0561
+-3.3183 entiendo -0.0404
+-3.3183 entonces -0.0561
+-3.3183 entre -0.0472
+-3.3183 envases -0.0150
+-2.6193 era -0.0500
+-3.3183 eran -0.0404
+-3.3183 erizos -0.0301
+-1.8711 es -0.2129
+-3.3183 esa -0.0561
+-3.3183 esbelta -0.0150
+-3.3183 escaldar -0.0502
+-3.3183 escasez -0.0301
+-3.3183 escondido -0.0561
+-3.3183 escribiendo -0.0150
+-3.3183 escribir -0.0561
+-3.3183 escritura -0.0561
+-3.3183 espacio -0.0561
+-3.3183 especie -0.0301
+-3.3183 esperanza -0.0504
+-3.3183 esposa -0.0553
+-3.0172 esta -0.0502
+-2.4152 estaba -0.0745
+-3.0172 estaban -0.0299
+-3.3183 estado -0.0301
+-3.3183 estados -0.0561
+-2.6193 este -0.0548
+-3.3183 esto -0.0530
+-3.0172 estos -0.1533
+-2.7162 está -0.0373
+-3.3183 euro -0.0150
+-3.3183 evitarse -0.0553
+-3.3183 evocación -0.0561
+-3.3183 exaltado -0.0150
+-3.3183 exclusivo -0.0150
+-2.6193 exterior -0.1126
+-3.3183 falsa -0.0150
+-3.3183 fatigados -0.0527
+-3.3183 favorito -0.0504
+-3.3183 fecha -0.0561
+-3.0172 femeninos -0.1457
+-3.3183 feo -0.0150
+-3.3183 fernando -0.0301
+-3.3183 fieles -0.0483
+-3.3183 filo -0.0301
+-3.3183 finales -0.0301
+-3.3183 finalización -0.0527
+-3.3183 floreada -0.0561
+-3.3183 flotaba -0.0546
+-3.3183 fondo -0.0527
+-3.3183 formaban -0.0561
+-3.3183 formada -0.0301
+-3.3183 formados -0.0527
+-3.3183 frase -0.0557
+-3.0172 frases -0.0557
+-3.3183 frío -0.0561
+-3.3183 fue -0.0472
+-3.3183 fuerte -0.0150
+-3.3183 fuga -0.0561
+-3.3183 fumaban -0.0561
+-3.3183 fémur -0.0150
+-3.3183 gaseosa -0.0150
+-3.3183 gato -0.0523
+-3.3183 gemidos -0.0301
+-3.3183 gente -0.0150
+-3.0172 germanos -0.1457
+-3.3183 golfos -0.0483
+-3.3183 goma -0.0523
+-3.3183 gorjeos -0.0301
+-3.3183 gozne -0.0504
+-3.3183 grabar -0.0523
+-3.3183 grado -0.0301
+-3.3183 gran -0.0561
+-3.3183 gratis -0.0472
+-3.3183 grisáceo -0.0301
+-3.3183 grupos -0.0301
+-3.3183 gusano -0.0483
+-3.0172 gusta -0.0500
+-3.3183 guste -0.0150
+-2.7162 ha -0.1015
+-3.3183 habano -0.0483
+-3.3183 haber -0.0561
+-3.3183 hablar -0.0504
+-3.3183 había -0.0561
+-3.3183 hace -0.0557
+-3.3183 hacerlo -0.0150
+-3.3183 hacia -0.0561
+-3.3183 hasta -0.0561
+-2.8412 hay -0.1086
+-3.3183 haya -0.0559
+-3.3183 hazte -0.0561
+-3.3183 he -0.0559
+-3.3183 helados -0.0561
+-3.3183 hojas -0.0561
+-3.3183 hombre -0.0532
+-3.3183 hora -0.0559
+-3.3183 horchata -0.0504
+-3.3183 hoy -0.0483
+-3.3183 huesos -0.0532
+-3.3183 huevos -0.0504
+-3.3183 humano -0.0150
+-3.3183 humeaba -0.0483
+-3.3183 humedad -0.0553
+-3.3183 humo -0.0301
+-3.3183 husmear -0.0404
+-3.3183 huía -0.0557
+-3.3183 huían -0.0301
+-3.0172 húmedo -0.1468
+-3.3183 ideal -0.0527
+-3.0172 ido -0.0445
+-3.3183 igual -0.0472
+-3.3183 imprimir -0.0553
+-3.3183 inanimadas -0.0150
+-3.3183 industrial -0.0561
+-3.3183 infantiles -0.0532
+-3.3183 inflamadas -0.0483
+-3.3183 información -0.0561
+-3.3183 inglaterra -0.0553
+-3.3183 inglés -0.0544
+-3.3183 inmediatamente -0.0150
+-3.3183 inmediato -0.0561
+-3.3183 inspector -0.0561
+-3.3183 instaló -0.0561
+-3.3183 interna -0.0561
+-3.0172 internet -0.0143
+-3.3183 inundación -0.0150
+-3.3183 invernáculo -0.0404
+-3.0172 invierno -0.0145
+-3.3183 invisible -0.0561
+-3.3183 ir -0.0472
+-3.3183 islas -0.0150
+-3.3183 israel -0.0504
+-3.3183 izquierda -0.0561
+-3.3183 iñaki -0.0555
+-3.3183 jarabes -0.0483
+-3.0172 jardín -0.0299
+-3.3183 jota -0.0504
+-3.0172 joven -0.0140
+-3.3183 jovenes -0.0523
+-3.3183 jugar -0.0561
+-3.3183 juguetes -0.0523
+-3.3183 junco -0.0557
+-1.5189 la -0.0561
+-3.3183 labios -0.0561
+-3.3183 lado -0.0301
+-3.0172 laqueada -0.1533
+-3.0172 largarse -0.0500
+-3.3183 largos -0.0527
+-2.0395 las -0.0887
+-2.8412 le -0.0555
+-2.8412 lejos -0.0103
+-3.3183 lentitud -0.0561
+-3.3183 lento -0.0559
+-3.0172 levantarse -0.0299
+-3.3183 levantó -0.0430
+-3.3183 leve -0.0561
+-3.3183 leídos -0.0555
+-3.3183 libro -0.0561
+-3.3183 libros -0.0561
+-3.3183 licenciatura -0.0561
+-3.3183 licor -0.0150
+-3.3183 licores -0.0150
+-3.3183 lidiar -0.0504
+-3.3183 ligeramente -0.0561
+-3.3183 limpio -0.0494
+-3.3183 limpió -0.0430
+-3.3183 llama -0.0472
+-3.3183 llamar -0.0530
+-3.3183 llanto -0.0527
+-3.3183 llegaban -0.0561
+-3.3183 llegar -0.0404
+-3.3183 llena -0.0150
+-3.3183 lleva -0.0561
+-3.3183 llevar -0.0553
+-3.3183 llueva -0.0150
+-2.3640 lo -0.1232
+-3.3183 lobo -0.0561
+-3.3183 lobos -0.0561
+-3.3183 locomotora -0.0150
+-3.3183 lodo -0.0561
+-3.3183 lona -0.0301
+-1.6848 los -0.0755
+-3.3183 lotería -0.0301
+-3.3183 luego -0.0472
+-3.3183 lugar -0.0150
+-3.0172 luminosos -0.1275
+-3.3183 luz -0.0561
+-3.0172 líneas -0.0521
+-2.8412 madera -0.1181
+-2.7162 madre -0.0589
+-3.3183 madruga -0.0559
+-3.3183 madrugar -0.0561
+-3.3183 madurilla -0.0472
+-3.3183 mago -0.0553
+-3.0172 mano -0.0073
+-3.3183 manos -0.0301
+-3.3183 manteca -0.0483
+-3.3183 manto -0.0538
+-3.3183 mar -0.0561
+-3.3183 marcar -0.0551
+-3.3183 marzo -0.0150
+-3.3183 mazo -0.0561
+-3.0172 mañana -0.0147
+-2.4152 me -0.0747
+-3.3183 mear -0.0483
+-3.0172 mecánica -0.1124
+-3.3183 media -0.0561
+-3.3183 medidas -0.0557
+-3.3183 medioambiente -0.0504
+-3.0172 mejor -0.0498
+-3.3183 mejores -0.0561
+-3.3183 menú -0.0561
+-3.3183 mermeladas -0.0404
+-3.0172 mesa -0.0391
+-2.8412 mesas -0.2179
+-3.3183 meterlo -0.0483
+-3.3183 metió -0.0483
+-3.3183 metálica -0.0150
+-3.3183 mezclábase -0.0472
+-2.4732 mi -0.0784
+-3.3183 mide -0.0557
+-3.3183 miedo -0.0527
+-3.3183 miel -0.0150
+-3.0172 mientras -0.0369
+-3.3183 miguel -0.0561
+-3.3183 mima -0.0553
+-3.3183 minerales -0.0561
+-3.3183 minero -0.0504
+-3.3183 miró -0.0530
+-2.6193 mismo -0.1098
+-3.3183 mismos -0.0559
+-3.3183 moluscos -0.0561
+-3.3183 moviesen -0.0483
+-3.0172 movía -0.0481
+-3.3183 movíase -0.0561
+-2.6193 mucho -0.0140
+-3.3183 muchos -0.0561
+-3.3183 muere -0.0404
+-3.3183 mugen -0.0150
+-3.3183 mujeres -0.0483
+-3.0172 mundo -0.0502
+-2.2391 muy -0.0530
+-2.1422 más -0.0358
+-3.3183 móvil -0.0553
+-3.3183 múltiples -0.0483
+-3.3183 músicos -0.0559
+-3.3183 nacido -0.0483
+-3.3183 nacimiento -0.0301
+-2.7162 nada -0.1188
+-3.3183 nadie -0.0557
+-3.3183 navidad -0.0536
+-3.0172 necesario -0.0559
+-3.3183 negras -0.0483
+-3.3183 ni -0.0502
+-3.3183 nicolás -0.0555
+-3.3183 niña -0.0561
+-2.7162 niño -0.0506
+-3.0172 niños -0.0145
+-2.2043 no -0.0395
+-3.3183 noche -0.0150
+-3.3183 noches -0.0527
+-3.0172 noventa -0.0147
+-3.3183 nuestro -0.0561
+-3.3183 nuevas -0.0559
+-3.3183 nueve -0.0301
+-3.3183 nuevo -0.0561
+-2.8412 número -0.0071
+-3.3183 números -0.0551
+-2.6193 o -0.0427
+-3.3183 obcecado -0.0483
+-3.3183 oblicuas -0.0561
+-3.3183 ochenta -0.0559
+-3.3183 ocho -0.0150
+-3.0172 ocultándose -0.1504
+-3.3183 ocupa -0.0561
+-3.3183 ocupados -0.0527
+-3.3183 ocurrido -0.0483
+-3.3183 oiga -0.0559
+-2.8412 ojeda -0.0143
+-2.7162 ojos -0.0127
+-3.0172 once -0.0147
+-3.0172 operativo 0.0140
+-3.3183 opio -0.0150
+-3.3183 ordenador -0.0504
+-3.3183 ordenadores -0.0150
+-3.3183 ordinaria -0.0561
+-3.3183 oreja -0.0504
+-3.3183 oriental -0.0504
+-3.3183 oro -0.0150
+-3.3183 oso -0.0546
+-3.0172 otra -0.0147
+-3.3183 otro -0.0561
+-3.3183 oído -0.0150
+-3.3183 oír -0.0472
+-3.0172 padre -0.0559
+-3.3183 palmera -0.0561
+-3.3183 palmeras -0.0301
+-3.0172 pan -0.0481
+-3.3183 papel -0.0504
+-3.3183 papeles -0.0561
+-2.1142 para -0.0376
+-3.3183 parece -0.0530
+-3.3183 parecer -0.0559
+-2.6193 parecía -0.0656
+-3.3183 parecían -0.0561
+-3.0172 pared -0.0470
+-3.3183 paredes -0.0150
+-3.3183 parras -0.0561
+-3.0172 parte -0.0551
+-3.3183 partes -0.0301
+-3.3183 pasaban -0.0504
+-3.3183 pasando -0.0301
+-3.3183 paseantes -0.0559
+-3.3183 pasos -0.0561
+-3.3183 pasta -0.0504
+-3.3183 pata -0.0301
+-3.3183 país -0.0301
+-3.3183 pecho -0.0483
+-3.3183 pelele -0.0483
+-3.3183 penínsulas -0.0561
+-3.3183 pequeña -0.0527
+-3.3183 pequeño -0.0150
+-3.3183 pequeños -0.0557
+-3.0172 perfume -0.0263
+-3.3183 perjudica -0.0561
+-2.8412 pero -0.0423
+-3.3183 persona -0.0532
+-2.7162 personas -0.0477
+-3.3183 perspectiva -0.0530
+-3.3183 pesada -0.0150
+-3.3183 pesar -0.0301
+-3.3183 peso -0.0483
+-3.3183 pez -0.0150
+-2.8412 piano -0.0840
+-3.3183 pictórico -0.0301
+-3.3183 piensa -0.0559
+-3.3183 pierde -0.0150
+-3.0172 pilastra -0.0391
+-3.3183 piso -0.0530
+-3.3183 planos -0.0301
+-3.3183 plantas -0.0532
+-3.3183 plato -0.0150
+-3.3183 plena -0.0557
+-3.3183 pliegos -0.0150
+-3.0172 pluma -0.0061
+-3.3183 poco -0.0561
+-3.3183 podía -0.0559
+-3.3183 poquito -0.0561
+-2.0878 por -0.2709
+-3.3183 pornografía -0.0150
+-3.3183 porque -0.0523
+-3.3183 portero -0.0150
+-3.3183 poseída -0.0301
+-3.3183 preparada -0.0504
+-3.3183 preparar -0.0502
+-3.3183 presente -0.0301
+-3.3183 prevista -0.0530
+-3.0172 primero -0.0145
+-3.3183 primos -0.0150
+-3.3183 probable -0.0494
+-3.0172 probando -0.0557
+-3.3183 produjo -0.0430
+-3.0172 programa -0.0296
+-3.3183 prohibido -0.0561
+-3.3183 promontorios -0.0301
+-3.3183 provocar -0.0404
+-3.3183 proyecto -0.0504
+-3.3183 pudo -0.0559
+-3.3183 puede -0.0559
+-3.3183 pueden -0.0561
+-3.3183 puedes -0.0559
+-3.0172 puedo -0.0557
+-3.0172 pulsa -0.0386
+-3.3183 puntiagudos -0.0559
+-3.3183 puso -0.0559
+-3.3183 pájaro -0.0483
+-3.3183 pájaros -0.0150
+-3.3183 péndulo -0.0150
+-3.3183 público -0.0301
+-1.7998 que -0.0921
+-3.3183 quedaba -0.0502
+-3.0172 quería -0.0557
+-3.0172 quien -0.0551
+-3.3183 quince -0.0150
+-3.3183 quién -0.0561
+-3.0172 qué -0.0542
+-3.3183 rapidamente -0.0404
+-3.3183 raramente -0.0555
+-3.3183 reciclar -0.0504
+-3.3183 recipiente -0.0561
+-3.3183 recoger -0.0561
+-3.3183 reconocimiento -0.0301
+-2.8412 rectángulos -0.0921
+-3.3183 reducido -0.0504
+-3.3183 referencias -0.0150
+-2.8412 reflejo -0.1177
+-3.3183 regional -0.0150
+-3.3183 regular -0.0483
+-3.0172 regularidad -0.1533
+-3.3183 repartido -0.0150
+-3.3183 repentino -0.0542
+-3.3183 reposarse -0.0483
+-3.3183 resolución -0.0527
+-3.3183 respaldos -0.0472
+-3.3183 resplandor -0.0301
+-3.3183 retazos -0.0301
+-3.3183 revolución -0.0561
+-3.3183 rigidez -0.0527
+-3.3183 risas -0.0301
+-3.3183 robaron -0.0150
+-3.3183 roce -0.0483
+-3.3183 rodillas -0.0150
+-3.3183 rogando -0.0483
+-3.0172 roja -0.1124
+-3.3183 rompía -0.0404
+-3.3183 ronca -0.0546
+-3.3183 ropero -0.0553
+-3.3183 rosa -0.0561
+-3.3183 rosadas -0.0561
+-3.3183 roñada -0.0150
+-3.3183 rubia -0.0483
+-3.0172 rubias -0.1275
+-3.0172 rubios -0.0299
+-3.3183 ruidosa -0.0483
+-3.3183 rumiante -0.0494
+-3.3183 saber -0.0536
+-3.3183 sabor -0.0538
+-3.3183 sacó -0.0502
+-3.3183 salir -0.0301
+-3.3183 salones -0.0561
+-3.3183 salud -0.0150
+-3.3183 salvar -0.0561
+-3.0172 salón -0.0559
+-3.3183 sangre -0.0561
+-3.3183 sanitarias -0.0561
+-3.3183 santificar -0.0472
+-2.0395 se -0.0506
+-3.3183 seda -0.0561
+-3.0172 seguir -0.0402
+-3.3183 segundo -0.0559
+-3.3183 seguían -0.0542
+-3.0172 seis -0.0542
+-3.3183 sellos -0.0538
+-3.3183 semejantes -0.0472
+-3.3183 sentir -0.0502
+-3.3183 separar -0.0472
+-3.0172 ser -0.0536
+-3.3183 seriamente -0.0430
+-3.3183 será -0.0404
+-3.3183 sesenta -0.0483
+-3.3183 setenta -0.0150
+-3.3183 señala -0.0504
+-3.3183 señor -0.0301
+-3.3183 señora -0.0553
+-3.3183 señoras -0.0150
+-3.0172 si -0.0464
+-3.0172 siempre -0.0106
+-2.8412 siete -0.0772
+-3.3183 significa -0.0555
+-3.3183 sigue -0.0530
+-3.3183 silenciosas -0.0553
+-3.3183 sillones -0.0301
+-3.3183 sillón -0.0301
+-3.3183 simpática -0.0150
+-3.3183 simpático -0.0150
+-3.0172 sistema -0.1533
+-3.3183 situación -0.0561
+-2.4152 sobre -0.0938
+-3.3183 soltó -0.0430
+-2.8412 son -0.0546
+-3.3183 sorteando -0.0472
+-3.3183 sorteo -0.0546
+-3.3183 sostenidos -0.0527
+-3.3183 soñolienta -0.0150
+-2.5401 su -0.0548
+-3.3183 subirlas -0.0472
+-3.3183 suele -0.0561
+-3.3183 suelo -0.0546
+-3.3183 suena -0.0553
+-3.3183 sujeta -0.0404
+-2.3183 sus -0.1217
+-3.3183 susurró -0.0559
+-3.3183 sólo -0.0546
+-3.3183 súbita -0.0561
+-3.0172 tabaco -0.0559
+-3.3183 tamaño -0.0150
+-3.3183 también -0.0557
+-3.3183 tapizados -0.0301
+-2.8412 tarde -0.0737
+-3.3183 tardes -0.0527
+-3.0172 tarima -0.1533
+-3.3183 taza -0.0301
+-2.6193 te -0.0910
+-2.8412 techo 0.0028
+-3.3183 tecleos -0.0527
+-3.0172 temblaba -0.1478
+-3.3183 temprano -0.0150
+-3.3183 tendidos -0.0301
+-3.3183 tener -0.0430
+-3.3183 tengo -0.0483
+-3.3183 tenido -0.0553
+-3.3183 terciopelo -0.0150
+-3.3183 texto -0.0150
+-3.3183 teñidas -0.0301
+-3.3183 tienda -0.0301
+-2.7162 tiene -0.0538
+-3.3183 tienen -0.0502
+-3.3183 tienes -0.0494
+-3.3183 timidez -0.0150
+-3.3183 tocado -0.0502
+-3.3183 toda -0.0551
+-3.0172 todo -0.0527
+-3.3183 todos -0.0150
+-3.0172 tomate -0.0143
+-2.7162 torno -0.6227
+-3.3183 tostado -0.0561
+-3.0172 totalmente -0.0559
+-3.3183 trabajo -0.0538
+-3.3183 trajo -0.0561
+-3.3183 tranquilo -0.0494
+-3.3183 trece -0.0561
+-3.0172 treinta -0.0481
+-2.6193 tres 0.0017
+-3.3183 trescientas -0.0561
+-2.7162 tu -0.1008
+-3.3183 turbios -0.0527
+-2.7162 té -0.0596
+-3.3183 término -0.0561
+-3.3183 u -0.0559
+-1.8559 un -0.0607
+-1.9203 una -0.0287
+-3.0172 unas -0.0557
+-3.3183 unidos -0.0150
+-3.0172 uniformados -0.1518
+-3.3183 uniforme -0.0301
+-2.5401 uno -0.1083
+-3.0172 unos -0.0559
+-3.3183 usar -0.0559
+-3.3183 usuario -0.0483
+-2.8412 va -0.2351
+-3.3183 vacas -0.0561
+-3.3183 vacía -0.0483
+-3.3183 vale -0.0561
+-3.0172 vamos -0.1446
+-3.3183 vecinos -0.0150
+-3.3183 veinte -0.0561
+-3.3183 veintiuno -0.0559
+-3.3183 velludo -0.0150
+-3.3183 ven -0.0561
+-3.3183 vende -0.0561
+-3.3183 venden -0.0472
+-3.0172 venir -0.1502
+-3.0172 ventana -0.0391
+-3.3183 ventanacon -0.0561
+-2.8412 ventanas -0.0698
+-3.3183 ventosas -0.0301
+-3.0172 ver -0.0310
+-3.3183 verdaderos -0.0561
+-2.7162 verde -0.0143
+-3.3183 vete -0.0561
+-3.0172 vez -0.0466
+-3.0172 vida -0.0559
+-3.3183 vidas -0.0150
+-3.3183 vidriera -0.0301
+-3.3183 vinagre -0.0150
+-3.0172 vino -0.0106
+-3.3183 vio -0.0504
+-2.7162 violines -0.1849
+-3.3183 visitando -0.0561
+-3.3183 visual -0.0301
+-3.3183 vivienda -0.0150
+-3.0172 vivir -0.1520
+-3.3183 volando -0.0150
+-3.0172 volver -0.1446
+-2.7162 voy -0.1766
+-3.0172 voz -0.0145
+-3.3183 vuelo -0.0561
+-1.7385 y -0.0335
+-3.3183 yeso -0.0546
+-3.3183 zapatos -0.0483
+-3.3183 zigzag -0.0150
+-3.3183 ánfora -0.0504
+-2.7162 él -0.0496
+-3.3183 érase -0.0511
+-3.3183 ñú -0.0504
+-3.0172 último -0.0412
+
+\2-grams:
+-1.5957 <s> a 0.0000
+-3.1915 <s> abrir 0.0000
+-3.1915 <s> además 0.0000
+-2.1658 <s> al 0.0000
+-3.1915 <s> algo 0.0000
+-3.1915 <s> amarilla 0.0000
+-3.1915 <s> antes 0.0000
+-3.1915 <s> aproximadamente 0.0000
+-2.5011 <s> buenas 0.0000
+-3.1915 <s> camareros 0.0000
+-3.1915 <s> clavó 0.0000
+-2.5011 <s> como 0.0000
+-3.1915 <s> con 0.0000
+-3.1915 <s> cubiertos 0.0000
+-3.1915 <s> cuál 0.0000
+-2.5011 <s> de 0.0000
+-3.1915 <s> dejaba 0.0000
+-3.1915 <s> del 0.0000
+-3.1915 <s> dentro 0.0000
+-3.1915 <s> diez 0.0000
+-3.1915 <s> dime 0.0000
+-3.1915 <s> dos 0.0000
+-0.8963 <s> el -0.0067
+-1.3734 <s> en 0.1064
+-3.1915 <s> entre 0.0000
+-1.7848 <s> es 0.0602
+-3.1915 <s> escribir 0.0000
+-3.1915 <s> esta 0.0000
+-3.1915 <s> estaba 0.0000
+-3.1915 <s> estaban 0.0000
+-3.1915 <s> está 0.0000
+-3.1915 <s> flotaba 0.0000
+-3.1915 <s> hazte 0.0000
+-3.1915 <s> he 0.0000
+-3.1915 <s> hoy 0.0000
+-3.1915 <s> inflamadas 0.0000
+-3.1915 <s> instaló 0.0000
+-3.1915 <s> iñaki 0.0000
+-1.1303 <s> la 0.0000
+-2.5011 <s> las 0.0000
+-3.1915 <s> llama 0.0000
+-3.1915 <s> llamar 0.0000
+-3.1915 <s> lleva 0.0000
+-1.3734 <s> los 0.0000
+-3.1915 <s> madera 0.0000
+-3.1915 <s> manteca 0.0000
+-3.1915 <s> marcar 0.0000
+-3.1915 <s> media 0.0000
+-1.5957 <s> mi -0.0123
+-3.1915 <s> mientras 0.0000
+-3.1915 <s> miguel 0.0000
+-3.1915 <s> movíase 0.0000
+-3.1915 <s> muchos 0.0000
+-3.1915 <s> muy 0.0000
+-2.5011 <s> más 0.0000
+-3.1915 <s> nicolás 0.0000
+-3.1915 <s> niños 0.0000
+-1.7405 <s> no 0.0000
+-3.1915 <s> nuestro 0.0000
+-3.1915 <s> ocultándose 0.0000
+-1.3222 <s> para 0.0000
+-3.1915 <s> pero 0.0000
+-3.1915 <s> por 0.0000
+-3.1915 <s> probando 0.0000
+-2.5011 <s> que 0.0000
+-3.1915 <s> quien 0.0000
+-3.1915 <s> quién 0.0000
+-3.1915 <s> qué 0.0000
+-2.5011 <s> se 0.0000
+-3.1915 <s> ser 0.0000
+-3.1915 <s> sesenta 0.0000
+-3.1915 <s> señala 0.0000
+-3.1915 <s> siempre 0.0000
+-3.1915 <s> sillones 0.0000
+-3.1915 <s> sorteando 0.0000
+-3.1915 <s> su 0.0000
+-3.1915 <s> sujeta 0.0000
+-1.7848 <s> sus -0.0380
+-3.1915 <s> sólo 0.0000
+-3.1915 <s> te 0.0000
+-3.1915 <s> todo 0.0000
+-3.1915 <s> trajo 0.0000
+-1.5957 <s> un 0.0000
+-2.5011 <s> una 0.0000
+-3.1915 <s> unas 0.0000
+-3.1915 <s> uniformados 0.0000
+-3.1915 <s> uno 0.0000
+-3.1915 <s> va 0.0000
+-2.5011 <s> vamos 0.0129
+-3.1915 <s> veinte 0.0000
+-3.1915 <s> vete 0.0000
+-3.1915 <s> vio 0.0000
+-3.1915 <s> vivir 0.0000
+-3.1915 <s> voy 0.0000
+-2.5011 <s> y 0.0000
+-3.1915 <s> érase 0.0000
+-2.5485 a actualizar 0.0000
+-1.8581 a aparecer 0.0129
+-2.5485 a atar 0.0000
+-2.5485 a cantar 0.0000
+-2.5485 a china 0.0000
+-2.5485 a cuerdas 0.0000
+-2.5485 a dar 0.0000
+-2.5485 a dios 0.0000
+-2.5485 a estados 0.0000
+-2.5485 a inglaterra 0.0000
+-2.5485 a internet 0.0000
+-2.5485 a jugar 0.0000
+-0.7304 a la 0.0000
+-2.5485 a largarse 0.0000
+-2.5485 a las 0.0000
+-2.5485 a lo 0.0000
+-1.1418 a los 0.0000
+-2.5485 a mi 0.0000
+-2.5485 a otra 0.0000
+-2.5485 a pared 0.0000
+-2.5485 a pesar 0.0000
+-2.5485 a pilastra 0.0000
+-2.5485 a provocar 0.0000
+-2.5485 a quien 0.0000
+-2.5485 a reciclar 0.0000
+-2.5485 a recoger 0.0000
+-2.5485 a salvar 0.0000
+-2.5485 a santificar 0.0000
+-2.5485 a ser 0.0000
+-2.5485 a tu 0.0000
+-2.5485 a una 0.0000
+-2.5485 a él 0.0000
+-0.9151 abandonar el 0.0000
+-0.9151 abaratamiento de 0.0000
+-0.9151 abarca poco 0.0000
+-0.9151 abierto </s> 0.0000
+-1.2161 abrir programa 0.0000
+-1.2161 abrir y 0.0000
+-0.9151 abstracción </s> 0.0000
+-0.9151 abstracto </s> 0.0000
+-0.9151 accesibilidad a 0.0000
+-0.9151 accionariado de 0.0000
+-0.9151 aceite por 0.0000
+-0.9151 aceptar </s> 0.0000
+-0.9151 acogían grupos 0.0000
+-0.9151 acompasado como 0.0000
+-0.9151 acompañado en 0.0000
+-0.9151 acompañándola fieles 0.0000
+-0.9151 actualizar rapidamente 0.0000
+-0.9151 acústico para 0.0000
+-0.9151 adelante y 0.0000
+-0.9151 además de 0.0000
+-0.9151 adherían a 0.0000
+-0.9151 adjetivo que 0.0000
+-0.9151 adornaba los 0.0000
+-0.9151 adornos de 0.0000
+-0.9151 adquirir el 0.0000
+-0.9151 advierten que 0.0000
+-0.9151 afirmación falsa 0.0000
+-0.9151 agrandados por 0.0000
+-0.9151 agrietado </s> 0.0000
+-0.5257 agrupábanse sobre -0.1072
+-0.9151 agua caliente 0.0000
+-0.9151 aguas minerales 0.0000
+-1.2161 ahora mismo 0.0000
+-1.2161 ahora vacía 0.0000
+-0.9151 aislamiento acústico 0.0000
+-2.1192 al almacén 0.0000
+-2.1192 al antílope 0.0000
+-2.1192 al asno 0.0000
+-2.1192 al buey 0.0000
+-2.1192 al caballo 0.0000
+-2.1192 al ente 0.0000
+-2.1192 al levantarse 0.0000
+-2.1192 al nacimiento 0.0000
+-2.1192 al otro 0.0000
+-2.1192 al presente 0.0000
+-2.1192 al ropero 0.0000
+-2.1192 al salir 0.0000
+-2.1192 al seis 0.0000
+-2.1192 al sentir 0.0000
+-2.1192 al siete 0.0000
+-2.1192 al ver 0.0000
+-1.2161 algo en 0.0000
+-1.2161 algo nuevo 0.0000
+-0.9151 aliño de 0.0000
+-0.5257 allá de -0.1387
+-0.9151 almacén </s> 0.0000
+-0.5257 alrededor de -0.1296
+-1.3922 alto </s> 0.0000
+-1.3922 alto del 0.0000
+-1.3922 alto por 0.0000
+-0.9151 altura eran 0.0000
+-0.9151 alzar tu 0.0000
+-0.9151 amanece más 0.0000
+-0.9151 amarilla de 0.0000
+-0.9151 amarillento y 0.0000
+-0.9151 ambiente era 0.0000
+-0.9151 amigos se 0.0000
+-0.5257 ampollas eléctricas 0.0000
+-0.9151 amé era 0.0000
+-0.9151 anchas manos 0.0000
+-0.9151 anda el 0.0000
+-0.9151 anillos </s> 0.0000
+-0.9151 animal rumiante 0.0000
+-0.9151 animar la 0.0000
+-0.9151 anterior al 0.0000
+-1.2161 antes cuando 0.0000
+-1.2161 antes de 0.0000
+-0.9151 antílope </s> 0.0000
+-0.9151 anuncio quería 0.0000
+-0.9151 anzuelo </s> 0.0000
+-0.5257 aparecer con -0.1314
+-0.9151 aparición del 0.0000
+-0.9151 aprender inglés 0.0000
+-0.9151 aprieta </s> 0.0000
+-0.9151 aproximadamente tiene 0.0000
+-0.9151 aquí ahora 0.0000
+-0.9151 archipiélago humano 0.0000
+-0.3665 arcos de -0.0348
+-0.9151 armadura estaba 0.0000
+-0.9151 arriesgado </s> 0.0000
+-0.9151 arte abstracto 0.0000
+-0.9151 artesanales </s> 0.0000
+-0.9151 artificial rigidez 0.0000
+-0.9151 artificiales cuyas 0.0000
+-0.9151 artillería pesada 0.0000
+-0.9151 asalariado es 0.0000
+-0.9151 asia </s> 0.0000
+-0.9151 asientos tapizados 0.0000
+-0.9151 asno con 0.0000
+-0.9151 aspa roja 0.0000
+-0.9151 aspecto exterior 0.0000
+-0.9151 atar a 0.0000
+-0.9151 atmósfera de 0.0000
+-0.9151 aula doy 0.0000
+-0.9151 autentificar tu 0.0000
+-0.9151 autoridades sanitarias 0.0000
+-0.9151 autónomo </s> 0.0000
+-0.9151 avanzó el 0.0000
+-0.9151 avería el 0.0000
+-1.2161 ayuda </s> 0.0000
+-1.2161 ayuda a 0.0000
+-0.5257 ayudar a 0.0000
+-1.3922 azul de 0.0000
+-1.3922 azul grisáceo 0.0000
+-1.3922 azul y 0.0000
+-0.9151 azulada que 0.0000
+-0.9151 azules </s> 0.0000
+-0.5257 años </s> 0.0000
+-0.9151 aúllan las 0.0000
+-0.9151 baile regional 0.0000
+-0.9151 bajo la 0.0000
+-1.2161 balanceo repentino 0.0000
+-1.2161 balanceo una 0.0000
+-0.9151 balón </s> 0.0000
+-0.9151 bambú formaban 0.0000
+-0.9151 bandeja en 0.0000
+-0.9151 bandejas </s> 0.0000
+-0.9151 barco </s> 0.0000
+-0.9151 bastante feo 0.0000
+-0.9151 bastoncillo </s> 0.0000
+-1.2161 bebida gaseosa 0.0000
+-1.2161 bebida preparada 0.0000
+-0.9151 bilbao </s> 0.0000
+-0.9151 bisagra metálica 0.0000
+-0.9151 biselados </s> 0.0000
+-0.9151 blanco también 0.0000
+-1.2161 blancura de 0.0000
+-1.2161 blancura uniforme 0.0000
+-0.9151 blanqueaban sobre 0.0000
+-0.9151 boca muere 0.0000
+-0.9151 bonita canción 0.0000
+-0.9151 botones dorados 0.0000
+-0.9151 botón aceptar 0.0000
+-1.2161 buen cubata 0.0000
+-1.2161 buen licor 0.0000
+-0.9151 buena chuleta 0.0000
+-1.2161 buenas noches 0.0000
+-1.2161 buenas tardes 0.0000
+-0.9151 buenos días 0.0000
+-0.9151 buey al 0.0000
+-0.9151 burbujeo de 0.0000
+-0.9151 bustos de 0.0000
+-0.9151 caballo y 0.0000
+-0.9151 cabeza </s> 0.0000
+-0.5257 cabezas rubias 0.0129
+-0.9151 caja en 0.0000
+-0.9151 caliente </s> 0.0000
+-0.9151 callaba y 0.0000
+-0.9151 calle </s> 0.0000
+-0.3665 cama </s> 0.0000
+-0.7017 camareros agrupábanse 0.0129
+-1.3922 camareros rubios 0.0000
+-0.9151 cambio de 0.0000
+-0.9151 camino </s> 0.0000
+-0.9151 camión tienes 0.0000
+-0.9151 campestre que 0.0000
+-0.9151 campo visual 0.0000
+-0.9151 canalizos de 0.0000
+-0.9151 canción </s> 0.0000
+-0.9151 cantar una 0.0000
+-0.9151 caperucita roja 0.0000
+-0.9151 capitalismo </s> 0.0000
+-0.9151 capitán será 0.0000
+-0.9151 cara </s> 0.0000
+-0.9151 caramelos </s> 0.0000
+-0.9151 carlos ha 0.0000
+-0.9151 caro y 0.0000
+-0.9151 carro me 0.0000
+-0.9151 cartera muy 0.0000
+-0.5257 casi mecánica 0.0129
+-0.7017 caso </s> 0.0000
+-1.3922 caso de 0.0000
+-0.9151 catorce y 0.0000
+-0.9151 catálogo contiene 0.0000
+-0.9151 centímetros </s> 0.0000
+-0.9151 cercanas a 0.0000
+-0.9151 cero uno 0.0000
+-0.9151 cerraban la 0.0000
+-1.2161 cerrar de 0.0000
+-1.2161 cerrar el 0.0000
+-0.9151 cerámico de 0.0000
+-0.9151 chaqueta azul 0.0000
+-0.9151 charolado </s> 0.0000
+-0.9151 chica que 0.0000
+-0.9151 chico miró 0.0000
+-0.9151 china </s> 0.0000
+-0.9151 chincheta </s> 0.0000
+-0.9151 chino </s> 0.0000
+-0.9151 choque de 0.0000
+-0.9151 chorizo </s> 0.0000
+-0.9151 chufas </s> 0.0000
+-0.9151 chuleta </s> 0.0000
+-0.9151 cien o 0.0000
+-1.2161 ciento setenta 0.0000
+-1.2161 ciento volando 0.0000
+-0.5257 cierto reflejo -0.0446
+-1.5171 cinco años 0.0000
+-1.5171 cinco seis 0.0000
+-1.5171 cinco siete 0.0000
+-1.5171 cinco son 0.0000
+-1.3922 cincuenta </s> 0.0000
+-1.3922 cincuenta centímetros 0.0000
+-1.3922 cincuenta y 0.0000
+-0.9151 clases de 0.0000
+-0.9151 clavó el 0.0000
+-0.9151 cobrizas adherían 0.0000
+-0.5257 coca cola 0.0000
+-0.9151 coche estaba 0.0000
+-0.8267 cola </s> 0.0000
+-1.5171 cola es 0.0000
+-1.5171 cola y 0.0000
+-0.9151 colcha de 0.0000
+-0.9151 colección de 0.0000
+-0.9151 color verde 0.0000
+-0.9151 coloreado a 0.0000
+-0.9151 columna esbelta 0.0000
+-0.9151 coma todo 0.0000
+-0.9151 comer pasta 0.0000
+-0.9151 comienza a 0.0000
+-1.8181 como asalariado 0.0000
+-1.8181 como autónomo 0.0000
+-1.8181 como dote 0.0000
+-1.8181 como el 0.0000
+-1.8181 como poseída 0.0000
+-1.8181 como si 0.0000
+-1.1277 como una 0.0000
+-0.9151 compactas líneas 0.0000
+-0.9151 compatibilidad es 0.0000
+-0.9151 compañía está 0.0000
+-0.9151 complicado </s> 0.0000
+-0.9151 comí huevos 0.0000
+-2.3622 con adornos 0.0000
+-2.3622 con balanceo 0.0000
+-2.3622 con chorizo 0.0000
+-2.3622 con chufas 0.0000
+-1.6718 con cierto 0.0129
+-2.3622 con círculos 0.0000
+-2.3622 con desden 0.0000
+-0.9112 con el 0.0000
+-1.6718 con la 0.0000
+-2.3622 con lentitud 0.0000
+-1.6718 con los 0.0000
+-2.3622 con pan 0.0000
+-2.3622 con perfume 0.0000
+-1.6718 con regularidad 0.0129
+-2.3622 con risas 0.0000
+-2.3622 con tomate 0.0000
+-2.3622 con tu 0.0000
+-2.3622 con un 0.0000
+-2.3622 con una 0.0000
+-0.9151 concha dura 0.0000
+-0.9151 concienciar a 0.0000
+-0.9151 confundidos con 0.0000
+-0.9151 conseguir llegar 0.0000
+-0.9151 contacto avanzó 0.0000
+-0.9151 contados </s> 0.0000
+-0.9151 contar con 0.0000
+-0.9151 contiene más 0.0000
+-0.9151 contrahecho </s> 0.0000
+-0.9151 contraseña pulsa 0.0000
+-0.9151 conversaciones con 0.0000
+-0.9151 corazón </s> 0.0000
+-0.9151 correo piensa 0.0000
+-0.5257 corros femeninos 0.0129
+-0.9151 corta chaqueta 0.0000
+-0.9151 cosa de 0.0000
+-1.3922 cosas hasta 0.0000
+-1.3922 cosas que 0.0000
+-1.3922 cosas y 0.0000
+-0.9151 cretona en 0.0000
+-0.9151 criadas cobrizas 0.0000
+-0.9151 crisis va 0.0000
+-1.3922 cristales biselados 0.0000
+-1.3922 cristales las 0.0000
+-1.3922 cristales ligeramente 0.0000
+-0.9151 cristo </s> 0.0000
+-0.9151 crujido de 0.0000
+-0.9151 cuando el 0.0000
+-0.9151 cuarenta cincuenta 0.0000
+-0.8267 cuatro cinco 0.0000
+-0.8267 cuatro ventanas -0.0446
+-0.9151 cubata hay 0.0000
+-1.2161 cubierto de 0.0000
+-1.2161 cubierto por 0.0000
+-0.9151 cubiertos al 0.0000
+-0.9151 cuello fernando 0.0000
+-0.9151 cuentan con 0.0000
+-0.9151 cuento de 0.0000
+-0.9151 cuerdas </s> 0.0000
+-0.9151 cuerpo es 0.0000
+-0.9151 culo </s> 0.0000
+-0.9151 culín de 0.0000
+-0.9151 cura va 0.0000
+-0.9151 cuyas hojas 0.0000
+-1.2161 cuál es 0.0000
+-1.2161 cuál te 0.0000
+-0.9151 círculos </s> 0.0000
+-0.9151 código abierto 0.0000
+-0.9151 dados estaban 0.0000
+-0.9151 dando </s> 0.0000
+-0.9151 danza </s> 0.0000
+-0.9151 dar nada 0.0000
+-3.0014 de aceite 0.0000
+-3.0014 de asia 0.0000
+-3.0014 de avería 0.0000
+-3.0014 de bambú 0.0000
+-3.0014 de bandejas 0.0000
+-3.0014 de caperucita 0.0000
+-2.3110 de cola -0.0707
+-3.0014 de color 0.0000
+-3.0014 de columna 0.0000
+-3.0014 de compactas 0.0000
+-3.0014 de compatibilidad 0.0000
+-3.0014 de corta 0.0000
+-3.0014 de cristo 0.0000
+-2.3110 de cuatro -0.0707
+-3.0014 de código 0.0000
+-3.0014 de danza 0.0000
+-3.0014 de edición 0.0000
+-3.0014 de energía 0.0000
+-3.0014 de ensalada 0.0000
+-3.0014 de este 0.0000
+-2.3110 de estos 0.0129
+-3.0014 de floreada 0.0000
+-2.3110 de germanos 0.0129
+-3.0014 de goma 0.0000
+-3.0014 de grabar 0.0000
+-3.0014 de gran 0.0000
+-3.0014 de habano 0.0000
+-3.0014 de humo 0.0000
+-3.0014 de imprimir 0.0000
+-3.0014 de invernáculo 0.0000
+-2.3110 de invierno 0.0000
+-3.0014 de invisible 0.0000
+-3.0014 de israel 0.0000
+-3.0014 de jarabes 0.0000
+-3.0014 de junco 0.0000
+-0.9724 de la -0.0163
+-1.1833 de las -0.0037
+-3.0014 de lodo 0.0000
+-1.5504 de los 0.0000
+-3.0014 de mar 0.0000
+-3.0014 de marzo 0.0000
+-3.0014 de mi 0.0000
+-3.0014 de mujeres 0.0000
+-3.0014 de múltiples 0.0000
+-3.0014 de músicos 0.0000
+-3.0014 de nada 0.0000
+-3.0014 de navidad 0.0000
+-1.9757 de ojeda 0.0000
+-2.3110 de ojos 0.0000
+-3.0014 de opio 0.0000
+-3.0014 de oro 0.0000
+-3.0014 de parecer 0.0000
+-3.0014 de pared 0.0000
+-3.0014 de pequeños 0.0000
+-3.0014 de personas 0.0000
+-3.0014 de pilastra 0.0000
+-3.0014 de pájaros 0.0000
+-3.0014 de qué 0.0000
+-3.0014 de sangre 0.0000
+-3.0014 de seda 0.0000
+-3.0014 de sellos 0.0000
+-3.0014 de situación 0.0000
+-1.9757 de su 0.0000
+-1.5947 de sus 0.0260
+-3.0014 de súbita 0.0000
+-3.0014 de terciopelo 0.0000
+-3.0014 de texto 0.0000
+-3.0014 de todos 0.0000
+-3.0014 de trescientas 0.0000
+-2.3110 de té -0.0707
+-1.5947 de un -0.0557
+-2.3110 de una 0.0000
+-3.0014 de unas 0.0000
+-3.0014 de unos 0.0000
+-3.0014 de ventana 0.0000
+-3.0014 de vinagre 0.0000
+-3.0014 de vino 0.0000
+-3.0014 de voz 0.0000
+-2.3110 de él 0.0000
+-1.2161 debes alzar 0.0000
+-1.2161 debes subirlas 0.0000
+-1.2161 decir </s> 0.0000
+-1.2161 decir que 0.0000
+-0.9151 decoración el 0.0000
+-0.9151 dedo lo 0.0000
+-1.2161 dedos </s> 0.0000
+-1.2161 dedos de 0.0000
+-0.9151 dejaba ver 0.0000
+-2.1455 del capitalismo 0.0000
+-2.1455 del caso 0.0000
+-2.1455 del cuerpo 0.0000
+-1.4551 del exterior -0.0112
+-2.1455 del fondo 0.0000
+-2.1455 del jardín 0.0000
+-2.1455 del menú 0.0000
+-1.4551 del mundo 0.0000
+-2.1455 del niño 0.0000
+-2.1455 del piano 0.0000
+-2.1455 del proyecto 0.0000
+-2.1455 del segundo 0.0000
+-1.4551 del techo 0.0000
+-2.1455 del té 0.0000
+-0.9151 dentro del 0.0000
+-0.9151 derecha </s> 0.0000
+-0.9151 descendían gorjeos 0.0000
+-0.9151 describe es 0.0000
+-0.9151 desden </s> 0.0000
+-0.9151 deslizaban de 0.0000
+-0.9151 después de 0.0000
+-1.3922 destacábanse </s> 0.0000
+-0.7017 destacábanse sobre -0.0644
+-0.9151 detrás de 0.0000
+-0.5257 dicho que 0.0000
+-0.9151 diez once 0.0000
+-0.9151 dijo buenos 0.0000
+-0.9151 dime cuál 0.0000
+-0.9151 dio como 0.0000
+-1.2161 dios le 0.0000
+-1.2161 dios rogando 0.0000
+-0.9151 divisaba una 0.0000
+-0.9151 doce trece 0.0000
+-0.9151 docena de 0.0000
+-0.9151 donante de 0.0000
+-1.2161 donde estaba 0.0000
+-1.2161 donde una 0.0000
+-0.9151 dorados pasaban 0.0000
+-1.7601 dos años 0.0000
+-1.7601 dos cuatro 0.0000
+-1.7601 dos niños 0.0000
+-1.7601 dos salones 0.0000
+-0.7344 dos tres 0.0000
+-0.9151 dote unos 0.0000
+-0.9151 doy clases 0.0000
+-0.9151 dura </s> 0.0000
+-0.9151 durmiendo </s> 0.0000
+-0.9151 durmió </s> 0.0000
+-1.2161 día de 0.0000
+-1.2161 día los 0.0000
+-0.9151 días </s> 0.0000
+-0.9151 edición de 0.0000
+-2.7901 el abaratamiento 0.0000
+-2.7901 el accionariado 0.0000
+-2.7901 el adjetivo 0.0000
+-2.7901 el ambiente 0.0000
+-2.7901 el anuncio 0.0000
+-2.7901 el anzuelo 0.0000
+-2.7901 el arte 0.0000
+-2.7901 el aspa 0.0000
+-2.7901 el azul 0.0000
+-2.7901 el balón 0.0000
+-2.7901 el barco 0.0000
+-2.7901 el botón 0.0000
+-2.7901 el burbujeo 0.0000
+-2.7901 el camino 0.0000
+-2.7901 el camión 0.0000
+-2.7901 el campo 0.0000
+-2.7901 el capitán 0.0000
+-2.7901 el catálogo 0.0000
+-2.7901 el chico 0.0000
+-2.7901 el coche 0.0000
+-2.7901 el corazón 0.0000
+-2.7901 el cuello 0.0000
+-2.7901 el cuento 0.0000
+-2.7901 el cura 0.0000
+-2.7901 el de 0.0000
+-2.7901 el dedo 0.0000
+-2.7901 el estado 0.0000
+-2.7901 el filo 0.0000
+-2.7901 el frío 0.0000
+-2.7901 el fémur 0.0000
+-2.7901 el gato 0.0000
+-2.7901 el gusano 0.0000
+-2.7901 el hombre 0.0000
+-2.7901 el inspector 0.0000
+-2.7901 el jardín 0.0000
+-2.7901 el leve 0.0000
+-2.7901 el llanto 0.0000
+-2.7901 el mago 0.0000
+-2.7901 el mazo 0.0000
+-2.7901 el medioambiente 0.0000
+-2.7901 el mismo 0.0000
+-2.0997 el niño 0.0000
+-2.7901 el número 0.0000
+-2.7901 el oso 0.0000
+-2.7901 el padre 0.0000
+-2.7901 el pan 0.0000
+-2.7901 el papel 0.0000
+-2.7901 el pecho 0.0000
+-2.7901 el perfume 0.0000
+-2.7901 el pez 0.0000
+-2.7901 el plato 0.0000
+-2.7901 el portero 0.0000
+-2.0997 el primero 0.0000
+-2.7901 el programa 0.0000
+-2.7901 el que 0.0000
+-2.7901 el reconocimiento 0.0000
+-2.7901 el reflejo 0.0000
+-2.7901 el saber 0.0000
+-2.7901 el salón 0.0000
+-2.7901 el señor 0.0000
+-2.7901 el sillón 0.0000
+-2.0997 el sistema 0.0129
+-2.7901 el sorteo 0.0000
+-2.7901 el suelo 0.0000
+-2.7901 el tabaco 0.0000
+-2.7901 el techo 0.0000
+-2.7901 el té 0.0000
+-1.7644 el verde 0.0000
+-2.7901 el yeso 0.0000
+-2.7901 el último 0.0000
+-1.2161 eléctricas del 0.0000
+-1.2161 eléctricas descendían 0.0000
+-0.9151 emancipan a 0.0000
+-0.9151 embadurnar </s> 0.0000
+-0.9151 empañándolos con 0.0000
+-2.4948 en abandonar 0.0000
+-2.4948 en agua 0.0000
+-2.4948 en alto 0.0000
+-2.4948 en caso 0.0000
+-2.4948 en conseguir 0.0000
+-2.4948 en día 0.0000
+-0.6767 en el 0.0000
+-2.4948 en esa 0.0000
+-2.4948 en esta 0.0000
+-2.4948 en este 0.0000
+-2.4948 en internet 0.0000
+-1.0438 en la 0.0000
+-1.8044 en las 0.0000
+-2.4948 en los 0.0000
+-2.4948 en mano 0.0000
+-2.4948 en plena 0.0000
+-2.4948 en su 0.0000
+-1.0881 en torno -0.0500
+-1.8044 en un 0.0000
+-2.4948 en ventana 0.0000
+-2.4948 en zigzag 0.0000
+-0.9151 enana movía 0.0000
+-0.9151 encogía en 0.0000
+-0.9151 encontraba escondido 0.0000
+-0.9151 encuadraban el 0.0000
+-0.9151 energía </s> 0.0000
+-0.9151 enrejados </s> 0.0000
+-0.9151 ensalada suele 0.0000
+-0.9151 ente público 0.0000
+-0.9151 entiendo el 0.0000
+-0.9151 entonces inanimadas 0.0000
+-0.9151 entre los 0.0000
+-0.9151 envases </s> 0.0000
+-1.6140 era bastante 0.0000
+-1.6140 era madurilla 0.0000
+-1.6140 era muy 0.0000
+-1.6140 era más 0.0000
+-1.6140 era rubia 0.0000
+-0.9151 eran el 0.0000
+-0.9151 erizos de 0.0000
+-2.3622 es anterior 0.0000
+-2.3622 es chino 0.0000
+-2.3622 es cosa 0.0000
+-2.3622 es de 0.0000
+-1.3365 es el 0.0000
+-2.3622 es finales 0.0000
+-2.3622 es ir 0.0000
+-2.3622 es la 0.0000
+-2.3622 es lo 0.0000
+-1.6718 es muy 0.0000
+-2.3622 es más 0.0000
+-1.6718 es necesario 0.0000
+-2.3622 es simpático 0.0000
+-0.6021 es un 0.0000
+-0.9555 es una -0.0542
+-0.9151 esa aula 0.0000
+-0.9151 esbelta </s> 0.0000
+-0.9151 escaldar un 0.0000
+-0.9151 escasez de 0.0000
+-0.9151 escondido bajo 0.0000
+-0.9151 escribiendo </s> 0.0000
+-0.9151 escribir nuevas 0.0000
+-0.9151 escritura huían 0.0000
+-0.9151 espacio reducido 0.0000
+-0.9151 especie de 0.0000
+-0.9151 esperanza es 0.0000
+-0.9151 esposa era 0.0000
+-1.2161 esta es 0.0000
+-1.2161 esta fuga 0.0000
+-1.8181 estaba agrietado 0.0000
+-1.1277 estaba cubierto 0.0000
+-1.8181 estaba durmiendo 0.0000
+-1.8181 estaba lo 0.0000
+-1.8181 estaba obcecado 0.0000
+-1.8181 estaba totalmente 0.0000
+-1.8181 estaba él 0.0000
+-1.2161 estaban de 0.0000
+-1.2161 estaban ocupados 0.0000
+-0.9151 estado de 0.0000
+-0.9151 estados unidos 0.0000
+-1.6140 este archipiélago 0.0000
+-1.6140 este cambio 0.0000
+-1.6140 este contacto 0.0000
+-1.6140 este correo 0.0000
+-1.6140 este número 0.0000
+-0.9151 esto al 0.0000
+-0.5257 estos corros 0.0129
+-1.5171 está el 0.0000
+-1.5171 está muy 0.0000
+-1.5171 está prohibido 0.0000
+-1.5171 está visitando 0.0000
+-0.9151 euro </s> 0.0000
+-0.9151 evitarse este 0.0000
+-0.9151 evocación campestre 0.0000
+-0.9151 exaltado </s> 0.0000
+-0.9151 exclusivo </s> 0.0000
+-0.5883 exterior </s> 0.0000
+-1.6140 exterior cosas 0.0000
+-1.6140 exterior se 0.0000
+-0.9151 falsa </s> 0.0000
+-0.9151 fatigados por 0.0000
+-0.9151 favorito es 0.0000
+-0.9151 fecha prevista 0.0000
+-0.5257 femeninos en -0.1038
+-0.9151 feo </s> 0.0000
+-0.9151 fernando de 0.0000
+-0.9151 fieles en 0.0000
+-0.9151 filo de 0.0000
+-0.9151 finales de 0.0000
+-0.9151 finalización del 0.0000
+-0.9151 floreada cretona 0.0000
+-0.9151 flotaba sobre 0.0000
+-0.9151 fondo del 0.0000
+-0.9151 formaban islas 0.0000
+-0.9151 formada de 0.0000
+-0.9151 formados por 0.0000
+-0.9151 frase número 0.0000
+-1.2161 frases comienza 0.0000
+-1.2161 frases debes 0.0000
+-0.9151 frío resplandor 0.0000
+-0.9151 fue a 0.0000
+-0.9151 fuerte </s> 0.0000
+-0.9151 fuga ideal 0.0000
+-0.9151 fumaban silenciosas 0.0000
+-0.9151 fémur </s> 0.0000
+-0.9151 gaseosa </s> 0.0000
+-0.9151 gato se 0.0000
+-0.9151 gemidos de 0.0000
+-0.9151 gente </s> 0.0000
+-0.5257 germanos y -0.0822
+-0.9151 golfos y 0.0000
+-0.9151 goma se 0.0000
+-0.9151 gorjeos de 0.0000
+-0.9151 gozne es 0.0000
+-0.9151 grabar las 0.0000
+-0.9151 grado de 0.0000
+-0.9151 gran tamaño 0.0000
+-0.9151 gratis a 0.0000
+-0.9151 grisáceo de 0.0000
+-0.9151 grupos de 0.0000
+-0.9151 gusano en 0.0000
+-1.2161 gusta mucho 0.0000
+-1.2161 gusta una 0.0000
+-0.9151 guste </s> 0.0000
+-0.8267 ha dicho 0.0129
+-1.5171 ha tenido 0.0000
+-1.5171 ha tocado 0.0000
+-0.9151 habano y 0.0000
+-0.9151 haber nacido 0.0000
+-0.9151 hablar con 0.0000
+-0.9151 había ocurrido 0.0000
+-0.9151 hace caso 0.0000
+-0.9151 hacerlo </s> 0.0000
+-0.9151 hacia adelante 0.0000
+-0.9151 hasta entonces 0.0000
+-1.3922 hay más 0.0000
+-0.7017 hay que 0.0000
+-0.9151 haya ido 0.0000
+-0.9151 hazte donante 0.0000
+-0.9151 he ido 0.0000
+-0.9151 helados artesanales 0.0000
+-0.9151 hojas parecían 0.0000
+-0.9151 hombre más 0.0000
+-0.9151 hora antes 0.0000
+-0.9151 horchata es 0.0000
+-0.9151 hoy en 0.0000
+-0.9151 huesos más 0.0000
+-0.9151 huevos con 0.0000
+-0.9151 humano </s> 0.0000
+-0.9151 humeaba en 0.0000
+-0.9151 humedad exterior 0.0000
+-0.9151 humo de 0.0000
+-0.9151 husmear el 0.0000
+-0.9151 huía lejos 0.0000
+-0.9151 huían de 0.0000
+-0.5257 húmedo que -0.1235
+-0.9151 ideal por 0.0000
+-1.2161 ido a 0.0000
+-1.2161 ido no 0.0000
+-0.9151 igual a 0.0000
+-0.9151 imprimir este 0.0000
+-0.9151 inanimadas </s> 0.0000
+-0.9151 industrial produjo 0.0000
+-0.9151 infantiles más 0.0000
+-0.9151 inflamadas en 0.0000
+-0.9151 información hablar 0.0000
+-0.9151 inglaterra o 0.0000
+-0.9151 inglés lo 0.0000
+-0.9151 inmediatamente </s> 0.0000
+-0.9151 inmediato blanco 0.0000
+-0.9151 inspector carlos 0.0000
+-0.9151 instaló aislamiento 0.0000
+-0.9151 interna ruidosa 0.0000
+-1.2161 internet </s> 0.0000
+-1.2161 internet hay 0.0000
+-0.9151 inundación </s> 0.0000
+-0.9151 invernáculo el 0.0000
+-1.2161 invierno </s> 0.0000
+-1.2161 invierno donde 0.0000
+-0.9151 invisible término 0.0000
+-0.9151 ir a 0.0000
+-0.9151 islas </s> 0.0000
+-0.9151 israel es 0.0000
+-0.9151 izquierda venden 0.0000
+-0.9151 iñaki tiene 0.0000
+-0.9151 jarabes y 0.0000
+-1.2161 jardín contrahecho 0.0000
+-1.2161 jardín de 0.0000
+-0.9151 jota es 0.0000
+-1.2161 joven </s> 0.0000
+-1.2161 joven tiene 0.0000
+-0.9151 jovenes se 0.0000
+-0.9151 jugar ni 0.0000
+-0.9151 juguetes se 0.0000
+-0.9151 junco pero 0.0000
+-2.7144 la accesibilidad 0.0000
+-2.7144 la aparición 0.0000
+-2.7144 la armadura 0.0000
+-2.7144 la artificial 0.0000
+-2.7144 la bandeja 0.0000
+-2.0240 la blancura 0.0000
+-2.7144 la boca 0.0000
+-2.7144 la cabeza 0.0000
+-2.7144 la caja 0.0000
+-2.7144 la calle 0.0000
+-1.6887 la cama 0.1982
+-2.7144 la cartera 0.0000
+-2.7144 la chica 0.0000
+-2.7144 la chincheta 0.0000
+-2.7144 la coca 0.0000
+-2.7144 la colcha 0.0000
+-2.7144 la compañía 0.0000
+-2.7144 la crisis 0.0000
+-2.7144 la decoración 0.0000
+-2.7144 la derecha 0.0000
+-2.7144 la escasez 0.0000
+-2.7144 la escritura 0.0000
+-2.7144 la esperanza 0.0000
+-2.7144 la fecha 0.0000
+-2.7144 la finalización 0.0000
+-2.7144 la frase 0.0000
+-2.7144 la gente 0.0000
+-2.7144 la horchata 0.0000
+-2.7144 la humedad 0.0000
+-2.7144 la inundación 0.0000
+-2.7144 la izquierda 0.0000
+-2.7144 la jota 0.0000
+-2.7144 la joven 0.0000
+-2.7144 la licenciatura 0.0000
+-2.7144 la lotería 0.0000
+-2.0240 la madera -0.0446
+-2.0240 la mesa 0.0000
+-2.7144 la niña 0.0000
+-2.7144 la noche 0.0000
+-2.7144 la oreja 0.0000
+-2.7144 la parte 0.0000
+-2.7144 la pata 0.0000
+-2.7144 la persona 0.0000
+-2.7144 la perspectiva 0.0000
+-2.0240 la pluma 0.0000
+-2.7144 la que 0.0000
+-2.7144 la resolución 0.0000
+-2.7144 la revolución 0.0000
+-2.7144 la salud 0.0000
+-2.7144 la señora 0.0000
+-2.0240 la tarde -0.0446
+-2.7144 la taza 0.0000
+-2.7144 la tienda 0.0000
+-2.7144 la vez 0.0000
+-2.7144 la vida 0.0000
+-2.7144 la vivienda 0.0000
+-0.9151 labios empañándolos 0.0000
+-0.9151 lado de 0.0000
+-0.5257 laqueada temblaba 0.0129
+-1.2161 largarse con 0.0000
+-1.2161 largarse mañana 0.0000
+-0.9151 largos del 0.0000
+-2.1938 las aguas 0.0000
+-1.5034 las ampollas 0.0129
+-2.1938 las autoridades 0.0000
+-2.1938 las cosas 0.0000
+-2.1938 las frases 0.0000
+-1.1681 las mesas 0.1982
+-2.1938 las palmeras 0.0000
+-2.1938 las paredes 0.0000
+-1.5034 las personas 0.0000
+-2.1938 las plantas 0.0000
+-2.1938 las que 0.0000
+-2.1938 las rodillas 0.0000
+-2.1938 las rosadas 0.0000
+-2.1938 las vacas 0.0000
+-2.1938 las ventanas 0.0000
+-1.3922 le ayuda 0.0000
+-1.3922 le describe 0.0000
+-1.3922 le hace 0.0000
+-1.3922 lejos </s> 0.0000
+-1.3922 lejos acompañado 0.0000
+-1.3922 lejos se 0.0000
+-0.9151 lentitud soñolienta 0.0000
+-0.9151 lento balanceo 0.0000
+-1.2161 levantarse de 0.0000
+-1.2161 levantarse dijo 0.0000
+-0.9151 levantó la 0.0000
+-0.9151 leve crujido 0.0000
+-0.9151 leídos está 0.0000
+-0.9151 libro favorito 0.0000
+-0.9151 libros infantiles 0.0000
+-0.9151 licenciatura porque 0.0000
+-0.9151 licor </s> 0.0000
+-0.9151 licores </s> 0.0000
+-0.9151 lidiar con 0.0000
+-0.9151 ligeramente turbios 0.0000
+-0.9151 limpio que 0.0000
+-0.9151 limpió la 0.0000
+-0.9151 llama a 0.0000
+-0.9151 llamar al 0.0000
+-0.9151 llanto del 0.0000
+-0.9151 llegaban confundidos 0.0000
+-0.9151 llegar el 0.0000
+-0.9151 llena </s> 0.0000
+-0.9151 lleva esto 0.0000
+-0.9151 llevar tres 0.0000
+-0.9151 llueva </s> 0.0000
+-1.8693 lo lejos 0.0000
+-1.8693 lo mejor 0.0000
+-0.8436 lo mismo 0.0836
+-1.1789 lo que 0.0000
+-1.8693 lo robaron 0.0000
+-1.8693 lo último 0.0000
+-0.9151 lobo raramente 0.0000
+-0.9151 lobos aúllan 0.0000
+-0.9151 locomotora </s> 0.0000
+-0.9151 lodo después 0.0000
+-0.9151 lona de 0.0000
+-2.5485 los anillos 0.0000
+-1.5228 los arcos 0.1982
+-2.5485 los asientos 0.0000
+-2.5485 los bustos 0.0000
+-1.8581 los camareros -0.0446
+-2.5485 los canalizos 0.0000
+-2.5485 los caramelos 0.0000
+-1.8581 los cristales 0.0000
+-2.5485 los dados 0.0000
+-2.5485 los dedos 0.0000
+-2.5485 los enrejados 0.0000
+-2.5485 los envases 0.0000
+-2.5485 los erizos 0.0000
+-2.5485 los gemidos 0.0000
+-2.5485 los golfos 0.0000
+-2.5485 los huesos 0.0000
+-2.5485 los jovenes 0.0000
+-2.5485 los juguetes 0.0000
+-2.5485 los libros 0.0000
+-2.5485 los lobos 0.0000
+-2.5485 los mejores 0.0000
+-2.5485 los mismos 0.0000
+-2.5485 los números 0.0000
+-2.5485 los ojos 0.0000
+-2.5485 los ordenadores 0.0000
+-2.5485 los papeles 0.0000
+-2.5485 los pasos 0.0000
+-2.5485 los planos 0.0000
+-2.5485 los pliegos 0.0000
+-2.5485 los promontorios 0.0000
+-1.5228 los rectángulos 0.0076
+-2.5485 los respaldos 0.0000
+-2.5485 los tecleos 0.0000
+-2.5485 los treinta 0.0000
+-2.5485 los vecinos 0.0000
+-2.5485 los verdaderos 0.0000
+-2.5485 los violines 0.0000
+-0.9151 lotería de 0.0000
+-0.9151 luego a 0.0000
+-0.9151 lugar </s> 0.0000
+-0.5257 luminosos de -0.1387
+-0.9151 luz azulada 0.0000
+-1.2161 líneas las 0.0000
+-1.2161 líneas negras 0.0000
+-0.7017 madera laqueada 0.0129
+-1.3922 madera tendidos 0.0000
+-1.5171 madre </s> 0.0000
+-1.5171 madre inmediatamente 0.0000
+-0.8267 madre me 0.0000
+-0.9151 madruga dios 0.0000
+-0.9151 madrugar amanece 0.0000
+-0.9151 madurilla a 0.0000
+-0.9151 mago parecía 0.0000
+-1.2161 mano </s> 0.0000
+-1.2161 mano que 0.0000
+-0.9151 manos de 0.0000
+-0.9151 manteca y 0.0000
+-0.9151 manto muy 0.0000
+-0.9151 mar tienen 0.0000
+-0.9151 marcar uno 0.0000
+-0.9151 marzo </s> 0.0000
+-0.9151 mazo dando 0.0000
+-1.2161 mañana </s> 0.0000
+-1.2161 mañana llueva 0.0000
+-1.8181 me gusta 0.0000
+-1.1277 me ha 0.0000
+-1.8181 me lo 0.0000
+-1.8181 me mima 0.0000
+-1.8181 me quedaba 0.0000
+-1.8181 me rompía 0.0000
+-1.8181 me suena 0.0000
+-0.9151 mear en 0.0000
+-0.5257 mecánica </s> 0.0000
+-0.9151 media docena 0.0000
+-0.9151 medidas son 0.0000
+-0.9151 medioambiente es 0.0000
+-1.2161 mejor es 0.0000
+-1.2161 mejor le 0.0000
+-0.9151 mejores helados 0.0000
+-0.9151 menú comí 0.0000
+-0.9151 mermeladas el 0.0000
+-1.2161 mesa los 0.0000
+-1.2161 mesa y 0.0000
+-0.3665 mesas de -0.0865
+-0.9151 meterlo en 0.0000
+-0.9151 metió en 0.0000
+-0.9151 metálica </s> 0.0000
+-0.9151 mezclábase a 0.0000
+-1.7601 mi carro 0.0000
+-1.7601 mi libro 0.0000
+-1.0697 mi madre -0.0707
+-1.7601 mi me 0.0000
+-1.7601 mi ordenador 0.0000
+-1.7601 mi padre 0.0000
+-0.9151 mide cincuenta 0.0000
+-0.9151 miedo por 0.0000
+-0.9151 miel </s> 0.0000
+-1.2161 mientras con 0.0000
+-1.2161 mientras la 0.0000
+-0.9151 miguel ven 0.0000
+-0.9151 mima mucho 0.0000
+-0.9151 minerales teñidas 0.0000
+-0.9151 minero es 0.0000
+-0.9151 miró al 0.0000
+-1.6140 mismo </s> 0.0000
+-1.6140 mismo aspecto 0.0000
+-0.5883 mismo que -0.0807
+-0.9151 mismos ocultándose 0.0000
+-0.9151 moluscos cuentan 0.0000
+-0.9151 moviesen en 0.0000
+-1.2161 movía detrás 0.0000
+-1.2161 movía en 0.0000
+-0.9151 movíase pasando 0.0000
+-1.6140 mucho </s> 0.0000
+-1.6140 mucho abarca 0.0000
+-1.6140 mucho comer 0.0000
+-1.6140 mucho madrugar 0.0000
+-1.6140 mucho peso 0.0000
+-0.9151 muchos moluscos 0.0000
+-0.9151 muere el 0.0000
+-0.9151 mugen </s> 0.0000
+-0.9151 mujeres y 0.0000
+-1.2161 mundo es 0.0000
+-1.2161 mundo mide 0.0000
+-1.9942 muy alto 0.0000
+-1.9942 muy arriesgado 0.0000
+-1.9942 muy cara 0.0000
+-1.9942 muy caro 0.0000
+-1.9942 muy complicado 0.0000
+-1.9942 muy fuerte 0.0000
+-1.9942 muy lejos 0.0000
+-1.9942 muy llena 0.0000
+-1.9942 muy pequeño 0.0000
+-1.9942 muy probable 0.0000
+-1.9942 muy repartido 0.0000
+-1.9942 muy simpática 0.0000
+-1.4007 más allá 0.0129
+-2.0911 más alto 0.0000
+-2.0911 más cosas 0.0000
+-2.0911 más de 0.0000
+-2.0911 más información 0.0000
+-2.0911 más largos 0.0000
+-2.0911 más leídos 0.0000
+-2.0911 más limpio 0.0000
+-2.0911 más pequeña 0.0000
+-2.0911 más te 0.0000
+-2.0911 más temprano 0.0000
+-2.0911 más tranquilo 0.0000
+-2.0911 más uno 0.0000
+-2.0911 más vale 0.0000
+-0.9151 móvil parecía 0.0000
+-0.9151 múltiples y 0.0000
+-0.9151 músicos uniformados 0.0000
+-0.9151 nacido en 0.0000
+-0.9151 nacimiento de 0.0000
+-0.4914 nada </s> 0.0000
+-1.5171 nada de 0.0000
+-0.9151 nadie le 0.0000
+-0.9151 navidad no 0.0000
+-1.2161 necesario hacerlo 0.0000
+-1.2161 necesario separar 0.0000
+-0.9151 negras y 0.0000
+-0.9151 ni un 0.0000
+-0.9151 nicolás está 0.0000
+-0.9151 niña susurró 0.0000
+-1.5171 niño era 0.0000
+-1.5171 niño me 0.0000
+-1.5171 niño muy 0.0000
+-1.5171 niño quería 0.0000
+-1.2161 niños </s> 0.0000
+-1.2161 niños rubios 0.0000
+-2.0290 no a 0.0000
+-2.0290 no entiendo 0.0000
+-2.0290 no fue 0.0000
+-2.0290 no haya 0.0000
+-2.0290 no ocupa 0.0000
+-2.0290 no oír 0.0000
+-2.0290 no podía 0.0000
+-2.0290 no por 0.0000
+-2.0290 no pudo 0.0000
+-2.0290 no puedo 0.0000
+-2.0290 no significa 0.0000
+-2.0290 no te 0.0000
+-2.0290 no voy 0.0000
+-0.9151 noche </s> 0.0000
+-0.9151 noches por 0.0000
+-1.2161 noventa </s> 0.0000
+-1.2161 noventa ochenta 0.0000
+-0.9151 nuestro grado 0.0000
+-0.9151 nuevas frases 0.0000
+-0.9151 nueve de 0.0000
+-0.9151 nuevo había 0.0000
+-1.3922 número </s> 0.0000
+-1.3922 número cien 0.0000
+-1.3922 número que 0.0000
+-0.9151 números uno 0.0000
+-1.6140 o a 0.0000
+-1.6140 o al 0.0000
+-1.6140 o ciento 0.0000
+-1.6140 o seguir 0.0000
+-1.6140 o seguían 0.0000
+-0.9151 obcecado en 0.0000
+-0.9151 oblicuas semejantes 0.0000
+-0.9151 ochenta noventa 0.0000
+-0.9151 ocho </s> 0.0000
+-0.5257 ocultándose para -0.1243
+-0.9151 ocupa lugar 0.0000
+-0.9151 ocupados por 0.0000
+-0.9151 ocurrido en 0.0000
+-0.9151 oiga debes 0.0000
+-1.3922 ojeda </s> 0.0000
+-1.3922 ojeda ahora 0.0000
+-1.3922 ojeda soltó 0.0000
+-1.5171 ojos </s> 0.0000
+-1.5171 ojos azules 0.0000
+-1.5171 ojos fatigados 0.0000
+-1.5171 ojos sobre 0.0000
+-1.2161 once </s> 0.0000
+-1.2161 once doce 0.0000
+-1.2161 operativo </s> 0.0000
+-1.2161 operativo de 0.0000
+-0.9151 opio </s> 0.0000
+-0.9151 ordenador es 0.0000
+-0.9151 ordenadores </s> 0.0000
+-0.9151 ordinaria callaba 0.0000
+-0.9151 oreja con 0.0000
+-0.9151 oriental con 0.0000
+-0.9151 oro </s> 0.0000
+-0.9151 oso estaba 0.0000
+-1.2161 otra </s> 0.0000
+-1.2161 otra ventanacon 0.0000
+-0.9151 otro lado 0.0000
+-0.9151 oído </s> 0.0000
+-0.9151 oír a 0.0000
+-1.2161 padre dio 0.0000
+-1.2161 padre ronca 0.0000
+-0.9151 palmera enana 0.0000
+-0.9151 palmeras de 0.0000
+-1.2161 pan tostado 0.0000
+-1.2161 pan y 0.0000
+-0.9151 papel con 0.0000
+-0.9151 papeles huía 0.0000
+-2.1192 para adquirir 0.0000
+-2.1192 para aprender 0.0000
+-2.1192 para autentificar 0.0000
+-2.1192 para ayudar 0.0000
+-2.1192 para cerrar 0.0000
+-2.1192 para embadurnar 0.0000
+-2.1192 para escaldar 0.0000
+-2.1192 para evitarse 0.0000
+-2.1192 para la 0.0000
+-2.1192 para más 0.0000
+-2.1192 para no 0.0000
+-2.1192 para preparar 0.0000
+-2.1192 para que 0.0000
+-2.1192 para reposarse 0.0000
+-1.4287 para volver 0.0129
+-0.9151 parece al 0.0000
+-0.9151 parecer joven 0.0000
+-1.6140 parecía animar 0.0000
+-1.6140 parecía de 0.0000
+-1.6140 parecía haber 0.0000
+-0.9236 parecía venir 0.0129
+-0.9151 parecían retazos 0.0000
+-1.2161 pared a 0.0000
+-1.2161 pared formada 0.0000
+-0.9151 paredes </s> 0.0000
+-0.9151 parras artificiales 0.0000
+-1.2161 parte exterior 0.0000
+-1.2161 parte sacó 0.0000
+-0.9151 partes de 0.0000
+-0.9151 pasaban con 0.0000
+-0.9151 pasando de 0.0000
+-0.9151 paseantes siempre 0.0000
+-0.9151 pasos contados 0.0000
+-0.9151 pasta con 0.0000
+-0.9151 pata de 0.0000
+-0.9151 país de 0.0000
+-0.9151 pecho en 0.0000
+-0.9151 pelele y 0.0000
+-0.9151 penínsulas formados 0.0000
+-0.9151 pequeña del 0.0000
+-0.9151 pequeño </s> 0.0000
+-0.9151 pequeños cristales 0.0000
+-1.2161 perfume de 0.0000
+-1.2161 perfume del 0.0000
+-0.9151 perjudica seriamente 0.0000
+-1.3922 pero con 0.0000
+-1.3922 pero no 0.0000
+-1.3922 pero una 0.0000
+-0.9151 persona más 0.0000
+-1.5171 personas al 0.0000
+-1.5171 personas cercanas 0.0000
+-1.5171 personas como 0.0000
+-1.5171 personas para 0.0000
+-0.9151 perspectiva al 0.0000
+-0.9151 pesada </s> 0.0000
+-0.9151 pesar de 0.0000
+-0.9151 peso en 0.0000
+-0.9151 pez </s> 0.0000
+-0.7017 piano de -0.1387
+-1.3922 piano y 0.0000
+-0.9151 pictórico de 0.0000
+-0.9151 piensa si 0.0000
+-0.9151 pierde </s> 0.0000
+-1.2161 pilastra a 0.0000
+-1.2161 pilastra y 0.0000
+-0.9151 piso para 0.0000
+-0.9151 planos de 0.0000
+-0.9151 plantas más 0.0000
+-0.9151 plato </s> 0.0000
+-0.9151 plena tarde 0.0000
+-0.9151 pliegos </s> 0.0000
+-1.2161 pluma </s> 0.0000
+-1.2161 pluma y 0.0000
+-0.9151 poco aprieta 0.0000
+-0.9151 podía levantarse 0.0000
+-0.9151 poquito culo 0.0000
+-2.1455 por criadas 0.0000
+-1.4551 por el 0.0000
+-0.3854 por la 0.0000
+-2.1455 por las 0.0000
+-2.1455 por los 0.0000
+-2.1455 por mucho 0.0000
+-2.1455 por nada 0.0000
+-2.1455 por señoras 0.0000
+-1.4551 por una 0.0000
+-0.9151 pornografía </s> 0.0000
+-0.9151 porque se 0.0000
+-0.9151 portero </s> 0.0000
+-0.9151 poseída de 0.0000
+-0.9151 preparada con 0.0000
+-0.9151 preparar un 0.0000
+-0.9151 presente de 0.0000
+-0.9151 prevista para 0.0000
+-1.2161 primero </s> 0.0000
+-1.2161 primero donde 0.0000
+-0.9151 primos </s> 0.0000
+-0.9151 probable que 0.0000
+-1.2161 probando cero 0.0000
+-1.2161 probando probando 0.0000
+-0.9151 produjo la 0.0000
+-1.2161 programa de 0.0000
+-1.2161 programa pulsa 0.0000
+-0.9151 prohibido mear 0.0000
+-0.9151 promontorios de 0.0000
+-0.9151 provocar el 0.0000
+-0.9151 proyecto es 0.0000
+-0.9151 pudo seguir 0.0000
+-0.9151 puede decir 0.0000
+-0.9151 pueden contar 0.0000
+-0.9151 puedes ayudar 0.0000
+-1.2161 puedo decir 0.0000
+-1.2161 puedo lidiar 0.0000
+-1.2161 pulsa el 0.0000
+-1.2161 pulsa sobre 0.0000
+-0.9151 puntiagudos dedos 0.0000
+-0.9151 puso totalmente 0.0000
+-0.9151 pájaro en 0.0000
+-0.9151 pájaros </s> 0.0000
+-0.9151 péndulo </s> 0.0000
+-0.9151 público de 0.0000
+-2.4336 que adornaba 0.0000
+-2.4336 que amé 0.0000
+-2.4336 que cerraban 0.0000
+-2.4336 que ciento 0.0000
+-2.4336 que coma 0.0000
+-2.4336 que el 0.0000
+-2.4336 que en 0.0000
+-2.4336 que encuadraban 0.0000
+-1.7431 que los -0.1347
+-2.4336 que mañana 0.0000
+-2.4336 que mejor 0.0000
+-2.4336 que meterlo 0.0000
+-2.4336 que más 0.0000
+-1.7431 que no 0.0000
+-1.4079 que parecía -0.0335
+-2.4336 que por 0.0000
+-2.4336 que pornografía 0.0000
+-0.8377 que se 0.0000
+-2.4336 que sigue 0.0000
+-2.4336 que tener 0.0000
+-2.4336 que tengo 0.0000
+-2.4336 que una 0.0000
+-2.4336 que uno 0.0000
+-2.4336 que usar 0.0000
+-2.4336 que vivir 0.0000
+-0.9151 quedaba un 0.0000
+-1.2161 quería concienciar 0.0000
+-1.2161 quería largarse 0.0000
+-1.2161 quien madruga 0.0000
+-1.2161 quien mucho 0.0000
+-0.9151 quince </s> 0.0000
+-0.9151 quién puede 0.0000
+-1.2161 qué me 0.0000
+-1.2161 qué puedo 0.0000
+-0.9151 rapidamente el 0.0000
+-0.9151 raramente tiene 0.0000
+-0.9151 reciclar es 0.0000
+-0.9151 recipiente cerámico 0.0000
+-0.9151 recoger miel 0.0000
+-0.9151 reconocimiento de 0.0000
+-1.3922 rectángulos de 0.0000
+-0.7017 rectángulos luminosos 0.0129
+-0.9151 reducido con 0.0000
+-0.9151 referencias </s> 0.0000
+-1.3922 reflejo azul 0.0000
+-0.7017 reflejo húmedo 0.0129
+-0.9151 regional </s> 0.0000
+-0.9151 regular y 0.0000
+-0.5257 regularidad casi 0.0129
+-0.9151 repartido </s> 0.0000
+-0.9151 repentino sus 0.0000
+-0.9151 reposarse en 0.0000
+-0.9151 resolución del 0.0000
+-0.9151 respaldos los 0.0000
+-0.9151 resplandor de 0.0000
+-0.9151 retazos de 0.0000
+-0.9151 revolución industrial 0.0000
+-0.9151 rigidez del 0.0000
+-0.9151 risas de 0.0000
+-0.9151 robaron </s> 0.0000
+-0.9151 roce en 0.0000
+-0.9151 rodillas </s> 0.0000
+-0.9151 rogando y 0.0000
+-0.5257 roja </s> 0.0000
+-0.9151 rompía el 0.0000
+-0.9151 ronca como 0.0000
+-0.9151 ropero o 0.0000
+-0.9151 rosa igual 0.0000
+-0.9151 rosadas ventosas 0.0000
+-0.9151 roñada </s> 0.0000
+-0.9151 rubia y 0.0000
+-0.5257 rubias de -0.1387
+-1.2161 rubios de 0.0000
+-1.2161 rubios sostenidos 0.0000
+-0.9151 ruidosa y 0.0000
+-0.9151 rumiante que 0.0000
+-0.9151 saber no 0.0000
+-0.9151 sabor muy 0.0000
+-0.9151 sacó un 0.0000
+-0.9151 salir de 0.0000
+-0.9151 salones agrandados 0.0000
+-0.9151 salud </s> 0.0000
+-0.9151 salvar vidas 0.0000
+-1.2161 salón inmediato 0.0000
+-1.2161 salón llegaban 0.0000
+-0.9151 sangre puedes 0.0000
+-0.9151 sanitarias advierten 0.0000
+-0.9151 santificar los 0.0000
+-2.1938 se acogían 0.0000
+-2.1938 se anda 0.0000
+-2.1938 se deslizaban 0.0000
+-2.1938 se divisaba 0.0000
+-2.1938 se durmió 0.0000
+-2.1938 se emancipan 0.0000
+-2.1938 se encogía 0.0000
+-2.1938 se encontraba 0.0000
+-2.1938 se ha 0.0000
+-2.1938 se limpió 0.0000
+-2.1938 se metió 0.0000
+-2.1938 se moviesen 0.0000
+-2.1938 se movía 0.0000
+-2.1938 se parece 0.0000
+-2.1938 se pierde 0.0000
+-2.1938 se pueden 0.0000
+-2.1938 se puso 0.0000
+-2.1938 se te 0.0000
+-2.1938 se vende 0.0000
+-0.9151 seda rosa 0.0000
+-1.2161 seguir el 0.0000
+-1.2161 seguir escribiendo 0.0000
+-0.9151 segundo salón 0.0000
+-0.9151 seguían sus 0.0000
+-1.2161 seis dos 0.0000
+-1.2161 seis siete 0.0000
+-0.9151 sellos muy 0.0000
+-0.9151 semejantes a 0.0000
+-0.9151 sentir un 0.0000
+-0.9151 separar los 0.0000
+-1.2161 ser minero 0.0000
+-1.2161 ser muy 0.0000
+-0.9151 seriamente la 0.0000
+-0.9151 será el 0.0000
+-0.9151 sesenta y 0.0000
+-0.9151 setenta </s> 0.0000
+-0.9151 señala con 0.0000
+-0.9151 señor de 0.0000
+-0.9151 señora era 0.0000
+-0.9151 señoras </s> 0.0000
+-1.2161 si es 0.0000
+-1.2161 si se 0.0000
+-1.2161 siempre </s> 0.0000
+-1.2161 siempre se 0.0000
+-0.7017 siete </s> 0.0000
+-1.3922 siete ocho 0.0000
+-0.9151 significa nada 0.0000
+-0.9151 sigue al 0.0000
+-0.9151 silenciosas o 0.0000
+-0.9151 sillones de 0.0000
+-0.9151 sillón de 0.0000
+-0.9151 simpática </s> 0.0000
+-0.9151 simpático </s> 0.0000
+-0.5257 sistema operativo 0.0000
+-0.9151 situación regular 0.0000
+-1.8181 sobre el 0.0000
+-1.8181 sobre la 0.0000
+-1.8181 sobre las 0.0000
+-0.7924 sobre los -0.0754
+-1.1277 sobre una -0.1303
+-0.9151 soltó la 0.0000
+-1.3922 son noventa 0.0000
+-1.3922 son primos 0.0000
+-1.3922 son tres 0.0000
+-0.9151 sorteando los 0.0000
+-0.9151 sorteo me 0.0000
+-0.9151 sostenidos por 0.0000
+-0.9151 soñolienta </s> 0.0000
+-1.6932 su abstracción 0.0000
+-1.6932 su altura 0.0000
+-1.6932 su artillería 0.0000
+-1.6932 su esposa 0.0000
+-1.6932 su oído 0.0000
+-1.6932 su parte 0.0000
+-0.9151 subirlas a 0.0000
+-0.9151 suele llevar 0.0000
+-0.9151 suelo estaba 0.0000
+-0.9151 suena este 0.0000
+-0.9151 sujeta el 0.0000
+-1.9151 sus anchas 0.0000
+-1.2246 sus cabezas 0.0129
+-1.9151 sus conversaciones 0.0000
+-1.9151 sus labios 0.0000
+-1.9151 sus medidas 0.0000
+-1.9151 sus ojos 0.0000
+-0.8893 sus violines 0.1231
+-0.9151 susurró algo 0.0000
+-0.9151 sólo me 0.0000
+-0.9151 súbita timidez 0.0000
+-1.2161 tabaco oriental 0.0000
+-1.2161 tabaco perjudica 0.0000
+-0.9151 tamaño </s> 0.0000
+-0.9151 también pero 0.0000
+-0.9151 tapizados de 0.0000
+-0.7017 tarde </s> 0.0000
+-1.3922 tarde para 0.0000
+-0.9151 tardes por 0.0000
+-0.5257 tarima alrededor 0.0129
+-0.9151 taza de 0.0000
+-1.6140 te gusta 0.0000
+-1.6140 te guste 0.0000
+-1.6140 te oiga 0.0000
+-0.9236 te voy 0.0283
+-1.3922 techo </s> 0.0000
+-1.3922 techo coloreado 0.0000
+-1.3922 techo el 0.0000
+-0.9151 tecleos del 0.0000
+-0.5257 temblaba con -0.1314
+-0.9151 temprano </s> 0.0000
+-0.9151 tendidos de 0.0000
+-0.9151 tener la 0.0000
+-0.9151 tengo en 0.0000
+-0.9151 tenido mucho 0.0000
+-0.9151 terciopelo </s> 0.0000
+-0.9151 texto </s> 0.0000
+-0.9151 teñidas de 0.0000
+-0.9151 tienda de 0.0000
+-1.5171 tiene cincuenta 0.0000
+-1.5171 tiene dos 0.0000
+-1.5171 tiene miedo 0.0000
+-1.5171 tiene poquito 0.0000
+-0.9151 tienen un 0.0000
+-0.9151 tienes que 0.0000
+-0.9151 timidez </s> 0.0000
+-0.9151 tocado un 0.0000
+-0.9151 toda su 0.0000
+-1.2161 todo estaba 0.0000
+-1.2161 todo lo 0.0000
+-0.9151 todos </s> 0.0000
+-1.2161 tomate </s> 0.0000
+-1.2161 tomate hay 0.0000
+-0.1104 torno de -0.0046
+-0.9151 tostado husmear 0.0000
+-1.2161 totalmente exaltado 0.0000
+-1.2161 totalmente roñada 0.0000
+-0.9151 trabajo muy 0.0000
+-0.9151 trajo toda 0.0000
+-0.9151 tranquilo que 0.0000
+-0.9151 trece catorce 0.0000
+-1.2161 treinta cuarenta 0.0000
+-1.2161 treinta y 0.0000
+-1.6140 tres </s> 0.0000
+-1.6140 tres cuatro 0.0000
+-1.6140 tres es 0.0000
+-1.6140 tres partes 0.0000
+-1.6140 tres y 0.0000
+-0.9151 trescientas referencias 0.0000
+-0.8267 tu madre 0.0000
+-1.5171 tu usuario 0.0000
+-1.5171 tu voz 0.0000
+-0.9151 turbios por 0.0000
+-0.8267 té </s> 0.0000
+-1.5171 té humeaba 0.0000
+-1.5171 té o 0.0000
+-0.9151 término acompañándola 0.0000
+-0.9151 u otra 0.0000
+-2.3775 un abrir 0.0000
+-2.3775 un aliño 0.0000
+-2.3775 un animal 0.0000
+-2.3775 un baile 0.0000
+-2.3775 un bastoncillo 0.0000
+-1.6870 un buen 0.0000
+-2.3775 un culín 0.0000
+-2.3775 un día 0.0000
+-2.3775 un espacio 0.0000
+-2.3775 un euro 0.0000
+-2.3775 un gozne 0.0000
+-2.3775 un lobo 0.0000
+-2.3775 un manto 0.0000
+-2.3775 un niño 0.0000
+-2.3775 un once 0.0000
+-2.3775 un país 0.0000
+-2.3775 un pelele 0.0000
+-1.6870 un piano -0.0446
+-2.3775 un péndulo 0.0000
+-2.3775 un recipiente 0.0000
+-2.3775 un roce 0.0000
+-2.3775 un sabor 0.0000
+-2.3775 un tomate 0.0000
+-2.3775 un trabajo 0.0000
+-2.3775 un vuelo 0.0000
+-2.3775 un ánfora 0.0000
+-2.3775 un ñú 0.0000
+-2.3130 una a 0.0000
+-2.3130 una afirmación 0.0000
+-2.3130 una atmósfera 0.0000
+-1.6226 una bebida 0.0000
+-2.3130 una bisagra 0.0000
+-2.3130 una bonita 0.0000
+-2.3130 una buena 0.0000
+-2.3130 una colección 0.0000
+-2.3130 una concha 0.0000
+-2.3130 una de 0.0000
+-2.3130 una especie 0.0000
+-2.3130 una evocación 0.0000
+-2.3130 una hora 0.0000
+-2.3130 una locomotora 0.0000
+-2.3130 una lona 0.0000
+-2.3130 una luz 0.0000
+-2.3130 una mano 0.0000
+-2.3130 una palmera 0.0000
+-1.6226 una tarima 0.0129
+-2.3130 una u 0.0000
+-2.3130 una vez 0.0000
+-2.3130 una vida 0.0000
+-2.3130 una vidriera 0.0000
+-1.2161 unas líneas 0.0000
+-1.2161 unas parras 0.0000
+-0.9151 unidos </s> 0.0000
+-0.5257 uniformados lo -0.0736
+-0.9151 uniforme de 0.0000
+-1.6932 uno de 0.0000
+-0.6675 uno dos 0.0425
+-1.6932 uno más 0.0000
+-1.6932 uno son 0.0000
+-1.2161 unos paseantes 0.0000
+-1.2161 unos zapatos 0.0000
+-0.9151 usar coca 0.0000
+-0.9151 usuario y 0.0000
+-0.3665 va a 0.0000
+-0.9151 vacas mugen 0.0000
+-0.9151 vacía y 0.0000
+-0.9151 vale pájaro 0.0000
+-0.5257 vamos a 0.0000
+-0.9151 vecinos </s> 0.0000
+-0.9151 veinte veintiuno 0.0000
+-0.9151 veintiuno treinta 0.0000
+-0.9151 velludo </s> 0.0000
+-0.9151 ven aquí 0.0000
+-0.9151 vende piso 0.0000
+-0.9151 venden los 0.0000
+-0.5257 venir del -0.1253
+-1.2161 ventana en 0.0000
+-1.2161 ventana los 0.0000
+-0.9151 ventanacon lento 0.0000
+-0.7017 ventanas </s> 0.0000
+-1.3922 ventanas que 0.0000
+-0.9151 ventosas de 0.0000
+-1.2161 ver el 0.0000
+-1.2161 ver los 0.0000
+-0.9151 verdaderos amigos 0.0000
+-1.5171 verde </s> 0.0000
+-1.5171 verde amarillento 0.0000
+-1.5171 verde charolado 0.0000
+-1.5171 verde pictórico 0.0000
+-0.9151 vete hacia 0.0000
+-1.2161 vez por 0.0000
+-1.2161 vez un 0.0000
+-1.2161 vida interna 0.0000
+-1.2161 vida ordinaria 0.0000
+-0.9151 vidas </s> 0.0000
+-0.9151 vidriera de 0.0000
+-0.9151 vinagre </s> 0.0000
+-1.2161 vino </s> 0.0000
+-1.2161 vino se 0.0000
+-0.9151 vio con 0.0000
+-1.5171 violines del 0.0000
+-0.4914 violines destacábanse 0.0076
+-0.9151 visitando bilbao 0.0000
+-0.9151 visual de 0.0000
+-0.9151 vivienda </s> 0.0000
+-0.5257 vivir como 0.0000
+-0.9151 volando </s> 0.0000
+-0.5257 volver a -0.1347
+-0.4914 voy a 0.0000
+-1.5171 voy al 0.0000
+-1.2161 voz </s> 0.0000
+-1.2161 voz ayuda 0.0000
+-0.9151 vuelo gratis 0.0000
+-2.4948 y acompasado 0.0000
+-2.4948 y al 0.0000
+-2.4948 y blanqueaban 0.0000
+-2.4948 y botones 0.0000
+-2.4948 y cerrar 0.0000
+-2.4948 y choque 0.0000
+-1.8044 y cinco 0.0000
+-2.4948 y con 0.0000
+-2.4948 y contraseña 0.0000
+-2.4948 y de 0.0000
+-2.4948 y dos 0.0000
+-1.8044 y el 0.0000
+-2.4948 y exclusivo 0.0000
+-2.4948 y levantó 0.0000
+-2.4948 y licores 0.0000
+-0.8990 y los -0.0138
+-2.4948 y luego 0.0000
+-2.4948 y mermeladas 0.0000
+-2.4948 y móvil 0.0000
+-2.4948 y nadie 0.0000
+-2.4948 y nueve 0.0000
+-2.4948 y oblicuas 0.0000
+-2.4948 y penínsulas 0.0000
+-2.4948 y personas 0.0000
+-2.4948 y puntiagudos 0.0000
+-2.4948 y quince 0.0000
+-2.4948 y se 0.0000
+-2.4948 y tabaco 0.0000
+-2.4948 y un 0.0000
+-2.4948 y una 0.0000
+-2.4948 y velludo 0.0000
+-2.4948 y vino 0.0000
+-0.9151 yeso estaba 0.0000
+-0.9151 zapatos y 0.0000
+-0.9151 zigzag </s> 0.0000
+-0.9151 ánfora es 0.0000
+-1.5171 él con 0.0000
+-1.5171 él fumaban 0.0000
+-1.5171 él mezclábase 0.0000
+-1.5171 él mientras 0.0000
+-0.9151 érase una 0.0000
+-0.9151 ñú es 0.0000
+-1.2161 último en 0.0000
+-1.2161 último que 0.0000
+
+\3-grams:
+-1.6369 <s> el niño
+-1.4240 <s> en el
+-1.1598 <s> en la
+-0.8587 <s> es un
+-0.9557 <s> mi madre
+-0.8587 <s> sus cabezas
+-0.5577 <s> vamos a
+-0.5577 a aparecer con
+-0.5577 agrupábanse sobre una
+-0.5577 allá de estos
+-0.5577 alrededor de un
+-0.5577 aparecer con regularidad
+-0.9980 arcos de sus
+-0.5577 cabezas rubias de
+-0.5577 camareros agrupábanse sobre
+-0.5577 casi mecánica </s>
+-0.5577 cierto reflejo húmedo
+-0.5577 con cierto reflejo
+-0.5577 con regularidad casi
+-0.5577 corros femeninos en
+-0.5577 cuatro ventanas </s>
+-0.5577 de cola </s>
+-0.5577 de cuatro ventanas
+-0.5577 de estos corros
+-0.5577 de germanos y
+-1.6348 de la cama
+-1.3706 de la madera
+-1.1598 de las ampollas
+-1.4240 de las mesas
+-1.1230 de sus violines
+-0.5577 de té </s>
+-0.8587 de un piano
+-0.5577 del exterior </s>
+-0.5577 destacábanse sobre los
+-0.5577 el sistema operativo
+-0.0969 en torno de
+-0.8587 es una bebida
+-0.5577 estos corros femeninos
+-0.5577 femeninos en torno
+-0.5577 germanos y los
+-0.5577 ha dicho que
+-0.5577 húmedo que parecía
+-0.9980 la cama </s>
+-0.5577 la madera laqueada
+-0.5577 la tarde </s>
+-0.5577 laqueada temblaba con
+-0.5577 las ampollas eléctricas
+-0.9980 las mesas de
+-0.9980 lo mismo que
+-0.9980 los arcos de
+-0.5577 los camareros agrupábanse
+-0.7338 los rectángulos luminosos
+-0.5577 luminosos de cuatro
+-0.5577 madera laqueada temblaba
+-0.7338 mesas de té
+-0.5577 mi madre me
+-0.7338 mismo que los
+-0.5577 más allá de
+-0.5577 ocultándose para volver
+-0.5577 para volver a
+-0.5577 parecía venir del
+-0.5577 piano de cola
+-0.5577 que los camareros
+-0.7338 que parecía venir
+-0.5577 rectángulos luminosos de
+-0.5577 reflejo húmedo que
+-0.5577 regularidad casi mecánica
+-0.5577 rubias de germanos
+-0.7338 sobre los rectángulos
+-0.5577 sobre una tarima
+-0.5577 sus cabezas rubias
+-0.9980 sus violines destacábanse
+-0.5577 tarima alrededor de
+-0.5577 te voy a
+-0.5577 temblaba con cierto
+-1.1230 torno de las
+-0.5577 un piano de
+-0.5577 una tarima alrededor
+-0.5577 uniformados lo mismo
+-0.9980 uno dos tres
+-0.5577 venir del exterior
+-0.7338 violines destacábanse sobre
+-0.5577 volver a aparecer
+-1.2199 y los arcos
+
+\end\
