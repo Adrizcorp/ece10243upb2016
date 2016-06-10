@@ -1,0 +1,77 @@
+Quartus II Archive log --	D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/DE0_NANO_SOC_arduino.qarlog
+
+Archive:	D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/DE0_NANO_SOC_arduino.qar
+Date:		Thu Jun 09 23:00:50 2016
+Quartus II 64-Bit		15.0.0 Build 145 04/22/2015 SJ Web Edition
+
+	=========== Files Selected: ===========
+C:/Users/USUARIO/Documents/tarea_star_wars/hw/rom_musical.v
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/DE0_NANO_SOC_arduino.SDC
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/DE0_NANO_SOC_arduino.qpf
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/DE0_NANO_SOC_arduino.qsf
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/DE0_NANO_SOC_arduino_assignment_defaults.qdf
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/altera/de0nano/clocks/pll_50m.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/cpu/alu.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/cpu/debug.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/cpu/defs_f32c.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/cpu/defs_mi32.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/cpu/defs_rv32.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/cpu/idecode_mi32.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/cpu/idecode_rv32.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/cpu/loadalign.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/cpu/pipeline.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/cpu/shift.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/de0_nano_soc_arduino.v
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/generic/bootloader/boot_rom_mi32el.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/generic/bootloader/boot_sio_mi32eb.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/generic/bootloader/boot_sio_mi32el.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/generic/bootloader/boot_sio_rv32el.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/generic/bootloader/defs_bootblock.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/generic/bptrace.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/generic/bram.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/generic/glue_bram.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/generic/reg1w2r.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/glue.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/modules/div_freq.v
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/modules/rom_musical.v
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/soc/gpio.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/soc/pid/ctrlpid.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/soc/pid/ctrlpid_v.v
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/soc/pid/pid.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/soc/pid/rotary_decoder.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/soc/pid/rotary_decoder_v.v
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/soc/pid/simotor.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/soc/pid/simotor_v.v
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/soc/sio.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/soc/spi.vhd
+D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/soc/timer.vhd
+	======= Total: 40 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.
+
+
+******* Archived project restoration attempt on Thu Jun 09 23:03:54 2016
+Source archive file:	D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/DE0_NANO_SOC_arduino.qar
+Quartus II failed to read the archive or extract some files into 
+	D:/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/DE0_NANO_SOC_arduino_restored/.
+	======= Files failed to restore before extraction terminated: ======
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/DE0_NANO_SOC_arduino.SDC
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/DE0_NANO_SOC_arduino.qpf
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/DE0_NANO_SOC_arduino.qsf
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/DE0_NANO_SOC_arduino_assignment_defaults.qdf
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/altera/de0nano/clocks/pll_50m.vhd
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/cpu/idecode_mi32.vhd
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/cpu/idecode_rv32.vhd
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/de0_nano_soc_arduino.v
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/generic/bootloader/boot_rom_mi32el.vhd
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/generic/bootloader/boot_sio_mi32eb.vhd
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/generic/bootloader/boot_sio_mi32el.vhd
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/generic/bootloader/boot_sio_rv32el.vhd
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/generic/bootloader/defs_bootblock.vhd
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/generic/glue_bram.vhd
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/modules/rom_musical.v
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/soc/pid/rotary_decoder.vhd
+drives/D/Diseño_avanzado/3-2_Arduino/Solucion_escala_De_DO/hw/DE0_NANO_SOC_arduino_solucion_Escala_restored/soc/pid/rotary_decoder_v.v
+			[17 file(s)]
+

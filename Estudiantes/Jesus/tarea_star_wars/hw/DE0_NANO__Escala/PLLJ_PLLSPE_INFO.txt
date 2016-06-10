@@ -1,0 +1,10 @@
+PLL_Name	glue:Arduino|pll_50m:clock|altpll:altpll_component|pll_50m_altpll:auto_generated|generic_pll1~FRACTIONAL_PLL
+PLLJITTER	27
+PLLSPEmax	100
+PLLSPEmin	-100
+
+PLL_Name	glue:Arduino|pll_50m:clock|altpll:altpll_component|pll_50m_altpll:auto_generated|generic_pll1~PLL_OUTPUT_COUNTER
+PLLJITTER	NA
+PLLSPEmax	NA
+PLLSPEmin	NA
+

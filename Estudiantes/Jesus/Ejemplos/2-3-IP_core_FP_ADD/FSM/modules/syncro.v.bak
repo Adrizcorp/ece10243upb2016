@@ -1,0 +1,9 @@
+module syncro( input async,
+					input clock,
+					output sync);
+					
+
+
+endmodule
+
+

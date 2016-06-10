@@ -1,0 +1,8 @@
+module generate1(
+			input clock,
+			input [15:0]data,
+			output [15:0]data_out
+		);
+
+
+endmodule
