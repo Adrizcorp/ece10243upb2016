@@ -1,0 +1,37 @@
+|test_clase1
+FPGA_CLK1_50 => ~NO_FANOUT~
+FPGA_CLK2_50 => ~NO_FANOUT~
+FPGA_CLK3_50 => ~NO_FANOUT~
+KEY[0] => ~NO_FANOUT~
+KEY[1] => ~NO_FANOUT~
+LED[0] << ejem_mux:multiplexor.out
+LED[1] << ejem_mux:multiplexor.out
+LED[2] << ejem_mux:multiplexor.out
+LED[3] << ejem_mux:multiplexor.out
+LED[4] << ejem_mux:multiplexor.out
+LED[5] << ejem_mux:multiplexor.out
+LED[6] << ejem_mux:multiplexor.out
+LED[7] << ejem_mux:multiplexor.out
+SW[0] => SW[0].IN1
+SW[1] => SW[1].IN1
+SW[2] => ~NO_FANOUT~
+SW[3] => ~NO_FANOUT~
+
+
+|test_clase1|ejem_mux:multiplexor
+sel[0] => Equal0.IN1
+sel[0] => Equal1.IN0
+sel[0] => Equal2.IN1
+sel[1] => Equal0.IN0
+sel[1] => Equal1.IN1
+sel[1] => Equal2.IN0
+out[0] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[1] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[2] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[3] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[4] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[5] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[6] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[7] <= out.DB_MAX_OUTPUT_PORT_TYPE
+
+

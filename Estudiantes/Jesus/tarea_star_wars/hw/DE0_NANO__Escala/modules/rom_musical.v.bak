@@ -1,0 +1,24 @@
+module rom_musical(
+		input [7:0]sel,
+		output [31:0]out
+	);
+
+reg [31:0]temp=32'd0;
+assign out[31:0]=temp[31:0];
+always@(*)
+begin
+	case(sel[7:0])
+		8'd0: temp[31:0]=32'd56817;//DO
+		8'd1: temp[31:0]=32'd50627;//RE
+		8'd2: temp[31:0]=32'd45096;//MI
+		8'd3: temp[31:0]=32'd42565;//FA
+		8'd4: temp[31:0]=32'd37924;//SOL
+		8'd5: temp[31:0]=32'd31650;//LA
+		8'd6: temp[31:0]=32'd30099;//TI xd
+		8'd7: temp[31:0]=32'd28409;
+		default: temp[31:0]=32'd0;
+	endcase
+end
+	
+	
+endmodule

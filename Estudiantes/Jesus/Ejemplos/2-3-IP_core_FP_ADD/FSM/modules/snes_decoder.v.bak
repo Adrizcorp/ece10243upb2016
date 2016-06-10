@@ -1,0 +1,18 @@
+module snes_decoder(
+			input clk,
+			input data,
+			input start,
+			output finish,
+			output idle,
+			output latch,
+			output clock
+	);
+							///finish___idle___clock___latch____state
+localparam IDLE	=		0________1______1_______0________000001;		
+localparam STATE1	=		0________0______1_______1________000010;
+localparam STATE2	=		0________0______1_______0________000100;
+localparam STATE3	=		0________0______0_______0________001000;
+localparam STATE4	=		0________0______1_______0________010000;	
+localparam FINISH	=		1________0______1_______0________100000;
+	
+endmodule
