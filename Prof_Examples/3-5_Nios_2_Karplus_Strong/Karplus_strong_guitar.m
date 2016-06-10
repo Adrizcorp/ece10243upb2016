@@ -1,6 +1,6 @@
-Fs = 44100;
-p = 133; %length of delay line
-tmax = 3.5;
+Fs = 16000;
+p = 156; %length of delay line
+tmax = 7;
 sr = rand(1,p); %initial shift register contents
 out = zeros(1,Fs*tmax);
 ptrout = 2; %pointer to sr
@@ -20,4 +20,6 @@ for i=1:Fs*tmax
 end
 
 sound(out,Fs)
+plot(out)
+
 
