@@ -1,0 +1,31 @@
+module dive_freq(
+	input clk,
+	input [31:0]in,
+	output div
+);
+
+//Assign register
+
+reg[31:0]contadorcito<=32'd0; //initialize value of "d"
+reg toggle=1'b0;
+
+//Wire is used to conect two parts
+
+wire div=toggle;
+
+//Assign the values for the output for the last register
+
+assign sync=q[2];
+
+//assign each process for each one
+always@(posedge clk)
+begin
+	toggle<=toggle;
+	contadorcito[31:0]<=contadorcito[31:0]+1'b1;
+	if(contadorcito[31:0]>=in[31:0])
+		begin
+			toggle<=~toggle;
+			contadorcito[31:0]<=32'd0;
+		end
+end
+endmodule
