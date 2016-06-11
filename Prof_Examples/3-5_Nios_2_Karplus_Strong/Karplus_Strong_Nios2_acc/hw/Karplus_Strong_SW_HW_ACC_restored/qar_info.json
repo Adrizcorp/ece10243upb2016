@@ -1,0 +1,7 @@
+{
+	"common_dir" : "D:/FPGAs/DE0nanoSOC/DE0_NANO_SOC_practica_nios2/",
+	"acds_version" : "Version 15.0.0",
+	"platform" : "windows",
+	"os" : "Windows 7",
+	"qpf" : "DE0_NANO_SOC_practica_nios2.qpf"
+}

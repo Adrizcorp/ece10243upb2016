@@ -1,0 +1,24 @@
+module contador(
+		input clk,
+		input reset,
+		output [7:0]conteo
+);
+
+//register is used to define a flip-flop
+
+reg[7:0]conteito=8'd0;
+
+//When you use "reg" you need to use a procces to assign behavior 
+
+always@(posedge clk) //posedge is the positive flank
+begin
+	if (reset==0)
+		begin
+			conteito[7:0]<=8'd0;
+		end
+	else 
+		begin
+			conteito[7:0]<=conteito[7:0]+1'b1;
+		end
+end
+endmodule

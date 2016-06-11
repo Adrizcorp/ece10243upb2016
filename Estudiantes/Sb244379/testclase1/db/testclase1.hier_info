@@ -1,0 +1,127 @@
+|testclase1
+FPGA_CLK1_50 => FPGA_CLK1_50.IN1
+FPGA_CLK2_50 => ~NO_FANOUT~
+FPGA_CLK3_50 => ~NO_FANOUT~
+KEY[0] => ~NO_FANOUT~
+KEY[1] => ~NO_FANOUT~
+LED[0] <= <GND>
+LED[1] <= <GND>
+LED[2] <= <GND>
+LED[3] <= <GND>
+LED[4] <= <GND>
+LED[5] <= <GND>
+LED[6] <= <GND>
+LED[7] <= <GND>
+SW[0] => SW[0].IN1
+SW[1] => SW[1].IN1
+SW[2] => ~NO_FANOUT~
+SW[3] => ~NO_FANOUT~
+
+
+|testclase1|ejem_mux:multiplexor
+sel[0] => Equal0.IN1
+sel[0] => Equal1.IN0
+sel[0] => Equal2.IN1
+sel[1] => Equal0.IN0
+sel[1] => Equal1.IN1
+sel[1] => Equal2.IN0
+out[0] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[1] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[2] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[3] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[4] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[5] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[6] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[7] <= out.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|testclase1|contador:contador1
+clk => ~NO_FANOUT~
+reset => ~NO_FANOUT~
+conteo[0] <= <GND>
+conteo[1] <= <GND>
+conteo[2] <= <GND>
+conteo[3] <= <GND>
+conteo[4] <= <GND>
+conteo[5] <= <GND>
+conteo[6] <= <GND>
+conteo[7] <= <GND>
+
+
+|testclase1|sincro:sincro_inst
+async => q[0].CLK
+async => reset.IN1
+clock => q[1].CLK
+clock => q[2].CLK
+sync <= q[2].DB_MAX_OUTPUT_PORT_TYPE
+
+
+|testclase1|div_freq:divisor1hz
+clk => contadorcito[0].CLK
+clk => contadorcito[1].CLK
+clk => contadorcito[2].CLK
+clk => contadorcito[3].CLK
+clk => contadorcito[4].CLK
+clk => contadorcito[5].CLK
+clk => contadorcito[6].CLK
+clk => contadorcito[7].CLK
+clk => contadorcito[8].CLK
+clk => contadorcito[9].CLK
+clk => contadorcito[10].CLK
+clk => contadorcito[11].CLK
+clk => contadorcito[12].CLK
+clk => contadorcito[13].CLK
+clk => contadorcito[14].CLK
+clk => contadorcito[15].CLK
+clk => contadorcito[16].CLK
+clk => contadorcito[17].CLK
+clk => contadorcito[18].CLK
+clk => contadorcito[19].CLK
+clk => contadorcito[20].CLK
+clk => contadorcito[21].CLK
+clk => contadorcito[22].CLK
+clk => contadorcito[23].CLK
+clk => contadorcito[24].CLK
+clk => contadorcito[25].CLK
+clk => contadorcito[26].CLK
+clk => contadorcito[27].CLK
+clk => contadorcito[28].CLK
+clk => contadorcito[29].CLK
+clk => contadorcito[30].CLK
+clk => contadorcito[31].CLK
+clk => toggle.CLK
+in[0] => LessThan0.IN32
+in[1] => LessThan0.IN31
+in[2] => LessThan0.IN30
+in[3] => LessThan0.IN29
+in[4] => LessThan0.IN28
+in[5] => LessThan0.IN27
+in[6] => LessThan0.IN26
+in[7] => LessThan0.IN25
+in[8] => LessThan0.IN24
+in[9] => LessThan0.IN23
+in[10] => LessThan0.IN22
+in[11] => LessThan0.IN21
+in[12] => LessThan0.IN20
+in[13] => LessThan0.IN19
+in[14] => LessThan0.IN18
+in[15] => LessThan0.IN17
+in[16] => LessThan0.IN16
+in[17] => LessThan0.IN15
+in[18] => LessThan0.IN14
+in[19] => LessThan0.IN13
+in[20] => LessThan0.IN12
+in[21] => LessThan0.IN11
+in[22] => LessThan0.IN10
+in[23] => LessThan0.IN9
+in[24] => LessThan0.IN8
+in[25] => LessThan0.IN7
+in[26] => LessThan0.IN6
+in[27] => LessThan0.IN5
+in[28] => LessThan0.IN4
+in[29] => LessThan0.IN3
+in[30] => LessThan0.IN2
+in[31] => LessThan0.IN1
+div <= toggle.DB_MAX_OUTPUT_PORT_TYPE
+
+

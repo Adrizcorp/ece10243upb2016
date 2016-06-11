@@ -1,0 +1,114 @@
+Restore Archived Project report for DE0_NANO_SOC_arduino
+Tue Jun 07 11:43:05 2016
+Quartus II 64-Bit Version 15.0.0 Build 145 04/22/2015 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Restore Archived Project Summary
+  3. Restore Archived Project Messages
+  4. Files Restored
+  5. Files Not Restored
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2015 Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus II License Agreement,
+the Altera MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Altera and sold by Altera or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++-------------------------------------------------------------------------+
+; Restore Archived Project Summary                                        ;
++---------------------------------+---------------------------------------+
+; Restore Archived Project Status ; Successful - Tue Jun 07 11:43:05 2016 ;
+; Revision Name                   ; DE0_NANO_SOC_arduino                  ;
+; Top-level Entity Name           ; DE0_NANO_SOC_arduino                  ;
+; Family                          ; Cyclone V                             ;
++---------------------------------+---------------------------------------+
+
+
++-----------------------------------+
+; Restore Archived Project Messages ;
++-----------------------------------+
+Info: Successfully restored 'C:/Users/hogar/Documents/GitHub/ece10243upb2016/Prof_Examples/3-2_Arduino/Blinkled.ino/hw/DE0_NANO_SOC_arduino.qar' into the 'C:\\Users\\hogar\\Documents\\Trabajo FPGAs\\Proyectos\\FPGArduino/' directory
+Info: Generated report 'DE0_NANO_SOC_arduino.restore.rpt'
+Info (23030): Evaluation of Tcl script c:/altera/15.0/quartus/common/tcl/apps/qpm/qar.tcl was successful
+Info: Quartus II 64-Bit Shell was successful. 0 errors, 2 warnings
+    Info: Peak virtual memory: 344 megabytes
+    Info: Processing ended: Tue Jun 07 11:43:05 2016
+    Info: Elapsed time: 00:00:06
+    Info: Total CPU time (on all processors): 00:00:02
+
+
++----------------------------------------------+
+; Files Restored                               ;
++----------------------------------------------+
+; File Name                                    ;
++----------------------------------------------+
+; qar_info.json                                ;
+; DE0_NANO_SOC_arduino.SDC                     ;
+; DE0_NANO_SOC_arduino.qpf                     ;
+; DE0_NANO_SOC_arduino.qsf                     ;
+; DE0_NANO_SOC_arduino_assignment_defaults.qdf ;
+; altera/de0nano/clocks/pll_50m.vhd            ;
+; cpu/alu.vhd                                  ;
+; cpu/debug.vhd                                ;
+; cpu/defs_f32c.vhd                            ;
+; cpu/defs_mi32.vhd                            ;
+; cpu/defs_rv32.vhd                            ;
+; cpu/idecode_mi32.vhd                         ;
+; cpu/idecode_rv32.vhd                         ;
+; cpu/loadalign.vhd                            ;
+; cpu/pipeline.vhd                             ;
+; cpu/shift.vhd                                ;
+; de0_nano_soc_arduino.v                       ;
+; generic/bootloader/boot_rom_mi32el.vhd       ;
+; generic/bootloader/boot_sio_mi32eb.vhd       ;
+; generic/bootloader/boot_sio_mi32el.vhd       ;
+; generic/bootloader/boot_sio_rv32el.vhd       ;
+; generic/bootloader/defs_bootblock.vhd        ;
+; generic/bptrace.vhd                          ;
+; generic/bram.vhd                             ;
+; generic/glue_bram.vhd                        ;
+; generic/reg1w2r.vhd                          ;
+; glue.vhd                                     ;
+; soc/gpio.vhd                                 ;
+; soc/pid/ctrlpid.vhd                          ;
+; soc/pid/ctrlpid_v.v                          ;
+; soc/pid/pid.vhd                              ;
+; soc/pid/rotary_decoder.vhd                   ;
+; soc/pid/rotary_decoder_v.v                   ;
+; soc/pid/simotor.vhd                          ;
+; soc/pid/simotor_v.v                          ;
+; soc/sio.vhd                                  ;
+; soc/spi.vhd                                  ;
+; soc/timer.vhd                                ;
++----------------------------------------------+
+
+
++--------------------------+
+; Files Not Restored       ;
++--------------------------+
+; File Name                ;
++--------------------------+
+; DE0_NANO_SOC_arduino.sdc ;
++--------------------------+
+
+
