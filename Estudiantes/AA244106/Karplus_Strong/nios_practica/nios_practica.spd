@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file
+   path="simulation/submodules/nios_practica_sys_clk.v"
+   type="VERILOG"
+   library="sys_clk" />
+ <file
+   path="simulation/submodules/nios_practica_sw.v"
+   type="VERILOG"
+   library="sw" />
+ <file
+   path="simulation/submodules/nios_practica_sel_nota.v"
+   type="VERILOG"
+   library="sel_nota" />
+ <file
+   path="simulation/submodules/nios_practica_pll.vo"
+   type="VERILOG"
+   library="pll" />
+ <file
+   path="simulation/submodules/nios_practica_noise_en.v"
+   type="VERILOG"
+   library="noise_en" />
+ <file
+   path="simulation/submodules/nios_practica_noise.v"
+   type="VERILOG"
+   library="noise" />
+ <file
+   path="simulation/submodules/nios_practica_leds.v"
+   type="VERILOG"
+   library="leds" />
+ <file
+   path="simulation/submodules/nios_practica_jtag_uart.v"
+   type="VERILOG"
+   library="jtag_uart" />
+ <file
+   path="simulation/submodules/nios_practica_div_freq.v"
+   type="VERILOG"
+   library="div_freq" />
+ <file
+   path="simulation/submodules/nios_practica_cpu.v"
+   type="VERILOG"
+   library="cpu" />
+ <file
+   path="simulation/submodules/nios_practica_RAM_jesus.hex"
+   type="HEX"
+   library="RAM_jesus" />
+ <file
+   path="simulation/submodules/nios_practica_RAM_jesus.v"
+   type="VERILOG"
+   library="RAM_jesus" />
+ <file path="simulation/nios_practica.v" type="VERILOG" />
+ <topLevel name="nios_practica" />
+ <deviceFamily name="cyclonev" />
+ <modelMap
+   controllerPath="nios_practica.RAM_jesus"
+   modelPath="nios_practica.RAM_jesus" />
+</simPackage>

@@ -1,0 +1,51 @@
+# system info nios_practica on 2016.06.11.11:18:59
+system_info:
+name,value
+DEVICE,5CSEMA4U23C6
+DEVICE_FAMILY,Cyclone V
+GENERATION_ID,1465661875
+#
+#
+# Files generated for nios_practica on 2016.06.11.11:18:59
+files:
+filepath,kind,attributes,module,is_top
+simulation/nios_practica.v,VERILOG,,nios_practica,true
+simulation/submodules/nios_practica_RAM_jesus.hex,HEX,,nios_practica_RAM_jesus,false
+simulation/submodules/nios_practica_RAM_jesus.v,VERILOG,,nios_practica_RAM_jesus,false
+simulation/submodules/nios_practica_cpu.v,VERILOG,,nios_practica_cpu,false
+simulation/submodules/nios_practica_div_freq.v,VERILOG,,nios_practica_div_freq,false
+simulation/submodules/nios_practica_jtag_uart.v,VERILOG,,nios_practica_jtag_uart,false
+simulation/submodules/nios_practica_leds.v,VERILOG,,nios_practica_leds,false
+simulation/submodules/nios_practica_noise.v,VERILOG,,nios_practica_noise,false
+simulation/submodules/nios_practica_noise_en.v,VERILOG,,nios_practica_noise_en,false
+simulation/submodules/nios_practica_pll.vo,VERILOG,,nios_practica_pll,false
+simulation/submodules/nios_practica_sel_nota.v,VERILOG,,nios_practica_sel_nota,false
+simulation/submodules/nios_practica_sw.v,VERILOG,,nios_practica_sw,false
+simulation/submodules/nios_practica_sys_clk.v,VERILOG,,nios_practica_sys_clk,false
+#
+# Map from instance-path to kind of module
+instances:
+instancePath,module
+nios_practica.RAM_jesus,nios_practica_RAM_jesus
+nios_practica.cpu,nios_practica_cpu
+nios_practica.cpu.cpu,nios_practica_cpu_cpu
+nios_practica.div_freq,nios_practica_div_freq
+nios_practica.jtag_uart,nios_practica_jtag_uart
+nios_practica.leds,nios_practica_leds
+nios_practica.noise,nios_practica_noise
+nios_practica.noise_en,nios_practica_noise_en
+nios_practica.noise_pulse,nios_practica_noise_en
+nios_practica.pll,nios_practica_pll
+nios_practica.sel_nota,nios_practica_sel_nota
+nios_practica.sw,nios_practica_sw
+nios_practica.sys_clk,nios_practica_sys_clk
+nios_practica.timer_ece10243upb2016_0,nios_practica_timer_ece10243upb2016_0
+nios_practica.uart,nios_practica_uart
+nios_practica.mm_interconnect_0,nios_practica_mm_interconnect_0
+nios_practica.irq_mapper,nios_practica_irq_mapper
+nios_practica.irq_synchronizer,altera_irq_clock_crosser
+nios_practica.irq_synchronizer_001,altera_irq_clock_crosser
+nios_practica.rst_controller,altera_reset_controller
+nios_practica.rst_controller_001,altera_reset_controller
+nios_practica.rst_controller_002,altera_reset_controller
+nios_practica.rst_controller_003,altera_reset_controller

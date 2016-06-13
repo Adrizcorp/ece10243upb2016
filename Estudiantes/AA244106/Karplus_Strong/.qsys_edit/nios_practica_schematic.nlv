@@ -1,0 +1,33 @@
+# # File gsaved with Nlview version 6.3.8  2013-12-19 bk=1.2992 VDI=34 GEI=35
+# 
+preplace inst nios_practica -pg 1 -lvl 1 -y 40 -regy -20
+preplace inst nios_practica.cpu.cpu -pg 1
+preplace inst nios_practica.cpu.clock_bridge -pg 1
+preplace inst nios_practica.RAM_jesus -pg 1 -lvl 3 -y 30
+preplace inst nios_practica.noise -pg 1 -lvl 2 -y 40
+preplace inst nios_practica.sys_clk -pg 1 -lvl 3 -y 230
+preplace inst nios_practica.leds -pg 1 -lvl 3 -y 490
+preplace inst nios_practica.jtag_uart -pg 1 -lvl 3 -y 120
+preplace inst nios_practica.uart -pg 1 -lvl 3 -y 360
+preplace inst nios_practica.div_freq -pg 1 -lvl 3 -y 710
+preplace inst nios_practica.cpu.reset_bridge -pg 1
+preplace inst nios_practica.noise_en -pg 1 -lvl 2 -y 180
+preplace inst nios_practica.pll -pg 1 -lvl 2 -y 300
+preplace inst nios_practica.cpu -pg 1 -lvl 1 -y 80
+preplace inst nios_practica.sw -pg 1 -lvl 3 -y 600
+preplace inst nios_practica.clk_50mhz -pg 1 -lvl 1 -y 300
+preplace netloc EXPORT<net_container>nios_practica</net_container>(SLAVE)clk_50mhz.clk_in_reset,(SLAVE)nios_practica.reset) 1 0 1 NJ
+preplace netloc INTERCONNECT<net_container>nios_practica</net_container>(MASTER)cpu.instruction_master,(SLAVE)cpu.debug_mem_slave,(SLAVE)leds.s1,(SLAVE)sys_clk.s1,(SLAVE)noise_en.s1,(SLAVE)uart.s1,(SLAVE)noise.s1,(SLAVE)jtag_uart.avalon_jtag_slave,(SLAVE)sw.s1,(SLAVE)div_freq.s1,(MASTER)cpu.data_master,(SLAVE)RAM_jesus.s1) 1 0 3 90 250 470 150 770
+preplace netloc EXPORT<net_container>nios_practica</net_container>(SLAVE)nios_practica.noise,(SLAVE)noise.external_connection) 1 0 2 NJ 230 NJ
+preplace netloc EXPORT<net_container>nios_practica</net_container>(SLAVE)noise_en.external_connection,(SLAVE)nios_practica.noise_en) 1 0 2 NJ 290 NJ
+preplace netloc INTERCONNECT<net_container>nios_practica</net_container>(SLAVE)leds.reset,(SLAVE)sys_clk.reset,(MASTER)clk_50mhz.clk_reset,(SLAVE)cpu.reset,(SLAVE)sw.reset,(MASTER)cpu.debug_reset_request,(SLAVE)RAM_jesus.reset1,(SLAVE)jtag_uart.reset,(SLAVE)div_freq.reset,(SLAVE)noise_en.reset,(SLAVE)uart.reset,(SLAVE)pll.reset,(SLAVE)noise.reset) 1 0 3 110 270 530 540 750
+preplace netloc EXPORT<net_container>nios_practica</net_container>(SLAVE)nios_practica.clk,(SLAVE)clk_50mhz.clk_in) 1 0 1 NJ
+preplace netloc EXPORT<net_container>nios_practica</net_container>(SLAVE)leds.external_connection,(SLAVE)nios_practica.leds) 1 0 3 NJ 520 NJ 520 NJ
+preplace netloc EXPORT<net_container>nios_practica</net_container>(SLAVE)uart.external_connection,(SLAVE)nios_practica.uart) 1 0 3 NJ 390 NJ 390 NJ
+preplace netloc EXPORT<net_container>nios_practica</net_container>(SLAVE)nios_practica.sw,(SLAVE)sw.external_connection) 1 0 3 NJ 630 NJ 630 NJ
+preplace netloc EXPORT<net_container>nios_practica</net_container>(SLAVE)nios_practica.div_freq,(SLAVE)div_freq.external_connection) 1 0 3 NJ 740 NJ 740 NJ
+preplace netloc FAN_OUT<net_container>nios_practica</net_container>(SLAVE)jtag_uart.irq,(SLAVE)uart.irq,(MASTER)cpu.irq,(SLAVE)sys_clk.irq) 1 1 2 NJ 170 810
+preplace netloc FAN_OUT<net_container>nios_practica</net_container>(MASTER)clk_50mhz.clk,(SLAVE)sys_clk.clk,(SLAVE)noise_en.clk,(SLAVE)leds.clk,(SLAVE)div_freq.clk,(SLAVE)sw.clk,(SLAVE)pll.refclk,(SLAVE)noise.clk) 1 1 2 550 290 730
+preplace netloc FAN_OUT<net_container>nios_practica</net_container>(SLAVE)cpu.clk,(SLAVE)RAM_jesus.clk1,(MASTER)pll.outclk0,(SLAVE)jtag_uart.clk,(SLAVE)uart.clk) 1 0 3 90 30 NJ 30 790
+levelinfo -pg 1 0 60 1000
+levelinfo -hier nios_practica 70 240 580 840 990
