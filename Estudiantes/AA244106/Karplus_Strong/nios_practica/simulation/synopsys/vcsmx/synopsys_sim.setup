@@ -1,0 +1,23 @@
+
+WORK > DEFAULT
+DEFAULT:               ./libraries/work/                 
+work:                  ./libraries/work/                 
+sys_clk:               ./libraries/sys_clk/              
+sw:                    ./libraries/sw/                   
+sel_nota:              ./libraries/sel_nota/             
+pll:                   ./libraries/pll/                  
+noise_en:              ./libraries/noise_en/             
+noise:                 ./libraries/noise/                
+leds:                  ./libraries/leds/                 
+jtag_uart:             ./libraries/jtag_uart/            
+div_freq:              ./libraries/div_freq/             
+cpu:                   ./libraries/cpu/                  
+RAM_jesus:             ./libraries/RAM_jesus/            
+altera_ver:            ./libraries/altera_ver/           
+lpm_ver:               ./libraries/lpm_ver/              
+sgate_ver:             ./libraries/sgate_ver/            
+altera_mf_ver:         ./libraries/altera_mf_ver/        
+altera_lnsim_ver:      ./libraries/altera_lnsim_ver/     
+cyclonev_ver:          ./libraries/cyclonev_ver/         
+cyclonev_hssi_ver:     ./libraries/cyclonev_hssi_ver/    
+cyclonev_pcie_hip_ver: ./libraries/cyclonev_pcie_hip_ver/

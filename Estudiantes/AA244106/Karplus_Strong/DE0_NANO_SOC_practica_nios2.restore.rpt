@@ -1,0 +1,150 @@
+Restore Archived Project report for DE0_NANO_SOC_practica_nios2
+Fri Jun 10 14:19:58 2016
+Quartus II 64-Bit Version 15.0.0 Build 145 04/22/2015 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Restore Archived Project Summary
+  3. Restore Archived Project Messages
+  4. Files Restored
+  5. Files Not Restored
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2015 Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus II License Agreement,
+the Altera MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Altera and sold by Altera or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++-------------------------------------------------------------------------+
+; Restore Archived Project Summary                                        ;
++---------------------------------+---------------------------------------+
+; Restore Archived Project Status ; Successful - Fri Jun 10 14:19:58 2016 ;
+; Revision Name                   ; DE0_NANO_SOC_practica_nios2           ;
+; Top-level Entity Name           ; DE0_NANO_SOC_practica_nios2           ;
+; Family                          ; Cyclone V                             ;
++---------------------------------+---------------------------------------+
+
+
++-----------------------------------+
+; Restore Archived Project Messages ;
++-----------------------------------+
+Info: Successfully restored 'C:/Users/hogar/Documents/GitHub/ece10243upb2016/Prof_Examples/3-5_Nios_2_Karplus_Strong/Karplus_Strong_Nios2_sw/DE0_NANO_SOC_practica_nios2_Karplus_Strong.qar' into the 'C:\\Users\\hogar\\Documents\\Trabajo_FPGAs\\Proyectos\\Karplus_Strong/' directory
+Info: Generated report 'DE0_NANO_SOC_practica_nios2.restore.rpt'
+Info (23030): Evaluation of Tcl script c:/altera/15.0/quartus/common/tcl/apps/qpm/qar.tcl was successful
+Info: Quartus II 64-Bit Shell was successful. 0 errors, 2 warnings
+    Info: Peak virtual memory: 346 megabytes
+    Info: Processing ended: Fri Jun 10 14:19:58 2016
+    Info: Elapsed time: 00:00:09
+    Info: Total CPU time (on all processors): 00:00:04
+
+
++---------------------------------------------------------------------------------------------------------+
+; Files Restored                                                                                          ;
++---------------------------------------------------------------------------------------------------------+
+; File Name                                                                                               ;
++---------------------------------------------------------------------------------------------------------+
+; qar_info.json                                                                                           ;
+; DE0_NANO_SOC_practica_nios2.SDC                                                                         ;
+; DE0_NANO_SOC_practica_nios2.qpf                                                                         ;
+; DE0_NANO_SOC_practica_nios2.qsf                                                                         ;
+; DE0_NANO_SOC_practica_nios2_assignment_defaults.qdf                                                     ;
+; de0_nano_soc_practica_nios2.v                                                                           ;
+; modules/dac_nano.v                                                                                      ;
+; modules/div_freq.v                                                                                      ;
+; modules/mono_dac.v                                                                                      ;
+; nios_practica.qsys                                                                                      ;
+; nios_practica.sopcinfo                                                                                  ;
+; nios_practica/nios_practica.cmp                                                                         ;
+; nios_practica/synthesis/nios_practica.debuginfo                                                         ;
+; nios_practica/synthesis/nios_practica.qip                                                               ;
+; nios_practica/synthesis/nios_practica.regmap                                                            ;
+; nios_practica/synthesis/nios_practica.v                                                                 ;
+; nios_practica/synthesis/submodules/altera_avalon_sc_fifo.v                                              ;
+; nios_practica/synthesis/submodules/altera_avalon_st_clock_crosser.v                                     ;
+; nios_practica/synthesis/submodules/altera_avalon_st_handshake_clock_crosser.v                           ;
+; nios_practica/synthesis/submodules/altera_avalon_st_pipeline_base.v                                     ;
+; nios_practica/synthesis/submodules/altera_irq_clock_crosser.sv                                          ;
+; nios_practica/synthesis/submodules/altera_merlin_arbitrator.sv                                          ;
+; nios_practica/synthesis/submodules/altera_merlin_burst_uncompressor.sv                                  ;
+; nios_practica/synthesis/submodules/altera_merlin_master_agent.sv                                        ;
+; nios_practica/synthesis/submodules/altera_merlin_master_translator.sv                                   ;
+; nios_practica/synthesis/submodules/altera_merlin_slave_agent.sv                                         ;
+; nios_practica/synthesis/submodules/altera_merlin_slave_translator.sv                                    ;
+; nios_practica/synthesis/submodules/altera_reset_controller.sdc                                          ;
+; nios_practica/synthesis/submodules/altera_reset_controller.v                                            ;
+; nios_practica/synthesis/submodules/altera_reset_synchronizer.v                                          ;
+; nios_practica/synthesis/submodules/nios_practica_RAM_jesus.hex                                          ;
+; nios_practica/synthesis/submodules/nios_practica_RAM_jesus.v                                            ;
+; nios_practica/synthesis/submodules/nios_practica_cpu.v                                                  ;
+; nios_practica/synthesis/submodules/nios_practica_cpu_cpu.sdc                                            ;
+; nios_practica/synthesis/submodules/nios_practica_cpu_cpu.v                                              ;
+; nios_practica/synthesis/submodules/nios_practica_cpu_cpu_debug_slave_sysclk.v                           ;
+; nios_practica/synthesis/submodules/nios_practica_cpu_cpu_debug_slave_tck.v                              ;
+; nios_practica/synthesis/submodules/nios_practica_cpu_cpu_debug_slave_wrapper.v                          ;
+; nios_practica/synthesis/submodules/nios_practica_cpu_cpu_ociram_default_contents.mif                    ;
+; nios_practica/synthesis/submodules/nios_practica_cpu_cpu_rf_ram_a.mif                                   ;
+; nios_practica/synthesis/submodules/nios_practica_cpu_cpu_rf_ram_b.mif                                   ;
+; nios_practica/synthesis/submodules/nios_practica_cpu_cpu_test_bench.v                                   ;
+; nios_practica/synthesis/submodules/nios_practica_div_freq.v                                             ;
+; nios_practica/synthesis/submodules/nios_practica_irq_mapper.sv                                          ;
+; nios_practica/synthesis/submodules/nios_practica_jtag_uart.v                                            ;
+; nios_practica/synthesis/submodules/nios_practica_leds.v                                                 ;
+; nios_practica/synthesis/submodules/nios_practica_mm_interconnect_0.v                                    ;
+; nios_practica/synthesis/submodules/nios_practica_mm_interconnect_0_avalon_st_adapter.v                  ;
+; nios_practica/synthesis/submodules/nios_practica_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv ;
+; nios_practica/synthesis/submodules/nios_practica_mm_interconnect_0_cmd_demux.sv                         ;
+; nios_practica/synthesis/submodules/nios_practica_mm_interconnect_0_cmd_demux_001.sv                     ;
+; nios_practica/synthesis/submodules/nios_practica_mm_interconnect_0_cmd_mux.sv                           ;
+; nios_practica/synthesis/submodules/nios_practica_mm_interconnect_0_cmd_mux_001.sv                       ;
+; nios_practica/synthesis/submodules/nios_practica_mm_interconnect_0_router.sv                            ;
+; nios_practica/synthesis/submodules/nios_practica_mm_interconnect_0_router_001.sv                        ;
+; nios_practica/synthesis/submodules/nios_practica_mm_interconnect_0_router_002.sv                        ;
+; nios_practica/synthesis/submodules/nios_practica_mm_interconnect_0_router_003.sv                        ;
+; nios_practica/synthesis/submodules/nios_practica_mm_interconnect_0_rsp_demux.sv                         ;
+; nios_practica/synthesis/submodules/nios_practica_mm_interconnect_0_rsp_demux_003.sv                     ;
+; nios_practica/synthesis/submodules/nios_practica_mm_interconnect_0_rsp_mux.sv                           ;
+; nios_practica/synthesis/submodules/nios_practica_mm_interconnect_0_rsp_mux_001.sv                       ;
+; nios_practica/synthesis/submodules/nios_practica_pll.qip                                                ;
+; nios_practica/synthesis/submodules/nios_practica_pll.v                                                  ;
+; nios_practica/synthesis/submodules/nios_practica_sw.v                                                   ;
+; nios_practica/synthesis/submodules/nios_practica_sys_clk.v                                              ;
+; nios_practica/synthesis/submodules/nios_practica_uart.v                                                 ;
+; pll_dac.cmp                                                                                             ;
+; pll_dac.qip                                                                                             ;
+; pll_dac.sip                                                                                             ;
+; pll_dac.spd                                                                                             ;
+; pll_dac.v                                                                                               ;
+; pll_dac/pll_dac_0002.qip                                                                                ;
+; pll_dac/pll_dac_0002.v                                                                                  ;
+; pll_dac_sim/pll_dac.vo                                                                                  ;
++---------------------------------------------------------------------------------------------------------+
+
+
++---------------------------------+
+; Files Not Restored              ;
++---------------------------------+
+; File Name                       ;
++---------------------------------+
+; DE0_NANO_SOC_practica_nios2.sdc ;
++---------------------------------+
+
+

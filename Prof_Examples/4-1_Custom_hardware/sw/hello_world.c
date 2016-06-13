@@ -18,15 +18,16 @@
 #include <io.h>
 #include <sys/alt_irq.h>
 #include <system.h>
+#include <unistd.h>
 
 void initTimer(int frequency){
 	int in_div_freq=(50000000/(2*frequency))-1;
-	IOWR(TIMER_ECE10243UPB2016_0_BASE,0,in_div_freq);
+	IOWR(TIMER_ECE10243UPB2016_1_BASE,0,in_div_freq);
 }
 
 
 void clr_timer_irq(){
-	IOWR(TIMER_ECE10243UPB2016_0_BASE,1,0);
+	IOWR(TIMER_ECE10243UPB2016_1_BASE,1,0);
 }
 
 static void timer_isr(void * context)
@@ -35,7 +36,7 @@ static void timer_isr(void * context)
 	static unsigned short counter= 0;
 	IOWR(LEDS_BASE,0,counter);
 	counter++;
-	printf("Llego a la Interrupcion\n");
+
 	// debe hacer clear de la interrupcion
 	clr_timer_irq();
 }
@@ -43,12 +44,13 @@ static void timer_isr(void * context)
 
 int main()
 {
-	initTimer(1);//1Hz
+	initTimer(15);//1Hz
 	//registra la interrupcion y ata a la funcion timer_isr
-	alt_ic_isr_register(TIMER_ECE10243UPB2016_0_IRQ_INTERRUPT_CONTROLLER_ID,TIMER_ECE10243UPB2016_0_IRQ,timer_isr,(void*)NULL, 0);
-	alt_ic_irq_enable (TIMER_ECE10243UPB2016_0_IRQ_INTERRUPT_CONTROLLER_ID,TIMER_ECE10243UPB2016_0_IRQ);
+	alt_ic_isr_register(TIMER_ECE10243UPB2016_1_IRQ_INTERRUPT_CONTROLLER_ID,TIMER_ECE10243UPB2016_1_IRQ,timer_isr,(void*)NULL, 0);
+	alt_ic_irq_enable (TIMER_ECE10243UPB2016_1_IRQ_INTERRUPT_CONTROLLER_ID,TIMER_ECE10243UPB2016_1_IRQ);
 	while(1){
-		clr_timer_irq();
+		printf("HOHOHO\n");
+		usleep(1000000);
 	}
 
   return 0;
