@@ -1,0 +1,12 @@
+module karplus_strong_nios(
+	input clk,
+	input [15:0]noise,
+	input noise_en,
+	input [9:0]sel_nota,
+	input noise_pulse,
+	input [31:0]div_freq_in,
+	output [15:0]syn_guitar
+);
+
+
+endmodule
