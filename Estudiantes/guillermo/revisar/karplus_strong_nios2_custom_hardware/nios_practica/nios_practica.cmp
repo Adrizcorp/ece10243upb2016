@@ -1,0 +1,18 @@
+	component nios_practica is
+		port (
+			clk_clk                 : in  std_logic                     := 'X';             -- clk
+			div_freq_export         : out std_logic_vector(31 downto 0);                    -- export
+			karplus_strong_0_export : out std_logic_vector(15 downto 0);                    -- export
+			karplus_strong_1_export : out std_logic_vector(15 downto 0);                    -- export
+			karplus_strong_2_export : out std_logic_vector(15 downto 0);                    -- export
+			karplus_strong_3_export : out std_logic_vector(15 downto 0);                    -- export
+			karplus_strong_4_export : out std_logic_vector(15 downto 0);                    -- export
+			karplus_strong_5_export : out std_logic_vector(15 downto 0);                    -- export
+			leds_export             : out std_logic_vector(7 downto 0);                     -- export
+			reset_reset_n           : in  std_logic                     := 'X';             -- reset_n
+			sw_export               : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- export
+			uart_rxd                : in  std_logic                     := 'X';             -- rxd
+			uart_txd                : out std_logic                                         -- txd
+		);
+	end component nios_practica;
+

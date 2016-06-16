@@ -1,0 +1,138 @@
+Flow report for DE0_NANO_SOC_practica_nios2
+Wed Jun 15 23:32:13 2016
+Quartus II 64-Bit Version 15.0.0 Build 145 04/22/2015 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Flow Summary
+  3. Flow Settings
+  4. Flow Non-Default Global Settings
+  5. Flow Elapsed Time
+  6. Flow OS Summary
+  7. Flow Log
+  8. Flow Messages
+  9. Flow Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2015 Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus II License Agreement,
+the Altera MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Altera and sold by Altera or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++------------------------------------------------------------------------------+
+; Flow Summary                                                                 ;
++---------------------------------+--------------------------------------------+
+; Flow Status                     ; Successful - Wed Jun 15 23:31:15 2016      ;
+; Quartus II 64-Bit Version       ; 15.0.0 Build 145 04/22/2015 SJ Web Edition ;
+; Revision Name                   ; DE0_NANO_SOC_practica_nios2                ;
+; Top-level Entity Name           ; DE0_NANO_SOC_practica_nios2                ;
+; Family                          ; Cyclone V                                  ;
+; Device                          ; 5CSEMA4U23C6                               ;
+; Timing Models                   ; Final                                      ;
+; Logic utilization (in ALMs)     ; 4,809 / 15,880 ( 30 % )                    ;
+; Total registers                 ; 12020                                      ;
+; Total pins                      ; 93 / 314 ( 30 % )                          ;
+; Total virtual pins              ; 0                                          ;
+; Total block memory bits         ; 1,771,264 / 2,764,800 ( 64 % )             ;
+; Total DSP Blocks                ; 0 / 84 ( 0 % )                             ;
+; Total HSSI RX PCSs              ; 0                                          ;
+; Total HSSI PMA RX Deserializers ; 0                                          ;
+; Total HSSI TX PCSs              ; 0                                          ;
+; Total HSSI PMA TX Serializers   ; 0                                          ;
+; Total PLLs                      ; 1 / 5 ( 20 % )                             ;
+; Total DLLs                      ; 0 / 4 ( 0 % )                              ;
++---------------------------------+--------------------------------------------+
+
+
++-------------------------------------------------+
+; Flow Settings                                   ;
++-------------------+-----------------------------+
+; Option            ; Setting                     ;
++-------------------+-----------------------------+
+; Start date & time ; 06/15/2016 23:24:57         ;
+; Main task         ; Compilation                 ;
+; Revision Name     ; DE0_NANO_SOC_practica_nios2 ;
++-------------------+-----------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                                                   ;
++-------------------------------------+-----------------------------------------------------------------+---------------+---------------+------------+
+; Assignment Name                     ; Value                                                           ; Default Value ; Entity Name   ; Section Id ;
++-------------------------------------+-----------------------------------------------------------------+---------------+---------------+------------+
+; COMPILER_SIGNATURE_ID               ; 77950489795352.146605109613660                                  ; --            ; --            ; --         ;
+; MAX_CORE_JUNCTION_TEMP              ; 85                                                              ; --            ; --            ; --         ;
+; MIN_CORE_JUNCTION_TEMP              ; 0                                                               ; --            ; --            ; --         ;
+; MISC_FILE                           ; nios_practica/synthesis/../nios_practica.cmp                    ; --            ; --            ; --         ;
+; MISC_FILE                           ; nios_practica/synthesis/../../nios_practica.qsys                ; --            ; --            ; --         ;
+; MISC_FILE                           ; pll_dac.cmp                                                     ; --            ; --            ; --         ;
+; MISC_FILE                           ; pll_dac_sim/pll_dac.vo                                          ; --            ; --            ; --         ;
+; PARTITION_COLOR                     ; 16764057                                                        ; --            ; --            ; Top        ;
+; PARTITION_FITTER_PRESERVATION_LEVEL ; PLACEMENT_AND_ROUTING                                           ; --            ; --            ; Top        ;
+; PARTITION_NETLIST_TYPE              ; SOURCE                                                          ; --            ; --            ; Top        ;
+; POWER_BOARD_THERMAL_MODEL           ; None (CONSERVATIVE)                                             ; --            ; --            ; --         ;
+; POWER_PRESET_COOLING_SOLUTION       ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW                           ; --            ; --            ; --         ;
+; SLD_FILE                            ; nios_practica/synthesis/nios_practica.regmap                    ; --            ; --            ; --         ;
+; SLD_FILE                            ; nios_practica/synthesis/nios_practica.debuginfo                 ; --            ; --            ; --         ;
+; SLD_INFO                            ; QSYS_NAME nios_practica HAS_SOPCINFO 1 GENERATION_ID 1466047181 ; --            ; nios_practica ; --         ;
+; SOPCINFO_FILE                       ; nios_practica/synthesis/../../nios_practica.sopcinfo            ; --            ; --            ; --         ;
+; SPD_FILE                            ; pll_dac.spd                                                     ; --            ; --            ; --         ;
+; SYNTHESIS_ONLY_QIP                  ; On                                                              ; --            ; --            ; --         ;
+; SYNTHESIS_ONLY_QIP                  ; On                                                              ; --            ; --            ; --         ;
++-------------------------------------+-----------------------------------------------------------------+---------------+---------------+------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------+
+; Flow Elapsed Time                                                                                                             ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Analysis & Synthesis      ; 00:01:15     ; 1.2                     ; 1037 MB             ; 00:01:59                           ;
+; Fitter                    ; 00:04:25     ; 1.4                     ; 2124 MB             ; 00:06:39                           ;
+; Assembler                 ; 00:00:22     ; 1.0                     ; 902 MB              ; 00:00:19                           ;
+; TimeQuest Timing Analyzer ; 00:00:54     ; 1.6                     ; 1282 MB             ; 00:01:18                           ;
+; Total                     ; 00:06:56     ; --                      ; --                  ; 00:10:15                           ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+
+
++----------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                        ;
++---------------------------+------------------+-----------+------------+----------------+
+; Module Name               ; Machine Hostname ; OS Name   ; OS Version ; Processor type ;
++---------------------------+------------------+-----------+------------+----------------+
+; Analysis & Synthesis      ; Usuario-PC       ; Windows 7 ; 6.2        ; x86_64         ;
+; Fitter                    ; Usuario-PC       ; Windows 7 ; 6.2        ; x86_64         ;
+; Assembler                 ; Usuario-PC       ; Windows 7 ; 6.2        ; x86_64         ;
+; TimeQuest Timing Analyzer ; Usuario-PC       ; Windows 7 ; 6.2        ; x86_64         ;
++---------------------------+------------------+-----------+------------+----------------+
+
+
+------------
+; Flow Log ;
+------------
+quartus_map --read_settings_files=on --write_settings_files=off DE0_NANO_SOC_practica_nios2 -c DE0_NANO_SOC_practica_nios2
+quartus_fit --read_settings_files=off --write_settings_files=off DE0_NANO_SOC_practica_nios2 -c DE0_NANO_SOC_practica_nios2
+quartus_asm --read_settings_files=off --write_settings_files=off DE0_NANO_SOC_practica_nios2 -c DE0_NANO_SOC_practica_nios2
+quartus_sta DE0_NANO_SOC_practica_nios2 -c DE0_NANO_SOC_practica_nios2
+
+
+
