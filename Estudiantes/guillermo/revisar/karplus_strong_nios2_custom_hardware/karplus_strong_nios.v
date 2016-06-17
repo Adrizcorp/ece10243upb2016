@@ -24,10 +24,10 @@ wire noise_pulse_wr=(address[2:0]==3'd3)? wr_en: 1'b0;
 wire div_freq_in_wr=(address[2:0]==3'd4)? wr_en: 1'b0;
 
 assign readdata[31:0]=(address[2:0]==3'd0)? ({16'd0,noise[15:0]}):
-							 (address[2:0]==3'd1)? ({1'd0,noise_en}):
-							 (address[2:0]==3'd2)? ({10'd0,sel_nota[9:0]}):
-							 (address[2:0]==3'd3)? ({1'd0,noise_pulse}):
-							 ({32'd0,div_freq_in[31:0]});
+					 (address[2:0]==3'd1)? ({1'd0,noise_en}):
+					 (address[2:0]==3'd2)? ({10'd0,sel_nota[9:0]}):
+					 (address[2:0]==3'd3)? ({1'd0,noise_pulse}):
+					 ({32'd0,div_freq_in[31:0]});
 
 reg [15:0]line_length[499:0];
 //wire [15:0]mux_ins[699:0];
@@ -76,10 +76,21 @@ end
 
 
 
-always@(posedge clock)
+always@(posedge noise_wr, posedge clock)
 begin
-	z[15:0]<=current_value[15:0];
-	line_length[0][15:0]<=noise_en? noise[15:0]:feedback[15:0];
+	z[15:0]<=z[15:0];
+	line_length[0][15:0]<=line_length[0][15:0];
+	if(noise_wr & noise_en==1'b1)
+		begin
+			z[15:0]<=current_value[15:0];
+			line_length[0][15:0]<=noise[15:0];
+		end
+	else if(noise_en==1'b0)
+		begin
+			z[15:0]<=current_value[15:0];
+			line_length[0][15:0]<=feedback[15:0];
+		end
+		
 end
 
 genvar index;
@@ -87,9 +98,16 @@ generate
 	for(index=499;index>=1;index=index-1)
 	begin: delay_generate
 	//	assign mux_ins[index][15:0]=line_length[index][15:0];
-		always@(posedge clock)
+		always@(posedge noise_wr, posedge clock)
 		begin
-			line_length[index][15:0]<=line_length[index-1][15:0];
+			if(noise_wr & noise_en==1'b1)
+				begin
+					line_length[index][15:0]<=line_length[index-1][15:0];
+				end
+			else if(noise_en==1'b0)
+				begin
+					line_length[index][15:0]<=line_length[index-1][15:0];
+				end
 		end
 		
 	end

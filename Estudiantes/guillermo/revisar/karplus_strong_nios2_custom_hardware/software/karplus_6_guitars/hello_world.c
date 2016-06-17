@@ -20,22 +20,27 @@ int main()
 {
 
 	printf("Hello from Nios II!\n");
-	init_karplus();
-	set_karplus_frequency(44100);
+	init_karplus(KARPLUS_STRONG_0_BASE);
+	init_karplus(KARPLUS_STRONG_1_BASE);
+	init_karplus(KARPLUS_STRONG_2_BASE);
+	init_karplus(KARPLUS_STRONG_3_BASE);
+	
+	set_karplus_frequency(KARPLUS_STRONG_0_BASE,44100);
 	while(1)
 	{
 	//prueba
-		/*play_tone(HIGH_E_0,1000);
-		play_tone(B_0,1000);
-		play_tone(G_0,1000);
-		play_tone(D_0,1000);
-		play_tone(A_0,1000);
-		play_tone(LOW_E_0,1000);
-		play_tone(HIGH_E_1,1000);
-		play_tone(B_1,1000);
-		play_tone(G_1,1000);
-		play_tone(D_1,1000);
-		play_tone(A_1,1000);
+		/*
+		play_tone(KARPLUS_STRONG_0_BASE,HIGH_E_0,1000);
+		play_tone(KARPLUS_STRONG_0_BASE,B_0,1000);
+		play_tone(KARPLUS_STRONG_0_BASE,G_0,1000);
+		play_tone(KARPLUS_STRONG_0_BASE,D_0,1000);
+		play_tone(KARPLUS_STRONG_0_BASE,A_0,1000);
+		play_tone(KARPLUS_STRONG_0_BASE,LOW_E_0,1000);
+		play_tone(KARPLUS_STRONG_0_BASE,HIGH_E_1,1000);
+		play_tone(KARPLUS_STRONG_0_BASE,B_1,1000);
+		play_tone(KARPLUS_STRONG_0_BASE,G_1,1000);
+		play_tone(KARPLUS_STRONG_0_BASE,D_1,1000);
+		play_tone(KARPLUS_STRONG_0_BASE,A_1,1000);
 		play_tone(LOW_E_1,1000);
 		play_tone(HIGH_E_2,1000);
 		play_tone(B_2,1000);
