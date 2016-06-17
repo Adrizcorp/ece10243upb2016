@@ -44,6 +44,9 @@ for i=1:siz
     %y(i+1)=y(1);
     for t=1:71
         g(t)=h(t)*z(t);
+%         for u=1:71
+%             y(i)=y(i)+g(u);
+%         end
     end
     for u=1:71
         y(i)=y(i)+g(u);
