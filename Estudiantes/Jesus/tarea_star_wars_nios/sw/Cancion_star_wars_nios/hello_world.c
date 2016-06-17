@@ -89,7 +89,7 @@ int main()
 	play_tone(la, 375);
 	play_tone(doh, 125);
 	play_tone(mih, 1000);
-	//more interesting stuff (this doesn't quite get it right somehow)
+	
 
 	play_tone(lah, 500);
 	play_tone(la, 350);
