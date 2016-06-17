@@ -15,7 +15,7 @@ wire [31:0]sum[20:0];
 
 initial $readmemh("coef.txt",coef);
 
-assign coef_current[15:0]= coef[sw{3:0}][15:0];
+assign coef_current[15:0]= coef[sw[3:0]][15:0];
 
 always@(posedge clk)
 begin
