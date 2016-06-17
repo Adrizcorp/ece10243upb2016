@@ -13,8 +13,9 @@ reg [15:0]coef[20:0];
 wire [31:0]multi[20:0];
 wire [31:0]sum[20:0];
 
+//inicializo los coeficientes del filtro FIR predeterminadamente.
 initial $readmemh("coef.txt",coef);
-
+//multiplexo los coeficientes a la salida
 assign coef_current[15:0]= coef[sw[3:0]][15:0];
 
 always@(posedge clk)
@@ -26,11 +27,16 @@ always@(posedge clk_coef)
 begin
 	coef[0][15:0]<=coef_in[15:0];
 end
+
+// semillas para generate
 assign multi[0][31:0]=line_length[0][15:0]*coef[0][15:0];
 assign sum[0][31:0]= multi[20][31:0]+multi[19][31:0];
 
+// asignacion a la salida de la signal filtrada
 assign audio_out[23:0]=sum[19][31:8]; // escalar el numero 8 bits
 
+
+//generacion automatica de FIR por generate.
 genvar index2;
 generate
 	for (index2=19; index2 >= 1; index2=index2-1)
