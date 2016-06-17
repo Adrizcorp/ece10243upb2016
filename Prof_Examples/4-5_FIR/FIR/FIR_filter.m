@@ -1,7 +1,7 @@
 % low_pass or Band_pass filters with windows Blackman Harris
 clear all
 clc
-Nf=24     % orden del filtro 
+Nf=20     % orden del filtro 
 N = Nf+1; % N?meros de Coeficientes 
 n = 0;
 fs = 44100;   % Frecuencia de muestreo 
