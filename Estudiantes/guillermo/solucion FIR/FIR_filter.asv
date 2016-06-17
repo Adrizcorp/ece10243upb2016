@@ -5,8 +5,8 @@ Nf=70    % orden del filtro
 N = Nf+1; % N?meros de Coeficientes 
 n = 0;
 fs = 44100;   % Frecuencia de muestreo 
-fc1 = 7000;    % Frecuencia de corte m?nima
-fc2 = 9000;   % Frecuencia de corte m?xima
+fc1 = 6000;    % Frecuencia de corte m?nima
+fc2 = 10000;   % Frecuencia de corte m?xima
 Wc1 = (2*pi*fc1)/fs
 Wc2 = (2*pi*fc2)/fs
 M = floor(N/2)
@@ -35,7 +35,7 @@ fvtool(h);
 siz=size(x);
 y=zeros(size(x));
 g=zeros(size(z));
-g=zeros(size(z));
+v=zeros(size(z));
 
 %Escriba su codigo de su filtro aqui
 %-----------------------------------
@@ -44,13 +44,15 @@ for i=1:siz
     %y(i+1)=y(1);
     for t=1:71
         g(t)=h(t)*z(t);
+        for u=1:71
+            y(i)=y(i)+g(u);
+        end
     end
-    for u=1:71
-        y(i)=y(i)+g(u);
-    end
-    for o=2:71
-        v=z(o-1);
-        z(o)=
+%     for u=1:71
+%         y(i)=y(i)+g(u);
+%     end
+    for o=1:70
+        z(72-o)=z(72-o-1);
     end   
 end
 
