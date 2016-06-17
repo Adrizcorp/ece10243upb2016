@@ -1,0 +1,1144 @@
+Archive member included to satisfy reference by file (symbol)
+
+c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-mul.o)
+                              obj/default/hello_world.o (__mulsi3)
+../tetrisSB_bsp/\libhal_bsp.a(alt_load.o)
+                              ../tetrisSB_bsp//obj/HAL/src/crt0.o (alt_load)
+../tetrisSB_bsp/\libhal_bsp.a(alt_main.o)
+                              ../tetrisSB_bsp//obj/HAL/src/crt0.o (alt_main)
+../tetrisSB_bsp/\libhal_bsp.a(alt_usleep.o)
+                              obj/default/hello_world.o (usleep)
+../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o) (alt_irq_init)
+../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o) (altera_avalon_jtag_uart_read_fd)
+../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_init.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o) (altera_avalon_jtag_uart_init)
+../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_ioctl.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o) (altera_avalon_jtag_uart_ioctl)
+../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o) (altera_avalon_jtag_uart_read)
+../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o) (altera_avalon_jtag_uart_write)
+../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_timer_sc.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o) (alt_avalon_timer_sc_init)
+../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_fd.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o) (altera_avalon_uart_read_fd)
+../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_init.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o) (altera_avalon_uart_init)
+../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_read.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_fd.o) (altera_avalon_uart_read)
+../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_write.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_fd.o) (altera_avalon_uart_write)
+../tetrisSB_bsp/\libhal_bsp.a(alt_alarm_start.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_init.o) (alt_alarm_start)
+../tetrisSB_bsp/\libhal_bsp.a(alt_busy_sleep.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_usleep.o) (alt_busy_sleep)
+../tetrisSB_bsp/\libhal_bsp.a(alt_close.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o) (close)
+../tetrisSB_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_load.o) (alt_dcache_flush_all)
+../tetrisSB_bsp/\libhal_bsp.a(alt_dev.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o) (alt_dev_list)
+../tetrisSB_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o) (alt_dev_llist_insert)
+../tetrisSB_bsp/\libhal_bsp.a(alt_do_ctors.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o) (_do_ctors)
+../tetrisSB_bsp/\libhal_bsp.a(alt_do_dtors.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o) (_do_dtors)
+../tetrisSB_bsp/\libhal_bsp.a(alt_errno.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_read.o) (alt_errno)
+../tetrisSB_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_load.o) (alt_icache_flush_all)
+../tetrisSB_bsp/\libhal_bsp.a(alt_iic.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_init.o) (alt_ic_isr_register)
+../tetrisSB_bsp/\libhal_bsp.a(alt_iic_isr_register.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_iic.o) (alt_iic_isr_register)
+../tetrisSB_bsp/\libhal_bsp.a(alt_io_redirect.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o) (alt_io_redirect)
+../tetrisSB_bsp/\libhal_bsp.a(alt_irq_entry.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_iic_isr_register.o) (alt_irq_entry)
+../tetrisSB_bsp/\libhal_bsp.a(alt_irq_handler.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_iic_isr_register.o) (alt_irq)
+../tetrisSB_bsp/\libhal_bsp.a(alt_irq_vars.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_iic.o) (alt_irq_active)
+../tetrisSB_bsp/\libhal_bsp.a(alt_open.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_io_redirect.o) (open)
+../tetrisSB_bsp/\libhal_bsp.a(alt_release_fd.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_close.o) (alt_release_fd)
+../tetrisSB_bsp/\libhal_bsp.a(alt_tick.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_init.o) (_alt_tick_rate)
+../tetrisSB_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o) (altera_nios2_gen2_irq_init)
+../tetrisSB_bsp/\libhal_bsp.a(alt_exception_entry.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_entry.o) (alt_exception)
+../tetrisSB_bsp/\libhal_bsp.a(alt_find_dev.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_open.o) (alt_find_dev)
+../tetrisSB_bsp/\libhal_bsp.a(alt_find_file.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_open.o) (alt_find_file)
+../tetrisSB_bsp/\libhal_bsp.a(alt_get_fd.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_open.o) (alt_get_fd)
+../tetrisSB_bsp/\libhal_bsp.a(alt_instruction_exception_entry.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_exception_entry.o) (alt_instruction_exception_entry)
+c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-atexit.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o) (atexit)
+c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-exit.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o) (exit)
+c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-impure.o)
+                              c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-exit.o) (_global_impure_ptr)
+c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-int_errno.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_read.o) (errno)
+c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcmp.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_find_dev.o) (memcmp)
+c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcpy.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o) (memcpy)
+c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-strlen.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_find_dev.o) (strlen)
+c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__atexit.o)
+                              c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-atexit.o) (__register_exitproc)
+c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__call_atexit.o)
+                              c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-exit.o) (__call_exitprocs)
+c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-divmod.o)
+                              ../tetrisSB_bsp/\libhal_bsp.a(alt_busy_sleep.o) (__udivsi3)
+../tetrisSB_bsp/\libhal_bsp.a(alt_exit.o)
+                              c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-exit.o) (_exit)
+
+Allocating common symbols
+Common symbol       size              file
+
+alt_irq             0x100             ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_handler.o)
+errno               0x4               c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-int_errno.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+reset            0x0000000000020000 0x0000000000000020
+RAM_jesus        0x0000000000020020 0x000000000001c500
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD ../tetrisSB_bsp//obj/HAL/src/crt0.o
+LOAD obj/default/hello_world.o
+LOAD c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libstdc++.a
+LOAD c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libm.a
+LOAD c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a
+START GROUP
+LOAD c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a
+LOAD c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a
+LOAD ../tetrisSB_bsp/\libhal_bsp.a
+LOAD c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libm.a
+END GROUP
+LOAD c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a
+                0x0000000000020000                __alt_mem_RAM_jesus = 0x20000
+
+.entry          0x0000000000020000       0x20
+ *(.entry)
+ .entry         0x0000000000020000       0x20 ../tetrisSB_bsp//obj/HAL/src/crt0.o
+                0x0000000000020000                __reset
+
+.exceptions     0x0000000000020020      0x20c
+                0x0000000000020020                PROVIDE (__ram_exceptions_start, ABSOLUTE (.))
+                0x0000000000020020                . = ALIGN (0x20)
+ *(.irq)
+ *(.exceptions.entry.label)
+ .exceptions.entry.label
+                0x0000000000020020        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_entry.o)
+                0x0000000000020020                alt_irq_entry
+ .exceptions.entry.label
+                0x0000000000020020        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_exception_entry.o)
+                0x0000000000020020                alt_exception
+ *(.exceptions.entry.user)
+ *(.exceptions.entry.ecc_fatal)
+ *(.exceptions.entry)
+ .exceptions.entry
+                0x0000000000020020       0x54 ../tetrisSB_bsp/\libhal_bsp.a(alt_exception_entry.o)
+ *(.exceptions.irqtest.user)
+ *(.exceptions.irqtest)
+ .exceptions.irqtest
+                0x0000000000020074       0x10 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_entry.o)
+ *(.exceptions.irqhandler.user)
+ *(.exceptions.irqhandler)
+ .exceptions.irqhandler
+                0x0000000000020084        0x4 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_entry.o)
+ *(.exceptions.irqreturn.user)
+ *(.exceptions.irqreturn)
+ .exceptions.irqreturn
+                0x0000000000020088        0x4 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_entry.o)
+ *(.exceptions.notirq.label)
+ .exceptions.notirq.label
+                0x000000000002008c        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_entry.o)
+ *(.exceptions.notirq.user)
+ *(.exceptions.notirq)
+ .exceptions.notirq
+                0x000000000002008c        0x8 ../tetrisSB_bsp/\libhal_bsp.a(alt_exception_entry.o)
+ *(.exceptions.soft.user)
+ *(.exceptions.soft)
+ *(.exceptions.unknown.user)
+ *(.exceptions.unknown)
+ .exceptions.unknown
+                0x0000000000020094       0x14 ../tetrisSB_bsp/\libhal_bsp.a(alt_exception_entry.o)
+ *(.exceptions.exit.label)
+ .exceptions.exit.label
+                0x00000000000200a8        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_entry.o)
+ .exceptions.exit.label
+                0x00000000000200a8        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_exception_entry.o)
+ *(.exceptions.exit.user)
+ *(.exceptions.exit)
+ .exceptions.exit
+                0x00000000000200a8       0x54 ../tetrisSB_bsp/\libhal_bsp.a(alt_exception_entry.o)
+ *(.exceptions)
+ .exceptions    0x00000000000200fc       0xd0 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_handler.o)
+                0x00000000000200fc                alt_irq_handler
+ .exceptions    0x00000000000201cc       0x60 ../tetrisSB_bsp/\libhal_bsp.a(alt_instruction_exception_entry.o)
+                0x00000000000201cc                alt_instruction_exception_entry
+                0x000000000002022c                PROVIDE (__ram_exceptions_end, ABSOLUTE (.))
+                0x0000000000020020                PROVIDE (__flash_exceptions_start, LOADADDR (.exceptions))
+
+.text           0x000000000002022c     0x3588
+                0x000000000002022c                PROVIDE (stext, ABSOLUTE (.))
+ *(.interp)
+ *(.hash)
+ *(.dynsym)
+ *(.dynstr)
+ *(.gnu.version)
+ *(.gnu.version_d)
+ *(.gnu.version_r)
+ *(.rel.init)
+ *(.rela.init)
+ *(.rel.text .rel.text.* .rel.gnu.linkonce.t.*)
+ *(.rela.text .rela.text.* .rela.gnu.linkonce.t.*)
+ *(.rel.fini)
+ *(.rela.fini)
+ *(.rel.rodata .rel.rodata.* .rel.gnu.linkonce.r.*)
+ *(.rela.rodata .rela.rodata.* .rela.gnu.linkonce.r.*)
+ *(.rel.data .rel.data.* .rel.gnu.linkonce.d.*)
+ *(.rela.data .rela.data.* .rela.gnu.linkonce.d.*)
+ *(.rel.tdata .rel.tdata.* .rel.gnu.linkonce.td.*)
+ *(.rela.tdata .rela.tdata.* .rela.gnu.linkonce.td.*)
+ *(.rel.tbss .rel.tbss.* .rel.gnu.linkonce.tb.*)
+ *(.rela.tbss .rela.tbss.* .rela.gnu.linkonce.tb.*)
+ *(.rel.ctors)
+ *(.rela.ctors)
+ *(.rel.dtors)
+ *(.rela.dtors)
+ *(.rel.got)
+ *(.rela.got)
+ *(.rel.sdata .rel.sdata.* .rel.gnu.linkonce.s.*)
+ *(.rela.sdata .rela.sdata.* .rela.gnu.linkonce.s.*)
+ *(.rel.sbss .rel.sbss.* .rel.gnu.linkonce.sb.*)
+ *(.rela.sbss .rela.sbss.* .rela.gnu.linkonce.sb.*)
+ *(.rel.sdata2 .rel.sdata2.* .rel.gnu.linkonce.s2.*)
+ *(.rela.sdata2 .rela.sdata2.* .rela.gnu.linkonce.s2.*)
+ *(.rel.sbss2 .rel.sbss2.* .rel.gnu.linkonce.sb2.*)
+ *(.rela.sbss2 .rela.sbss2.* .rela.gnu.linkonce.sb2.*)
+ *(.rel.bss .rel.bss.* .rel.gnu.linkonce.b.*)
+ *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*)
+ *(.rel.plt)
+ *(.rela.plt)
+ *(.rel.dyn)
+ *(.init)
+ *(.plt)
+ *(.text .stub .text.* .gnu.linkonce.t.*)
+ .text          0x000000000002022c       0x3c ../tetrisSB_bsp//obj/HAL/src/crt0.o
+                0x000000000002022c                _start
+ .text          0x0000000000020268      0x5ec obj/default/hello_world.o
+                0x0000000000020268                play_tone_tetris
+                0x00000000000202b8                main
+ .text          0x0000000000020854       0x28 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-mul.o)
+                0x0000000000020854                __mulsi3
+ .text          0x000000000002087c       0xe4 ../tetrisSB_bsp/\libhal_bsp.a(alt_load.o)
+                0x00000000000208e0                alt_load
+ .text          0x0000000000020960       0x78 ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o)
+                0x0000000000020960                alt_main
+ .text          0x00000000000209d8       0x30 ../tetrisSB_bsp/\libhal_bsp.a(alt_usleep.o)
+                0x00000000000209d8                usleep
+ .text          0x0000000000020a08       0xe8 ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o)
+                0x0000000000020a40                alt_irq_init
+                0x0000000000020a74                alt_sys_init
+ .text          0x0000000000020af0      0x164 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+                0x0000000000020af0                altera_avalon_jtag_uart_read_fd
+                0x0000000000020b50                altera_avalon_jtag_uart_write_fd
+                0x0000000000020bb0                altera_avalon_jtag_uart_close_fd
+                0x0000000000020c00                altera_avalon_jtag_uart_ioctl_fd
+ .text          0x0000000000020c54      0x3d8 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_init.o)
+                0x0000000000020c54                altera_avalon_jtag_uart_init
+                0x0000000000020fc4                altera_avalon_jtag_uart_close
+ .text          0x000000000002102c       0xec ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_ioctl.o)
+                0x000000000002102c                altera_avalon_jtag_uart_ioctl
+ .text          0x0000000000021118      0x20c ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+                0x0000000000021118                altera_avalon_jtag_uart_read
+ .text          0x0000000000021324      0x218 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+                0x0000000000021324                altera_avalon_jtag_uart_write
+ .text          0x000000000002153c       0xfc ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_timer_sc.o)
+                0x00000000000215b0                alt_avalon_timer_sc_init
+ .text          0x0000000000021638      0x110 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_fd.o)
+                0x0000000000021638                altera_avalon_uart_read_fd
+                0x0000000000021698                altera_avalon_uart_write_fd
+                0x00000000000216f8                altera_avalon_uart_close_fd
+ .text          0x0000000000021748      0x3b8 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_init.o)
+                0x0000000000021748                altera_avalon_uart_init
+                0x0000000000021aac                altera_avalon_uart_close
+ .text          0x0000000000021b00      0x22c ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_read.o)
+                0x0000000000021b50                altera_avalon_uart_read
+ .text          0x0000000000021d2c      0x1fc ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_write.o)
+                0x0000000000021d7c                altera_avalon_uart_write
+ .text          0x0000000000021f28      0x140 ../tetrisSB_bsp/\libhal_bsp.a(alt_alarm_start.o)
+                0x0000000000021f28                alt_alarm_start
+ .text          0x0000000000022068      0x158 ../tetrisSB_bsp/\libhal_bsp.a(alt_busy_sleep.o)
+                0x0000000000022068                alt_busy_sleep
+ .text          0x00000000000221c0      0x128 ../tetrisSB_bsp/\libhal_bsp.a(alt_close.o)
+                0x0000000000022210                close
+ .text          0x00000000000222e8       0x1c ../tetrisSB_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+                0x00000000000222e8                alt_dcache_flush_all
+ .text          0x0000000000022304       0x2c ../tetrisSB_bsp/\libhal_bsp.a(alt_dev.o)
+ .text          0x0000000000022330       0xf4 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+                0x0000000000022380                alt_dev_llist_insert
+ .text          0x0000000000022424       0x5c ../tetrisSB_bsp/\libhal_bsp.a(alt_do_ctors.o)
+                0x0000000000022424                _do_ctors
+ .text          0x0000000000022480       0x5c ../tetrisSB_bsp/\libhal_bsp.a(alt_do_dtors.o)
+                0x0000000000022480                _do_dtors
+ .text          0x00000000000224dc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_errno.o)
+ .text          0x00000000000224dc       0x1c ../tetrisSB_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+                0x00000000000224dc                alt_icache_flush_all
+ .text          0x00000000000224f8      0x1e0 ../tetrisSB_bsp/\libhal_bsp.a(alt_iic.o)
+                0x00000000000224f8                alt_ic_isr_register
+                0x0000000000022548                alt_ic_irq_enable
+                0x00000000000225e8                alt_ic_irq_disable
+                0x000000000002268c                alt_ic_irq_enabled
+ .text          0x00000000000226d8       0xf0 ../tetrisSB_bsp/\libhal_bsp.a(alt_iic_isr_register.o)
+                0x00000000000226d8                alt_iic_isr_register
+ .text          0x00000000000227c8      0x158 ../tetrisSB_bsp/\libhal_bsp.a(alt_io_redirect.o)
+                0x00000000000228a8                alt_io_redirect
+ .text          0x0000000000022920        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_entry.o)
+ .text          0x0000000000022920        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_handler.o)
+ .text          0x0000000000022920        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_vars.o)
+ .text          0x0000000000022920      0x2a4 ../tetrisSB_bsp/\libhal_bsp.a(alt_open.o)
+                0x0000000000022a64                open
+ .text          0x0000000000022bc4       0x80 ../tetrisSB_bsp/\libhal_bsp.a(alt_release_fd.o)
+                0x0000000000022bc4                alt_release_fd
+ .text          0x0000000000022c44      0x19c ../tetrisSB_bsp/\libhal_bsp.a(alt_tick.o)
+                0x0000000000022c44                alt_alarm_stop
+                0x0000000000022cdc                alt_tick
+ .text          0x0000000000022de0       0x20 ../tetrisSB_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+                0x0000000000022de0                altera_nios2_gen2_irq_init
+ .text          0x0000000000022e00        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_exception_entry.o)
+ .text          0x0000000000022e00       0x90 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_dev.o)
+                0x0000000000022e00                alt_find_dev
+ .text          0x0000000000022e90      0x114 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_file.o)
+                0x0000000000022e90                alt_find_file
+ .text          0x0000000000022fa4       0xd4 ../tetrisSB_bsp/\libhal_bsp.a(alt_get_fd.o)
+                0x0000000000022fa4                alt_get_fd
+ .text          0x0000000000023078       0x9c ../tetrisSB_bsp/\libhal_bsp.a(alt_instruction_exception_entry.o)
+                0x0000000000023078                alt_exception_cause_generated_bad_addr
+ .text          0x0000000000023114       0x14 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-atexit.o)
+                0x0000000000023114                atexit
+ .text          0x0000000000023128       0x38 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-exit.o)
+                0x0000000000023128                exit
+ .text          0x0000000000023160        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-impure.o)
+ .text          0x0000000000023160        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-int_errno.o)
+ .text          0x0000000000023160       0x7c c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcmp.o)
+                0x0000000000023160                memcmp
+ .text          0x00000000000231dc      0x138 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcpy.o)
+                0x00000000000231dc                memcpy
+ .text          0x0000000000023314       0x98 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-strlen.o)
+                0x0000000000023314                strlen
+ .text          0x00000000000233ac      0x114 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__atexit.o)
+                0x00000000000233ac                __register_exitproc
+ .text          0x00000000000234c0      0x194 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__call_atexit.o)
+                0x00000000000234c0                __call_exitprocs
+ .text          0x0000000000023654      0x12c c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-divmod.o)
+                0x00000000000236c0                __divsi3
+                0x0000000000023714                __modsi3
+                0x0000000000023770                __udivsi3
+                0x0000000000023778                __umodsi3
+ .text          0x0000000000023780       0x34 ../tetrisSB_bsp/\libhal_bsp.a(alt_exit.o)
+                0x0000000000023780                _exit
+ *(.gnu.warning.*)
+ *(.fini)
+                0x00000000000237b4                PROVIDE (__etext, ABSOLUTE (.))
+                0x00000000000237b4                PROVIDE (_etext, ABSOLUTE (.))
+                0x00000000000237b4                PROVIDE (etext, ABSOLUTE (.))
+ *(.eh_frame_hdr)
+                0x00000000000237b4                . = ALIGN (0x4)
+                0x00000000000237b4                PROVIDE (__preinit_array_start, ABSOLUTE (.))
+ *(.preinit_array)
+                0x00000000000237b4                PROVIDE (__preinit_array_end, ABSOLUTE (.))
+                0x00000000000237b4                PROVIDE (__init_array_start, ABSOLUTE (.))
+ *(.init_array)
+                0x00000000000237b4                PROVIDE (__init_array_end, ABSOLUTE (.))
+                0x00000000000237b4                PROVIDE (__fini_array_start, ABSOLUTE (.))
+ *(.fini_array)
+                0x00000000000237b4                PROVIDE (__fini_array_end, ABSOLUTE (.))
+ *(.eh_frame)
+ *(.gcc_except_table .gcc_except_table.*)
+ *(.dynamic)
+                0x00000000000237b4                PROVIDE (__CTOR_LIST__, ABSOLUTE (.))
+ *(.ctors)
+ *(SORT(.ctors.*))
+                0x00000000000237b4                PROVIDE (__CTOR_END__, ABSOLUTE (.))
+                0x00000000000237b4                PROVIDE (__DTOR_LIST__, ABSOLUTE (.))
+ *(.dtors)
+ *(SORT(.dtors.*))
+                0x00000000000237b4                PROVIDE (__DTOR_END__, ABSOLUTE (.))
+ *(.jcr)
+                0x00000000000237b4                . = ALIGN (0x4)
+
+.rodata         0x00000000000237b4       0x3c
+                0x00000000000237b4                PROVIDE (__ram_rodata_start, ABSOLUTE (.))
+                0x00000000000237b4                . = ALIGN (0x4)
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+ .rodata        0x00000000000237b4       0x10 ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o)
+ .rodata        0x00000000000237c4       0x1c ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .rodata        0x00000000000237e0        0xc ../tetrisSB_bsp/\libhal_bsp.a(alt_dev.o)
+ .rodata.str1.4
+                0x00000000000237ec        0x4 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-impure.o)
+ *(.rodata1)
+                0x00000000000237f0                . = ALIGN (0x4)
+                0x00000000000237f0                PROVIDE (__ram_rodata_end, ABSOLUTE (.))
+                0x00000000000237b4                PROVIDE (__flash_rodata_start, LOADADDR (.rodata))
+
+.rwdata         0x00000000000237f0     0x171c load address 0x0000000000024f0c
+                0x00000000000237f0                PROVIDE (__ram_rwdata_start, ABSOLUTE (.))
+                0x00000000000237f0                . = ALIGN (0x4)
+ *(.got.plt)
+ *(.got)
+ *(.data1)
+ *(.data .data.* .gnu.linkonce.d.*)
+ .data          0x00000000000237f0        0x0 ../tetrisSB_bsp//obj/HAL/src/crt0.o
+ .data          0x00000000000237f0        0x0 obj/default/hello_world.o
+ .data          0x00000000000237f0        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-mul.o)
+ .data          0x00000000000237f0        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_load.o)
+ .data          0x00000000000237f0        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o)
+ .data          0x00000000000237f0        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_usleep.o)
+ .data          0x00000000000237f0     0x1124 ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .data          0x0000000000024914        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+ .data          0x0000000000024914        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_init.o)
+ .data          0x0000000000024914        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_ioctl.o)
+ .data          0x0000000000024914        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .data          0x0000000000024914        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+ .data          0x0000000000024914        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_timer_sc.o)
+ .data          0x0000000000024914        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_fd.o)
+ .data          0x0000000000024914        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_init.o)
+ .data          0x0000000000024914        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_read.o)
+ .data          0x0000000000024914        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_write.o)
+ .data          0x0000000000024914        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_alarm_start.o)
+ .data          0x0000000000024914        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_busy_sleep.o)
+ .data          0x0000000000024914        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_close.o)
+ .data          0x0000000000024914        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+ .data          0x0000000000024914      0x1a8 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev.o)
+                0x0000000000024914                alt_dev_null
+                0x000000000002493c                alt_fd_list
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_ctors.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_dtors.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_errno.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_iic.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_iic_isr_register.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_io_redirect.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_entry.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_handler.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_vars.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_open.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_release_fd.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_tick.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_exception_entry.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_dev.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_file.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_get_fd.o)
+ .data          0x0000000000024abc        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_instruction_exception_entry.o)
+ .data          0x0000000000024abc        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-atexit.o)
+ .data          0x0000000000024abc        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-exit.o)
+ .data          0x0000000000024abc      0x424 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-impure.o)
+ .data          0x0000000000024ee0        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-int_errno.o)
+ .data          0x0000000000024ee0        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcmp.o)
+ .data          0x0000000000024ee0        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcpy.o)
+ .data          0x0000000000024ee0        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-strlen.o)
+ .data          0x0000000000024ee0        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__atexit.o)
+ .data          0x0000000000024ee0        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__call_atexit.o)
+ .data          0x0000000000024ee0        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-divmod.o)
+ .data          0x0000000000024ee0        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_exit.o)
+                0x000000000002cee0                _gp = ABSOLUTE ((. + 0x8000))
+                0x000000000002cee0                PROVIDE (gp, _gp)
+ *(.rwdata .rwdata.*)
+ *(.sdata .sdata.* .gnu.linkonce.s.*)
+ .sdata         0x0000000000024ee0       0x14 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev.o)
+                0x0000000000024ee0                alt_fs_list
+                0x0000000000024ee8                alt_dev_list
+                0x0000000000024ef0                alt_max_fd
+ .sdata         0x0000000000024ef4        0x4 ../tetrisSB_bsp/\libhal_bsp.a(alt_errno.o)
+                0x0000000000024ef4                alt_errno
+ .sdata         0x0000000000024ef8        0x4 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_vars.o)
+                0x0000000000024ef8                alt_priority_mask
+ .sdata         0x0000000000024efc        0x8 ../tetrisSB_bsp/\libhal_bsp.a(alt_tick.o)
+                0x0000000000024efc                alt_alarm_list
+ .sdata         0x0000000000024f04        0x8 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-impure.o)
+                0x0000000000024f04                _global_impure_ptr
+                0x0000000000024f08                _impure_ptr
+ *(.sdata2 .sdata2.* .gnu.linkonce.s2.*)
+                0x0000000000024f0c                . = ALIGN (0x4)
+                0x0000000000024f0c                _edata = ABSOLUTE (.)
+                0x0000000000024f0c                PROVIDE (edata, ABSOLUTE (.))
+                0x0000000000024f0c                PROVIDE (__ram_rwdata_end, ABSOLUTE (.))
+                0x0000000000024f0c                PROVIDE (__flash_rwdata_start, LOADADDR (.rwdata))
+
+.bss            0x0000000000026628      0x120
+                0x0000000000026628                __bss_start = ABSOLUTE (.)
+                0x0000000000026628                PROVIDE (__sbss_start, ABSOLUTE (.))
+                0x0000000000026628                PROVIDE (___sbss_start, ABSOLUTE (.))
+ *(.dynsbss)
+ *(.sbss .sbss.* .gnu.linkonce.sb.*)
+ .sbss          0x0000000000026628        0xc ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o)
+                0x0000000000026628                alt_argc
+                0x000000000002662c                alt_argv
+                0x0000000000026630                alt_envp
+ .sbss          0x0000000000026634        0x4 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_vars.o)
+                0x0000000000026634                alt_irq_active
+ .sbss          0x0000000000026638        0x8 ../tetrisSB_bsp/\libhal_bsp.a(alt_tick.o)
+                0x0000000000026638                _alt_tick_rate
+                0x000000000002663c                _alt_nticks
+ .sbss          0x0000000000026640        0x4 ../tetrisSB_bsp/\libhal_bsp.a(alt_instruction_exception_entry.o)
+                0x0000000000026640                alt_instruction_exception_handler
+ .sbss          0x0000000000026644        0x4 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-int_errno.o)
+                0x0000000000026644                errno
+ *(.sbss2 .sbss2.* .gnu.linkonce.sb2.*)
+ *(.scommon)
+                0x0000000000026648                PROVIDE (__sbss_end, ABSOLUTE (.))
+                0x0000000000026648                PROVIDE (___sbss_end, ABSOLUTE (.))
+ *(.dynbss)
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp//obj/HAL/src/crt0.o
+ .bss           0x0000000000026648        0x0 obj/default/hello_world.o
+ .bss           0x0000000000026648        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-mul.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_load.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_usleep.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_init.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_ioctl.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_timer_sc.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_fd.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_init.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_read.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_write.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_alarm_start.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_busy_sleep.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_close.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_ctors.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_dtors.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_errno.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_iic.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_iic_isr_register.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_io_redirect.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_entry.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_handler.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_vars.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_open.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_release_fd.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_tick.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_exception_entry.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_dev.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_file.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_get_fd.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_instruction_exception_entry.o)
+ .bss           0x0000000000026648        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-atexit.o)
+ .bss           0x0000000000026648        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-exit.o)
+ .bss           0x0000000000026648        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-impure.o)
+ .bss           0x0000000000026648        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-int_errno.o)
+ .bss           0x0000000000026648        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcmp.o)
+ .bss           0x0000000000026648        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcpy.o)
+ .bss           0x0000000000026648        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-strlen.o)
+ .bss           0x0000000000026648        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__atexit.o)
+ .bss           0x0000000000026648        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__call_atexit.o)
+ .bss           0x0000000000026648        0x0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-divmod.o)
+ .bss           0x0000000000026648        0x0 ../tetrisSB_bsp/\libhal_bsp.a(alt_exit.o)
+ *(COMMON)
+ COMMON         0x0000000000026648      0x100 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_handler.o)
+                0x0000000000026648                alt_irq
+                0x0000000000026748                . = ALIGN (0x4)
+                0x0000000000026748                __bss_end = ABSOLUTE (.)
+
+.RAM_jesus      0x0000000000026748        0x0
+                0x0000000000026748                PROVIDE (_alt_partition_RAM_jesus_start, ABSOLUTE (.))
+ *(.RAM_jesus .RAM_jesus. RAM_jesus.*)
+                0x0000000000026748                . = ALIGN (0x4)
+                0x0000000000026748                PROVIDE (_alt_partition_RAM_jesus_end, ABSOLUTE (.))
+                0x0000000000026748                _end = ABSOLUTE (.)
+                0x0000000000026748                end = ABSOLUTE (.)
+                0x0000000000026748                __alt_stack_base = ABSOLUTE (.)
+                0x0000000000026748                PROVIDE (_alt_partition_RAM_jesus_load_addr, LOADADDR (.RAM_jesus))
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x0000000000000000       0x23
+ *(.comment)
+ .comment       0x0000000000000000       0x23 obj/default/hello_world.o
+                                         0x24 (size before relaxing)
+ .comment       0x0000000000000000       0x24 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-mul.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_load.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_usleep.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_init.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_ioctl.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_timer_sc.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_fd.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_init.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_read.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_write.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_alarm_start.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_busy_sleep.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_close.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_ctors.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_dtors.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_errno.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_iic.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_iic_isr_register.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_io_redirect.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_handler.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_vars.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_open.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_release_fd.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_tick.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_dev.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_file.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_get_fd.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_instruction_exception_entry.o)
+ .comment       0x0000000000000000       0x24 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-atexit.o)
+ .comment       0x0000000000000000       0x24 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-exit.o)
+ .comment       0x0000000000000000       0x24 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-impure.o)
+ .comment       0x0000000000000000       0x24 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-int_errno.o)
+ .comment       0x0000000000000000       0x24 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcmp.o)
+ .comment       0x0000000000000000       0x24 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcpy.o)
+ .comment       0x0000000000000000       0x24 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-strlen.o)
+ .comment       0x0000000000000000       0x24 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__atexit.o)
+ .comment       0x0000000000000000       0x24 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__call_atexit.o)
+ .comment       0x0000000000000000       0x24 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-divmod.o)
+ .comment       0x0000000000000000       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_exit.o)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x0000000000000000      0x6b8
+ *(.debug_aranges)
+ .debug_aranges
+                0x0000000000000000       0x28 ../tetrisSB_bsp//obj/HAL/src/crt0.o
+ .debug_aranges
+                0x0000000000000028       0x20 obj/default/hello_world.o
+ .debug_aranges
+                0x0000000000000048       0x20 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-mul.o)
+ .debug_aranges
+                0x0000000000000068       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_load.o)
+ .debug_aranges
+                0x0000000000000088       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o)
+ .debug_aranges
+                0x00000000000000a8       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_usleep.o)
+ .debug_aranges
+                0x00000000000000c8       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .debug_aranges
+                0x00000000000000e8       0x20 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+ .debug_aranges
+                0x0000000000000108       0x20 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_init.o)
+ .debug_aranges
+                0x0000000000000128       0x20 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_ioctl.o)
+ .debug_aranges
+                0x0000000000000148       0x20 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .debug_aranges
+                0x0000000000000168       0x20 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+ .debug_aranges
+                0x0000000000000188       0x20 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_timer_sc.o)
+ .debug_aranges
+                0x00000000000001a8       0x20 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_fd.o)
+ .debug_aranges
+                0x00000000000001c8       0x20 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_init.o)
+ .debug_aranges
+                0x00000000000001e8       0x20 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_read.o)
+ .debug_aranges
+                0x0000000000000208       0x20 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_write.o)
+ .debug_aranges
+                0x0000000000000228       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_alarm_start.o)
+ .debug_aranges
+                0x0000000000000248       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_busy_sleep.o)
+ .debug_aranges
+                0x0000000000000268       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_close.o)
+ .debug_aranges
+                0x0000000000000288       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+ .debug_aranges
+                0x00000000000002a8       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev.o)
+ .debug_aranges
+                0x00000000000002c8       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+ .debug_aranges
+                0x00000000000002e8       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_ctors.o)
+ .debug_aranges
+                0x0000000000000308       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_dtors.o)
+ .debug_aranges
+                0x0000000000000328       0x18 ../tetrisSB_bsp/\libhal_bsp.a(alt_errno.o)
+ .debug_aranges
+                0x0000000000000340       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+ .debug_aranges
+                0x0000000000000360       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_iic.o)
+ .debug_aranges
+                0x0000000000000380       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_iic_isr_register.o)
+ .debug_aranges
+                0x00000000000003a0       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_io_redirect.o)
+ .debug_aranges
+                0x00000000000003c0       0x30 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_entry.o)
+ .debug_aranges
+                0x00000000000003f0       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_handler.o)
+ .debug_aranges
+                0x0000000000000410       0x18 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_vars.o)
+ .debug_aranges
+                0x0000000000000428       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_open.o)
+ .debug_aranges
+                0x0000000000000448       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_release_fd.o)
+ .debug_aranges
+                0x0000000000000468       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_tick.o)
+ .debug_aranges
+                0x0000000000000488       0x20 ../tetrisSB_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+ .debug_aranges
+                0x00000000000004a8       0x38 ../tetrisSB_bsp/\libhal_bsp.a(alt_exception_entry.o)
+ .debug_aranges
+                0x00000000000004e0       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_dev.o)
+ .debug_aranges
+                0x0000000000000500       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_file.o)
+ .debug_aranges
+                0x0000000000000520       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_get_fd.o)
+ .debug_aranges
+                0x0000000000000540       0x28 ../tetrisSB_bsp/\libhal_bsp.a(alt_instruction_exception_entry.o)
+ .debug_aranges
+                0x0000000000000568       0x20 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-atexit.o)
+ .debug_aranges
+                0x0000000000000588       0x20 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-exit.o)
+ .debug_aranges
+                0x00000000000005a8       0x18 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-impure.o)
+ .debug_aranges
+                0x00000000000005c0       0x18 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-int_errno.o)
+ .debug_aranges
+                0x00000000000005d8       0x20 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcmp.o)
+ .debug_aranges
+                0x00000000000005f8       0x20 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcpy.o)
+ .debug_aranges
+                0x0000000000000618       0x20 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-strlen.o)
+ .debug_aranges
+                0x0000000000000638       0x20 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__atexit.o)
+ .debug_aranges
+                0x0000000000000658       0x20 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__call_atexit.o)
+ .debug_aranges
+                0x0000000000000678       0x20 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-divmod.o)
+ .debug_aranges
+                0x0000000000000698       0x20 ../tetrisSB_bsp/\libhal_bsp.a(alt_exit.o)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x0000000000000000     0x8840
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x0000000000000000       0x61 ../tetrisSB_bsp//obj/HAL/src/crt0.o
+ .debug_info    0x0000000000000061       0xcc obj/default/hello_world.o
+ .debug_info    0x000000000000012d       0xb4 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-mul.o)
+ .debug_info    0x00000000000001e1      0x13e ../tetrisSB_bsp/\libhal_bsp.a(alt_load.o)
+ .debug_info    0x000000000000031f      0x12a ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o)
+ .debug_info    0x0000000000000449       0xa9 ../tetrisSB_bsp/\libhal_bsp.a(alt_usleep.o)
+ .debug_info    0x00000000000004f2      0x5b1 ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .debug_info    0x0000000000000aa3      0x527 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+ .debug_info    0x0000000000000fca      0x3a1 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_init.o)
+ .debug_info    0x000000000000136b      0x279 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_ioctl.o)
+ .debug_info    0x00000000000015e4      0x342 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .debug_info    0x0000000000001926      0x339 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+ .debug_info    0x0000000000001c5f      0x21f ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_timer_sc.o)
+ .debug_info    0x0000000000001e7e      0x440 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_fd.o)
+ .debug_info    0x00000000000022be      0x32c ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_init.o)
+ .debug_info    0x00000000000025ea      0x312 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_read.o)
+ .debug_info    0x00000000000028fc      0x317 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_write.o)
+ .debug_info    0x0000000000002c13      0x2c5 ../tetrisSB_bsp/\libhal_bsp.a(alt_alarm_start.o)
+ .debug_info    0x0000000000002ed8       0xd0 ../tetrisSB_bsp/\libhal_bsp.a(alt_busy_sleep.o)
+ .debug_info    0x0000000000002fa8      0x31a ../tetrisSB_bsp/\libhal_bsp.a(alt_close.o)
+ .debug_info    0x00000000000032c2       0x8b ../tetrisSB_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+ .debug_info    0x000000000000334d      0x495 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev.o)
+ .debug_info    0x00000000000037e2      0x1a2 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+ .debug_info    0x0000000000003984       0x83 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_ctors.o)
+ .debug_info    0x0000000000003a07       0x83 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_dtors.o)
+ .debug_info    0x0000000000003a8a       0x9f ../tetrisSB_bsp/\libhal_bsp.a(alt_errno.o)
+ .debug_info    0x0000000000003b29       0x8b ../tetrisSB_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+ .debug_info    0x0000000000003bb4      0x349 ../tetrisSB_bsp/\libhal_bsp.a(alt_iic.o)
+ .debug_info    0x0000000000003efd      0x1e8 ../tetrisSB_bsp/\libhal_bsp.a(alt_iic_isr_register.o)
+ .debug_info    0x00000000000040e5      0x49e ../tetrisSB_bsp/\libhal_bsp.a(alt_io_redirect.o)
+ .debug_info    0x0000000000004583       0x6a ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_entry.o)
+ .debug_info    0x00000000000045ed      0x180 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_handler.o)
+ .debug_info    0x000000000000476d       0x88 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_vars.o)
+ .debug_info    0x00000000000047f5      0x3b4 ../tetrisSB_bsp/\libhal_bsp.a(alt_open.o)
+ .debug_info    0x0000000000004ba9      0x2b0 ../tetrisSB_bsp/\libhal_bsp.a(alt_release_fd.o)
+ .debug_info    0x0000000000004e59      0x292 ../tetrisSB_bsp/\libhal_bsp.a(alt_tick.o)
+ .debug_info    0x00000000000050eb       0x8b ../tetrisSB_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+ .debug_info    0x0000000000005176       0x70 ../tetrisSB_bsp/\libhal_bsp.a(alt_exception_entry.o)
+ .debug_info    0x00000000000051e6      0x2e2 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_dev.o)
+ .debug_info    0x00000000000054c8      0x2df ../tetrisSB_bsp/\libhal_bsp.a(alt_find_file.o)
+ .debug_info    0x00000000000057a7      0x309 ../tetrisSB_bsp/\libhal_bsp.a(alt_get_fd.o)
+ .debug_info    0x0000000000005ab0      0x1d8 ../tetrisSB_bsp/\libhal_bsp.a(alt_instruction_exception_entry.o)
+ .debug_info    0x0000000000005c88      0x10a c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-atexit.o)
+ .debug_info    0x0000000000005d92      0x8df c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-exit.o)
+ .debug_info    0x0000000000006671      0x88f c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-impure.o)
+ .debug_info    0x0000000000006f00       0x83 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-int_errno.o)
+ .debug_info    0x0000000000006f83      0x113 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcmp.o)
+ .debug_info    0x0000000000007096      0x133 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcpy.o)
+ .debug_info    0x00000000000071c9       0xdb c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-strlen.o)
+ .debug_info    0x00000000000072a4      0x93b c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__atexit.o)
+ .debug_info    0x0000000000007bdf      0x948 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__call_atexit.o)
+ .debug_info    0x0000000000008527      0x234 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-divmod.o)
+ .debug_info    0x000000000000875b       0xe5 ../tetrisSB_bsp/\libhal_bsp.a(alt_exit.o)
+
+.debug_abbrev   0x0000000000000000     0x3197
+ *(.debug_abbrev)
+ .debug_abbrev  0x0000000000000000       0x12 ../tetrisSB_bsp//obj/HAL/src/crt0.o
+ .debug_abbrev  0x0000000000000012       0x78 obj/default/hello_world.o
+ .debug_abbrev  0x000000000000008a       0x6f c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-mul.o)
+ .debug_abbrev  0x00000000000000f9       0x9f ../tetrisSB_bsp/\libhal_bsp.a(alt_load.o)
+ .debug_abbrev  0x0000000000000198       0xba ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o)
+ .debug_abbrev  0x0000000000000252       0x60 ../tetrisSB_bsp/\libhal_bsp.a(alt_usleep.o)
+ .debug_abbrev  0x00000000000002b2      0x190 ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .debug_abbrev  0x0000000000000442      0x127 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+ .debug_abbrev  0x0000000000000569      0x197 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_init.o)
+ .debug_abbrev  0x0000000000000700      0x111 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_ioctl.o)
+ .debug_abbrev  0x0000000000000811      0x1ac ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .debug_abbrev  0x00000000000009bd      0x1a8 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+ .debug_abbrev  0x0000000000000b65      0x155 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_timer_sc.o)
+ .debug_abbrev  0x0000000000000cba      0x109 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_fd.o)
+ .debug_abbrev  0x0000000000000dc3      0x178 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_init.o)
+ .debug_abbrev  0x0000000000000f3b      0x183 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_read.o)
+ .debug_abbrev  0x00000000000010be      0x18a ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_write.o)
+ .debug_abbrev  0x0000000000001248      0x162 ../tetrisSB_bsp/\libhal_bsp.a(alt_alarm_start.o)
+ .debug_abbrev  0x00000000000013aa       0x7e ../tetrisSB_bsp/\libhal_bsp.a(alt_busy_sleep.o)
+ .debug_abbrev  0x0000000000001428      0x11f ../tetrisSB_bsp/\libhal_bsp.a(alt_close.o)
+ .debug_abbrev  0x0000000000001547       0x42 ../tetrisSB_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+ .debug_abbrev  0x0000000000001589       0xd9 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev.o)
+ .debug_abbrev  0x0000000000001662      0x114 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+ .debug_abbrev  0x0000000000001776       0x79 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_ctors.o)
+ .debug_abbrev  0x00000000000017ef       0x79 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_dtors.o)
+ .debug_abbrev  0x0000000000001868       0x5a ../tetrisSB_bsp/\libhal_bsp.a(alt_errno.o)
+ .debug_abbrev  0x00000000000018c2       0x42 ../tetrisSB_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+ .debug_abbrev  0x0000000000001904      0x163 ../tetrisSB_bsp/\libhal_bsp.a(alt_iic.o)
+ .debug_abbrev  0x0000000000001a67      0x169 ../tetrisSB_bsp/\libhal_bsp.a(alt_iic_isr_register.o)
+ .debug_abbrev  0x0000000000001bd0      0x114 ../tetrisSB_bsp/\libhal_bsp.a(alt_io_redirect.o)
+ .debug_abbrev  0x0000000000001ce4       0x12 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_entry.o)
+ .debug_abbrev  0x0000000000001cf6      0x122 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_handler.o)
+ .debug_abbrev  0x0000000000001e18       0x40 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_vars.o)
+ .debug_abbrev  0x0000000000001e58      0x148 ../tetrisSB_bsp/\libhal_bsp.a(alt_open.o)
+ .debug_abbrev  0x0000000000001fa0       0xde ../tetrisSB_bsp/\libhal_bsp.a(alt_release_fd.o)
+ .debug_abbrev  0x000000000000207e      0x15a ../tetrisSB_bsp/\libhal_bsp.a(alt_tick.o)
+ .debug_abbrev  0x00000000000021d8       0x42 ../tetrisSB_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+ .debug_abbrev  0x000000000000221a       0x12 ../tetrisSB_bsp/\libhal_bsp.a(alt_exception_entry.o)
+ .debug_abbrev  0x000000000000222c       0xf0 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_dev.o)
+ .debug_abbrev  0x000000000000231c       0xf0 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_file.o)
+ .debug_abbrev  0x000000000000240c      0x10d ../tetrisSB_bsp/\libhal_bsp.a(alt_get_fd.o)
+ .debug_abbrev  0x0000000000002519       0xd1 ../tetrisSB_bsp/\libhal_bsp.a(alt_instruction_exception_entry.o)
+ .debug_abbrev  0x00000000000025ea       0xb8 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-atexit.o)
+ .debug_abbrev  0x00000000000026a2      0x1e6 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-exit.o)
+ .debug_abbrev  0x0000000000002888      0x180 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-impure.o)
+ .debug_abbrev  0x0000000000002a08       0x37 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-int_errno.o)
+ .debug_abbrev  0x0000000000002a3f       0x7f c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcmp.o)
+ .debug_abbrev  0x0000000000002abe       0x9c c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcpy.o)
+ .debug_abbrev  0x0000000000002b5a       0x90 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-strlen.o)
+ .debug_abbrev  0x0000000000002bea      0x21e c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__atexit.o)
+ .debug_abbrev  0x0000000000002e08      0x210 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__call_atexit.o)
+ .debug_abbrev  0x0000000000003018       0xd9 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-divmod.o)
+ .debug_abbrev  0x00000000000030f1       0xa6 ../tetrisSB_bsp/\libhal_bsp.a(alt_exit.o)
+
+.debug_line     0x0000000000000000     0x3299
+ *(.debug_line)
+ .debug_line    0x0000000000000000       0x66 ../tetrisSB_bsp//obj/HAL/src/crt0.o
+ .debug_line    0x0000000000000066       0xe2 obj/default/hello_world.o
+ .debug_line    0x0000000000000148       0x80 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-mul.o)
+ .debug_line    0x00000000000001c8       0x8d ../tetrisSB_bsp/\libhal_bsp.a(alt_load.o)
+ .debug_line    0x0000000000000255       0xa4 ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o)
+ .debug_line    0x00000000000002f9       0xa5 ../tetrisSB_bsp/\libhal_bsp.a(alt_usleep.o)
+ .debug_line    0x000000000000039e      0x186 ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .debug_line    0x0000000000000524      0x12f ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+ .debug_line    0x0000000000000653      0x180 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_init.o)
+ .debug_line    0x00000000000007d3      0x12e ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_ioctl.o)
+ .debug_line    0x0000000000000901      0x16a ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .debug_line    0x0000000000000a6b      0x16a ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+ .debug_line    0x0000000000000bd5       0xfd ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_timer_sc.o)
+ .debug_line    0x0000000000000cd2       0xee ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_fd.o)
+ .debug_line    0x0000000000000dc0      0x18a ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_init.o)
+ .debug_line    0x0000000000000f4a      0x17f ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_read.o)
+ .debug_line    0x00000000000010c9      0x166 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_write.o)
+ .debug_line    0x000000000000122f       0xfa ../tetrisSB_bsp/\libhal_bsp.a(alt_alarm_start.o)
+ .debug_line    0x0000000000001329       0xa2 ../tetrisSB_bsp/\libhal_bsp.a(alt_busy_sleep.o)
+ .debug_line    0x00000000000013cb      0x15e ../tetrisSB_bsp/\libhal_bsp.a(alt_close.o)
+ .debug_line    0x0000000000001529       0x51 ../tetrisSB_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+ .debug_line    0x000000000000157a       0xf0 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev.o)
+ .debug_line    0x000000000000166a       0xd0 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+ .debug_line    0x000000000000173a       0x59 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_ctors.o)
+ .debug_line    0x0000000000001793       0x59 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_dtors.o)
+ .debug_line    0x00000000000017ec       0x51 ../tetrisSB_bsp/\libhal_bsp.a(alt_errno.o)
+ .debug_line    0x000000000000183d       0x4f ../tetrisSB_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+ .debug_line    0x000000000000188c       0xef ../tetrisSB_bsp/\libhal_bsp.a(alt_iic.o)
+ .debug_line    0x000000000000197b       0xdb ../tetrisSB_bsp/\libhal_bsp.a(alt_iic_isr_register.o)
+ .debug_line    0x0000000000001a56      0x12d ../tetrisSB_bsp/\libhal_bsp.a(alt_io_redirect.o)
+ .debug_line    0x0000000000001b83       0x6b ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_entry.o)
+ .debug_line    0x0000000000001bee       0xaa ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_handler.o)
+ .debug_line    0x0000000000001c98       0x50 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_vars.o)
+ .debug_line    0x0000000000001ce8      0x12d ../tetrisSB_bsp/\libhal_bsp.a(alt_open.o)
+ .debug_line    0x0000000000001e15       0xb0 ../tetrisSB_bsp/\libhal_bsp.a(alt_release_fd.o)
+ .debug_line    0x0000000000001ec5       0xfe ../tetrisSB_bsp/\libhal_bsp.a(alt_tick.o)
+ .debug_line    0x0000000000001fc3       0x51 ../tetrisSB_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+ .debug_line    0x0000000000002014       0xb3 ../tetrisSB_bsp/\libhal_bsp.a(alt_exception_entry.o)
+ .debug_line    0x00000000000020c7       0xb5 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_dev.o)
+ .debug_line    0x000000000000217c       0xd1 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_file.o)
+ .debug_line    0x000000000000224d       0xd8 ../tetrisSB_bsp/\libhal_bsp.a(alt_get_fd.o)
+ .debug_line    0x0000000000002325       0xb9 ../tetrisSB_bsp/\libhal_bsp.a(alt_instruction_exception_entry.o)
+ .debug_line    0x00000000000023de       0xe9 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-atexit.o)
+ .debug_line    0x00000000000024c7      0x1fd c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-exit.o)
+ .debug_line    0x00000000000026c4      0x162 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-impure.o)
+ .debug_line    0x0000000000002826       0x60 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-int_errno.o)
+ .debug_line    0x0000000000002886      0x178 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcmp.o)
+ .debug_line    0x00000000000029fe      0x187 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcpy.o)
+ .debug_line    0x0000000000002b85      0x171 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-strlen.o)
+ .debug_line    0x0000000000002cf6      0x227 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__atexit.o)
+ .debug_line    0x0000000000002f1d      0x244 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__call_atexit.o)
+ .debug_line    0x0000000000003161       0xc7 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-divmod.o)
+ .debug_line    0x0000000000003228       0x71 ../tetrisSB_bsp/\libhal_bsp.a(alt_exit.o)
+
+.debug_frame    0x0000000000000000      0xe40
+ *(.debug_frame)
+ .debug_frame   0x0000000000000000       0x60 obj/default/hello_world.o
+ .debug_frame   0x0000000000000060       0x20 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-mul.o)
+ .debug_frame   0x0000000000000080       0x5c ../tetrisSB_bsp/\libhal_bsp.a(alt_load.o)
+ .debug_frame   0x00000000000000dc       0x2c ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o)
+ .debug_frame   0x0000000000000108       0x38 ../tetrisSB_bsp/\libhal_bsp.a(alt_usleep.o)
+ .debug_frame   0x0000000000000140       0x88 ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .debug_frame   0x00000000000001c8       0xb0 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+ .debug_frame   0x0000000000000278       0xa4 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_init.o)
+ .debug_frame   0x000000000000031c       0x34 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_ioctl.o)
+ .debug_frame   0x0000000000000350       0x38 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .debug_frame   0x0000000000000388       0x38 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+ .debug_frame   0x00000000000003c0       0x60 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_timer_sc.o)
+ .debug_frame   0x0000000000000420       0x88 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_fd.o)
+ .debug_frame   0x00000000000004a8       0xcc ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_init.o)
+ .debug_frame   0x0000000000000574       0x60 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_read.o)
+ .debug_frame   0x00000000000005d4       0x60 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_write.o)
+ .debug_frame   0x0000000000000634       0x34 ../tetrisSB_bsp/\libhal_bsp.a(alt_alarm_start.o)
+ .debug_frame   0x0000000000000668       0x38 ../tetrisSB_bsp/\libhal_bsp.a(alt_busy_sleep.o)
+ .debug_frame   0x00000000000006a0       0x60 ../tetrisSB_bsp/\libhal_bsp.a(alt_close.o)
+ .debug_frame   0x0000000000000700       0x34 ../tetrisSB_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+ .debug_frame   0x0000000000000734       0x34 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev.o)
+ .debug_frame   0x0000000000000768       0x60 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+ .debug_frame   0x00000000000007c8       0x38 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_ctors.o)
+ .debug_frame   0x0000000000000800       0x38 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_dtors.o)
+ .debug_frame   0x0000000000000838       0x34 ../tetrisSB_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+ .debug_frame   0x000000000000086c       0xa4 ../tetrisSB_bsp/\libhal_bsp.a(alt_iic.o)
+ .debug_frame   0x0000000000000910       0x38 ../tetrisSB_bsp/\libhal_bsp.a(alt_iic_isr_register.o)
+ .debug_frame   0x0000000000000948       0x64 ../tetrisSB_bsp/\libhal_bsp.a(alt_io_redirect.o)
+ .debug_frame   0x00000000000009ac       0x38 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_handler.o)
+ .debug_frame   0x00000000000009e4       0x8c ../tetrisSB_bsp/\libhal_bsp.a(alt_open.o)
+ .debug_frame   0x0000000000000a70       0x3c ../tetrisSB_bsp/\libhal_bsp.a(alt_release_fd.o)
+ .debug_frame   0x0000000000000aac       0x5c ../tetrisSB_bsp/\libhal_bsp.a(alt_tick.o)
+ .debug_frame   0x0000000000000b08       0x34 ../tetrisSB_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+ .debug_frame   0x0000000000000b3c       0x38 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_dev.o)
+ .debug_frame   0x0000000000000b74       0x38 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_file.o)
+ .debug_frame   0x0000000000000bac       0x3c ../tetrisSB_bsp/\libhal_bsp.a(alt_get_fd.o)
+ .debug_frame   0x0000000000000be8       0x5c ../tetrisSB_bsp/\libhal_bsp.a(alt_instruction_exception_entry.o)
+ .debug_frame   0x0000000000000c44       0x20 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-atexit.o)
+ .debug_frame   0x0000000000000c64       0x28 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-exit.o)
+ .debug_frame   0x0000000000000c8c       0x20 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcmp.o)
+ .debug_frame   0x0000000000000cac       0x30 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcpy.o)
+ .debug_frame   0x0000000000000cdc       0x20 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-strlen.o)
+ .debug_frame   0x0000000000000cfc       0x38 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__atexit.o)
+ .debug_frame   0x0000000000000d34       0x54 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__call_atexit.o)
+ .debug_frame   0x0000000000000d88       0x8c c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-divmod.o)
+ .debug_frame   0x0000000000000e14       0x2c ../tetrisSB_bsp/\libhal_bsp.a(alt_exit.o)
+
+.debug_str      0x0000000000000000     0x1ed1
+ *(.debug_str)
+ .debug_str     0x0000000000000000       0xed obj/default/hello_world.o
+                                        0x12b (size before relaxing)
+ .debug_str     0x00000000000000ed      0x146 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-mul.o)
+                                        0x191 (size before relaxing)
+ .debug_str     0x0000000000000233      0x11e ../tetrisSB_bsp/\libhal_bsp.a(alt_load.o)
+                                        0x1e8 (size before relaxing)
+ .debug_str     0x0000000000000351       0x70 ../tetrisSB_bsp/\libhal_bsp.a(alt_main.o)
+                                        0x173 (size before relaxing)
+ .debug_str     0x00000000000003c1       0x27 ../tetrisSB_bsp/\libhal_bsp.a(alt_usleep.o)
+                                        0x11e (size before relaxing)
+ .debug_str     0x00000000000003e8      0x25a ../tetrisSB_bsp/\libhal_bsp.a(alt_sys_init.o)
+                                        0x3f8 (size before relaxing)
+ .debug_str     0x0000000000000642       0xb9 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+                                        0x37a (size before relaxing)
+ .debug_str     0x00000000000006fb       0xd1 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_init.o)
+                                        0x30e (size before relaxing)
+ .debug_str     0x00000000000007cc       0x4a ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_ioctl.o)
+                                        0x269 (size before relaxing)
+ .debug_str     0x0000000000000816       0x7f ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+                                        0x2be (size before relaxing)
+ .debug_str     0x0000000000000895       0x4a ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+                                        0x2bf (size before relaxing)
+ .debug_str     0x00000000000008df       0x6d ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_timer_sc.o)
+                                        0x221 (size before relaxing)
+ .debug_str     0x000000000000094c       0x77 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_fd.o)
+                                        0x2cb (size before relaxing)
+ .debug_str     0x00000000000009c3       0xb1 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_init.o)
+                                        0x28d (size before relaxing)
+ .debug_str     0x0000000000000a74       0x5d ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_read.o)
+                                        0x26e (size before relaxing)
+ .debug_str     0x0000000000000ad1       0x49 ../tetrisSB_bsp/\libhal_bsp.a(altera_avalon_uart_write.o)
+                                        0x262 (size before relaxing)
+ .debug_str     0x0000000000000b1a       0x59 ../tetrisSB_bsp/\libhal_bsp.a(alt_alarm_start.o)
+                                        0x254 (size before relaxing)
+ .debug_str     0x0000000000000b73       0x42 ../tetrisSB_bsp/\libhal_bsp.a(alt_busy_sleep.o)
+                                        0x141 (size before relaxing)
+ .debug_str     0x0000000000000bb5       0x2c ../tetrisSB_bsp/\libhal_bsp.a(alt_close.o)
+                                        0x1e1 (size before relaxing)
+ .debug_str     0x0000000000000be1       0x34 ../tetrisSB_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+                                        0x12b (size before relaxing)
+ .debug_str     0x0000000000000c15      0x120 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev.o)
+                                        0x2db (size before relaxing)
+ .debug_str     0x0000000000000d35       0x34 ../tetrisSB_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+                                        0x1a2 (size before relaxing)
+ .debug_str     0x0000000000000d69       0x48 ../tetrisSB_bsp/\libhal_bsp.a(alt_do_ctors.o)
+                                         0xb2 (size before relaxing)
+ .debug_str     0x0000000000000db1       0x4c ../tetrisSB_bsp/\libhal_bsp.a(alt_do_dtors.o)
+                                         0xb1 (size before relaxing)
+ .debug_str     0x0000000000000dfd       0x14 ../tetrisSB_bsp/\libhal_bsp.a(alt_errno.o)
+                                        0x11b (size before relaxing)
+ .debug_str     0x0000000000000e11       0x34 ../tetrisSB_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+                                        0x12b (size before relaxing)
+ .debug_str     0x0000000000000e45       0xbd ../tetrisSB_bsp/\libhal_bsp.a(alt_iic.o)
+                                        0x214 (size before relaxing)
+ .debug_str     0x0000000000000f02       0x4c ../tetrisSB_bsp/\libhal_bsp.a(alt_iic_isr_register.o)
+                                        0x1be (size before relaxing)
+ .debug_str     0x0000000000000f4e       0x56 ../tetrisSB_bsp/\libhal_bsp.a(alt_io_redirect.o)
+                                        0x2ec (size before relaxing)
+ .debug_str     0x0000000000000fa4       0x3a ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_handler.o)
+                                        0x16d (size before relaxing)
+ .debug_str     0x0000000000000fde       0x17 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_vars.o)
+                                        0x11c (size before relaxing)
+ .debug_str     0x0000000000000ff5       0x2f ../tetrisSB_bsp/\libhal_bsp.a(alt_open.o)
+                                        0x221 (size before relaxing)
+ .debug_str     0x0000000000001024       0x28 ../tetrisSB_bsp/\libhal_bsp.a(alt_release_fd.o)
+                                        0x1b5 (size before relaxing)
+ .debug_str     0x000000000000104c       0x4a ../tetrisSB_bsp/\libhal_bsp.a(alt_tick.o)
+                                        0x228 (size before relaxing)
+ .debug_str     0x0000000000001096       0x3b ../tetrisSB_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+                                        0x132 (size before relaxing)
+ .debug_str     0x00000000000010d1       0x24 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_dev.o)
+                                        0x1c2 (size before relaxing)
+ .debug_str     0x00000000000010f5       0x26 ../tetrisSB_bsp/\libhal_bsp.a(alt_find_file.o)
+                                        0x1d0 (size before relaxing)
+ .debug_str     0x000000000000111b       0x30 ../tetrisSB_bsp/\libhal_bsp.a(alt_get_fd.o)
+                                        0x1f2 (size before relaxing)
+ .debug_str     0x000000000000114b      0x48b ../tetrisSB_bsp/\libhal_bsp.a(alt_instruction_exception_entry.o)
+                                        0x575 (size before relaxing)
+ .debug_str     0x00000000000015d6      0x14c c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-atexit.o)
+                                        0x1e5 (size before relaxing)
+ .debug_str     0x0000000000001722      0x3b0 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-exit.o)
+                                        0x57b (size before relaxing)
+ .debug_str     0x0000000000001ad2       0xd7 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-impure.o)
+                                        0x572 (size before relaxing)
+ .debug_str     0x0000000000001ba9       0x40 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-int_errno.o)
+                                        0x1a1 (size before relaxing)
+ .debug_str     0x0000000000001be9       0xdb c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcmp.o)
+                                        0x1a8 (size before relaxing)
+ .debug_str     0x0000000000001cc4       0x6c c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcpy.o)
+                                        0x1cf (size before relaxing)
+ .debug_str     0x0000000000001d30       0x52 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-strlen.o)
+                                        0x1bb (size before relaxing)
+ .debug_str     0x0000000000001d82       0x4e c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__atexit.o)
+                                        0x5c8 (size before relaxing)
+ .debug_str     0x0000000000001dd0       0x58 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__call_atexit.o)
+                                        0x591 (size before relaxing)
+ .debug_str     0x0000000000001e28       0x7f c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-divmod.o)
+                                        0x1d0 (size before relaxing)
+ .debug_str     0x0000000000001ea7       0x2a ../tetrisSB_bsp/\libhal_bsp.a(alt_exit.o)
+                                        0x127 (size before relaxing)
+
+.debug_loc      0x0000000000000000      0xa8a
+ *(.debug_loc)
+ .debug_loc     0x0000000000000000       0x93 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-mul.o)
+ .debug_loc     0x0000000000000093       0x2c c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-atexit.o)
+ .debug_loc     0x00000000000000bf       0x1e c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-exit.o)
+ .debug_loc     0x00000000000000dd      0x126 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcmp.o)
+ .debug_loc     0x0000000000000203      0x2a2 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-memcpy.o)
+ .debug_loc     0x00000000000004a5       0x47 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-strlen.o)
+ .debug_loc     0x00000000000004ec      0x185 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__atexit.o)
+ .debug_loc     0x0000000000000671      0x1a6 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__call_atexit.o)
+ .debug_loc     0x0000000000000817      0x273 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/mno-hw-mul\libgcc.a(lib2-divmod.o)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.debug_alt_sim_info
+                0x0000000000000000       0x40
+ *(.debug_alt_sim_info)
+ .debug_alt_sim_info
+                0x0000000000000000       0x10 ../tetrisSB_bsp//obj/HAL/src/crt0.o
+ .debug_alt_sim_info
+                0x0000000000000010       0x30 ../tetrisSB_bsp/\libhal_bsp.a(alt_busy_sleep.o)
+                0x000000000003c520                __alt_data_end = 0x3c520
+                0x000000000003c520                PROVIDE (__alt_stack_pointer, __alt_data_end)
+                0x0000000000026748                PROVIDE (__alt_stack_limit, __alt_stack_base)
+                0x0000000000026748                PROVIDE (__alt_heap_start, end)
+                0x000000000003c520                PROVIDE (__alt_heap_limit, 0x3c520)
+OUTPUT(tetrisSB.elf elf32-littlenios2)
+
+.debug_ranges   0x0000000000000000       0xb8
+ .debug_ranges  0x0000000000000000       0x20 ../tetrisSB_bsp//obj/HAL/src/crt0.o
+ .debug_ranges  0x0000000000000020       0x28 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_entry.o)
+ .debug_ranges  0x0000000000000048       0x10 ../tetrisSB_bsp/\libhal_bsp.a(alt_irq_handler.o)
+ .debug_ranges  0x0000000000000058       0x30 ../tetrisSB_bsp/\libhal_bsp.a(alt_exception_entry.o)
+ .debug_ranges  0x0000000000000088       0x18 ../tetrisSB_bsp/\libhal_bsp.a(alt_instruction_exception_entry.o)
+ .debug_ranges  0x00000000000000a0       0x18 c:/altera/15.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.9.1/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libc.a(lib_a-__call_atexit.o)
