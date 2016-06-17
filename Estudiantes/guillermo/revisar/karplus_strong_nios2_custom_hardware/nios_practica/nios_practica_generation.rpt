@@ -1,0 +1,205 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate D:\Material_FPGAs\nios2\karplus_strong_nios2_custom_hardware\nios_practica.qsys --block-symbol-file --output-directory=D:\Material_FPGAs\nios2\karplus_strong_nios2_custom_hardware\nios_practica --family="Cyclone V" --part=5CSEMA4U23C6
+Progress: Loading karplus_strong_nios2_custom_hardware/nios_practica.qsys
+Progress: Reading input file
+Progress: Adding RAM_jesus [altera_avalon_onchip_memory2 15.0]
+Progress: Parameterizing module RAM_jesus
+Progress: Adding clk_50mhz [clock_source 15.0]
+Progress: Parameterizing module clk_50mhz
+Progress: Adding cpu [altera_nios2_gen2 15.0]
+Progress: Parameterizing module cpu
+Progress: Adding div_freq [altera_avalon_pio 15.0]
+Progress: Parameterizing module div_freq
+Progress: Adding jtag_uart [altera_avalon_jtag_uart 15.0]
+Progress: Parameterizing module jtag_uart
+Progress: Adding karplus_strong_0 [karplus_strong 1.0]
+Progress: Parameterizing module karplus_strong_0
+Progress: Adding karplus_strong_1 [karplus_strong 1.0]
+Progress: Parameterizing module karplus_strong_1
+Progress: Adding karplus_strong_2 [karplus_strong 1.0]
+Progress: Parameterizing module karplus_strong_2
+Progress: Adding karplus_strong_3 [karplus_strong 1.0]
+Progress: Parameterizing module karplus_strong_3
+Progress: Adding karplus_strong_4 [karplus_strong 1.0]
+Progress: Parameterizing module karplus_strong_4
+Progress: Adding karplus_strong_5 [karplus_strong 1.0]
+Progress: Parameterizing module karplus_strong_5
+Progress: Adding leds [altera_avalon_pio 15.0]
+Progress: Parameterizing module leds
+Progress: Adding pll [altera_pll 15.0]
+Progress: Parameterizing module pll
+Progress: Adding sw [altera_avalon_pio 15.0]
+Progress: Parameterizing module sw
+Progress: Adding sys_clk [altera_avalon_timer 15.0]
+Progress: Parameterizing module sys_clk
+Progress: Adding uart [altera_avalon_uart 15.0]
+Progress: Parameterizing module uart
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: nios_practica.pll: The legal reference clock frequency is 5.0 MHz..800.0 MHz
+Info: nios_practica.pll: Able to implement PLL with user settings
+Info: nios_practica.sw: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Warning: nios_practica.pll: pll.locked must be exported, or connected to a matching conduit.
+Info: ip-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate D:\Material_FPGAs\nios2\karplus_strong_nios2_custom_hardware\nios_practica.qsys --synthesis=VERILOG --output-directory=D:\Material_FPGAs\nios2\karplus_strong_nios2_custom_hardware\nios_practica\synthesis --family="Cyclone V" --part=5CSEMA4U23C6
+Progress: Loading karplus_strong_nios2_custom_hardware/nios_practica.qsys
+Progress: Reading input file
+Progress: Adding RAM_jesus [altera_avalon_onchip_memory2 15.0]
+Progress: Parameterizing module RAM_jesus
+Progress: Adding clk_50mhz [clock_source 15.0]
+Progress: Parameterizing module clk_50mhz
+Progress: Adding cpu [altera_nios2_gen2 15.0]
+Progress: Parameterizing module cpu
+Progress: Adding div_freq [altera_avalon_pio 15.0]
+Progress: Parameterizing module div_freq
+Progress: Adding jtag_uart [altera_avalon_jtag_uart 15.0]
+Progress: Parameterizing module jtag_uart
+Progress: Adding karplus_strong_0 [karplus_strong 1.0]
+Progress: Parameterizing module karplus_strong_0
+Progress: Adding karplus_strong_1 [karplus_strong 1.0]
+Progress: Parameterizing module karplus_strong_1
+Progress: Adding karplus_strong_2 [karplus_strong 1.0]
+Progress: Parameterizing module karplus_strong_2
+Progress: Adding karplus_strong_3 [karplus_strong 1.0]
+Progress: Parameterizing module karplus_strong_3
+Progress: Adding karplus_strong_4 [karplus_strong 1.0]
+Progress: Parameterizing module karplus_strong_4
+Progress: Adding karplus_strong_5 [karplus_strong 1.0]
+Progress: Parameterizing module karplus_strong_5
+Progress: Adding leds [altera_avalon_pio 15.0]
+Progress: Parameterizing module leds
+Progress: Adding pll [altera_pll 15.0]
+Progress: Parameterizing module pll
+Progress: Adding sw [altera_avalon_pio 15.0]
+Progress: Parameterizing module sw
+Progress: Adding sys_clk [altera_avalon_timer 15.0]
+Progress: Parameterizing module sys_clk
+Progress: Adding uart [altera_avalon_uart 15.0]
+Progress: Parameterizing module uart
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: nios_practica.pll: The legal reference clock frequency is 5.0 MHz..800.0 MHz
+Info: nios_practica.pll: Able to implement PLL with user settings
+Info: nios_practica.sw: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Warning: nios_practica.pll: pll.locked must be exported, or connected to a matching conduit.
+Info: nios_practica: Generating nios_practica "nios_practica" for QUARTUS_SYNTH
+Info: Inserting clock-crossing logic between cmd_demux.src1 and cmd_mux_001.sink0
+Info: Inserting clock-crossing logic between cmd_demux.src2 and cmd_mux_002.sink0
+Info: Inserting clock-crossing logic between cmd_demux.src3 and cmd_mux_003.sink0
+Info: Inserting clock-crossing logic between cmd_demux.src4 and cmd_mux_004.sink0
+Info: Inserting clock-crossing logic between cmd_demux.src5 and cmd_mux_005.sink0
+Info: Inserting clock-crossing logic between cmd_demux.src6 and cmd_mux_006.sink0
+Info: Inserting clock-crossing logic between cmd_demux.src9 and cmd_mux_009.sink0
+Info: Inserting clock-crossing logic between cmd_demux.src10 and cmd_mux_010.sink0
+Info: Inserting clock-crossing logic between cmd_demux.src12 and cmd_mux_012.sink0
+Info: Inserting clock-crossing logic between cmd_demux.src13 and cmd_mux_013.sink0
+Info: Inserting clock-crossing logic between rsp_demux_001.src0 and rsp_mux.sink1
+Info: Inserting clock-crossing logic between rsp_demux_002.src0 and rsp_mux.sink2
+Info: Inserting clock-crossing logic between rsp_demux_003.src0 and rsp_mux.sink3
+Info: Inserting clock-crossing logic between rsp_demux_004.src0 and rsp_mux.sink4
+Info: Inserting clock-crossing logic between rsp_demux_005.src0 and rsp_mux.sink5
+Info: Inserting clock-crossing logic between rsp_demux_006.src0 and rsp_mux.sink6
+Info: Inserting clock-crossing logic between rsp_demux_009.src0 and rsp_mux.sink9
+Info: Inserting clock-crossing logic between rsp_demux_010.src0 and rsp_mux.sink10
+Info: Inserting clock-crossing logic between rsp_demux_012.src0 and rsp_mux.sink12
+Info: Inserting clock-crossing logic between rsp_demux_013.src0 and rsp_mux.sink13
+Warning: nios_practica: "No matching role found for uart:s1:dataavailable (dataavailable)"
+Warning: nios_practica: "No matching role found for uart:s1:readyfordata (readyfordata)"
+Info: RAM_jesus: Starting RTL generation for module 'nios_practica_RAM_jesus'
+Info: RAM_jesus:   Generation command is [exec C:/altera/15.0/quartus/bin64/perl/bin/perl.exe -I C:/altera/15.0/quartus/bin64/perl/lib -I C:/altera/15.0/quartus/sopc_builder/bin/europa -I C:/altera/15.0/quartus/sopc_builder/bin/perl_lib -I C:/altera/15.0/quartus/sopc_builder/bin -I C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=nios_practica_RAM_jesus --dir=C:/Users/Usuario/AppData/Local/Temp/alt6968_9066401087681174110.dir/0002_RAM_jesus_gen/ --quartus_dir=C:/altera/15.0/quartus --verilog --config=C:/Users/Usuario/AppData/Local/Temp/alt6968_9066401087681174110.dir/0002_RAM_jesus_gen//nios_practica_RAM_jesus_component_configuration.pl  --do_build_sim=0  ]
+Info: RAM_jesus: Done RTL generation for module 'nios_practica_RAM_jesus'
+Info: RAM_jesus: "nios_practica" instantiated altera_avalon_onchip_memory2 "RAM_jesus"
+Info: cpu: "nios_practica" instantiated altera_nios2_gen2 "cpu"
+Info: div_freq: Starting RTL generation for module 'nios_practica_div_freq'
+Info: div_freq:   Generation command is [exec C:/altera/15.0/quartus/bin64/perl/bin/perl.exe -I C:/altera/15.0/quartus/bin64/perl/lib -I C:/altera/15.0/quartus/sopc_builder/bin/europa -I C:/altera/15.0/quartus/sopc_builder/bin/perl_lib -I C:/altera/15.0/quartus/sopc_builder/bin -I C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=nios_practica_div_freq --dir=C:/Users/Usuario/AppData/Local/Temp/alt6968_9066401087681174110.dir/0003_div_freq_gen/ --quartus_dir=C:/altera/15.0/quartus --verilog --config=C:/Users/Usuario/AppData/Local/Temp/alt6968_9066401087681174110.dir/0003_div_freq_gen//nios_practica_div_freq_component_configuration.pl  --do_build_sim=0  ]
+Info: div_freq: Done RTL generation for module 'nios_practica_div_freq'
+Info: div_freq: "nios_practica" instantiated altera_avalon_pio "div_freq"
+Info: jtag_uart: Starting RTL generation for module 'nios_practica_jtag_uart'
+Info: jtag_uart:   Generation command is [exec C:/altera/15.0/quartus/bin64/perl/bin/perl.exe -I C:/altera/15.0/quartus/bin64/perl/lib -I C:/altera/15.0/quartus/sopc_builder/bin/europa -I C:/altera/15.0/quartus/sopc_builder/bin/perl_lib -I C:/altera/15.0/quartus/sopc_builder/bin -I C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart -- C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart/generate_rtl.pl --name=nios_practica_jtag_uart --dir=C:/Users/Usuario/AppData/Local/Temp/alt6968_9066401087681174110.dir/0004_jtag_uart_gen/ --quartus_dir=C:/altera/15.0/quartus --verilog --config=C:/Users/Usuario/AppData/Local/Temp/alt6968_9066401087681174110.dir/0004_jtag_uart_gen//nios_practica_jtag_uart_component_configuration.pl  --do_build_sim=0  ]
+Info: jtag_uart: Done RTL generation for module 'nios_practica_jtag_uart'
+Info: jtag_uart: "nios_practica" instantiated altera_avalon_jtag_uart "jtag_uart"
+Info: karplus_strong_0: "nios_practica" instantiated karplus_strong "karplus_strong_0"
+Info: leds: Starting RTL generation for module 'nios_practica_leds'
+Info: leds:   Generation command is [exec C:/altera/15.0/quartus/bin64/perl/bin/perl.exe -I C:/altera/15.0/quartus/bin64/perl/lib -I C:/altera/15.0/quartus/sopc_builder/bin/europa -I C:/altera/15.0/quartus/sopc_builder/bin/perl_lib -I C:/altera/15.0/quartus/sopc_builder/bin -I C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=nios_practica_leds --dir=C:/Users/Usuario/AppData/Local/Temp/alt6968_9066401087681174110.dir/0006_leds_gen/ --quartus_dir=C:/altera/15.0/quartus --verilog --config=C:/Users/Usuario/AppData/Local/Temp/alt6968_9066401087681174110.dir/0006_leds_gen//nios_practica_leds_component_configuration.pl  --do_build_sim=0  ]
+Info: leds: Done RTL generation for module 'nios_practica_leds'
+Info: leds: "nios_practica" instantiated altera_avalon_pio "leds"
+Info: pll: "nios_practica" instantiated altera_pll "pll"
+Info: sw: Starting RTL generation for module 'nios_practica_sw'
+Info: sw:   Generation command is [exec C:/altera/15.0/quartus/bin64/perl/bin/perl.exe -I C:/altera/15.0/quartus/bin64/perl/lib -I C:/altera/15.0/quartus/sopc_builder/bin/europa -I C:/altera/15.0/quartus/sopc_builder/bin/perl_lib -I C:/altera/15.0/quartus/sopc_builder/bin -I C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=nios_practica_sw --dir=C:/Users/Usuario/AppData/Local/Temp/alt6968_9066401087681174110.dir/0008_sw_gen/ --quartus_dir=C:/altera/15.0/quartus --verilog --config=C:/Users/Usuario/AppData/Local/Temp/alt6968_9066401087681174110.dir/0008_sw_gen//nios_practica_sw_component_configuration.pl  --do_build_sim=0  ]
+Info: sw: Done RTL generation for module 'nios_practica_sw'
+Info: sw: "nios_practica" instantiated altera_avalon_pio "sw"
+Info: sys_clk: Starting RTL generation for module 'nios_practica_sys_clk'
+Info: sys_clk:   Generation command is [exec C:/altera/15.0/quartus/bin64//perl/bin/perl.exe -I C:/altera/15.0/quartus/bin64//perl/lib -I C:/altera/15.0/quartus/sopc_builder/bin/europa -I C:/altera/15.0/quartus/sopc_builder/bin/perl_lib -I C:/altera/15.0/quartus/sopc_builder/bin -I C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_timer -- C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_timer/generate_rtl.pl --name=nios_practica_sys_clk --dir=C:/Users/Usuario/AppData/Local/Temp/alt6968_9066401087681174110.dir/0009_sys_clk_gen/ --quartus_dir=C:/altera/15.0/quartus --verilog --config=C:/Users/Usuario/AppData/Local/Temp/alt6968_9066401087681174110.dir/0009_sys_clk_gen//nios_practica_sys_clk_component_configuration.pl  --do_build_sim=0  ]
+Info: sys_clk: Done RTL generation for module 'nios_practica_sys_clk'
+Info: sys_clk: "nios_practica" instantiated altera_avalon_timer "sys_clk"
+Info: uart: Starting RTL generation for module 'nios_practica_uart'
+Info: uart:   Generation command is [exec C:/altera/15.0/quartus/bin64/perl/bin/perl.exe -I C:/altera/15.0/quartus/bin64/perl/lib -I C:/altera/15.0/quartus/sopc_builder/bin/europa -I C:/altera/15.0/quartus/sopc_builder/bin/perl_lib -I C:/altera/15.0/quartus/sopc_builder/bin -I C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart -- C:/altera/15.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart/generate_rtl.pl --name=nios_practica_uart --dir=C:/Users/Usuario/AppData/Local/Temp/alt6968_9066401087681174110.dir/0010_uart_gen/ --quartus_dir=C:/altera/15.0/quartus --verilog --config=C:/Users/Usuario/AppData/Local/Temp/alt6968_9066401087681174110.dir/0010_uart_gen//nios_practica_uart_component_configuration.pl  --do_build_sim=0  ]
+Info: uart: Done RTL generation for module 'nios_practica_uart'
+Info: uart: "nios_practica" instantiated altera_avalon_uart "uart"
+Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_001: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_002: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_003: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_004: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_005: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_006: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_007: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_008: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_009: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_010: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_011: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_012: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_013: Inserting error_adapter: error_adapter_0
+Info: mm_interconnect_0: "nios_practica" instantiated altera_mm_interconnect "mm_interconnect_0"
+Info: irq_mapper: "nios_practica" instantiated altera_irq_mapper "irq_mapper"
+Info: irq_synchronizer: "nios_practica" instantiated altera_irq_clock_crosser "irq_synchronizer"
+Info: rst_controller: "nios_practica" instantiated altera_reset_controller "rst_controller"
+Info: cpu: Starting RTL generation for module 'nios_practica_cpu_cpu'
+Info: cpu:   Generation command is [exec C:/altera/15.0/quartus/bin64/eperlcmd.exe -I C:/altera/15.0/quartus/bin64/perl/lib -I C:/altera/15.0/quartus/sopc_builder/bin/europa -I C:/altera/15.0/quartus/sopc_builder/bin/perl_lib -I C:/altera/15.0/quartus/sopc_builder/bin -I C:/altera/15.0/quartus/../ip/altera/nios2_ip/altera_nios2_gen2/cpu_lib -I C:/altera/15.0/quartus/../ip/altera/nios2_ip/altera_nios2_gen2/nios_lib -I C:/altera/15.0/quartus/../ip/altera/nios2_ip/altera_nios2_gen2 -I C:/altera/15.0/quartus/../ip/altera/nios2_ip/altera_nios2_gen2 -- C:/altera/15.0/quartus/../ip/altera/nios2_ip/altera_nios2_gen2/generate_rtl.epl --name=nios_practica_cpu_cpu --dir=C:/Users/Usuario/AppData/Local/Temp/alt6968_9066401087681174110.dir/0014_cpu_gen/ --quartus_bindir=C:/altera/15.0/quartus/bin64 --verilog --config=C:/Users/Usuario/AppData/Local/Temp/alt6968_9066401087681174110.dir/0014_cpu_gen//nios_practica_cpu_cpu_processor_configuration.pl  --do_build_sim=0  ]
+Info: cpu: # 2016.06.15 22:20:19 (*) Starting Nios II generation
+Info: cpu: # 2016.06.15 22:20:19 (*)   Checking for plaintext license.
+Info: cpu: # 2016.06.15 22:20:21 (*)   Couldn't query license setup in Quartus directory C:/altera/15.0/quartus/bin64
+Info: cpu: # 2016.06.15 22:20:21 (*)   Defaulting to contents of LM_LICENSE_FILE environment variable
+Info: cpu: # 2016.06.15 22:20:21 (*)   LM_LICENSE_FILE environment variable is empty
+Info: cpu: # 2016.06.15 22:20:22 (*)   Plaintext license not found.
+Info: cpu: # 2016.06.15 22:20:22 (*)   No license required to generate encrypted Nios II/e.
+Info: cpu: # 2016.06.15 22:20:22 (*)   Elaborating CPU configuration settings
+Info: cpu: # 2016.06.15 22:20:22 (*)   Creating all objects for CPU
+Info: cpu: # 2016.06.15 22:20:24 (*)   Generating RTL from CPU objects
+Info: cpu: # 2016.06.15 22:20:24 (*)   Creating plain-text RTL
+Info: cpu: # 2016.06.15 22:20:25 (*) Done Nios II generation
+Info: cpu: Done RTL generation for module 'nios_practica_cpu_cpu'
+Info: cpu: "cpu" instantiated altera_nios2_gen2_unit "cpu"
+Info: cpu_data_master_translator: "mm_interconnect_0" instantiated altera_merlin_master_translator "cpu_data_master_translator"
+Info: jtag_uart_avalon_jtag_slave_translator: "mm_interconnect_0" instantiated altera_merlin_slave_translator "jtag_uart_avalon_jtag_slave_translator"
+Info: cpu_data_master_agent: "mm_interconnect_0" instantiated altera_merlin_master_agent "cpu_data_master_agent"
+Info: jtag_uart_avalon_jtag_slave_agent: "mm_interconnect_0" instantiated altera_merlin_slave_agent "jtag_uart_avalon_jtag_slave_agent"
+Info: jtag_uart_avalon_jtag_slave_agent_rsp_fifo: "mm_interconnect_0" instantiated altera_avalon_sc_fifo "jtag_uart_avalon_jtag_slave_agent_rsp_fifo"
+Info: router: "mm_interconnect_0" instantiated altera_merlin_router "router"
+Info: router_001: "mm_interconnect_0" instantiated altera_merlin_router "router_001"
+Info: router_002: "mm_interconnect_0" instantiated altera_merlin_router "router_002"
+Info: router_009: "mm_interconnect_0" instantiated altera_merlin_router "router_009"
+Info: cmd_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux"
+Info: cmd_demux_001: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux_001"
+Info: cmd_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux"
+Info: cmd_mux_007: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux_007"
+Info: Reusing file D:/Material_FPGAs/nios2/karplus_strong_nios2_custom_hardware/nios_practica/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: rsp_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux"
+Info: rsp_demux_001: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux_001"
+Info: rsp_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux"
+Info: Reusing file D:/Material_FPGAs/nios2/karplus_strong_nios2_custom_hardware/nios_practica/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: rsp_mux_001: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux_001"
+Info: Reusing file D:/Material_FPGAs/nios2/karplus_strong_nios2_custom_hardware/nios_practica/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: crosser: "mm_interconnect_0" instantiated altera_avalon_st_handshake_clock_crosser "crosser"
+Info: avalon_st_adapter: "mm_interconnect_0" instantiated altera_avalon_st_adapter "avalon_st_adapter"
+Info: error_adapter_0: "avalon_st_adapter" instantiated error_adapter "error_adapter_0"
+Info: nios_practica: Done "nios_practica" with 36 modules, 53 files
+Info: ip-generate succeeded.
+Info: Finished: Create HDL design files for synthesis
