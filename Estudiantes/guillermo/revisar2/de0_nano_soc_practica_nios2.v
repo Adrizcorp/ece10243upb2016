@@ -82,7 +82,7 @@ module DE0_NANO_SOC_practica_nios2(
 dac_nano dac_nano_inst
 (
 	.DACout(GPIO_0[4]) ,	// output  DACout_sig
-	.DACin({nota[15:0]}) ,	// input [16:0] DACin_sig
+	.DACin({~nota[15],nota[14:0]}) ,	// input [16:0] DACin_sig
 	.Clk(FPGA_CLK1_50) ,	// input  Clk_sig
 	.Reset(1'b0) 	// input  Reset_sig
 ); 
