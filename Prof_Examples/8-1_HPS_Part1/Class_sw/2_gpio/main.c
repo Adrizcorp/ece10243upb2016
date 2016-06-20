@@ -3,9 +3,9 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include "hwlib.h"
-#include "socal/socal.h"
-#include "socal/hps.h"
-#include "socal/alt_gpio.h"
+#include "socal.h"
+#include "hps.h"
+#include "alt_gpio.h"
 
 #define HW_REGS_BASE ( ALT_STM_OFST )
 #define HW_REGS_SPAN ( 0x04000000 )
