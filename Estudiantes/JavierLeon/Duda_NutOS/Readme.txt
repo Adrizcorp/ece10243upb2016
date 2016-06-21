@@ -3,3 +3,9 @@ ya intenté varias cosas para solucionarlo y no me han funcionado. En la carpeta 
 trabajando todo.
 
 LINK DEL TUTORIAL DE NutOS: http://www.emb4fun.de/fpga/nutos2/index.html
+
+
+
+https://casper.berkeley.edu/svn/trunk/roach/sw/uboot/include/nios2.h
+
+
