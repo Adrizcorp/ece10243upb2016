@@ -1,0 +1,36 @@
+C:/Users/Holguer/Documents/GitHub/ECE10243upb2016/Estudiantes/guillermo/simu_revisar/mux_nco_freq.v {1 {vlog -work firwork -stats=none C:/Users/Holguer/Documents/GitHub/ECE10243upb2016/Estudiantes/guillermo/simu_revisar/mux_nco_freq.v
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module mux_nco_freq
+
+Top level modules:
+	mux_nco_freq
+
+} {} {}} C:/Users/Holguer/Documents/GitHub/ECE10243upb2016/Estudiantes/guillermo/simu_revisar/fir_ece10243upb.v {1 {vlog -work firwork -stats=none C:/Users/Holguer/Documents/GitHub/ECE10243upb2016/Estudiantes/guillermo/simu_revisar/fir_ece10243upb.v
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module fir_ece10243upb
+
+Top level modules:
+	fir_ece10243upb
+
+} {} {}} C:/Users/Holguer/Documents/GitHub/ECE10243upb2016/Estudiantes/guillermo/simu_revisar/simulacion.v {1 {vlog -work firwork -stats=none {C:\Users\Holguer\Documents\GitHub\ECE10243upb2016\Estudiantes\guillermo\simu_revisar\simulacion.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module simulacion
+
+Top level modules:
+	simulacion
+
+} {} {}} C:/Users/Holguer/Documents/GitHub/ECE10243upb2016/Estudiantes/guillermo/simu_revisar/waveform_gen.v {1 {vlog -work firwork -stats=none C:/Users/Holguer/Documents/GitHub/ECE10243upb2016/Estudiantes/guillermo/simu_revisar/waveform_gen.v
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module waveform_gen
+
+Top level modules:
+	waveform_gen
+
+} {} {}} C:/Users/Holguer/Documents/GitHub/ECE10243upb2016/Estudiantes/guillermo/simu_revisar/div_freq.v {1 {vlog -work firwork -stats=none C:/Users/Holguer/Documents/GitHub/ECE10243upb2016/Estudiantes/guillermo/simu_revisar/div_freq.v
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module div_freq
+
+Top level modules:
+	div_freq
+
+} {} {}}
