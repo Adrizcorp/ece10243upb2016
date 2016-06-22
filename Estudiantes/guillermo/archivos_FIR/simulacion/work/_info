@@ -1,0 +1,30 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/altera/14.1
+vwaveform_gen
+!s110 1466566221
+!i10b 1
+!s100 nC_Oh[oo[lXU:[VFc4DL63
+I2G[eQA6nS`^20BH_7hMom3
+V`JN@9S9cnhjKRR_L]QIcM3
+dC:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion
+w1466566196
+8C:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion/waveform_gen.v
+FC:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion/waveform_gen.v
+L0 1
+OV;L;10.3c;59
+r1
+!s85 0
+31
+!s108 1466566220.981000
+!s107 C:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion/waveform_gen.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion/waveform_gen.v|
+!i113 1
+o-work work

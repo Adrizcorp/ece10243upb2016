@@ -9,7 +9,7 @@ module waveform_gen(
 reg [31:0]phase_acc=32'd0;
 reg [11:0]romcitaseno[4095:0];
 
-initial $readmemh("sin.txt",romcitaseno);
+initial $readmemh("D:\Material_FPGAs\SystemBuilder\CodeGenerated\FIR\simulacion\sin.txt",romcitaseno);
 assign sin_out[11:0]=romcitaseno[phase_acc[31:20]][11:0];
 
 always@(posedge clk, negedge reset)
