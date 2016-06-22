@@ -94,7 +94,7 @@ twentynm_ver = $MODEL_TECH/../altera/verilog/twentynm
 twentynm_hssi_ver = $MODEL_TECH/../altera/verilog/twentynm_hssi
 twentynm_hip_ver = $MODEL_TECH/../altera/verilog/twentynm_hip
 
-work = firwork
+work = work2
 [vcom]
 ; VHDL93 variable selects language version as the default. 
 ; Default is VHDL-2002.
@@ -218,7 +218,7 @@ Resolution = ps
 UserTimeUnit = default
 
 ; Default run length
-RunLength = 100 ps
+RunLength = 20 us
 
 ; Maximum iterations that can be run without advancing simulation time
 IterationLimit = 5000
@@ -406,19 +406,19 @@ ConcurrentFileLimit = 40
 ;            can result in a corrupt MPF file.  All project properties
 ;            can be modified through project window dialogs.
 Project_Version = 6
-Project_DefaultLib = firwork
+Project_DefaultLib = work2
 Project_SortMethod = unused
 Project_Files_Count = 5
-Project_File_0 = C:/Users/Holguer/Documents/GitHub/ECE10243upb2016/Estudiantes/guillermo/simu_revisar/mux_nco_freq.v
-Project_File_P_0 = cover_toggle 0 vlog_protect 0 file_type verilog group_id 0 cover_exttoggle 0 cover_nofec 0 cover_cond 0 vlog_1995compat 0 vlog_nodebug 0 folder {Top Level} last_compile 1466200118 cover_fsm 0 cover_branch 0 vlog_noload 0 vlog_enable0In 0 cover_excludedefault 0 vlog_disableopt 0 cover_covercells 0 vlog_hazard 0 vlog_showsource 0 cover_optlevel 3 voptflow 1 ood 0 vlog_0InOptions {} toggle - vlog_options {} compile_to firwork vlog_upper 0 cover_noshort 0 compile_order 3 dont_compile 0 cover_expr 0 cover_stmt 0
-Project_File_1 = C:/Users/Holguer/Documents/GitHub/ECE10243upb2016/Estudiantes/guillermo/simu_revisar/fir_ece10243upb.v
-Project_File_P_1 = cover_toggle 0 vlog_protect 0 file_type verilog group_id 0 cover_exttoggle 0 cover_nofec 0 cover_cond 0 vlog_1995compat 0 vlog_nodebug 0 folder {Top Level} cover_branch 0 cover_fsm 0 last_compile 1466517679 vlog_noload 0 cover_excludedefault 0 vlog_enable0In 0 vlog_disableopt 0 cover_covercells 0 voptflow 1 cover_optlevel 3 vlog_showsource 0 vlog_hazard 0 toggle - vlog_0InOptions {} ood 0 cover_noshort 0 vlog_upper 0 compile_to firwork vlog_options {} compile_order 1 cover_expr 0 dont_compile 0 cover_stmt 0
-Project_File_2 = C:/Users/Holguer/Documents/GitHub/ECE10243upb2016/Estudiantes/guillermo/simu_revisar/waveform_gen.v
-Project_File_P_2 = cover_toggle 0 vlog_protect 0 file_type verilog group_id 0 cover_exttoggle 0 cover_nofec 0 cover_cond 0 vlog_1995compat 0 vlog_nodebug 0 cover_fsm 0 cover_branch 0 vlog_noload 0 last_compile 1466519033 folder {Top Level} cover_excludedefault 0 vlog_enable0In 0 vlog_disableopt 0 cover_covercells 0 voptflow 1 cover_optlevel 3 vlog_showsource 0 vlog_hazard 0 toggle - vlog_0InOptions {} ood 0 cover_noshort 0 vlog_upper 0 compile_to firwork vlog_options {} compile_order 4 cover_expr 0 dont_compile 0 cover_stmt 0
-Project_File_3 = C:/Users/Holguer/Documents/GitHub/ECE10243upb2016/Estudiantes/guillermo/simu_revisar/simulacion.v
-Project_File_P_3 = cover_toggle 0 vlog_protect 0 file_type verilog group_id 0 cover_exttoggle 0 cover_nofec 0 cover_cond 0 vlog_1995compat 0 vlog_nodebug 0 folder {Top Level} last_compile 1466519164 cover_fsm 0 cover_branch 0 vlog_noload 0 vlog_enable0In 0 cover_excludedefault 0 vlog_disableopt 0 cover_covercells 0 vlog_hazard 0 vlog_showsource 0 cover_optlevel 3 voptflow 1 ood 0 vlog_0InOptions {} toggle - vlog_options {} compile_to firwork vlog_upper 0 cover_noshort 0 compile_order 2 dont_compile 0 cover_expr 0 cover_stmt 0
-Project_File_4 = C:/Users/Holguer/Documents/GitHub/ECE10243upb2016/Estudiantes/guillermo/simu_revisar/div_freq.v
-Project_File_P_4 = cover_toggle 0 vlog_protect 0 file_type verilog group_id 0 cover_exttoggle 0 cover_nofec 0 cover_cond 0 vlog_1995compat 0 vlog_nodebug 0 folder {Top Level} cover_branch 0 cover_fsm 0 last_compile 1465046905 vlog_noload 0 cover_excludedefault 0 vlog_enable0In 0 vlog_disableopt 0 cover_covercells 0 voptflow 1 cover_optlevel 3 vlog_showsource 0 vlog_hazard 0 toggle - vlog_0InOptions {} ood 0 cover_noshort 0 vlog_upper 0 compile_to firwork vlog_options {} compile_order 0 cover_expr 0 dont_compile 0 cover_stmt 0
+Project_File_0 = D:/Material_FPGAs/simu/div_freq.v
+Project_File_P_0 = cover_toggle 0 vlog_protect 0 file_type verilog group_id 0 cover_exttoggle 0 cover_nofec 0 cover_cond 0 vlog_1995compat 0 vlog_nodebug 0 cover_fsm 0 cover_branch 0 vlog_noload 0 last_compile 1466545076 folder {Top Level} cover_excludedefault 0 vlog_enable0In 0 vlog_disableopt 0 cover_covercells 0 voptflow 1 cover_optlevel 3 vlog_showsource 0 vlog_hazard 0 toggle - vlog_0InOptions {} ood 0 cover_noshort 0 vlog_upper 0 compile_to work2 vlog_options {} compile_order 2 cover_expr 0 dont_compile 0 cover_stmt 0
+Project_File_1 = D:/Material_FPGAs/simu/simulacion.v
+Project_File_P_1 = cover_toggle 0 vlog_protect 0 file_type verilog group_id 0 cover_exttoggle 0 cover_nofec 0 cover_cond 0 vlog_1995compat 0 vlog_nodebug 0 cover_fsm 0 cover_branch 0 vlog_noload 0 last_compile 1466545076 folder {Top Level} cover_excludedefault 0 vlog_enable0In 0 vlog_disableopt 0 cover_covercells 0 voptflow 1 cover_optlevel 3 vlog_showsource 0 vlog_hazard 0 toggle - vlog_0InOptions {} ood 0 cover_noshort 0 vlog_upper 0 compile_to work2 vlog_options {} compile_order 1 cover_expr 0 dont_compile 0 cover_stmt 0
+Project_File_2 = D:/Material_FPGAs/simu/waveform_gen.v
+Project_File_P_2 = cover_toggle 0 vlog_protect 0 file_type verilog group_id 0 cover_exttoggle 0 cover_nofec 0 cover_cond 0 vlog_1995compat 0 vlog_nodebug 0 cover_fsm 0 last_compile 1466568263 vlog_noload 0 cover_branch 0 folder {Top Level} vlog_enable0In 0 cover_excludedefault 0 vlog_disableopt 0 cover_covercells 0 vlog_hazard 0 vlog_showsource 0 cover_optlevel 3 voptflow 1 ood 0 vlog_0InOptions {} toggle - vlog_options {} compile_to work2 vlog_upper 0 cover_noshort 0 compile_order 0 dont_compile 0 cover_expr 0 cover_stmt 0
+Project_File_3 = D:/Material_FPGAs/simu/mux_nco_freq.v
+Project_File_P_3 = cover_toggle 0 vlog_protect 0 file_type verilog group_id 0 cover_exttoggle 0 cover_nofec 0 cover_cond 0 vlog_1995compat 0 vlog_nodebug 0 cover_fsm 0 cover_branch 0 vlog_noload 0 last_compile 1466545076 folder {Top Level} cover_excludedefault 0 vlog_enable0In 0 vlog_disableopt 0 cover_covercells 0 voptflow 1 cover_optlevel 3 vlog_showsource 0 vlog_hazard 0 toggle - vlog_0InOptions {} ood 0 cover_noshort 0 vlog_upper 0 compile_to work2 vlog_options {} compile_order 4 cover_expr 0 dont_compile 0 cover_stmt 0
+Project_File_4 = D:/Material_FPGAs/simu/fir_ece10243upb.v
+Project_File_P_4 = cover_toggle 0 vlog_protect 0 file_type verilog group_id 0 cover_exttoggle 0 cover_nofec 0 cover_cond 0 vlog_1995compat 0 vlog_nodebug 0 folder {Top Level} cover_branch 0 cover_fsm 0 last_compile 1466570839 vlog_noload 0 cover_excludedefault 0 vlog_enable0In 0 vlog_disableopt 0 cover_covercells 0 voptflow 1 cover_optlevel 3 vlog_showsource 0 vlog_hazard 0 toggle - vlog_0InOptions {} ood 0 cover_noshort 0 vlog_upper 0 compile_to work2 vlog_options {} compile_order 3 cover_expr 0 dont_compile 0 cover_stmt 0
 Project_Sim_Count = 0
 Project_Folder_Count = 0
 Echo_Compile_Output = 0
