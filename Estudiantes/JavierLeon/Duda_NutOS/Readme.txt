@@ -8,4 +8,8 @@ LINK DEL TUTORIAL DE NutOS: http://www.emb4fun.de/fpga/nutos2/index.html
 
 https://casper.berkeley.edu/svn/trunk/roach/sw/uboot/include/nios2.h
 
+Profesor, tengo un problema parecido al que se me presentó anteriormente 
+(para el anterior no tuve que poner librerías en ningún sitio, sólo tuve que reemplazar la carpeta, 
+pero esto mismo no me funciona en este caso)
+
 

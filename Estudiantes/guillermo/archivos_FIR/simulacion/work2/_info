@@ -1,0 +1,110 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dD:/Material_FPGAs/simulaciones
+vdiv_freq
+Z0 !s110 1466569975
+!i10b 1
+!s100 ;fB@3INz^ZM<AAX:?Z7QG2
+IJ[X[@7=`e6ijMm0ol;XJ63
+Z1 V`JN@9S9cnhjKRR_L]QIcM3
+Z2 dD:/Material_FPGAs/simu
+Z3 w1466545076
+8D:/Material_FPGAs/simu/div_freq.v
+FD:/Material_FPGAs/simu/div_freq.v
+L0 1
+Z4 OV;L;10.3c;59
+r1
+!s85 0
+31
+!s108 1466569975.973000
+!s107 D:/Material_FPGAs/simu/div_freq.v|
+!s90 -reportprogress|300|-work|work2|-stats=none|D:/Material_FPGAs/simu/div_freq.v|
+!i113 1
+Z5 o-work work2
+vfir_ece10243upb
+!s110 1466570844
+!i10b 1
+!s100 H1P>WVdzTz1=hTmT<;STg3
+IXaO;@3fle8CnZBN]G>V4[1
+R1
+R2
+w1466570839
+8D:/Material_FPGAs/simu/fir_ece10243upb.v
+FD:/Material_FPGAs/simu/fir_ece10243upb.v
+L0 1
+R4
+r1
+!s85 0
+31
+!s108 1466570844.017000
+!s107 D:/Material_FPGAs/simu/fir_ece10243upb.v|
+!s90 -reportprogress|300|-work|work2|-stats=none|D:/Material_FPGAs/simu/fir_ece10243upb.v|
+!i113 1
+R5
+vmux_nco_freq
+!s110 1466569976
+!i10b 1
+!s100 4G2]OmTm4lomj59]kYSJ?0
+IYTi2?ka05fF7zJj_m[iMO3
+R1
+R2
+R3
+8D:/Material_FPGAs/simu/mux_nco_freq.v
+FD:/Material_FPGAs/simu/mux_nco_freq.v
+L0 1
+R4
+r1
+!s85 0
+31
+!s108 1466569976.142000
+!s107 D:/Material_FPGAs/simu/mux_nco_freq.v|
+!s90 -reportprogress|300|-work|work2|-stats=none|D:/Material_FPGAs/simu/mux_nco_freq.v|
+!i113 1
+R5
+vsimulacion
+R0
+!i10b 1
+!s100 B9E5>ckNgUHb[1>^?X?:C0
+I77LQChGgFMXGEdQ:`dnN83
+R1
+R2
+R3
+8D:/Material_FPGAs/simu/simulacion.v
+FD:/Material_FPGAs/simu/simulacion.v
+L0 1
+R4
+r1
+!s85 0
+31
+!s108 1466569975.886000
+!s107 D:/Material_FPGAs/simu/simulacion.v|
+!s90 -reportprogress|300|-work|work2|-stats=none|D:/Material_FPGAs/simu/simulacion.v|
+!i113 1
+R5
+vwaveform_gen
+R0
+!i10b 1
+!s100 nC_Oh[oo[lXU:[VFc4DL63
+I7z]]RST8abkUg0W[LU4Ab2
+R1
+R2
+w1466568263
+8D:/Material_FPGAs/simu/waveform_gen.v
+FD:/Material_FPGAs/simu/waveform_gen.v
+L0 1
+R4
+r1
+!s85 0
+31
+!s108 1466569975.808000
+!s107 D:/Material_FPGAs/simu/waveform_gen.v|
+!s90 -reportprogress|300|-work|work2|-stats=none|D:/Material_FPGAs/simu/waveform_gen.v|
+!i113 1
+R5

@@ -14,7 +14,8 @@ wire [31:0]multi[20:0];
 wire [31:0]sum[20:0];
 
 //inicializo los coeficientes del filtro FIR predeterminadamente.
-initial $readmemh("C:\Users\Holguer\Documents\GitHub\ECE10243upb2016\Estudiantes\guillermo\simu_revisar\coef.txt",coef);
+initial $readmemh("init.txt",line_length);
+initial $readmemh("coef.txt",coef);
 //multiplexo los coeficientes a la salida
 assign coef_current[15:0]= coef[sw[3:0]][15:0];
 
