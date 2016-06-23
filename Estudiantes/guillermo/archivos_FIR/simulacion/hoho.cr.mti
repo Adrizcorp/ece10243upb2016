@@ -1,0 +1,8 @@
+C:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion/waveform_gen.v {1 {vlog -work work -stats=none C:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion/waveform_gen.v
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module waveform_gen
+
+Top level modules:
+	waveform_gen
+
+} {} {}}
