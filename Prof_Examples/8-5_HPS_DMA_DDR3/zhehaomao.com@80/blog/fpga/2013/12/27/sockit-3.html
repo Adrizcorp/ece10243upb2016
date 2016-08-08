@@ -1,0 +1,541 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+
+  Exploring the Arrow SoCKit Part III - Controlling FPGA from Software
+
+</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../../css/main.css"/default.htm>
+<link rel="stylesheet" type="text/css" href="../../../../../css/syntax.css"/default.htm>
+<link href="../../../../../atom.xml" type="application/atom+xml" rel="alternate"/>
+
+</head>
+<body>
+<div id="container">
+
+<div id="header">
+<a id="toplink" href="../../../../../"/default.htm>Howard Mao</a>
+</div> <!--header-->
+
+<div id="main">
+  
+    <h1>Exploring the Arrow SoCKit Part III - Controlling FPGA from Software</h1>
+  
+  <p>In part I, I showed you how to load a simple LED example onto the FPGA.
+In part II, I showed you how to install Linux onto the ARM processor.
+Now, in part III, I will show you how to connect the two together so that
+you can control the speed of the blinking LEDs from software.
+To do this, we will use Qsys, a system integration tool from Altera that
+can automatically generate interconnect logic to hook up different hardware
+modules.</p>
+
+<p>Hardware descriptions and C code can be found on <a href="https://github.com/zhemao/sockit_test">Github</a>.</p>
+
+<h2 id="a-brief-aside-on-memory-mapped-io">A Brief Aside on Memory-Mapped IO</h2>
+
+<p>Before we begin, it’s useful to go over exactly how software running on
+the CPU interacts with hardware peripherals. If you are already familiar with
+the concept of memory-mapped IO, feel free to skip this section. Otherwise,
+read on.</p>
+
+<p>In order for software to control hardware peripherals, the processor must have
+a way to communicate with the peripherals. This communication method must
+also be extensible without changing the CPU hardware, since one CPU model
+could be used in many types of systems with different sets of peripherals.
+The method used by most modern processors is memory-mapped IO, in which the
+“memory” that a processor sees is actually a bus or some other kind of
+interconnect, and different parts of the address space are mapped either to
+actual RAM or to hardware peripherals.</p>
+
+<object type="image/svg+xml" data="/svg/memory-mapped-io.svg">MMIO</object>
+
+<p>The processor can then send commands to a peripheral by writing to the
+peripheral’s address space and get information back by reading from the
+peripheral’s address space.</p>
+
+<h2 id="the-avalon-mm-interface">The Avalon MM Interface</h2>
+
+<p>So now you know that we’ll need to hook up our peripherals to a memory bus in
+order for the CPU to communicate with them. But what exactly is the interface
+for connecting a hardware unit to the bus?</p>
+
+<p>On Altera’s FPGAs, the easiest bus interface to use is the Avalon MM interface.
+Avalon MM is a master-slave protocol, with a CPU being the master
+and the peripherals being the slaves.</p>
+
+<p>Avalon memory-mapped slaves can have the following signals</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Direction</th>
+      <th>Width</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>address</td>
+      <td>input</td>
+      <td>up to 64</td>
+      <td>the address on the slave being accessed</td>
+    </tr>
+    <tr>
+      <td>read</td>
+      <td>input</td>
+      <td>1</td>
+      <td>indicates whether a read operation is requested</td>
+    </tr>
+    <tr>
+      <td>readdata</td>
+      <td>output</td>
+      <td>8, 16, 32, or 64</td>
+      <td>the data that will be read</td>
+    </tr>
+    <tr>
+      <td>write</td>
+      <td>input</td>
+      <td>1</td>
+      <td>indicates whether a write operation is requested</td>
+    </tr>
+    <tr>
+      <td>writedata</td>
+      <td>input</td>
+      <td>8, 16, 32, or 64</td>
+      <td>the data to be written</td>
+    </tr>
+    <tr>
+      <td>byteenable</td>
+      <td>input</td>
+      <td>2, 4, or 8</td>
+      <td>for multi-byte writedata, indicates which bytes are valid</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This is not an exhaustive list of course, but these are the ones that are
+likely to be of concern unless you are doing something fancy.</p>
+
+<p>These signals are also optional, so you can, say, leave out “read” and “readdata”
+if you don’t care about reading from the peripheral.
+In fact, that’s exactly what we’re going to do for our delay controller.</p>
+
+<h2 id="delay-control-as-avalon-slave">Delay Control as Avalon Slave</h2>
+
+<p>We will modify our <code>delay_ctrl</code> module from part 1 so that it is an Avalon
+slave. This will allow us to set the delay from the CPU.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">delay_ctrl</span> <span class="p">(</span>
+    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">reset</span><span class="p">,</span>
+
+    <span class="k">input</span> <span class="n">faster</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">slower</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">delay</span><span class="p">,</span>
+
+    <span class="k">input</span> <span class="n">write</span><span class="p">,</span>
+    <span class="k">input</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">writedata</span>
+<span class="p">);</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">delay_intern</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b1000</span><span class="p">;</span>
+
+<span class="k">assign</span> <span class="n">delay</span> <span class="o">=</span> <span class="n">delay_intern</span><span class="p">;</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span>
+        <span class="n">delay_intern</span> <span class="o">&lt;=</span> <span class="mh">4</span><span class="mb">&#39;b1000</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">write</span><span class="p">)</span>
+        <span class="n">delay_intern</span> <span class="o">&lt;=</span> <span class="n">writedata</span><span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">faster</span> <span class="o">&amp;&amp;</span> <span class="n">delay_intern</span> <span class="o">!=</span> <span class="mh">4</span><span class="mb">&#39;b0001</span><span class="p">)</span>
+        <span class="n">delay_intern</span> <span class="o">&lt;=</span> <span class="n">delay_intern</span> <span class="o">-</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">slower</span> <span class="o">&amp;&amp;</span> <span class="n">delay_intern</span> <span class="o">!=</span> <span class="mh">4</span><span class="mb">&#39;b1111</span><span class="p">)</span>
+        <span class="n">delay_intern</span> <span class="o">&lt;=</span> <span class="n">delay_intern</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>You’ll see that I have added a “write” and 8-bit “writedata” input.
+When “write” is asserted high, the stored delay will take the value of
+the lower 4 bits of “writedata”. This will allow us to set the delay by
+writing it to this peripheral’s memory. Notice that, since this peripheral only
+has one thing that can be written, it does not need an address input.</p>
+
+<h2 id="building-a-system-in-qsys">Building a System in Qsys</h2>
+
+<p>Now that you have an Avalon peripheral, we can hook it up to the processor.
+For this, we will need to use Altera’s Qsys tool. You can open Qsys from Quartus
+by going to “Tools” -&gt; “Qsys”. You can also click the Qsys icon, which is the
+farthest on the right in our trusty Quartus toolbar screenshot.</p>
+
+<p><img src="http://i.imgur.com/mdatABF.png" alt="Quartus Toolbar" /></p>
+
+<p>When you first start Qsys, the only component in place will be the clock
+and reset controller. We will need to add our processor to this system.</p>
+
+<h3 id="adding-the-hps">Adding the HPS</h3>
+
+<p>Open the “Embedded Processors” section in the “Library” window
+at the top left. Then, select “Hard Processor System” and click the “Add”
+button. This will open up a menu where you can select the options for the
+hard processor. You will need to make the following changes.</p>
+
+<ol>
+  <li>Under the “General” section of the “FPGA Interfaces” tab,
+deselect “Enable MPU standby and event signals”.</li>
+  <li>In the “AXI Bridges” section, change “FPGA-to-HPS interface width” and
+“HPS-to-FPGA interface width” to “Unused”. We will only need the lightweight
+HPS-to-FPGA interface for this project.</li>
+  <li>Delete the entry in the “FPGA-to-HPS SDRAM interface” section.</li>
+  <li>Go to the “SDRAM” tab and click on the “Memory Parameters” subtab.</li>
+  <li>In the “Memory Initialization Options” section, change “ODT Rtt nominal value”
+under “Mode Register 1” to “RZQ/6”.</li>
+</ol>
+
+<p>Once you’ve made all these changes, you can click “Finish” to add the HPS to
+the system.</p>
+
+<h3 id="creating-and-adding-the-delay-controller">Creating and Adding the Delay Controller</h3>
+
+<p>Now you will need to add the delay controller to the system. Since this is
+a custom module, you will first need to create a new qsys component for it.
+Go to the “Library” window and double-click on “New Component”. In the newly
+opened window, select the following options.</p>
+
+<ol>
+  <li>Under the “Component Type” tab, change “Name” and “Display name”
+to “delay_ctrl”.</li>
+  <li>Go to the “Files” tab and click the “+” button under
+“Synthesis Files” to add a new file to this component.
+Choose the “delay_ctrl.v” file.</li>
+  <li>Click “Analyze Synthesis Files” to check the file for syntax errors and
+pull out the signals.</li>
+  <li>Go to the “Signals” tab, where you will indicate the purpose of the signals
+in the module.</li>
+  <li>Make sure that the “write” and “writedata” signals are on an avalon slave
+interface called “avalon_slave_0” and that the signal types are “write”
+and “writedata”, respectively.</li>
+  <li>Make sure “clk” and “reset” are on “clock” and “reset” interfaces with
+signal types “clock” and “reset” respectively.</li>
+  <li>Change the interface for “faster” to “new Conduit”. This will create an
+interface called “conduit_end”.</li>
+  <li>Assign “slower” and “delay” to also be on the “conduit_end” interface.
+The conduit interface type means that the signals will not be used
+internally by the Qsys interconnect and will instead be exported out to
+the top-level.</li>
+  <li>Change the signal type for all of the conduit signals to “export”.</li>
+  <li>Go to the “Interfaces” tab. Make sure there are four interfaces:
+“clock”, “reset”, “conduit_end”, and “avalon_slave_0”.
+If there are others, you can remove then using
+“Remove Interfaces with no Signals”.</li>
+  <li>Make sure “reset” has “clock” as its associated clock.</li>
+  <li>Make sure that “avalon_slave_0” has “clock” as its associated clock and
+“reset” as its associated reset.</li>
+</ol>
+
+<p>Press “Finish” and save this component. You should see a new file called
+“delay_ctrl_hw.tcl” in your project directory and a component named
+“delay_ctrl” under “Project” in the library window. Add this component to
+your system. You can just press “Finish” in the add dialog as there are no options.</p>
+
+<h3 id="connecting-the-components">Connecting the Components</h3>
+
+<p>Now that you’ve placed all of the components, you must connect all the
+interfaces together. All of the possible connections are indicated by
+light grey lines. To make an actual connection, simply click on the empty
+bubbles at the intersections of lines. A connection which is actually made
+will turn black and the bubble will be filled in.</p>
+
+<ol>
+  <li>Double-click in the “Export” column for the “clk_in” signal under the
+“clk_0” component and export it as “clk”.</li>
+  <li>Double-click to export the “clk_in_reset” signal as “reset”.</li>
+  <li>Connect the “clk” output of the “clk_0” component to the
+“h2f_lw_axi_clock” input in “hps_0” and to the “clock” input of
+“delay_ctrl_0”.</li>
+  <li>Connect the “clk_reset” output of “clk_0” to “h2f_reset” of “hps_0”
+and to “reset” of “delay_ctrl_0”.</li>
+  <li>Connect “h2f_lw_axi_master” of “hps_0” to “avalon_slave_0” of
+“delay_ctrl_0”.</li>
+  <li>Export “memory” of “hps_0” as “memory”</li>
+  <li>Export “conduit_end” of “delay_ctrl_0” as “delay_ctrl”.</li>
+</ol>
+
+<p>In the end, your “System contents” window should look something like this.</p>
+
+<p><img src="http://i.imgur.com/QE4ZHgW.png?1" alt="Qsys Connections" /></p>
+
+<p>You have now finished the system, so save it as “soc_system.qsys”.
+You can now generate the system by clicking “Generate” -&gt; “Generate” from
+the menu. In the “Generation” dialog, make sure “Create HDL design files
+for synthesis” is set to Verilog. You can also change the “Output Directory”
+to a directory of your choosing. By default, it will be a subdirectory of
+your project directory called “soc_system”. Press the “Generate” button,
+and Qsys will begin producing Verilog files for this system. Once the system
+finishes generation successfully, you can close Qsys.</p>
+
+<h2 id="adding-qsys-system-to-quartus-project">Adding Qsys System to Quartus Project</h2>
+
+<p>Now that we have a generated Qsys system, we will need to add it to our
+Quartus project so that it can be compiled into the .sof. Since we have
+included “delay_ctrl.v” in the system, we can remove it from the project.
+In its place, we will add the system, which has been generated at
+“soc_system/synthesis/soc_system.qip”. You can add this file to your project
+by going to the “Files” tab of the “Project Navigator” window on the left,
+right-clicking on the “Files” folder icon, and choosing “Add/Remove Files in
+Project”.</p>
+
+<p>Once you have added “soc_system” to the project, you must add it to the
+top-level file, “sockit_test”. First, the top-level inputs will have to
+change in order to accomodate the exported “memory” interface of the system.
+Change the <code>module</code> declaration of sockit_test to the following.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">sockit_test</span> <span class="p">(</span>
+    <span class="k">input</span>         <span class="no">CLOCK_50</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="no">KEY</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="no">LED</span><span class="p">,</span>
+
+    <span class="k">output</span> <span class="p">[</span><span class="mh">14</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">hps_memory_mem_a</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">hps_memory_mem_ba</span><span class="p">,</span>
+    <span class="k">output</span>        <span class="n">hps_memory_mem_ck</span><span class="p">,</span>
+    <span class="k">output</span>        <span class="n">hps_memory_mem_ck_n</span><span class="p">,</span>
+    <span class="k">output</span>        <span class="n">hps_memory_mem_cke</span><span class="p">,</span>
+    <span class="k">output</span>        <span class="n">hps_memory_mem_cs_n</span><span class="p">,</span>
+    <span class="k">output</span>        <span class="n">hps_memory_mem_ras_n</span><span class="p">,</span>
+    <span class="k">output</span>        <span class="n">hps_memory_mem_cas_n</span><span class="p">,</span>
+    <span class="k">output</span>        <span class="n">hps_memory_mem_we_n</span><span class="p">,</span>
+    <span class="k">output</span>        <span class="n">hps_memory_mem_reset_n</span><span class="p">,</span>
+    <span class="k">inout</span>  <span class="p">[</span><span class="mh">39</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">hps_memory_mem_dq</span><span class="p">,</span>
+    <span class="k">inout</span>  <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">hps_memory_mem_dqs</span><span class="p">,</span>
+    <span class="k">inout</span>  <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">hps_memory_mem_dqs_n</span><span class="p">,</span>
+    <span class="k">output</span>        <span class="n">hps_memory_mem_odt</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">hps_memory_mem_dm</span><span class="p">,</span>
+    <span class="k">input</span>         <span class="n">hps_memory_oct_rzqin</span>
+<span class="p">);</span></code></pre></div>
+
+<p>Then, delete the <code>delay_ctrl</code> port mapping from the body of <code>sockit_test</code> and
+replace it with a port mapping for <code>soc_system</code>.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="n">soc_system</span> <span class="n">soc</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">delay_ctrl_delay</span> <span class="p">(</span><span class="n">delay</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">delay_ctrl_slower</span> <span class="p">(</span><span class="n">key_os</span><span class="p">[</span><span class="mh">0</span><span class="p">]),</span>
+    <span class="p">.</span><span class="n">delay_ctrl_faster</span> <span class="p">(</span><span class="n">key_os</span><span class="p">[</span><span class="mh">1</span><span class="p">]),</span>
+    <span class="p">.</span><span class="n">memory_mem_a</span>        <span class="p">(</span><span class="n">hps_memory_mem_a</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">memory_mem_ba</span>       <span class="p">(</span><span class="n">hps_memory_mem_ba</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">memory_mem_ck</span>       <span class="p">(</span><span class="n">hps_memory_mem_ck</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">memory_mem_ck_n</span>     <span class="p">(</span><span class="n">hps_memory_mem_ck_n</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">memory_mem_cke</span>      <span class="p">(</span><span class="n">hps_memory_mem_cke</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">memory_mem_cs_n</span>     <span class="p">(</span><span class="n">hps_memory_mem_cs_n</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">memory_mem_ras_n</span>    <span class="p">(</span><span class="n">hps_memory_mem_ras_n</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">memory_mem_cas_n</span>    <span class="p">(</span><span class="n">hps_memory_mem_cas_n</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">memory_mem_we_n</span>     <span class="p">(</span><span class="n">hps_memory_mem_we_n</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">memory_mem_reset_n</span>  <span class="p">(</span><span class="n">hps_memory_mem_reset_n</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">memory_mem_dq</span>       <span class="p">(</span><span class="n">hps_memory_mem_dq</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">memory_mem_dqs</span>      <span class="p">(</span><span class="n">hps_memory_mem_dqs</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">memory_mem_dqs_n</span>    <span class="p">(</span><span class="n">hps_memory_mem_dqs_n</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">memory_mem_odt</span>      <span class="p">(</span><span class="n">hps_memory_mem_odt</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">memory_mem_dm</span>       <span class="p">(</span><span class="n">hps_memory_mem_dm</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">memory_oct_rzqin</span>    <span class="p">(</span><span class="n">hps_memory_oct_rzqin</span><span class="p">),</span>
+
+    <span class="p">.</span><span class="n">clk_clk</span> <span class="p">(</span><span class="n">main_clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">reset_reset_n</span> <span class="p">(</span><span class="o">!</span><span class="n">key_os</span><span class="p">[</span><span class="mh">3</span><span class="p">])</span>
+<span class="p">);</span></code></pre></div>
+
+<p>Your final <code>sockit_test.v</code> file should look like
+<a href="https://github.com/zhemao/sockit_test/blob/master/rtl/sockit_test.v">this</a></p>
+
+<h2 id="adding-pin-assignments-and-compiling-project">Adding Pin Assignments and Compiling Project</h2>
+
+<p>Now that you’ve added the system, you have to make the pin assignments for
+the new inputs. Fortunately, Qsys generates a Tcl script which can add these
+assignments automatically. First, run Analysis and Synthesis so that Quartus
+can determine what the new pins are. Once this is done, open
+“Tools” -&gt; “Tcl Scripts” in the Quartus menu. The script you need is at
+“soc_system/synthesis/submodules/hps_sdram_p0_pin_assignments.tcl”.
+Once the script has run, you can run the full compilation.</p>
+
+<h2 id="programming-the-fpga-from-hps">Programming the FPGA from HPS</h2>
+
+<p>Since we will be using the HPS a lot, it’s useful to know how to program the
+FPGA from the HPS. This way, you won’t have to keep switching the USB cable
+between the UART to the USB Blaster.</p>
+
+<p>Programming from the HPS requires a slightly different board configuration.
+The MSEL switches should be set to 00000, so make sure all the switches are in
+the ‘0’ position. This configuration should still allow you to program from
+the USB Blaster.</p>
+
+<p>Programming the FPGA from the HPS requires a raw binary file (.rbf) instead
+of a .sof file. You can convert the .sof file to a .rbf file using the
+<code>quartus_cpf</code> tool. Run the following command from your project directory.</p>
+
+<pre><code>quartus_cpf -c output_files/sockit_test.sof output_files/sockit_test.rbf
+</code></pre>
+
+<p>Copy the “sockit_test.rbf” file to the “/root” folder of the Linux
+partition on your SD card. You can then run the following command from the
+HPS to program the FPGA.</p>
+
+<pre><code>dd if=sockit_test.rbf of=/dev/fpga0
+</code></pre>
+
+<p>You should see the FPGA LEDs begin to blink at this point.
+Be careful that you do not program the FPGA in this way when the FPGA-to-HPS
+or HPS-to-FPGA bridges are enabled. When you first boot up the board, the
+bridges are disabled by default, but later we will switch one of the
+bridges on. You should always make sure to disable any bridges you’ve enabled
+before you program the FPGA again. The following sequence of commands will
+disable all the bridges on the Cyclone V.</p>
+
+<pre><code>echo 0 &gt; /sys/class/fpga-bridge/fpga2hps/enable
+echo 0 &gt; /sys/class/fpga-bridge/hps2fpga/enable
+echo 0 &gt; /sys/class/fpga-bridge/lwhps2fpga/enable
+</code></pre>
+
+<p>Echoing 1 to the sysfs files will re-enable the bridges. You can also run
+<a href="https://github.com/zhemao/sockit_test/blob/master/software/hps_scripts/program_fpga.sh">this script</a>
+to disable the bridges, program the fpga, and re-enable the bridges.</p>
+
+<h2 id="setting-the-delay-from-the-hps">Setting the Delay from the HPS</h2>
+
+<p>And now, the final step: controlling the delay from software. To do this,
+you will have to write to the base address of the “delay_ctrl” peripheral.
+This peripheral is connected to the lightweight HPS-to-FPGA bridge.
+The lightweight bridge’s region of memory begins at address 0xff200000, so to
+find the address of an FPGA peripheral, simply add the peripheral’s offset as
+shown by Qsys to that address. In our case, the “delay_ctrl” peripheral was
+assigned the offset 0x00000000, so the full address is simply 0xff200000.</p>
+
+<p>The Linux kernel we are running uses <a href="https://en.wikipedia.org/wiki/Virtual_memory">virtual memory</a>,
+so we cannot directly write to address 0xff200000 from a userspace process,
+since that physical address is not mapped into the process’s address space.
+The proper way to expose the “delay_ctrl” peripheral is to write a kernel
+module, which I will discuss in my next post. For now, we will use a simpler
+method, which is to use the <code>mmap</code> system call on the “/dev/mem” device file,
+which represents physical memory, to map the HPS-to-FPGA bridge’s memory
+into the process memory.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;sys/mman.h&gt;</span>
+<span class="cp">#include &lt;sys/types.h&gt;</span>
+<span class="cp">#include &lt;sys/stat.h&gt;</span>
+<span class="cp">#include &lt;fcntl.h&gt;</span>
+<span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+<span class="cp">#include &lt;unistd.h&gt;</span>
+<span class="cp">#include &lt;stdint.h&gt;</span>
+
+<span class="cp">#define PAGE_SIZE 4096</span>
+<span class="cp">#define LWHPS2FPGA_BRIDGE_BASE 0xff200000</span>
+<span class="cp">#define BLINK_OFFSET 0x0</span>
+
+<span class="k">volatile</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">blink_mem</span><span class="p">;</span>
+<span class="kt">void</span> <span class="o">*</span><span class="n">bridge_map</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">EXIT_FAILURE</span><span class="p">;</span>
+	<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">value</span><span class="p">;</span>
+	<span class="kt">off_t</span> <span class="n">blink_base</span> <span class="o">=</span> <span class="n">LWHPS2FPGA_BRIDGE_BASE</span><span class="p">;</span>
+
+	<span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Usage: %s number</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+		<span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="cm">/* check the bounds of the value being set */</span>
+	<span class="n">value</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">||</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Invalid delay setting.&quot;</span>
+				<span class="s">&quot;Delay must be between 1 and 15, inclusive.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+		<span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="cm">/* open the memory device file */</span>
+	<span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="s">&quot;/dev/mem&quot;</span><span class="p">,</span> <span class="n">O_RDWR</span><span class="o">|</span><span class="n">O_SYNC</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">fd</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">perror</span><span class="p">(</span><span class="s">&quot;open&quot;</span><span class="p">);</span>
+		<span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="cm">/* map the LWHPS2FPGA bridge into process memory */</span>
+	<span class="n">bridge_map</span> <span class="o">=</span> <span class="n">mmap</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">PAGE_SIZE</span><span class="p">,</span> <span class="n">PROT_WRITE</span><span class="p">,</span> <span class="n">MAP_SHARED</span><span class="p">,</span>
+				<span class="n">fd</span><span class="p">,</span> <span class="n">blink_base</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">bridge_map</span> <span class="o">==</span> <span class="n">MAP_FAILED</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">perror</span><span class="p">(</span><span class="s">&quot;mmap&quot;</span><span class="p">);</span>
+		<span class="k">goto</span> <span class="n">cleanup</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="cm">/* get the delay_ctrl peripheral&#39;s base address */</span>
+	<span class="n">blink_mem</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="p">(</span><span class="n">bridge_map</span> <span class="o">+</span> <span class="n">BLINK_OFFSET</span><span class="p">);</span>
+
+	<span class="cm">/* write the value */</span>
+	<span class="o">*</span><span class="n">blink_mem</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+
+	<span class="k">if</span> <span class="p">(</span><span class="n">munmap</span><span class="p">(</span><span class="n">bridge_map</span><span class="p">,</span> <span class="n">PAGE_SIZE</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">perror</span><span class="p">(</span><span class="s">&quot;munmap&quot;</span><span class="p">);</span>
+		<span class="k">goto</span> <span class="n">cleanup</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="nl">cleanup</span><span class="p">:</span>
+	<span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+	<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Ignoring all of the error-handling and setup code, the important parts of
+the program are the following.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bridge_map</span> <span class="o">=</span> <span class="n">mmap</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">PAGE_SIZE</span><span class="p">,</span> <span class="n">PROT_WRITE</span><span class="p">,</span> <span class="n">MAP_SHARED</span><span class="p">,</span>
+			<span class="n">fd</span><span class="p">,</span> <span class="n">blink_base</span><span class="p">);</span>
+<span class="n">blink_mem</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="p">(</span><span class="n">bridge_map</span> <span class="o">+</span> <span class="n">BLINK_OFFSET</span><span class="p">);</span>
+<span class="o">*</span><span class="n">blink_mem</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span></code></pre></div>
+
+<p>The <code>mmap</code> call maps a single page of memory beginning at 0xff200000 into the
+process’s memory space. The first argument to <code>mmap</code> is the virtual memory
+address we want the mapped memory to start at. By leaving it null, we allow
+the kernel to use the next memory address available. The second argument is
+the size of the region we want mapped. The size will always be a multiple of
+the page size (on Linux, this is 4 kB or 4096 bytes), so we specify the size
+of a single page even though we only need a byte.</p>
+
+<p>The second line calculates the base address of the “delay_ctrl” peripheral.
+In this case, <code>BLINK_OFFSET</code> is 0, so the addition isn’t really necessary,
+but it’s good to use named constants.</p>
+
+<p>Finally, the coup-de-grace, the third line writes to the memory address,
+setting the value of the <code>delay_intern</code> signal in the “delay_ctrl” module.
+Notice that <code>blink_mem</code> is declared with the <code>volatile</code> keyword. This tells
+the compiler that the value stored at this memory address can change without
+being written to from software. This disables certain compiler optimizations
+that can cause incorrect behavior.</p>
+
+<p>You can find the source code and a Makefile in the
+<a href="https://github.com/zhemao/sockit_test/tree/master/software/blinker_us">software/blinker_us</a>
+folder in the git repository. Compiling it will produce a “blinker” ARM
+executable, which can be copied to the SD card. The program can be run like so…</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># enable the lwhps2fpga bridge</span>
+<span class="nb">echo </span><span class="m">1</span> &gt; /sys/class/fpga-bridge/lwhps2fpga/enable
+<span class="c"># make it blink fast</span>
+./blinker 1
+<span class="c"># make it blink slow</span>
+./blinker 15</code></pre></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>And now you’ve seen it all, from hardware to software. In my next post, we’ll
+clean things up a bit and write a kernel module to handle the writes to
+the HPS-to-FPGA bridge.</p>
+
+<p><a href="../24/sockit-2.html">&lt;- Part 2</a>
+<a href="../29/sockit-4.html">Part 4 -&gt;</a></p>
+
+</div> <!--main-->
+
+</div> <!--container-->
+</body>
+</html>

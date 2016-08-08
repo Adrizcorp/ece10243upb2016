@@ -1,0 +1,941 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+
+  Exploring the Arrow SoCKit Part VIII - The Audio Codec
+
+</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../../css/main.css"/default.htm>
+<link rel="stylesheet" type="text/css" href="../../../../../css/syntax.css"/default.htm>
+<link href="../../../../../atom.xml" type="application/atom+xml" rel="alternate"/>
+
+</head>
+<body>
+<div id="container">
+
+<div id="header">
+<a id="toplink" href="../../../../../"/default.htm>Howard Mao</a>
+</div> <!--header-->
+
+<div id="main">
+  
+    <h1>Exploring the Arrow SoCKit Part VIII - The Audio Codec</h1>
+  
+  <p>In the next few posts, we will look at implementing real-time audio processing
+on the FPGA. The first step, of course, is to build an interface to the
+audio codec so that we can record and play audio. Interfacing with hardware
+peripherals from an FPGA can be a rather challenging task, so I thought it
+deserved its own article. In this post, we will walk through the steps it
+takes to get audio capture and playback working on the FPGA. If you wish to
+follow along, you will need speakers or headsets and a microphone.
+All of the hardware descriptions and other project files can be found on
+<a href="https://github.com/zhemao/rtaudio_effects/tree/part8">Github</a>.</p>
+
+<h2 id="an-introduction-to-digital-audio">An Introduction to Digital Audio</h2>
+
+<p>Before we get into the details of the SoCKit board’s audio codec, it’s worth
+discussing some of the more general aspects of digital audio and what
+exactly an audio codec does. If you already have experience working with
+digital audio, feel free to skip this section.</p>
+
+<p>What our ears perceive as sound are pressure waves which propagate through
+some medium (like air or water), creating alternating areas of compression
+and rarefaction. Microphones convert these pressure waves into an electrical
+signal, and speakers do the inverse. The pressure at a point in the wave is
+represented electrically as a voltage level. The electrical signals here are
+analog signals, which is to say that they are continuous in time and voltage.
+However, the FPGA is a digital device, which can only deal with discrete
+(binary) quantities and runs at a fixed clock rate. Therefore, we need an audio
+codec in order to convert between the analog signals coming from the microphone
+or going to the speakers and the digital signals that the FPGA understands.</p>
+
+<p>First, let’s look at how audio input from the microphones gets handled.
+The signal that comes into the audio codec from the microphones is analog
+and looks something like this.</p>
+
+<p><img src="http://i.imgur.com/AlMoXWM.png" alt="Analog" width="950" /></p>
+
+<p>The x-axis is time, the y-axis is voltage (I know, <a href="https://xkcd.com/833/">I’m terrible</a>).
+I’ve chosen 16 as the amplitude here purely arbitrarily. The actual voltages
+depend on the microphone and audio codec. The signal here is continuous in
+time and voltage. To break up the time axis into the discrete chunks, the
+audio codec performs sampling, which captures the voltage level at regular
+intervals.</p>
+
+<p><img src="http://i.imgur.com/AGn0ZqL.png" alt="Sampled" width="950" /></p>
+
+<p>The frequency at which samples are captured is called the sampling rate.</p>
+
+<p>Now the time axis has been discretized, but the voltage levels are still
+continuous. To convert the voltage levels into discrete quantities
+(i.e. integers), the audio codec performs analog-to-digital conversion (ADC).</p>
+
+<p><img src="http://i.imgur.com/HXrRZc3.png" alt="Digital" width="950" /></p>
+
+<p>To output audio on the speakers, the audio codec does the reverse operation,
+converting integer samples back to analog voltage values. This is known
+as digital-to-analog conversion (DAC).</p>
+
+<p><img src="http://i.imgur.com/Pv0B98V.png" alt="DAC" width="950" /></p>
+
+<p>As you can see, we’ve lost a bit of information from sampling and ADC, so our
+reproduced signal looks kind of jagged. But after some analog filtering,
+the signal will be smoothed out into a relatively faithful reproduction of the
+original analog signal, albeit with a little quantization noise (the difference
+between the discrete voltage and the original analog voltage). In general,
+the integer range will be a lot larger than -15 to 15. I’ve just chosen an
+extreme case for illustration. With a larger integer range, the quantization
+noise will be reduced. The sampling rate does not affect quantization noise,
+but it does determine the range of (audio) frequencies that can be represented.
+A sampling rate of <code>r</code> Hz can capture signals up to <code>r/2</code> Hz. A simple
+explanation of why this is is that a sinusoid crosses the origin twice in a
+single period. In order to reproduce the true frequency of the sinusoid,
+there must be at least one sample taken between each zero-crossing.
+The standard audio quality for music is CD quality, which has 16-bit samples
+at 44.1 kHz. These are the settings we will use in our project.</p>
+
+<p>If you’d like to learn more about sampling, ADC, and DAC, you can read
+Chapter 3 of
+<a href="http://www.dspguide.com/ch3.htm">The Scientist and Engineer’s Guide to Digital Signal Processing</a>.</p>
+
+<h2 id="importing-pin-assignments">Importing Pin Assignments</h2>
+
+<p>So far, we’ve been putting our pin assignments in manually. This will get
+pretty tedious once we start using more pins. Fortunately, Quartus provides
+a way to import pin assignments from a settings file. You can download the
+settings file from <a href="https://www.dropbox.com/s/htdzq5gof4vc1ll/sockit.qsf">here</a>.
+To import it into your Quartus project, go to “Assignments” -&gt; “Import Assignments”
+and put in the path to the file you want to import from.</p>
+
+<h2 id="finding-the-datasheets">Finding the Datasheets</h2>
+
+<p>The SoCKit board uses the Analog Devices SSM2603 audio codec. You can find the
+<a href="http://www.analog.com/static/imported-files/data_sheets/SSM2603.pdf">datasheet</a>
+for this codec on the manufacturer’s website. We will be using this datasheet
+as our primary reference. It’s also helpful to know how the codec is connected
+to the FPGA, as this will tell us the correspondence between the pin names
+used on the FPGA and the pin names used in the codec datasheet.
+These connections can be found on page 19 of the
+<a href="http://www.rocketboards.org/pub/Documentation/ArrowSoCKitEvaluationBoard/C5S_REV_C_05_07_13.pdf">SoCKit Schematics</a>.</p>
+
+<h2 id="isup2supc-configuration-interface">I<sup>2</sup>C Configuration Interface</h2>
+
+<p>Before the Audio Codec can start capturing or playing audio, it has to be
+configured with options such as the sampling rate and sample width (how many
+bits each sample is). The protocol the audio codec uses for configuration
+is the Inter-Integrated Circuit (I<sup>2</sup>C) protocol. This is a two-wire
+protocol originally designed by Phillips Semiconductor in the 1980s to connect
+peripherals to the CPU in TV sets. Nowadays it’s used to connect low-speed
+peripherals in all sorts of devices. You can find detailed information
+about the I<sup>2</sup>C protocol at <a href="http://www.esacademy.com/en/library/technical-articles-and-documents/miscellaneous/i2c-bus.html">Embedded Systems Academy</a>,
+from which I took all the timing diagrams you will see below.
+I will describe the basic protocol as used by the SSM2603 here.</p>
+
+<h3 id="the-isup2supc-protocol">The I<sup>2</sup>C Protocol</h3>
+
+<p>The two wires in the I<sup>2</sup>C protocol are labeled SDAT and SCLK for
+Serial Data and Serial Clock respectively. From these names you can probably
+guess what their functions are. In I<sup>2</sup>C, data is sent a bit at a time
+over the SDAT wire, with the separation between bits determined by clock cycles
+on the SCLK wire. SDAT and SCLK are also sometimes abbreviated as SDA or SCL.</p>
+
+<p>I<sup>2</sup>C is a master-slave protocol. The master initiates every
+transmission and drives the SCLK line. In our case, the FPGA is the master
+and the audio codec is the slave. According to the I<sup>2</sup>C spec, the
+SDAT and SCLK lines are both bidirectional and are connected to pull-up
+resistors. This means that if no unit is driving a bus line, the voltage will
+be high. If you look at the the SoCKit board schematics, however, only SDAT
+is bidirectional, and SCLK is connected as output only. This makes implementing
+our controller on the FPGA a bit simpler, as we don’t have to worry about the
+slave holding the SCLK line low (this is called clock stretching).</p>
+
+<p>To initiate a transmission, the master keeps the SCLK line high and then
+does a high-to-low transition on the SDAT line.</p>
+
+<p><img src="http://www.esacademy.com/assets/images/g01stast.gif" alt="Start" /></p>
+
+<p>The start symbol is followed by transmission of the 7-bit slave address.
+This is necessary because multiple slaves can be connected to the same bus.
+The bits are transmitted one per SCLK cycle. The value can be changed during
+the low phase of SCLK and must remain stable during the high phase.</p>
+
+<p><img src="http://www.esacademy.com/assets/images/g01sendb.gif" alt="Transmission" /></p>
+
+<p>The bits are transmitted in big-endian order (most-significant bit first).
+After the seven bits of the address are transmitted, an eight read/write bit
+is transmitted. This should be 0 if the transmission is a write (master
+sending to slave) or 1 if the transmission is a read (master receiving from
+slave). In our case we will only be writing, so the read/write bit will
+always be 0.</p>
+
+<p>After the address and read/write bit are sent, the master allows the SDAT
+line to float for one SCLK cycle. The slave whose address has just been
+transmitted should send an acknowledgement (ACK) by pulling SDAT low for the
+entire cycle.</p>
+
+<p><img src="http://www.esacademy.com/assets/images/g01getak.gif" alt="ACK" /></p>
+
+<p>After receiving the ACK, the master transmits the data a bit at a time in the
+same way it sent the address and read/write bit. After every eight bits,
+the master should wait one cycle for an ACK from the slave.</p>
+
+<p>After the last byte is acknowledged by the slave, the master sends a STOP
+symbol to end the transmission by sending a low-to-high transition on SDAT
+while SCLK is held high.</p>
+
+<p><img src="http://www.esacademy.com/assets/images/g02stast.gif" alt="Stop" /></p>
+
+<p>If you look on page 17 of the SSM2603 datasheet, you will see that the codec
+takes 16-bit data words. Therefore, each transmission will have 3 acks
+(1 after address + r/w bit, 1 after each data byte) before a stop symbol must
+be sent. Another question which must be answered about the codec’s
+I<sup>2</sup>C interface is how fast SCLK can be toggled. If you look at
+page 5 of the datasheet, you will see that the maximum SCLK frequency is
+526 kHz.</p>
+
+<p>The I<sup>2</sup>C controller Verilog module looks like this.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">i2c_controller</span> <span class="p">(</span>
+    <span class="k">input</span>  <span class="n">clk</span><span class="p">,</span>
+
+    <span class="k">output</span> <span class="n">i2c_sclk</span><span class="p">,</span>
+    <span class="k">inout</span>  <span class="n">i2c_sdat</span><span class="p">,</span>
+
+    <span class="k">input</span>  <span class="n">start</span><span class="p">,</span>
+    <span class="k">output</span> <span class="n">done</span><span class="p">,</span>
+    <span class="k">output</span> <span class="n">ack</span><span class="p">,</span>
+
+    <span class="k">input</span> <span class="p">[</span><span class="mh">23</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">i2c_data</span>
+<span class="p">);</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">23</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">data</span><span class="p">;</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">stage</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">sclk_divider</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">clock_en</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+
+<span class="c1">// don&#39;t toggle the clock unless we&#39;re sending data</span>
+<span class="c1">// clock will also be kept high when sending START and STOP symbols</span>
+<span class="k">assign</span> <span class="n">i2c_sclk</span> <span class="o">=</span> <span class="p">(</span><span class="o">!</span><span class="n">clock_en</span><span class="p">)</span> <span class="o">||</span> <span class="n">sclk_divider</span><span class="p">[</span><span class="mh">6</span><span class="p">];</span>
+<span class="kt">wire</span> <span class="n">midlow</span> <span class="o">=</span> <span class="p">(</span><span class="n">sclk_divider</span> <span class="o">==</span> <span class="mh">7&#39;h1f</span><span class="p">);</span>
+
+<span class="kt">reg</span> <span class="n">sdat</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+<span class="c1">// rely on pull-up resistor to set SDAT high</span>
+<span class="k">assign</span> <span class="n">i2c_sdat</span> <span class="o">=</span> <span class="p">(</span><span class="n">sdat</span><span class="p">)</span> <span class="o">?</span> <span class="mh">1</span><span class="p">&#39;</span><span class="n">bz</span> <span class="o">:</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">acks</span><span class="p">;</span>
+
+<span class="k">parameter</span> <span class="no">LAST_STAGE</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">&#39;d29</span><span class="p">;</span>
+
+<span class="k">assign</span> <span class="n">ack</span> <span class="o">=</span> <span class="p">(</span><span class="n">acks</span> <span class="o">==</span> <span class="mh">3</span><span class="mb">&#39;b000</span><span class="p">);</span>
+<span class="k">assign</span> <span class="n">done</span> <span class="o">=</span> <span class="p">(</span><span class="n">stage</span> <span class="o">==</span> <span class="no">LAST_STAGE</span><span class="p">);</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">start</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">sclk_divider</span> <span class="o">&lt;=</span> <span class="mh">7</span><span class="mi">&#39;d0</span><span class="p">;</span>
+        <span class="n">stage</span> <span class="o">&lt;=</span> <span class="mh">5</span><span class="mi">&#39;d0</span><span class="p">;</span>
+        <span class="n">clock_en</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+        <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+        <span class="n">acks</span> <span class="o">&lt;=</span> <span class="mh">3</span><span class="mb">&#39;b111</span><span class="p">;</span>
+        <span class="n">data</span> <span class="o">&lt;=</span> <span class="n">i2c_data</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">sclk_divider</span> <span class="o">==</span> <span class="mh">7</span><span class="mi">&#39;d127</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="n">sclk_divider</span> <span class="o">&lt;=</span> <span class="mh">7</span><span class="mi">&#39;d0</span><span class="p">;</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">stage</span> <span class="o">!=</span> <span class="no">LAST_STAGE</span><span class="p">)</span>
+                <span class="n">stage</span> <span class="o">&lt;=</span> <span class="n">stage</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+
+            <span class="k">case</span> <span class="p">(</span><span class="n">stage</span><span class="p">)</span>
+                <span class="c1">// after start</span>
+                <span class="mh">5</span><span class="mi">&#39;d0</span><span class="o">:</span>  <span class="n">clock_en</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+                <span class="c1">// receive acks</span>
+                <span class="mh">5</span><span class="mi">&#39;d9</span><span class="o">:</span>  <span class="n">acks</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">i2c_sdat</span><span class="p">;</span>
+                <span class="mh">5</span><span class="mi">&#39;d18</span><span class="o">:</span> <span class="n">acks</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">i2c_sdat</span><span class="p">;</span>
+                <span class="mh">5</span><span class="mi">&#39;d27</span><span class="o">:</span> <span class="n">acks</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">i2c_sdat</span><span class="p">;</span>
+                <span class="c1">// before stop</span>
+                <span class="mh">5</span><span class="mi">&#39;d28</span><span class="o">:</span> <span class="n">clock_en</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+            <span class="k">endcase</span>
+        <span class="k">end</span> <span class="k">else</span>
+            <span class="n">sclk_divider</span> <span class="o">&lt;=</span> <span class="n">sclk_divider</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">midlow</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="k">case</span> <span class="p">(</span><span class="n">stage</span><span class="p">)</span>
+                <span class="c1">// start</span>
+                <span class="mh">5</span><span class="mi">&#39;d0</span><span class="o">:</span>  <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+                <span class="c1">// byte 1</span>
+                <span class="mh">5</span><span class="mi">&#39;d1</span><span class="o">:</span>  <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">23</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d2</span><span class="o">:</span>  <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">22</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d3</span><span class="o">:</span>  <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">21</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d4</span><span class="o">:</span>  <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">20</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d5</span><span class="o">:</span>  <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">19</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d6</span><span class="o">:</span>  <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">18</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d7</span><span class="o">:</span>  <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">17</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d8</span><span class="o">:</span>  <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">16</span><span class="p">];</span>
+                <span class="c1">// ack 1</span>
+                <span class="mh">5</span><span class="mi">&#39;d9</span><span class="o">:</span>  <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+                <span class="c1">// byte 2</span>
+                <span class="mh">5</span><span class="mi">&#39;d10</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">15</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d11</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">14</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d12</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">13</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d13</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">12</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d14</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">11</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d15</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">10</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d16</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">9</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d17</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">8</span><span class="p">];</span>
+                <span class="c1">// ack 2</span>
+                <span class="mh">5</span><span class="mi">&#39;d18</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+                <span class="c1">// byte 3</span>
+                <span class="mh">5</span><span class="mi">&#39;d19</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">7</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d20</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">6</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d21</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">5</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d22</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">4</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d23</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">3</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d24</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">2</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d25</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">1</span><span class="p">];</span>
+                <span class="mh">5</span><span class="mi">&#39;d26</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">0</span><span class="p">];</span>
+                <span class="c1">// ack 3</span>
+                <span class="mh">5</span><span class="mi">&#39;d27</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+                <span class="c1">// stop</span>
+                <span class="mh">5</span><span class="mi">&#39;d28</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+                <span class="mh">5</span><span class="mi">&#39;d29</span><span class="o">:</span> <span class="n">sdat</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+            <span class="k">endcase</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>SCLK is divided down by 128, giving us a frequency of about 390 kHz. The codec
+steps through the bits one at a time, not checking the acks until all 24 bits
+(7-bit address + r/w bit + 16-bit data) are transmitted. A transmission is
+started when the <code>start</code> signal is set high, and <code>done</code> is set when the
+transmission is complete. The <code>ack</code> signal is set high if all of the ACKs were
+received. Another thing to note is that to set SDAT to high, we leave the
+wire floating and rely on the pull-up resistor to pull the voltage
+to a high value (<code>z</code> means high-impedance; assigning it to an <code>inout</code> signal
+leaves the wire floating).</p>
+
+<h3 id="ssm2603-register-settings">SSM2603 Register Settings</h3>
+
+<p>Now we have a way to send data through the configuration interface, but what
+data do we send? For that we must consult the datasheet. The first thing we
+need to know is what the slave address of the audio codec is. Page 17 of the
+datasheet states</p>
+
+<blockquote>
+  <p>If the CSB pin is set to 0, the address selected is 0011010;
+if 1, the address is 0011011</p>
+</blockquote>
+
+<p>You can figure out what CSB is set to on the SoCKit by looking at the
+schematic. It’s actually a bit ambiguous in the schematic, which shows that
+CSB is connected to both V<sub>dd</sub> and ground through resistors.
+However, the schematic  helpfully notes that the default I<sup>2</sup>C address
+is 0x34 / 0x35. Note that this is an 8-bit word. The difference in the LSB
+refers to the read/write bit. Since we are only writing, the address we use is
+0x34. This means CSB must be set to 0.</p>
+
+<p>Now we need to figure out what the 16-bit data words are. The audio codec
+organizes its configuration variables into 19 9-bit registers. The first
+seven bits of the data transmission are the register address, and the last
+nine bits are the register contents.</p>
+
+<p>The section on control register sequencing states</p>
+
+<blockquote>
+  <p>Enable all of the necessary power management bits of
+Register R6 with the exception of the out bit (Bit D4). The
+out bit should be set to 1 until the final step of the control
+register sequence.</p>
+</blockquote>
+
+<p>We will be using all parts of the codec, so for now, set all of the bits
+in register 6 to 0 except bit 4.</p>
+
+<p>Now let’s start from the top and work our way down.</p>
+
+<p>Register 0 controls the input volume of the left channel ADC. We don’t want
+simultaneous loading of volume, so set bit 8 to 0. We also don’t want mute,
+so set bit 7 to 0 as well. Bits 5-0 specify the volume in decibels.
+A decibel is a unit of signal power that operates on a logarithmic scale.
+If a signal is specified as <code>N</code> dB, that means it is 10 <sup>N / 10</sup>
+times more powerful than the baseline. You can specify any volume you want here,
+but I suggest you just choose 0 dB (the baseline), which is 010111.
+Choose the same options for the right-channel ADC control in register 1.</p>
+
+<p>Registers 2 and 3 control left-channel and right-channel DAC volume,
+respectively. Put a 0 for bit 8, and set the volume to 0 dB, which is
+1111001.</p>
+
+<p>Register 4 contains options for the analog audio path. Bits 7-5 control the
+<a href="https://en.wikipedia.org/wiki/Sidetone">sidetone</a>, which allows some of the
+microphone input to be mixed back to the output. This is used mainly in
+telephones because usability studies indicate that it is important feature.
+We will be feeding the microphone input back to the output anyway, so we do
+not need sidetone. Set the attenuation to 11, and the sidetone enable to 0.
+Bit 4 is the DAC select. We will be using the DAC, so set this to 1.
+Bits 3 and 2 control which input port (line input or microphone input) gets
+used as the input to the ADC. We want to use the microphone, so set the
+BYPASS to 0 and the INSEL to 1. Bit 1 is to mute the microphone, which we don’t
+want, so set this to 0. Bit 0 is MICBOOST, which controls the microphone
+amplifier. You can set this to either 0, for no boost, or 1, for 100x boost.</p>
+
+<p>Register 5 controls the digital audio path. Bit 4 sets whether or not the
+DC offset is stored. We want the DC offset to be cleared, so set this to 0.
+Bit 3 is for digital mute, set this to 0. Bits 2-1 are for de-emphasis control,
+which helps improve the signal-to-noise ratio of the audio. Set these bits
+to 10, since we will be using a 44.1 kHz sampling rate. Bit 0 controls the
+ADC high pass filter. Set this to 0, the default.</p>
+
+<p>Register 7 sets the options for the digital audio interface, which we will
+use to send and receive samples from the codec. We want the codec to run
+in left-justified slave mode with 16-bit samples. Set BCLKINV, MS, LRSWAP,
+and LRP to 0. Set WL to 00 for 16 bit audio, and set Format to 01 for
+left-justified mode. I will explain what all of these things mean in the next
+section.</p>
+
+<p>Register 8 controls the sampling rate. We want a 44.1 kHz rate for both the
+ADC and the DAC. According to table 30 in the datasheet, this means we should
+set CLKODIV2 and CLKDIV2 to 0, SR to 1000, the base oversampling rate to 0,
+and USB mode select to 0.</p>
+
+<p>Finally, we set register 6 to all zeros to power on the output and bit 0
+of register 9 to 1 to activate the digital core.</p>
+
+<p>Here is the final configuration controller. It steps through the different
+16-bit data words for the I<sup>2</sup>C controller one at a time.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">i2c_av_config</span> <span class="p">(</span>
+    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">reset</span><span class="p">,</span>
+
+    <span class="k">output</span> <span class="n">i2c_sclk</span><span class="p">,</span>
+    <span class="k">inout</span>  <span class="n">i2c_sdat</span><span class="p">,</span>
+
+    <span class="k">output</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">status</span>
+<span class="p">);</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">23</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">i2c_data</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">lut_data</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">lut_index</span> <span class="o">=</span> <span class="mh">4</span><span class="mi">&#39;d0</span><span class="p">;</span>
+
+<span class="k">parameter</span> <span class="no">LAST_INDEX</span> <span class="o">=</span> <span class="mh">4&#39;ha</span><span class="p">;</span>
+
+<span class="kt">reg</span>  <span class="n">i2c_start</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="n">i2c_done</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="n">i2c_ack</span><span class="p">;</span>
+
+<span class="n">i2c_controller</span> <span class="n">control</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">clk</span> <span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">i2c_sclk</span> <span class="p">(</span><span class="n">i2c_sclk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">i2c_sdat</span> <span class="p">(</span><span class="n">i2c_sdat</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">i2c_data</span> <span class="p">(</span><span class="n">i2c_data</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">start</span> <span class="p">(</span><span class="n">i2c_start</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">done</span> <span class="p">(</span><span class="n">i2c_done</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">ack</span> <span class="p">(</span><span class="n">i2c_ack</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">case</span> <span class="p">(</span><span class="n">lut_index</span><span class="p">)</span>
+        <span class="mh">4&#39;h0</span><span class="o">:</span> <span class="n">lut_data</span> <span class="o">&lt;=</span> <span class="mh">16&#39;h0c10</span><span class="p">;</span> <span class="c1">// power on everything except out</span>
+        <span class="mh">4&#39;h1</span><span class="o">:</span> <span class="n">lut_data</span> <span class="o">&lt;=</span> <span class="mh">16&#39;h0017</span><span class="p">;</span> <span class="c1">// left input</span>
+        <span class="mh">4&#39;h2</span><span class="o">:</span> <span class="n">lut_data</span> <span class="o">&lt;=</span> <span class="mh">16&#39;h0217</span><span class="p">;</span> <span class="c1">// right input</span>
+        <span class="mh">4&#39;h3</span><span class="o">:</span> <span class="n">lut_data</span> <span class="o">&lt;=</span> <span class="mh">16&#39;h0479</span><span class="p">;</span> <span class="c1">// left output</span>
+        <span class="mh">4&#39;h4</span><span class="o">:</span> <span class="n">lut_data</span> <span class="o">&lt;=</span> <span class="mh">16&#39;h0679</span><span class="p">;</span> <span class="c1">// right output</span>
+        <span class="mh">4&#39;h5</span><span class="o">:</span> <span class="n">lut_data</span> <span class="o">&lt;=</span> <span class="mh">16&#39;h08d4</span><span class="p">;</span> <span class="c1">// analog path</span>
+        <span class="mh">4&#39;h6</span><span class="o">:</span> <span class="n">lut_data</span> <span class="o">&lt;=</span> <span class="mh">16&#39;h0a04</span><span class="p">;</span> <span class="c1">// digital path</span>
+        <span class="mh">4&#39;h7</span><span class="o">:</span> <span class="n">lut_data</span> <span class="o">&lt;=</span> <span class="mh">16&#39;h0e01</span><span class="p">;</span> <span class="c1">// digital IF</span>
+        <span class="mh">4&#39;h8</span><span class="o">:</span> <span class="n">lut_data</span> <span class="o">&lt;=</span> <span class="mh">16&#39;h1020</span><span class="p">;</span> <span class="c1">// sampling rate</span>
+        <span class="mh">4&#39;h9</span><span class="o">:</span> <span class="n">lut_data</span> <span class="o">&lt;=</span> <span class="mh">16&#39;h0c00</span><span class="p">;</span> <span class="c1">// power on everything</span>
+        <span class="mh">4&#39;ha</span><span class="o">:</span> <span class="n">lut_data</span> <span class="o">&lt;=</span> <span class="mh">16&#39;h1201</span><span class="p">;</span> <span class="c1">// activate</span>
+        <span class="k">default</span><span class="o">:</span> <span class="n">lut_data</span> <span class="o">&lt;=</span> <span class="mh">16&#39;h0000</span><span class="p">;</span>
+    <span class="k">endcase</span>
+<span class="k">end</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">control_state</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">&#39;b00</span><span class="p">;</span>
+
+<span class="k">assign</span> <span class="n">status</span> <span class="o">=</span> <span class="n">lut_index</span><span class="p">;</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">lut_index</span> <span class="o">&lt;=</span> <span class="mh">4</span><span class="mi">&#39;d0</span><span class="p">;</span>
+        <span class="n">i2c_start</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+        <span class="n">control_state</span> <span class="o">&lt;=</span> <span class="mh">2</span><span class="mb">&#39;b00</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">control_state</span><span class="p">)</span>
+            <span class="mh">2</span><span class="mb">&#39;b00</span><span class="o">:</span> <span class="k">begin</span>
+                <span class="n">i2c_start</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+                <span class="n">i2c_data</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="mh">8&#39;h34</span><span class="p">,</span> <span class="n">lut_data</span><span class="p">};</span>
+                <span class="n">control_state</span> <span class="o">&lt;=</span> <span class="mh">2</span><span class="mb">&#39;b01</span><span class="p">;</span>
+            <span class="k">end</span>
+            <span class="mh">2</span><span class="mb">&#39;b01</span><span class="o">:</span> <span class="k">begin</span>
+                <span class="n">i2c_start</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+                <span class="n">control_state</span> <span class="o">&lt;=</span> <span class="mh">2</span><span class="mb">&#39;b10</span><span class="p">;</span>
+            <span class="k">end</span>
+            <span class="mh">2</span><span class="mb">&#39;b10</span><span class="o">:</span> <span class="k">if</span> <span class="p">(</span><span class="n">i2c_done</span><span class="p">)</span> <span class="k">begin</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">i2c_ack</span><span class="p">)</span> <span class="k">begin</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">lut_index</span> <span class="o">==</span> <span class="no">LAST_INDEX</span><span class="p">)</span>
+                        <span class="n">control_state</span> <span class="o">&lt;=</span> <span class="mh">2</span><span class="mb">&#39;b11</span><span class="p">;</span>
+                    <span class="k">else</span> <span class="k">begin</span>
+                        <span class="n">lut_index</span> <span class="o">&lt;=</span> <span class="n">lut_index</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+                        <span class="n">control_state</span> <span class="o">&lt;=</span> <span class="mh">2</span><span class="mb">&#39;b00</span><span class="p">;</span>
+                    <span class="k">end</span>
+                <span class="k">end</span> <span class="k">else</span>
+                    <span class="n">control_state</span> <span class="o">&lt;=</span> <span class="mh">2</span><span class="mb">&#39;b00</span><span class="p">;</span>
+            <span class="k">end</span>
+        <span class="k">endcase</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<h2 id="the-digital-audio-interface">The Digital Audio Interface</h2>
+
+<p>Now that we have the audio codec configured, we need to implement a controller
+for the digital audio interface so that we can actually send samples to the
+DAC and receive samples from the ADC. In our configuration, we set the digital
+audio interface to left-justified slave mode. Slave mode simply means that
+the FPGA drives all of the clocks. There are five different clock signals and
+two data signals on the digital audio interface. The following table shows how
+the names for these signals in the FPGA settings file correspond to the names
+in the datasheet.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>FPGA Name</th>
+      <th>Datasheet Name</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>AUD_ADCLRCK</td>
+      <td>RECLRC</td>
+      <td>Clock</td>
+    </tr>
+    <tr>
+      <td>AUD_ADCDAT</td>
+      <td>RECDAT</td>
+      <td>Data</td>
+    </tr>
+    <tr>
+      <td>AUD_DACLRCK</td>
+      <td>PBLRC</td>
+      <td>Clock</td>
+    </tr>
+    <tr>
+      <td>AUD_DACDAT</td>
+      <td>PBDAT</td>
+      <td>Data</td>
+    </tr>
+    <tr>
+      <td>AUD_XCK</td>
+      <td>MCLK</td>
+      <td>Clock</td>
+    </tr>
+    <tr>
+      <td>AUD_BCLK</td>
+      <td>BCLK</td>
+      <td>Clock</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You can figure this correspondence out for yourself by looking at the labels
+on the SoCKit schematic.</p>
+
+<h3 id="the-clocks">The Clocks</h3>
+
+<p>The first clock we have to worry about generating is the master clock MCLK.
+According to table 30, the frequency of this clock should be 11.2896 MHz.
+This frequency cannot be generated by simply dividing the master clock
+(there is no integer number N such that 50 / N is close enough to 11.2896).
+Fortunately, the Cyclone V contains specialty circuits called Phase-Locked
+Loops (PLLs) which can generate very precise clock signals. You can add a
+PLL to your design using Megawizard. The PLL megafunction is under
+“PLL” -&gt; “Altera PLL v13.1”.</p>
+
+<p>In the main page of the wizard, change the reference clock frequency to 50 MHz
+and uncheck the “Enable locked output port” option. In the “Output Clocks”
+section, change “Number of Clocks” to 2. We will use the PLL to generate a
+11.2896 MHz clock for the audio codec and a 50 MHz main clock.
+Enter these frequencies in for “Desired Frequency”. For the 50 MHz clock, you
+will also need to change the actual frequency to the one right below 50 MHz
+(you can’t generate a clock faster than 50 MHz from a 50 MHz reference).</p>
+
+<p>The next clock we have to consider is the bit clock, BCLK. According to
+table 30, this clock should be a quarter the frequency of the master clock.
+We can easily generate this using a frequency divider on the audio clock
+from the PLL.</p>
+
+<p>The last two clocks are RECLRC and PBLRC. LRC stands for left right clock.
+This clock signals tells the codec which of the two stereo audio channels
+is being accessed. Since we chose not to invert the clocks, the two LRC signals
+are high for the left channel and low for the right channel. The frequency of
+these two clocks is 256 times slower than the master clock frequency.
+One cycle of LRC corresponds to a single audio frame. The clock division
+therefore makes sense, since 11.2896 MHz / 256 = 44.1 kHz. This signal is
+likewise generated by frequency division of the master audio clock.</p>
+
+<h3 id="sending-data">Sending Data</h3>
+
+<p>The timing diagram on page 15 of the datasheet shows us how the data lines
+RECDAT and PBDAT are synchronized to the clocks. The data changes on each
+falling edge of BCLK. The first (most significant) bit of a sample is sent
+on the rising or falling edge of LRC.</p>
+
+<p>You will notice that there are 128 / 4 = 32 cycles of BCLK in one phase of
+LRCK, but only 16 bits in a (mono) sample. Fortunately, the timing diagram
+shows us how to handle this. After transmitting the bits in big-endian order,
+the value of the data signals in the last 16 BCLK clocks cycles are don’t cares.</p>
+
+<h3 id="the-final-code">The Final Code</h3>
+
+<p>So here’s the final code for the audio codec driver. The clock passed in here
+is the audio clock from the PLL, which is then divided down for LRC and BCLK.
+The data is pushed out or read in through shift registers. There are also
+<code>sample_end</code> and <code>sample_req</code> signals, which are asserted high for one cycle
+after the last bit of an ADC sample is received or before the first bit of a
+DAC sample must be sent.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">audio_codec</span> <span class="p">(</span>
+    <span class="k">input</span>  <span class="n">clk</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="n">reset</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">sample_end</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">sample_req</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">audio_output</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">audio_input</span><span class="p">,</span>
+    <span class="c1">// 1 - left, 0 - right</span>
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">channel_sel</span><span class="p">,</span>
+
+    <span class="k">output</span> <span class="no">AUD_ADCLRCK</span><span class="p">,</span>
+    <span class="k">input</span> <span class="no">AUD_ADCDAT</span><span class="p">,</span>
+    <span class="k">output</span> <span class="no">AUD_DACLRCK</span><span class="p">,</span>
+    <span class="k">output</span> <span class="no">AUD_DACDAT</span><span class="p">,</span>
+    <span class="k">output</span> <span class="no">AUD_BCLK</span>
+<span class="p">);</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">lrck_divider</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">bclk_divider</span><span class="p">;</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">shift_out</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">shift_temp</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">shift_in</span><span class="p">;</span>
+
+<span class="kt">wire</span> <span class="n">lrck</span> <span class="o">=</span> <span class="o">!</span><span class="n">lrck_divider</span><span class="p">[</span><span class="mh">7</span><span class="p">];</span>
+
+<span class="k">assign</span> <span class="no">AUD_ADCLRCK</span> <span class="o">=</span> <span class="n">lrck</span><span class="p">;</span>
+<span class="k">assign</span> <span class="no">AUD_DACLRCK</span> <span class="o">=</span> <span class="n">lrck</span><span class="p">;</span>
+<span class="k">assign</span> <span class="no">AUD_BCLK</span> <span class="o">=</span> <span class="n">bclk_divider</span><span class="p">[</span><span class="mh">1</span><span class="p">];</span>
+<span class="k">assign</span> <span class="no">AUD_DACDAT</span> <span class="o">=</span> <span class="n">shift_out</span><span class="p">[</span><span class="mh">15</span><span class="p">];</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">lrck_divider</span> <span class="o">&lt;=</span> <span class="mh">8&#39;hff</span><span class="p">;</span>
+        <span class="n">bclk_divider</span> <span class="o">&lt;=</span> <span class="mh">2</span><span class="mb">&#39;b11</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+        <span class="n">lrck_divider</span> <span class="o">&lt;=</span> <span class="n">lrck_divider</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+        <span class="n">bclk_divider</span> <span class="o">&lt;=</span> <span class="n">bclk_divider</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">assign</span> <span class="n">sample_end</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">lrck_divider</span> <span class="o">==</span> <span class="mh">8&#39;h40</span><span class="p">);</span>
+<span class="k">assign</span> <span class="n">sample_end</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">lrck_divider</span> <span class="o">==</span> <span class="mh">8&#39;hc0</span><span class="p">);</span>
+<span class="k">assign</span> <span class="n">audio_input</span> <span class="o">=</span> <span class="n">shift_in</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">sample_req</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">lrck_divider</span> <span class="o">==</span> <span class="mh">8&#39;hfe</span><span class="p">);</span>
+<span class="k">assign</span> <span class="n">sample_req</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">lrck_divider</span> <span class="o">==</span> <span class="mh">8&#39;h7e</span><span class="p">);</span>
+
+<span class="kt">wire</span> <span class="n">clr_lrck</span> <span class="o">=</span> <span class="p">(</span><span class="n">lrck_divider</span> <span class="o">==</span> <span class="mh">8&#39;h7f</span><span class="p">);</span>
+<span class="kt">wire</span> <span class="n">set_lrck</span> <span class="o">=</span> <span class="p">(</span><span class="n">lrck_divider</span> <span class="o">==</span> <span class="mh">8&#39;hff</span><span class="p">);</span>
+<span class="c1">// high right after bclk is set</span>
+<span class="kt">wire</span> <span class="n">set_bclk</span> <span class="o">=</span> <span class="p">(</span><span class="n">bclk_divider</span> <span class="o">==</span> <span class="mh">2</span><span class="mb">&#39;b10</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">lrck_divider</span><span class="p">[</span><span class="mh">6</span><span class="p">]);</span>
+<span class="c1">// high right before bclk is cleared</span>
+<span class="kt">wire</span> <span class="n">clr_bclk</span> <span class="o">=</span> <span class="p">(</span><span class="n">bclk_divider</span> <span class="o">==</span> <span class="mh">2</span><span class="mb">&#39;b11</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">lrck_divider</span><span class="p">[</span><span class="mh">6</span><span class="p">]);</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">shift_out</span> <span class="o">&lt;=</span> <span class="mh">16&#39;h0</span><span class="p">;</span>
+        <span class="n">shift_in</span> <span class="o">&lt;=</span> <span class="mh">16&#39;h0</span><span class="p">;</span>
+        <span class="n">shift_in</span> <span class="o">&lt;=</span> <span class="mh">16&#39;h0</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">set_lrck</span> <span class="o">||</span> <span class="n">clr_lrck</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="c1">// check if current channel is selected</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">channel_sel</span><span class="p">[</span><span class="n">set_lrck</span><span class="p">])</span> <span class="k">begin</span>
+            <span class="n">shift_out</span> <span class="o">&lt;=</span> <span class="n">audio_output</span><span class="p">;</span>
+            <span class="n">shift_temp</span> <span class="o">&lt;=</span> <span class="n">audio_output</span><span class="p">;</span>
+            <span class="n">shift_in</span> <span class="o">&lt;=</span> <span class="mh">16&#39;h0</span><span class="p">;</span>
+        <span class="c1">// repeat the sample from the other channel if not</span>
+        <span class="k">end</span> <span class="k">else</span> <span class="n">shift_out</span> <span class="o">&lt;=</span> <span class="n">shift_temp</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">set_bclk</span> <span class="o">==</span> <span class="mh">1</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="c1">// only read in if channel is selected</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">channel_sel</span><span class="p">[</span><span class="n">lrck</span><span class="p">])</span>
+            <span class="n">shift_in</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">shift_in</span><span class="p">[</span><span class="mh">14</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span> <span class="no">AUD_ADCDAT</span><span class="p">};</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">clr_bclk</span> <span class="o">==</span> <span class="mh">1</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">shift_out</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">shift_out</span><span class="p">[</span><span class="mh">14</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">};</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>You will notice that the <code>AUD_XCK</code> signal is missing here. That is because
+we assign it at the top-level module directly from the PLL output.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">sockit_top</span> <span class="p">(</span>
+    <span class="k">input</span>  <span class="no">OSC_50_B8A</span><span class="p">,</span>
+
+    <span class="k">inout</span>  <span class="no">AUD_ADCLRCK</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="no">AUD_ADCDAT</span><span class="p">,</span>
+    <span class="k">inout</span>  <span class="no">AUD_DACLRCK</span><span class="p">,</span>
+    <span class="k">output</span> <span class="no">AUD_DACDAT</span><span class="p">,</span>
+    <span class="k">output</span> <span class="no">AUD_XCK</span><span class="p">,</span>
+    <span class="k">inout</span>  <span class="no">AUD_BCLK</span><span class="p">,</span>
+    <span class="k">output</span> <span class="no">AUD_I2C_SCLK</span><span class="p">,</span>
+    <span class="k">inout</span>  <span class="no">AUD_I2C_SDAT</span><span class="p">,</span>
+    <span class="k">output</span> <span class="no">AUD_MUTE</span><span class="p">,</span>
+
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="no">KEY</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="no">SW</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="no">LED</span>
+<span class="p">);</span>
+
+<span class="kt">wire</span> <span class="n">reset</span> <span class="o">=</span> <span class="o">!</span><span class="no">KEY</span><span class="p">[</span><span class="mh">0</span><span class="p">];</span>
+<span class="kt">wire</span> <span class="n">main_clk</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="n">audio_clk</span><span class="p">;</span>
+
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">sample_end</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">sample_req</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">audio_output</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">audio_input</span><span class="p">;</span>
+
+<span class="n">clock_pll</span> <span class="n">pll</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">refclk</span> <span class="p">(</span><span class="no">OSC_50_B8A</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">rst</span> <span class="p">(</span><span class="n">reset</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">outclk_0</span> <span class="p">(</span><span class="n">audio_clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">outclk_1</span> <span class="p">(</span><span class="n">main_clk</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="n">i2c_av_config</span> <span class="n">av_config</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">clk</span> <span class="p">(</span><span class="n">main_clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">reset</span> <span class="p">(</span><span class="n">reset</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">i2c_sclk</span> <span class="p">(</span><span class="no">AUD_I2C_SCLK</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">i2c_sdat</span> <span class="p">(</span><span class="no">AUD_I2C_SDAT</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">status</span> <span class="p">(</span><span class="no">LED</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">assign</span> <span class="no">AUD_XCK</span> <span class="o">=</span> <span class="n">audio_clk</span><span class="p">;</span>
+<span class="k">assign</span> <span class="no">AUD_MUTE</span> <span class="o">=</span> <span class="p">(</span><span class="no">SW</span> <span class="o">!=</span> <span class="mh">4</span><span class="mb">&#39;b0</span><span class="p">);</span>
+
+<span class="n">audio_codec</span> <span class="n">ac</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">clk</span> <span class="p">(</span><span class="n">audio_clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">reset</span> <span class="p">(</span><span class="n">reset</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">sample_end</span> <span class="p">(</span><span class="n">sample_end</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">sample_req</span> <span class="p">(</span><span class="n">sample_req</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">audio_output</span> <span class="p">(</span><span class="n">audio_output</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">audio_input</span> <span class="p">(</span><span class="n">audio_input</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">channel_sel</span> <span class="p">(</span><span class="mh">2</span><span class="mb">&#39;b10</span><span class="p">),</span>
+
+    <span class="p">.</span><span class="no">AUD_ADCLRCK</span> <span class="p">(</span><span class="no">AUD_ADCLRCK</span><span class="p">),</span>
+    <span class="p">.</span><span class="no">AUD_ADCDAT</span> <span class="p">(</span><span class="no">AUD_ADCDAT</span><span class="p">),</span>
+    <span class="p">.</span><span class="no">AUD_DACLRCK</span> <span class="p">(</span><span class="no">AUD_DACLRCK</span><span class="p">),</span>
+    <span class="p">.</span><span class="no">AUD_DACDAT</span> <span class="p">(</span><span class="no">AUD_DACDAT</span><span class="p">),</span>
+    <span class="p">.</span><span class="no">AUD_BCLK</span> <span class="p">(</span><span class="no">AUD_BCLK</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="n">audio_effects</span> <span class="n">ae</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">clk</span> <span class="p">(</span><span class="n">audio_clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">sample_end</span> <span class="p">(</span><span class="n">sample_end</span><span class="p">[</span><span class="mh">1</span><span class="p">]),</span>
+    <span class="p">.</span><span class="n">sample_req</span> <span class="p">(</span><span class="n">sample_req</span><span class="p">[</span><span class="mh">1</span><span class="p">]),</span>
+    <span class="p">.</span><span class="n">audio_output</span> <span class="p">(</span><span class="n">audio_output</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">audio_input</span>  <span class="p">(</span><span class="n">audio_input</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">control</span> <span class="p">(</span><span class="no">SW</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>Also at the top-level is the assignment for the <code>AUD_MUTE</code> signal. This signal
+is active low, which means the codec is muted when <code>AUD_MUTE</code> is high.
+Therefore, we set it so that it is only low when all the switches are off.</p>
+
+<p>We’ve seen all of the modules included in this top-level except <code>audio_effects</code>,
+which will hold all of our control logic. For now, <code>audio_effects</code> will just
+contain some testing logic.</p>
+
+<h2 id="testing-it-out">Testing it Out</h2>
+
+<p>Now that we have an audio codec controller, we should test that it can actually
+produce sound. To test the output, we can emit a fixed sine wave. The samples
+for this sine wave can be stored in a ROM. To test that the ADC is working,
+we can do straight feedback, sending samples coming in through the ADC back
+out through the DAC. We control what mode the control is in using the switches.</p>
+
+<p>The sine wave we produce here is at 440 Hz. That is why there are 100 samples
+in our ROM, since one period of the sine wave contains 44100 / 440 = 100.2
+samples.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">audio_effects</span> <span class="p">(</span>
+    <span class="k">input</span>  <span class="n">clk</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="n">sample_end</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="n">sample_req</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">audio_output</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">audio_input</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">control</span>
+<span class="p">);</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">romdata</span> <span class="p">[</span><span class="mh">0</span><span class="o">:</span><span class="mh">99</span><span class="p">];</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">index</span> <span class="o">=</span> <span class="mh">7</span><span class="mi">&#39;d0</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">last_sample</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dat</span><span class="p">;</span>
+
+<span class="k">assign</span> <span class="n">audio_output</span> <span class="o">=</span> <span class="n">dat</span><span class="p">;</span>
+
+<span class="k">parameter</span> <span class="no">SINE</span>     <span class="o">=</span> <span class="mh">0</span><span class="p">;</span>
+<span class="k">parameter</span> <span class="no">FEEDBACK</span> <span class="o">=</span> <span class="mh">1</span><span class="p">;</span>
+
+<span class="k">initial</span> <span class="k">begin</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h0000</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h0805</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h1002</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h17ee</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">4</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h1fc3</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">5</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h2777</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">6</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h2f04</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">7</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h3662</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">8</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h3d89</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">9</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h4472</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">10</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h4b16</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">11</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h516f</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">12</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h5776</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">13</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h5d25</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">14</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h6276</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">15</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h6764</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">16</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h6bea</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">17</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7004</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">18</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h73ad</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">19</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h76e1</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">20</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h799e</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">21</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7be1</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">22</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7da7</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">23</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7eef</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">24</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7fb7</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">25</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7fff</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">26</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7fc6</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">27</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7f0c</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">28</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7dd3</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">29</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7c1b</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">30</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h79e6</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">31</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7737</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">32</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7410</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">33</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7074</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">34</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h6c67</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">35</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h67ed</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">36</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h630a</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">37</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h5dc4</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">38</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h5820</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">39</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h5222</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">40</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h4bd3</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">41</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h4537</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">42</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h3e55</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">43</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h3735</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">44</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h2fdd</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">45</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h2855</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">46</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h20a5</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">47</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h18d3</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">48</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h10e9</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">49</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h08ee</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">50</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h00e9</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">51</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hf8e4</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">52</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hf0e6</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">53</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;he8f7</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">54</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;he120</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">55</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hd967</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">56</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hd1d5</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">57</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hca72</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">58</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hc344</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">59</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hbc54</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">60</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hb5a7</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">61</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;haf46</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">62</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;ha935</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">63</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;ha37c</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">64</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h9e20</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">65</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h9926</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">66</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h9494</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">67</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h906e</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">68</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8cb8</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">69</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8976</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">70</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h86ab</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">71</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h845a</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">72</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8286</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">73</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8130</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">74</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8059</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">75</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8003</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">76</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h802d</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">77</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h80d8</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">78</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8203</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">79</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h83ad</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">80</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h85d3</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">81</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8875</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">82</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8b8f</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">83</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8f1d</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">84</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h931e</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">85</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h978c</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">86</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h9c63</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">87</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;ha19e</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">88</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;ha738</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">89</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;had2b</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">90</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hb372</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">91</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hba05</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">92</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hc0df</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">93</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hc7f9</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">94</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hcf4b</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">95</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hd6ce</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">96</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hde7a</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">97</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;he648</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">98</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hee30</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">99</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hf629</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sample_end</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">last_sample</span> <span class="o">&lt;=</span> <span class="n">audio_input</span><span class="p">;</span>
+    <span class="k">end</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">sample_req</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">control</span><span class="p">[</span><span class="no">FEEDBACK</span><span class="p">])</span>
+            <span class="n">dat</span> <span class="o">&lt;=</span> <span class="n">last_sample</span><span class="p">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">control</span><span class="p">[</span><span class="no">SINE</span><span class="p">])</span> <span class="k">begin</span>
+            <span class="n">dat</span> <span class="o">&lt;=</span> <span class="n">romdata</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">==</span> <span class="mh">7</span><span class="mi">&#39;d99</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">&lt;=</span> <span class="mh">7</span><span class="mi">&#39;d00</span><span class="p">;</span>
+            <span class="k">else</span>
+                <span class="n">index</span> <span class="o">&lt;=</span> <span class="n">index</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+        <span class="k">end</span> <span class="k">else</span>
+            <span class="n">dat</span> <span class="o">&lt;=</span> <span class="mh">16</span><span class="mi">&#39;d0</span><span class="p">;</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>To hear the results of the test hardware on the FPGA, plug your speakers
+into the green audio port on the FPGA and the microphone into the pink audio
+port. Flip switch 0 to hear the sine wave and switch 1 to hear the microphone
+feedback. If you are using headphones, I strongly suggest that you do not
+actually put then on, especially in the sine wave mode, as the volume at 0 dB
+is quite loud.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>So now we have audio working on the FPGA. In my next post, I will discuss the
+implementation of FIR filters on the FPGA, which will allow us to do some
+interesting audio processing.</p>
+
+<p><a href="../08/sockit-7.html">&lt;- Part 7</a>
+<a href="../26/sockit-9.html">Part 9 -&gt;</a></p>
+
+</div> <!--main-->
+
+</div> <!--container-->
+</body>
+</html>

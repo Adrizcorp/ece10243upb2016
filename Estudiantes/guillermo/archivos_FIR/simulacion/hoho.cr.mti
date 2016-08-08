@@ -5,4 +5,11 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	waveform_gen
 
+} {} {}} C:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion/max6675_decoder.v {1 {vlog -work work -stats=none C:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion/max6675_decoder.v
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module max6675_decoder
+
+Top level modules:
+	max6675_decoder
+
 } {} {}}

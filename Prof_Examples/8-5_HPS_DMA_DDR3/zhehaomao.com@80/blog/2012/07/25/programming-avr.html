@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+
+  Programming an AVR Microcontroller
+
+</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../css/main.css"/default.htm>
+<link rel="stylesheet" type="text/css" href="../../../../css/syntax.css"/default.htm>
+<link href="../../../../atom.xml" type="application/atom+xml" rel="alternate"/>
+
+</head>
+<body>
+<div id="container">
+
+<div id="header">
+<a id="toplink" href="../../../../"/default.htm>Howard Mao</a>
+</div> <!--header-->
+
+<div id="main">
+  
+    <h1>Programming an AVR Microcontroller</h1>
+  
+  <p>This post details the process of compiling C code into an AVR hex file and
+programming it onto an ATMega328 microcontroller using an Arduino Uno board
+as the programmer. The information on how to do this was culled from several 
+different sources online. </p>
+
+<h1 id="step-1-installing-dependencies">Step 1: Installing dependencies</h1>
+
+<p>Make sure you have the following pieces of software installed.</p>
+
+<ul>
+  <li>arduino</li>
+  <li>make</li>
+  <li>avrdude</li>
+  <li>avr-gcc</li>
+  <li>avr-binutils</li>
+</ul>
+
+<h1 id="step-2-setting-up-arduino">Step 2: Setting up Arduino</h1>
+
+<p>Plug the Arduino into your computer and compile and upload the ArduinoISP
+sketch.</p>
+
+<p>This should be under File -&gt; Examples -&gt; ArduinoISP.</p>
+
+<h1 id="step-3-compiling-and-linking-the-code">Step 3: Compiling and Linking the Code</h1>
+
+<p>Check out the source code from <a href="https://bitbucket.org/zhemao/ledblink">https://bitbucket.org/zhemao/ledblink</a></p>
+
+<pre><code>git clone https://bitbucket.org/zhemao/ledblink.git
+</code></pre>
+
+<p>Compile the ledblink.c file into an object file using avr-gcc.</p>
+
+<pre><code>avr-gcc -c -Os -Wall -DF_CPU=8000000 -mmcu=atmega328 ledblink.c
+</code></pre>
+
+<p>Note that <code>-DF_CPU</code> flag is just passing in a preprocessor variable. You won’t have
+to do this if you are writing your own code. The <code>-Os</code> optimization flag tells
+the compiler to optimize for a smaller executable. This is helpful when 
+writing to a small microcontroller ROM.</p>
+
+<p>Link the object file into an ELF executable</p>
+
+<pre><code>avr-gcc -mmcu=atmega328 ledblink.o -o ledblink.elf
+</code></pre>
+
+<p>Convert the ELF executable into an AVR hex file</p>
+
+<pre><code>avr-objcopy -O ihex -R .eeprom ledblink.elf ledblink.hex
+</code></pre>
+
+<p>You can do all of the above using the makefile by just running make with
+no arguments.</p>
+
+<h1 id="step-3-setting-up-the-circuit">Step 3: Setting up the circuit.</h1>
+
+<p>Hook up the Uno to the ATMega328 according the <a href="http://arduino.cc/en/Tutorial/ArduinoISP">instructions</a>
+on the Arduino website. Hook up an LED in series with a resistor to the PD6 pin
+on the ATMega328. This would be pin 12 (3rd from the bottom on the left side).
+You can find the ATMega328 datasheet at http://www.atmel.com/Images/8271s.pdf.</p>
+
+<h1 id="step-4-programming-the-microcontroller">Step 4: Programming the Microcontroller</h1>
+
+<p>Make sure ArduinoISP is running properly, and then run the following command to
+upload the hex file.</p>
+
+<pre><code>avrdude -p m328p -P /dev/ttyACM0 -c avrisp -b 19200 -U flash:w:ledblink.hex
+</code></pre>
+
+<p>The -p flag denotes the chip number of the microcontroller (m328p corresponds to
+ATMega328p). The -P flag is the device file for the serial port. It may be 
+something different on your system. It is generally something linke 
+/dev/ttyACMx or /dev/ttyUSBx, where x is a number. The -c flag is the name of 
+the programmer, in this case ArduinoISP. The -b flag specifies the USB baud 
+rate, which is 19200 Bd for the Arduino. And the -U flag just tells avrdude 
+what file to program onto the microcontroller.</p>
+
+<p>If you are successful, you should see something like <a href="http://www.youtube.com/watch?v=-IjRGw39Iek&feature=plcp">this</a>.</p>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/-IjRGw39Iek" frameborder="0">Youtube Embedding Disabled</iframe>
+
+<h1 id="attributions">Attributions</h1>
+
+<p>ArduinoISP instructions from <a href="http://arduino.cc/en/Tutorial/ArduinoISP">Arduino website</a>. </p>
+
+<p>Code and compilation instructions by <a href="http://www.ladyada.net/learn/proj1/blinky.html">Limor Fried</a> (AKA Lady Ada).</p>
+
+<p>Programmer instructions from <a href="http://www.openhardwarehub.com/projects/43-Scavenger-Hunt-Beacon-Decoder-and-AVR-Programmer">Kurt T</a>.</p>
+
+<h1 id="update">Update</h1>
+
+<p>I’ve recently discovered that you can use avrdude to upload the hex file to the
+microcontroller on the arduino itself through the arduino bootloader. For
+instance, on an arduino uno, you could do the following</p>
+
+<pre><code>avrdude -p m328p -P /dev/ttyACM0 -c arduino -b 115200 -U flash:w:ledblink.hex
+</code></pre>
+
+<p>The git repository has been update with these as the defaults.</p>
+
+</div> <!--main-->
+
+</div> <!--container-->
+</body>
+</html>

@@ -5,9 +5,9 @@
 #include <time.h>
 #include <sys/mman.h>
 #include "hwlib.h"
-#include "socal/socal.h"
-#include "socal/hps.h"
-#include "socal/alt_gpio.h"
+#include "socal.h"
+#include "hps.h"
+#include "alt_gpio.h"
 #include "hps_0.h"
 #include "led.h"
 #include <stdbool.h>

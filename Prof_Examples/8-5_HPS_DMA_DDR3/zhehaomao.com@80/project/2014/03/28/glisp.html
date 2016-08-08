@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+
+  Golang LISP Interpreter
+
+</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../css/main.css"/default.htm>
+<link rel="stylesheet" type="text/css" href="../../../../css/syntax.css"/default.htm>
+<link href="../../../../atom.xml" type="application/atom+xml" rel="alternate"/>
+
+</head>
+<body>
+<div id="container">
+
+<div id="header">
+<a id="toplink" href="../../../../"/default.htm>Howard Mao</a>
+</div> <!--header-->
+
+<div id="main">
+  
+    <h1>Golang LISP Interpreter</h1>
+  
+  <p>GLISP is a LISP interpreter I implemented in the Go programming language.
+It was designed as an embedded extension language for Go. It features a
+hand-rolled lexer and parser and executes on a simple stack-based virtual
+machine. The language features Clojure-like syntax, proper tail-call
+optimization, and an easy-to-use Go API.</p>
+
+<p>The code can be found on <a href="https://github.com/zhemao/glisp">Github</a>.</p>
+
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="c1">; factorial algorithm implemented in GLISP</span>
+<span class="c1">; using tail recursion</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">factorial-loop</span> <span class="p">[</span><span class="nv">n</span> <span class="nv">acc</span><span class="p">]</span>
+    <span class="p">(</span><span class="nb">cond </span><span class="p">(</span><span class="nb">= </span><span class="nv">n</span> <span class="mi">0</span><span class="p">)</span> <span class="nv">acc</span>
+        <span class="p">(</span><span class="nf">factorial-loop</span> <span class="p">(</span><span class="nb">- </span><span class="nv">n</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="nb">* </span><span class="nv">n</span> <span class="nv">acc</span><span class="p">))))</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">factorial</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+    <span class="p">(</span><span class="nf">factorial-loop</span> <span class="nv">n</span> <span class="mi">1</span><span class="p">))</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;github.com/zhemao/glisp/interpreter&quot;</span>
+    <span class="s">&quot;errors&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">// implementing factorial in Go to be used in GLISP</span>
+
+<span class="kd">func</span> <span class="nx">FactorialFunction</span><span class="p">(</span><span class="nx">env</span> <span class="o">*</span><span class="nx">glisp</span><span class="p">.</span><span class="nx">Glisp</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">,</span>
+        <span class="nx">args</span> <span class="p">[]</span><span class="nx">glisp</span><span class="p">.</span><span class="nx">Sexp</span><span class="p">)</span> <span class="p">(</span><span class="nx">glisp</span><span class="p">.</span><span class="nx">Sexp</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">glisp</span><span class="p">.</span><span class="nx">SexpNull</span><span class="p">,</span> <span class="nx">glisp</span><span class="p">.</span><span class="nx">WrongNargs</span>
+    <span class="p">}</span>
+
+    <span class="nx">res</span> <span class="o">:=</span> <span class="mi">1</span>
+    <span class="kd">var</span> <span class="nx">n</span> <span class="kt">int</span>
+    <span class="k">switch</span> <span class="nx">t</span> <span class="o">:=</span> <span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">].(</span><span class="kd">type</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nx">glisp</span><span class="p">.</span><span class="nx">SexpInt</span><span class="p">:</span>
+        <span class="nx">n</span> <span class="p">=</span> <span class="nb">int</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span>
+    <span class="k">default</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nx">glisp</span><span class="p">.</span><span class="nx">SexpNull</span><span class="p">,</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="s">&quot;factorial argument must be integer&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="nx">n</span> <span class="p">&lt;</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">glisp</span><span class="p">.</span><span class="nx">SexpNull</span><span class="p">,</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="s">&quot;factorial argument must be positive&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nx">res</span> <span class="o">*=</span> <span class="nx">i</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">glisp</span><span class="p">.</span><span class="nx">SexpInt</span><span class="p">(</span><span class="nx">res</span><span class="p">),</span> <span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="c1">// creating glisp environment and calling factorial function</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">env</span> <span class="o">:=</span> <span class="nx">glisp</span><span class="p">.</span><span class="nx">NewGlisp</span><span class="p">()</span>
+    <span class="nx">env</span><span class="p">.</span><span class="nx">AddFunction</span><span class="p">(</span><span class="s">&quot;factorial&quot;</span><span class="p">,</span> <span class="nx">FactorialFunction</span><span class="p">)</span>
+    <span class="nx">res</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">env</span><span class="p">.</span><span class="nx">EvalString</span><span class="p">(</span><span class="s">&quot;(factorial 5)&quot;</span><span class="p">)</span>
+
+    <span class="k">switch</span> <span class="nx">t</span> <span class="o">:=</span> <span class="nx">res</span><span class="p">.(</span><span class="kd">type</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nx">glisp</span><span class="p">.</span><span class="nx">SexpInt</span><span class="p">:</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;result is %d\n&quot;</span><span class="p">,</span> <span class="nx">t</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+</div> <!--main-->
+
+</div> <!--container-->
+</body>
+</html>

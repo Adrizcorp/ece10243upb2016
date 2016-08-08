@@ -1,0 +1,354 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+
+  The Vector Programming Language
+
+</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../css/main.css"/default.htm>
+<link rel="stylesheet" type="text/css" href="../../../../css/syntax.css"/default.htm>
+<link href="../../../../atom.xml" type="application/atom+xml" rel="alternate"/>
+
+</head>
+<body>
+<div id="container">
+
+<div id="header">
+<a id="toplink" href="../../../../"/default.htm>Howard Mao</a>
+</div> <!--header-->
+
+<div id="main">
+  
+    <h1>The Vector Programming Language</h1>
+  
+  <p>Vector was our team’s final project for COMS 4115: Programming Languages and
+Translators. Vector is a high-level language for general-purpose GPU computing.
+Over the course of the semester, our team developed a compiler that compiled
+Vector into CUDA, which could then be compiled to run on Nvidia GPUs.
+My teammates were Zachary Newman, Sidharth Shanker, Jonathan Yu, and Harry Lee.</p>
+
+<h2 id="rationale">Rationale</h2>
+
+<p>General-purpose computing on the GPU (GPGPU) has become more popular lately
+with the introduction of CUDA and OpenCL. They have been shown to perform
+quite well at compute-heavy tasks, such as running scientific simulations.
+However, writing GPU programs in CUDA or OpenCL require a lot of boilerplate,
+such as choosing the number of blocks and threads to launch and copying memory
+to and from the GPU. The reason for this low level of abstraction is that it
+allows programs to be tuned and optimized for specific GPU hardware.
+This fine control is necessary for high-performance computing, where it’s
+important to squeeze out every last drop of performance, but it can be pretty
+daunting for programmers or researchers investigating GPGPU for the first time.
+At any rate, even an unoptimized GPU program will handily beat out equivalent
+CPU implementations at certain tasks.
+For this reason, we developed Vector to offer a higher level of abstraction
+than CUDA or OpenCL so that less experienced programmers could quickly write a
+parallel program and witness the power of the GPU.</p>
+
+<h2 id="features">Features</h2>
+
+<p>Vector provides the following features over CUDA/OpenCL</p>
+
+<ul>
+  <li>Automatic memory management
+    <ul>
+      <li>Arrays in vector are reference-counted</li>
+      <li>Arrays are allocated both on CPU and GPU</li>
+      <li>Memory is automatically copied between CPU and GPU when needed</li>
+    </ul>
+  </li>
+  <li>The <code>pfor</code> statement
+    <ul>
+      <li>Run code on GPU without having to define a separate kernel function</li>
+      <li>Automatically detects what variables need to be passed in</li>
+      <li>Number of blocks and threads/block chosen automatically</li>
+    </ul>
+  </li>
+  <li>Higher-order functions
+    <ul>
+      <li>Specifically map and reduce</li>
+      <li>Pass in a <code>__device__</code> function and an array.
+Kernel will be generated for you.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="syntax">Syntax</h2>
+
+<p>Vector uses a C-like syntax. So the following is a valid Vector program.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">vec_main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello, World</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Note that unlike in C, we did not need to include “stdio.h”, and the main
+function is named <code>vec_main</code> instead of main. In this post, I will focus on
+the language features that make Vector different from C.</p>
+
+<h3 id="type-inference">Type inference</h3>
+
+<p>Vector has rudimentary support for type inference. For instance,</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="nl">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">15</span><span class="p">;</span></code></pre></div>
+
+<p>This declares <code>i</code> as an int and assigns 15 to it, without having to explicitly
+declare <code>i</code> as an integer. If you’ve ever used <a href="http://golang.org/">Go</a> before,
+this syntax should be familiar.</p>
+
+<p>One limitation is that Vector does not do automatic type promotion, so the
+following will not work.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="nl">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="nl">j</span> <span class="p">:</span><span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">;</span></code></pre></div>
+
+<p>Instead, you’d have to do the following</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="nl">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="nl">j</span> <span class="p">:</span><span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="kt">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">);</span></code></pre></div>
+
+<h3 id="for-loops">For loops</h3>
+
+<p>Instead of needing explicit init, check, and increment statements like for
+loops in C, for loops in Vector uses ranges. So the following Vector…</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="mi">0</span><span class="o">:</span><span class="mi">10</span><span class="o">:</span><span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// do something</span>
+<span class="p">}</span></code></pre></div>
+
+<p>…is equivalent to the following C (well actually, C++).</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// do something</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Everything except the middle argument in a range and the colon preceding is
+optional, so the following ranges are equivalent.</p>
+
+<pre><code>0:5:1
+0:5
+:5:1
+:5
+</code></pre>
+
+<h3 id="arrays">Arrays</h3>
+
+<p>Vector arrays are like C arrays. However, Vector arrays are multi-dimensional.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="c1">// declare a 2D array with 3 rows and 2 columns</span>
+<span class="kt">int</span> <span class="n">arr</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+<span class="c1">// assign into row 0, column 1</span>
+<span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span></code></pre></div>
+
+<p>Vector arrays are reference counted, so you can safely pass them into and out
+of functions without having to worry about freeing them.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">float</span><span class="p">[]</span> <span class="n">scale</span><span class="p">(</span><span class="kt">float</span> <span class="n">sc</span><span class="p">,</span> <span class="kt">float</span> <span class="n">arr</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="kt">float</span> <span class="n">res</span><span class="p">[</span><span class="n">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)];</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="mi">0</span><span class="o">:</span><span class="n">len</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
+        <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sc</span> <span class="o">*</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>The built-in function <code>len(arr)</code> gives the size of the array <code>arr</code>. If it is a
+multi-dimensional array, you can give <code>len</code> an integer as the second argument
+to find the length along that dimension.</p>
+
+<p>You can also use <code>for</code> loops to iterate over the elements of an array in a
+for-each type syntax.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="nl">arr</span> <span class="p">:</span><span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">};</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">x</span> <span class="n">in</span> <span class="n">arr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// do something</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Note that array declarations can also be type-inferenced.</p>
+
+<h3 id="parallel-for-pfor">Parallel for (pfor)</h3>
+
+<p>Our first GPU construct. the syntax of <code>pfor</code> is identical to the range
+iteration <code>for</code>.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">pfor</span> <span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="mi">0</span><span class="o">:</span><span class="mi">1000</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// do something</span>
+<span class="p">}</span></code></pre></div>
+
+<p>The difference is that <code>pfor</code> actually runs as a GPU kernel, and each iteration
+of the “loop” is run in parallel in a different GPU thread. Arrays can be
+read and written to on the GPU. So, for instance, if you wanted to take the
+element-wise production of two arrays, you could do the following.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">float</span><span class="p">[]</span> <span class="n">vecmult</span><span class="p">(</span><span class="kt">float</span> <span class="n">a</span><span class="p">[],</span> <span class="kt">float</span> <span class="n">b</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="kt">float</span> <span class="n">c</span><span class="p">[</span><span class="n">len</span><span class="p">(</span><span class="n">a</span><span class="p">)];</span>
+    <span class="n">pfor</span> <span class="p">(</span><span class="n">i</span> <span class="nl">in</span> <span class="p">:</span><span class="n">len</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+        <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Each scalar multiplication happens in a separate GPU thread.</p>
+
+<h3 id="map-and-reduce">Map and Reduce</h3>
+
+<p>Vector provides two higher-order functions which run on the GPU. You denote
+a higher-order function by pre-pending an <code>@</code> symbol.</p>
+
+<p>The <code>map</code> function takes a function of one argument <code>f</code> and an array <code>a</code> and
+produces an array <code>b</code> in which <code>b[i] = f(a[i])</code>. So, for instance, to square
+each element of an array, we can do the following.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">__device__</span> <span class="kt">int</span> <span class="nf">square</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="p">[]</span> <span class="n">square_array</span><span class="p">(</span><span class="kt">int</span> <span class="n">arr</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="err">@</span><span class="n">map</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="n">arr</span><span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+<p>The function passed into <code>@map</code> must be declared with the <code>__device__</code> annotation
+so that it is compiled for the GPU.</p>
+
+<p>The <code>reduce</code> function takes a function of two arguments and an array and applies
+the function to pairs of elements in the array, then pairs of the results of
+the first pass, and so on until there is a single result. This makes it useful
+for, say, taking the sum of an array.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">__device__</span> <span class="kt">int</span> <span class="nf">add</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">sum</span><span class="p">(</span><span class="kt">int</span> <span class="n">arr</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="err">@</span><span class="n">reduce</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="n">arr</span><span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+<p>The function passed to reduce must be commutative and associative, otherwise
+the result of the computation is not likely to be what you would expect.</p>
+
+<h2 id="example-program">Example Program</h2>
+
+<p>Here’s a demonstration of what Vector can do. The following is a Mandelbrot
+set generator that runs on the GPU.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">__device__</span> <span class="n">uint8</span> <span class="nf">mandelbrot</span><span class="p">(</span><span class="kt">int</span> <span class="n">xi</span><span class="p">,</span> <span class="kt">int</span> <span class="n">yi</span><span class="p">,</span> <span class="kt">int</span> <span class="n">xn</span><span class="p">,</span> <span class="kt">int</span> <span class="n">yn</span><span class="p">,</span>
+    <span class="kt">float</span> <span class="n">left</span><span class="p">,</span> <span class="kt">float</span> <span class="n">right</span><span class="p">,</span> <span class="kt">float</span> <span class="n">top</span><span class="p">,</span> <span class="kt">float</span> <span class="n">bottom</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nl">iter</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="nl">x0</span> <span class="p">:</span><span class="o">=</span> <span class="n">left</span> <span class="o">+</span> <span class="p">(</span><span class="n">right</span> <span class="o">-</span> <span class="n">left</span><span class="p">)</span> <span class="o">/</span> <span class="kt">float</span><span class="p">(</span><span class="n">xn</span><span class="p">)</span> <span class="o">*</span> <span class="kt">float</span><span class="p">(</span><span class="n">xi</span><span class="p">);</span>
+    <span class="nl">y0</span> <span class="p">:</span><span class="o">=</span> <span class="n">bottom</span> <span class="o">+</span> <span class="p">(</span><span class="n">top</span> <span class="o">-</span> <span class="n">bottom</span><span class="p">)</span> <span class="o">/</span> <span class="kt">float</span><span class="p">(</span><span class="n">yn</span><span class="p">)</span> <span class="o">*</span> <span class="kt">float</span><span class="p">(</span><span class="n">yi</span><span class="p">);</span>
+    <span class="c1">// construct complex numbers</span>
+    <span class="nl">z0</span> <span class="p">:</span><span class="o">=</span> <span class="err">#</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">);</span>
+    <span class="nl">z</span> <span class="p">:</span><span class="o">=</span> <span class="err">#</span><span class="p">(</span><span class="kt">float</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="kt">float</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">iter</span> <span class="o">&lt;</span> <span class="mi">255</span> <span class="o">&amp;&amp;</span> <span class="n">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// look, we have native complex arithmetic</span>
+        <span class="c1">// no more cuAddf, cuMulf</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span> <span class="o">+</span> <span class="n">z0</span><span class="p">;</span>
+        <span class="n">iter</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">uint8</span><span class="p">(</span><span class="n">iter</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">print_pgm</span><span class="p">(</span><span class="n">uint8</span> <span class="n">shades</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="kt">int</span> <span class="n">height</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="cm">/* see https://en.wikipedia.org/wiki/Portable_graymap#PGM_example */</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;P2</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;255</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">y</span> <span class="n">in</span> <span class="mi">0</span><span class="o">:</span><span class="n">height</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">x</span> <span class="n">in</span> <span class="mi">0</span><span class="o">:</span><span class="n">width</span><span class="p">)</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%u &quot;</span><span class="p">,</span> <span class="n">shades</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">vec_main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nl">img_height</span> <span class="p">:</span><span class="o">=</span> <span class="mi">512</span><span class="p">;</span>
+    <span class="nl">img_width</span> <span class="p">:</span><span class="o">=</span> <span class="mi">768</span><span class="p">;</span>
+
+    <span class="n">uint8</span> <span class="n">shades</span><span class="p">[</span><span class="n">img_height</span><span class="p">,</span> <span class="n">img_width</span><span class="p">];</span>
+
+    <span class="nl">left</span> <span class="p">:</span><span class="o">=</span> <span class="kt">float</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">);</span>
+    <span class="nl">right</span> <span class="p">:</span><span class="o">=</span> <span class="kt">float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">);</span>
+    <span class="nl">top</span> <span class="p">:</span><span class="o">=</span> <span class="kt">float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">);</span>
+    <span class="nl">bottom</span> <span class="p">:</span><span class="o">=</span> <span class="kt">float</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">);</span>
+
+
+    <span class="n">pfor</span> <span class="p">(</span><span class="n">yi</span> <span class="n">in</span> <span class="mi">0</span><span class="o">:</span><span class="n">img_height</span><span class="p">,</span> <span class="n">xi</span> <span class="n">in</span> <span class="mi">0</span><span class="o">:</span><span class="n">img_width</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">shades</span><span class="p">[</span><span class="n">yi</span><span class="p">,</span> <span class="n">xi</span><span class="p">]</span> <span class="o">=</span> <span class="n">mandelbrot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">,</span>
+                            <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">bottom</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">print_pgm</span><span class="p">(</span><span class="n">shades</span><span class="p">,</span> <span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>It outputs the image as a portable graymap file on standard output.
+Here is what the result looks like mapping 0 to black and 255 to blue.</p>
+
+<p><img src="http://i.imgur.com/26vNg21.png" alt="Mandelbrot Set" /></p>
+
+<p>I wrote a similar program in C to run on the CPU.</p>
+
+<p>To see how the GPU performed compared to the CPU, I ran both versions with
+successively larger images. Here is how the runtime of the programs scaled with
+image area.</p>
+
+<p><img src="http://i.imgur.com/NuBAh1w.png" alt="Mandelbrot Benchmark" /></p>
+
+<p>The benchmarks were performed on an Amazon EC2 G2 instance, which has a
+Quadro K5000 GPU and 2.6 GHz Xeon CPU. These benchmarks are obviously kind of
+apples and oranges, since we’re benchmarking two different pieces of hardware,
+but suffice to say that on a decent gaming PC, the GPU could provide a speedup.</p>
+
+<p>You can see the code for the benchmarks on Github.</p>
+
+<p><a href="https://github.com/vectorlang/vector/blob/master/bench/mandelbrot-bench-gpu.vec">GPU Benchmark</a>
+<a href="https://github.com/vectorlang/vector/blob/master/bench/mandelbrot-bench-cpu.c">CPU Benchmark</a></p>
+
+<p><em>Update: Some commenters on HN pointed out that the previous benchmark results
+in this article were incorrect. I have updated the post with new benchmark results.</em></p>
+
+<h2 id="downsides">Downsides</h2>
+
+<ul>
+  <li>Error reporting is more-or-less non-existent.</li>
+  <li>No synchronization inside <code>pfor</code> statements. You will have to synchronize
+by breaking up your program into multiple <code>pfor</code> statements.</li>
+  <li>No way to do code separation.</li>
+  <li>Difficult to access the large CUDA standard library. There is a built-in
+<code>inline</code> function which allows you to insert inline CUDA code into Vector,
+but you’d really have to be a compiler developer to understand how to use it.</li>
+</ul>
+
+<h2 id="future-development">Future Development</h2>
+
+<p>What future development? It’s a class project! What I actually hope to do is
+bake some of the features of Vector into a larger, more feature-rich programming
+language. The <a href="http://julialang.org/">Julia</a> language looks pretty attractive
+for this, given its macro system and focus on scientific computing. I’d also
+like to compile to OpenCL instead of CUDA, since that would support a larger
+variety of hardware.</p>
+
+<p><a href="https://github.com/vectorlang/vector/">Code</a>
+<a href="https://dl.dropboxusercontent.com/u/22450509/vector.pdf">Final Report</a></p>
+
+</div> <!--main-->
+
+</div> <!--container-->
+</body>
+</html>

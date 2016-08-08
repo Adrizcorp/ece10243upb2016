@@ -1,0 +1,463 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+
+  Exploring the Arrow SoCKit Part VII - Software Control for the FPGA MD5 Cracker
+
+</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../../css/main.css"/default.htm>
+<link rel="stylesheet" type="text/css" href="../../../../../css/syntax.css"/default.htm>
+<link href="../../../../../atom.xml" type="application/atom+xml" rel="alternate"/>
+
+</head>
+<body>
+<div id="container">
+
+<div id="header">
+<a id="toplink" href="../../../../../"/default.htm>Howard Mao</a>
+</div> <!--header-->
+
+<div id="main">
+  
+    <h1>Exploring the Arrow SoCKit Part VII - Software Control for the FPGA MD5 Cracker</h1>
+  
+  <p>So now, finally, it’s time to connect our MD5 units to the HPS so that we can
+get them to do something useful.</p>
+
+<h2 id="grouping-several-md5-units">Grouping Several MD5 Units</h2>
+
+<p>First, we’ll want to instantiate multiple MD5 units and multiplex their
+inputs and outputs. We’ll instantiate 16 md5 units here for a total of 32
+compute nodes. The choice of number of nodes is pretty arbitrary. In our case
+it’s convenient since the lightweight HPS-to-FPGA bridge is 32-bit, so we can
+use a single word each for the start, reset, and done signals.
+Using a for-generate statement saves us a lot of typing here.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">md5group</span> <span class="p">(</span>
+    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="k">input</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">start</span><span class="p">,</span>
+    <span class="k">input</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">reset</span><span class="p">,</span>
+
+    <span class="k">input</span> <span class="n">write</span><span class="p">,</span>
+    <span class="k">input</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">writedata</span><span class="p">,</span>
+    <span class="k">input</span> <span class="p">[</span><span class="mh">8</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">writeaddr</span><span class="p">,</span>
+
+    <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">readdata</span><span class="p">,</span>
+    <span class="k">input</span>      <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">readaddr</span><span class="p">,</span>
+
+    <span class="k">output</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">done</span>
+<span class="p">);</span>
+
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">unit_write</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">127</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">digest_arr</span> <span class="p">[</span><span class="mh">0</span><span class="o">:</span><span class="mh">31</span><span class="p">];</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">digest_sel</span> <span class="o">=</span> <span class="n">readaddr</span><span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">2</span><span class="p">];</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">word_sel</span> <span class="o">=</span> <span class="n">readaddr</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">127</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">digest</span> <span class="o">=</span> <span class="n">digest_arr</span><span class="p">[</span><span class="n">digest_sel</span><span class="p">];</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">case</span> <span class="p">(</span><span class="n">word_sel</span><span class="p">)</span>
+        <span class="mh">2</span><span class="mb">&#39;b00</span><span class="o">:</span> <span class="n">readdata</span> <span class="o">=</span> <span class="n">digest</span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+        <span class="mh">2</span><span class="mb">&#39;b01</span><span class="o">:</span> <span class="n">readdata</span> <span class="o">=</span> <span class="n">digest</span><span class="p">[</span><span class="mh">63</span><span class="o">:</span><span class="mh">32</span><span class="p">];</span>
+        <span class="mh">2</span><span class="mb">&#39;b10</span><span class="o">:</span> <span class="n">readdata</span> <span class="o">=</span> <span class="n">digest</span><span class="p">[</span><span class="mh">95</span><span class="o">:</span><span class="mh">64</span><span class="p">];</span>
+        <span class="mh">2</span><span class="mb">&#39;b11</span><span class="o">:</span> <span class="n">readdata</span> <span class="o">=</span> <span class="n">digest</span><span class="p">[</span><span class="mh">127</span><span class="o">:</span><span class="mh">96</span><span class="p">];</span>
+    <span class="k">endcase</span>
+<span class="k">end</span>
+
+<span class="k">genvar</span> <span class="n">i</span><span class="p">;</span>
+<span class="k">generate</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mh">16</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span> <span class="k">begin</span> <span class="o">:</span> <span class="no">MD5GEN</span>
+        <span class="k">assign</span> <span class="n">unit_write</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">write</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">==</span> <span class="n">writeaddr</span><span class="p">[</span><span class="mh">8</span><span class="o">:</span><span class="mh">5</span><span class="p">]);</span>
+        <span class="n">md5unit</span> <span class="n">md5</span> <span class="p">(</span>
+            <span class="p">.</span><span class="n">clk</span> <span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+            <span class="p">.</span><span class="n">reset</span> <span class="p">(</span><span class="n">reset</span><span class="p">[</span><span class="mh">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">]),</span>
+            <span class="p">.</span><span class="n">start</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mh">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">]),</span>
+            <span class="p">.</span><span class="n">write</span> <span class="p">(</span><span class="n">unit_write</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+            <span class="p">.</span><span class="n">writedata</span> <span class="p">(</span><span class="n">writedata</span><span class="p">),</span>
+            <span class="p">.</span><span class="n">writeaddr</span> <span class="p">(</span><span class="n">writeaddr</span><span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]),</span>
+            <span class="p">.</span><span class="n">digest0</span> <span class="p">(</span><span class="n">digest_arr</span><span class="p">[</span><span class="mh">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">]),</span>
+            <span class="p">.</span><span class="n">digest1</span> <span class="p">(</span><span class="n">digest_arr</span><span class="p">[</span><span class="mh">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mh">1</span><span class="p">]),</span>
+            <span class="p">.</span><span class="n">done</span> <span class="p">(</span><span class="n">done</span><span class="p">[</span><span class="mh">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">])</span>
+        <span class="p">);</span>
+    <span class="k">end</span>
+<span class="k">endgenerate</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<h2 id="avalon-interfaces">Avalon Interfaces</h2>
+
+<p>Now we’ll need some Avalon slave interfaces. First, we’ll make one interface
+for the control and status signals: reset, start, and done.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">md5control</span> <span class="p">(</span>
+    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">reset</span><span class="p">,</span>
+
+    <span class="k">input</span>      <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">avs_writedata</span><span class="p">,</span>
+    <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">avs_readdata</span><span class="p">,</span>
+    <span class="k">input</span>      <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">avs_address</span><span class="p">,</span>
+    <span class="k">input</span>             <span class="n">avs_read</span><span class="p">,</span>
+    <span class="k">input</span>             <span class="n">avs_write</span><span class="p">,</span>
+
+    <span class="k">output</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">md5_start</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">md5_reset</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">md5_done</span>
+<span class="p">);</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">start_reg</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">reset_reg</span><span class="p">;</span>
+
+<span class="k">assign</span> <span class="n">md5_start</span> <span class="o">=</span> <span class="n">start_reg</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">md5_reset</span> <span class="o">=</span> <span class="n">reset_reg</span><span class="p">;</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">avs_write</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">avs_address</span><span class="p">)</span>
+            <span class="mh">2</span><span class="mb">&#39;b00</span><span class="o">:</span> <span class="k">begin</span>
+                <span class="n">reset_reg</span> <span class="o">&lt;=</span> <span class="n">avs_writedata</span><span class="p">;</span>
+                <span class="n">start_reg</span> <span class="o">&lt;=</span> <span class="mh">32</span><span class="mi">&#39;d0</span><span class="p">;</span>
+            <span class="k">end</span>
+            <span class="mh">2</span><span class="mb">&#39;b01</span><span class="o">:</span> <span class="k">begin</span>
+                <span class="n">reset_reg</span> <span class="o">&lt;=</span> <span class="mh">32</span><span class="mi">&#39;d0</span><span class="p">;</span>
+                <span class="n">start_reg</span> <span class="o">&lt;=</span> <span class="n">avs_writedata</span><span class="p">;</span>
+            <span class="k">end</span>
+            <span class="k">default</span><span class="o">:</span> <span class="k">begin</span>
+                <span class="n">reset_reg</span> <span class="o">&lt;=</span> <span class="mh">32</span><span class="mi">&#39;d0</span><span class="p">;</span>
+                <span class="n">start_reg</span> <span class="o">&lt;=</span> <span class="mh">32</span><span class="mi">&#39;d0</span><span class="p">;</span>
+            <span class="k">end</span>
+        <span class="k">endcase</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">avs_read</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">reset_reg</span> <span class="o">&lt;=</span> <span class="mh">32</span><span class="mi">&#39;d0</span><span class="p">;</span>
+        <span class="n">start_reg</span> <span class="o">&lt;=</span> <span class="mh">32</span><span class="mi">&#39;d0</span><span class="p">;</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">avs_address</span><span class="p">)</span>
+            <span class="mh">2</span><span class="mb">&#39;b00</span><span class="o">:</span> <span class="n">avs_readdata</span> <span class="o">&lt;=</span> <span class="n">reset_reg</span><span class="p">;</span>
+            <span class="mh">2</span><span class="mb">&#39;b01</span><span class="o">:</span> <span class="n">avs_readdata</span> <span class="o">&lt;=</span> <span class="n">start_reg</span><span class="p">;</span>
+            <span class="mh">2</span><span class="mb">&#39;b10</span><span class="o">:</span> <span class="n">avs_readdata</span> <span class="o">&lt;=</span> <span class="n">md5_done</span><span class="p">;</span>
+            <span class="k">default</span><span class="o">:</span> <span class="n">avs_readdata</span> <span class="o">&lt;=</span> <span class="mh">32</span><span class="mi">&#39;d0</span><span class="p">;</span>
+        <span class="k">endcase</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+        <span class="n">reset_reg</span> <span class="o">&lt;=</span> <span class="mh">32</span><span class="mi">&#39;d0</span><span class="p">;</span>
+        <span class="n">start_reg</span> <span class="o">&lt;=</span> <span class="mh">32</span><span class="mi">&#39;d0</span><span class="p">;</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>Notice that, unless we are writing to start or reset, we set the signals
+back to 0 after every cycle. This ensures that the signals are only high for
+a single cycle as expected.</p>
+
+<p>We also need Avalon slaves for the input and output signals in md5group.
+These slaves aren’t very interesting, since they pretty much just pass the
+signals through, so I won’t show them here. You can look at them on
+<a href="https://github.com/zhemao/md5cracker/tree/master/rtl/avalon">Github</a> if
+you’re really interested.</p>
+
+<h2 id="qsys">Qsys</h2>
+
+<p>If you’re using the code on <a href="https://github.com/zhemao/md5cracker">Github</a>,
+you can load the <code>soc_system.qsys</code> file once you open up Qsys and click
+generate. I basically just created the peripherals with the <code>avs_*</code> signals
+connected to the Avalon interface and <code>md5_*</code> signal exported to conduits.
+You can click generate in Qsys and a .qip file will be generated at
+“soc_system/synthesis/soc_system.qip” as before.</p>
+
+<p>At this point, I ran into a really weird bug with Qsys. No matter what I did,
+it refused to export the <code>md5_write</code> signal from the <code>md5input</code> peripheral.
+I ended up having to edit it manually to make it work. Since this is kind of
+tedious to do every time, I wrote a script that will fix the generated
+“soc_system.v” file automatically. If you’re using the code from Github,
+just run the “fix_generated_system.sh” script.</p>
+
+<p>At this point, you can run Analysis and Synthesis, followed by the memory pin
+placement TCL script that was generated by Qsys. After that’s done, you can
+compile the programming file for the FPGA. You don’t have to run the full
+compilation to get the .sof file, you only have to run up to the
+“Assembler” stage. You can do this by just double clicking on “Assembler”
+in the “Tasks” window at the center left. Be prepared to wait a while.
+Quartus’s fitter can take a really long time for larger designs.
+Once the assembler stage has finished, you can convert the .sof file to a
+raw binary file if you so choose.</p>
+
+<h2 id="the-software">The Software</h2>
+
+<p>The software we run on the board will have to generate a bunch of inputs,
+pad them appropriately, and then load everything into the FPGA registers.
+We’ll just use the “mmap /dev/mem” technique again to access the bridge memory.
+We’ll use a struct to keep track of all the pointers and files we’ll need.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">fpga_control</span> <span class="p">{</span>
+	<span class="kt">void</span> <span class="o">*</span><span class="n">mem</span><span class="p">;</span>
+	<span class="k">volatile</span> <span class="kt">uint32_t</span> <span class="o">*</span><span class="n">md5input</span><span class="p">;</span>
+	<span class="k">volatile</span> <span class="kt">uint32_t</span> <span class="o">*</span><span class="n">md5output</span><span class="p">;</span>
+	<span class="k">volatile</span> <span class="kt">uint32_t</span> <span class="o">*</span><span class="n">md5control</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">fd</span><span class="p">;</span>
+<span class="p">};</span></code></pre></div>
+
+<p>Then we can create functions for initializing and cleaning up the struct.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#define MD5_INPUT_OFFSET 0x0</span>
+<span class="cp">#define MD5_OUTPUT_OFFSET 0x800</span>
+<span class="cp">#define MD5_CONTROL_OFFSET 0xa00</span>
+
+<span class="cp">#define PAGE_SIZE sysconf(_SC_PAGESIZE)</span>
+<span class="cp">#define LWHPS2FPGA_BASE 0xff200000</span>
+
+<span class="kt">int</span> <span class="nf">init_fpga_control</span><span class="p">(</span><span class="k">struct</span> <span class="n">fpga_control</span> <span class="o">*</span><span class="n">fpga</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="n">fpga</span><span class="o">-&gt;</span><span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="s">&quot;/dev/mem&quot;</span><span class="p">,</span> <span class="n">O_RDWR</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">fpga</span><span class="o">-&gt;</span><span class="n">fd</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+	<span class="n">fpga</span><span class="o">-&gt;</span><span class="n">mem</span> <span class="o">=</span> <span class="n">mmap</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">PAGE_SIZE</span><span class="p">,</span> <span class="n">PROT_READ</span> <span class="o">|</span> <span class="n">PROT_WRITE</span><span class="p">,</span>
+			<span class="n">MAP_SHARED</span><span class="p">,</span> <span class="n">fpga</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">,</span> <span class="n">LWHPS2FPGA_BASE</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">fpga</span><span class="o">-&gt;</span><span class="n">mem</span> <span class="o">==</span> <span class="n">MAP_FAILED</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">close</span><span class="p">(</span><span class="n">fpga</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">);</span>
+		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="n">fpga</span><span class="o">-&gt;</span><span class="n">md5input</span> <span class="o">=</span> <span class="n">fpga</span><span class="o">-&gt;</span><span class="n">mem</span> <span class="o">+</span> <span class="n">MD5_INPUT_OFFSET</span><span class="p">;</span>
+	<span class="n">fpga</span><span class="o">-&gt;</span><span class="n">md5output</span> <span class="o">=</span> <span class="n">fpga</span><span class="o">-&gt;</span><span class="n">mem</span> <span class="o">+</span> <span class="n">MD5_OUTPUT_OFFSET</span><span class="p">;</span>
+	<span class="n">fpga</span><span class="o">-&gt;</span><span class="n">md5control</span> <span class="o">=</span> <span class="n">fpga</span><span class="o">-&gt;</span><span class="n">mem</span> <span class="o">+</span> <span class="n">MD5_CONTROL_OFFSET</span><span class="p">;</span>
+
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">release_fpga_control</span><span class="p">(</span><span class="k">struct</span> <span class="n">fpga_control</span> <span class="o">*</span><span class="n">fpga</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="n">munmap</span><span class="p">(</span><span class="n">fpga</span><span class="o">-&gt;</span><span class="n">mem</span><span class="p">,</span> <span class="n">PAGE_SIZE</span><span class="p">);</span>
+	<span class="n">close</span><span class="p">(</span><span class="n">fpga</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+<p>You might want to change the offset constants if your offsets are different.</p>
+
+<p>We’ll want convenience functions for doing five key operations: resetting an
+MD5 unit, starting a unit, checking if a unit is done, copying the input in,
+and copying the output back. These definitions are pretty simple.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">fpga_reset_unit</span><span class="p">(</span><span class="k">struct</span> <span class="n">fpga_control</span> <span class="o">*</span><span class="n">fpga</span><span class="p">,</span> <span class="kt">int</span> <span class="n">unit</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="n">fpga</span><span class="o">-&gt;</span><span class="n">md5control</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">unit</span><span class="p">);</span>
+	<span class="k">while</span> <span class="p">((</span><span class="n">fpga</span><span class="o">-&gt;</span><span class="n">md5control</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">unit</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">fpga_start_unit</span><span class="p">(</span><span class="k">struct</span> <span class="n">fpga_control</span> <span class="o">*</span><span class="n">fpga</span><span class="p">,</span> <span class="kt">int</span> <span class="n">unit</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="n">fpga</span><span class="o">-&gt;</span><span class="n">md5control</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">unit</span><span class="p">);</span>
+	<span class="k">while</span> <span class="p">((</span><span class="n">fpga</span><span class="o">-&gt;</span><span class="n">md5control</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">unit</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">fpga_unit_done</span><span class="p">(</span><span class="k">struct</span> <span class="n">fpga_control</span> <span class="o">*</span><span class="n">fpga</span><span class="p">,</span> <span class="kt">int</span> <span class="n">unit</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="k">return</span> <span class="p">(</span><span class="n">fpga</span><span class="o">-&gt;</span><span class="n">md5control</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">unit</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">fpga_copy_input</span><span class="p">(</span><span class="k">struct</span> <span class="n">fpga_control</span> <span class="o">*</span><span class="n">fpga</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="o">*</span><span class="n">input</span><span class="p">,</span> <span class="kt">int</span> <span class="n">unit</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">start</span><span class="p">;</span>
+
+	<span class="n">start</span> <span class="o">=</span> <span class="n">MD5_INPUT_SIZE</span> <span class="o">*</span> <span class="n">unit</span><span class="p">;</span>
+
+	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">MD5_INPUT_SIZE</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+		<span class="n">fpga</span><span class="o">-&gt;</span><span class="n">md5input</span><span class="p">[</span><span class="n">start</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">input</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">fpga_copy_output</span><span class="p">(</span><span class="k">struct</span> <span class="n">fpga_control</span> <span class="o">*</span><span class="n">fpga</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="o">*</span><span class="n">output</span><span class="p">,</span> <span class="kt">int</span> <span class="n">unit</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">start</span><span class="p">;</span>
+
+	<span class="n">start</span> <span class="o">=</span> <span class="n">MD5_OUTPUT_SIZE</span> <span class="o">*</span> <span class="n">unit</span><span class="p">;</span>
+
+	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">MD5_OUTPUT_SIZE</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+		<span class="n">output</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">fpga</span><span class="o">-&gt;</span><span class="n">md5output</span><span class="p">[</span><span class="n">start</span> <span class="o">+</span> <span class="n">i</span><span class="p">];</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Now we’ll need code to generate the byte sequences we’ll use as our inputs.
+For our purposes, let’s generate all the alpha-numeric strings that can fit
+in a single 512-bit MD5 block.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#define NUM_VALID_CHARS 62</span>
+<span class="cp">#define LARGEST_SEQUENCE 58</span>
+
+<span class="k">struct</span> <span class="n">seq_gen</span> <span class="p">{</span>
+	<span class="kt">int</span> <span class="n">length</span><span class="p">;</span>
+	<span class="kt">uint8_t</span> <span class="n">valid_chars</span><span class="p">[</span><span class="n">NUM_VALID_CHARS</span><span class="p">];</span>
+	<span class="kt">uint8_t</span> <span class="n">sequence</span><span class="p">[</span><span class="n">LARGEST_SEQUENCE</span><span class="p">];</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">init_seq_gen</span><span class="p">(</span><span class="k">struct</span> <span class="n">seq_gen</span> <span class="o">*</span><span class="n">seq_gen</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+
+	<span class="n">seq_gen</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+	<span class="c1">// 0-25 lowercase latin characters</span>
+	<span class="c1">// 26-51 uppercase latin characters</span>
+	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">26</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">seq_gen</span><span class="o">-&gt;</span><span class="n">valid_chars</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;a&#39;</span> <span class="o">+</span> <span class="n">i</span><span class="p">;</span>
+		<span class="n">seq_gen</span><span class="o">-&gt;</span><span class="n">valid_chars</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">26</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;A&#39;</span> <span class="o">+</span> <span class="n">i</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="c1">// 52-61 Arabic numerals</span>
+	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+		<span class="n">seq_gen</span><span class="o">-&gt;</span><span class="n">valid_chars</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">52</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;0&#39;</span> <span class="o">+</span> <span class="n">i</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kr">inline</span> <span class="kt">void</span> <span class="nf">copy_sequence</span><span class="p">(</span><span class="k">struct</span> <span class="n">seq_gen</span> <span class="o">*</span><span class="n">seq_gen</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">seq</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">seq_gen</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+		<span class="n">seq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">seq_gen</span><span class="o">-&gt;</span><span class="n">valid_chars</span><span class="p">[</span><span class="n">seq_gen</span><span class="o">-&gt;</span><span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">next_sequence</span><span class="p">(</span><span class="k">struct</span> <span class="n">seq_gen</span> <span class="o">*</span><span class="n">seq_gen</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">seq</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+	<span class="kt">char</span> <span class="n">last_char</span> <span class="o">=</span> <span class="n">NUM_VALID_CHARS</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">updated</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">seq_gen</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="c1">// sequence[i] is not the maximum int</span>
+		<span class="c1">// increment it and break out of this loop</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">seq_gen</span><span class="o">-&gt;</span><span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">last_char</span><span class="p">)</span> <span class="p">{</span>
+			<span class="n">seq_gen</span><span class="o">-&gt;</span><span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+			<span class="n">updated</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+			<span class="k">break</span><span class="p">;</span>
+		<span class="p">}</span>
+		<span class="c1">// otherwise, wrap back around to 0</span>
+		<span class="n">seq_gen</span><span class="o">-&gt;</span><span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="c1">// if everything was at the maximum valid int,</span>
+	<span class="c1">// we need to extend the length</span>
+	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">updated</span><span class="p">)</span> <span class="p">{</span>
+		<span class="c1">// if we can generate no more strings, return 0</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">seq_gen</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">==</span> <span class="n">LARGEST_SEQUENCE</span><span class="p">)</span>
+			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+		<span class="n">seq_gen</span><span class="o">-&gt;</span><span class="n">sequence</span><span class="p">[</span><span class="n">seq_gen</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+		<span class="n">seq_gen</span><span class="o">-&gt;</span><span class="n">length</span><span class="o">++</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="c1">// copy the characters to the pointer given</span>
+	<span class="n">copy_sequence</span><span class="p">(</span><span class="n">seq_gen</span><span class="p">,</span> <span class="n">seq</span><span class="p">);</span>
+	<span class="k">return</span> <span class="n">seq_gen</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>The <code>next_sequence</code> function copies the next string in the sequence to the
+pointer given and returns the length of the string or 0 if all of the strings
+have been generated. Now that we have a way to generate inputs and control the
+FPGA, we can write the main loop of our program.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#define REPORT_INTERVAL 5</span>
+
+<span class="k">static</span> <span class="kr">inline</span> <span class="kt">void</span> <span class="nf">wait_for_done</span><span class="p">(</span><span class="k">struct</span> <span class="n">fpga_control</span> <span class="o">*</span><span class="n">fpga</span><span class="p">,</span> <span class="kt">int</span> <span class="n">unit</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">fpga_unit_done</span><span class="p">(</span><span class="n">fpga</span><span class="p">,</span> <span class="n">unit</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">unit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="k">struct</span> <span class="n">fpga_control</span> <span class="n">fpga</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+	<span class="k">struct</span> <span class="n">seq_gen</span> <span class="n">seq_gen</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+	<span class="kt">uint8_t</span> <span class="n">bytes</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span>
+	<span class="kt">uint32_t</span> <span class="n">digest</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+	<span class="kt">uint32_t</span> <span class="o">*</span><span class="n">words</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)</span> <span class="n">bytes</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">first_pass</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
+	<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">hashes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="kt">clock_t</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">report_time</span><span class="p">;</span>
+	<span class="kt">float</span> <span class="n">hash_time</span><span class="p">,</span> <span class="n">avg_hashes</span><span class="p">;</span>
+
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;initializing fpga control</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">init_fpga_control</span><span class="p">(</span><span class="n">fpga</span><span class="p">))</span> <span class="p">{</span>
+		<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Could not initialize fpga controller</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+		<span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="n">init_seq_gen</span><span class="p">(</span><span class="n">seq_gen</span><span class="p">);</span>
+
+	<span class="n">start</span> <span class="o">=</span> <span class="n">clock</span><span class="p">();</span>
+	<span class="n">report_time</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">REPORT_INTERVAL</span> <span class="o">*</span> <span class="n">CLOCKS_PER_SEC</span><span class="p">;</span>
+
+	<span class="k">while</span> <span class="p">((</span><span class="n">len</span> <span class="o">=</span> <span class="n">next_sequence</span><span class="p">(</span><span class="n">seq_gen</span><span class="p">,</span> <span class="n">bytes</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">padbuffer</span><span class="p">(</span><span class="n">bytes</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
+
+		<span class="n">wait_for_done</span><span class="p">(</span><span class="n">fpga</span><span class="p">,</span> <span class="n">unit</span><span class="p">);</span>
+		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">first_pass</span><span class="p">)</span> <span class="p">{</span>
+			<span class="n">fpga_copy_output</span><span class="p">(</span><span class="n">fpga</span><span class="p">,</span> <span class="n">digest</span><span class="p">,</span> <span class="n">unit</span><span class="p">);</span>
+			<span class="n">hashes</span><span class="o">++</span><span class="p">;</span>
+		<span class="p">}</span>
+
+		<span class="n">fpga_reset_unit</span><span class="p">(</span><span class="n">fpga</span><span class="p">,</span> <span class="n">unit</span><span class="p">);</span>
+		<span class="n">fpga_copy_input</span><span class="p">(</span><span class="n">fpga</span><span class="p">,</span> <span class="n">words</span><span class="p">,</span> <span class="n">unit</span><span class="p">);</span>
+		<span class="n">fpga_start_unit</span><span class="p">(</span><span class="n">fpga</span><span class="p">,</span> <span class="n">unit</span><span class="p">);</span>
+
+		<span class="n">unit</span><span class="o">++</span><span class="p">;</span>
+
+		<span class="k">if</span> <span class="p">(</span><span class="n">unit</span> <span class="o">==</span> <span class="n">NUM_MD5_UNITS</span><span class="p">)</span> <span class="p">{</span>
+			<span class="n">unit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+			<span class="n">first_pass</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+		<span class="p">}</span>
+
+		<span class="n">end</span> <span class="o">=</span> <span class="n">clock</span><span class="p">();</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">end</span> <span class="o">&gt;</span> <span class="n">report_time</span><span class="p">)</span> <span class="p">{</span>
+			<span class="n">hash_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span> <span class="n">CLOCKS_PER_SEC</span><span class="p">;</span>
+			<span class="n">avg_hashes</span> <span class="o">=</span> <span class="n">hashes</span> <span class="o">/</span> <span class="n">hash_time</span><span class="p">;</span>
+			<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hashing at %f per sec</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">avg_hashes</span><span class="p">);</span>
+			<span class="n">report_time</span> <span class="o">+=</span> <span class="n">REPORT_INTERVAL</span> <span class="o">*</span> <span class="n">CLOCKS_PER_SEC</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_MD5_UNITS</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">wait_for_done</span><span class="p">(</span><span class="n">fpga</span><span class="p">,</span> <span class="p">(</span><span class="n">unit</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span> <span class="o">%</span> <span class="n">NUM_MD5_UNITS</span><span class="p">);</span>
+		<span class="n">fpga_copy_output</span><span class="p">(</span><span class="n">fpga</span><span class="p">,</span> <span class="n">digest</span><span class="p">,</span> <span class="p">(</span><span class="n">unit</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span> <span class="o">%</span> <span class="n">NUM_MD5_UNITS</span><span class="p">);</span>
+		<span class="n">hashes</span><span class="o">++</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="n">end</span> <span class="o">=</span> <span class="n">clock</span><span class="p">();</span>
+
+	<span class="n">hash_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span> <span class="n">CLOCKS_PER_SEC</span><span class="p">;</span>
+	<span class="n">avg_hashes</span> <span class="o">=</span> <span class="n">hashes</span> <span class="o">/</span> <span class="n">hash_time</span><span class="p">;</span>
+
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Time elapsed: %f s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">hash_time</span><span class="p">);</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hashes computed: %lu</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">hashes</span><span class="p">);</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Average hash rate: %f per sec</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">avg_hashes</span><span class="p">);</span>
+
+	<span class="n">release_fpga_control</span><span class="p">(</span><span class="n">fpga</span><span class="p">);</span>
+	<span class="k">return</span> <span class="n">status</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Basically, the main loop will go through the 32 units in a round. At each
+iteration, it waits for the unit to finish, copies data back from it if
+necessary, resets the unit, copies the next sequence to it, and then starts
+the unit again. This way, we can keep all 32 units busy.</p>
+
+<h2 id="results">Results</h2>
+
+<p>Using this 32-unit MD5 cracker, we can compute hashes on the SoCKit at about
+80 thousand hashes per second. This is actually not that great. A single 2.7
+GHz Intel Xeon core on my Macbook air can run at 10s of millions of hashes
+per second. A high end GPU running OCL hashcat can run the algorithm at 23
+billion hashes per second. There are probably ways to speed up our computation,
+perhaps by instantiating more MD5 units or moving our sequence generation to
+the FPGA, but it’s unlikely that the raw performance would catch up to that
+of the Xeon.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>So now you have seen how to implement moderately complex algorithms on the FPGA.
+You have also seen that mid-range FPGAs like the Cyclone V aren’t actually
+that great when it comes to raw performance. Where FPGAs really shine is in
+strictly timed IO and real-time processing. We’ll explore the use of FPGAs in
+these sorts of applications in the next few posts, as we look at implementing
+real-time digital audio effects on the FPGA.</p>
+
+<p><a href="../06/sockit-6.html">&lt;- Part 6</a>
+<a href="../15/sockit-8.html">Part 8 -&gt;</a></p>
+
+</div> <!--main-->
+
+</div> <!--container-->
+</body>
+</html>

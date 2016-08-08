@@ -1,0 +1,343 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+
+  Exploring the Arrow SoCKit Part IV - Writing a Linux Device Driver
+
+</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../../css/main.css"/default.htm>
+<link rel="stylesheet" type="text/css" href="../../../../../css/syntax.css"/default.htm>
+<link href="../../../../../atom.xml" type="application/atom+xml" rel="alternate"/>
+
+</head>
+<body>
+<div id="container">
+
+<div id="header">
+<a id="toplink" href="../../../../../"/default.htm>Howard Mao</a>
+</div> <!--header-->
+
+<div id="main">
+  
+    <h1>Exploring the Arrow SoCKit Part IV - Writing a Linux Device Driver</h1>
+  
+  <p>Now that we are able to control our blinker module from software, we should
+write a device driver that sets up an interface between our userspace code
+and the hardware. This allows us to avoid having to mmap “/dev/mem”, which
+is hacky and unsafe.</p>
+
+<p>Ideally, we would like our driver to export a file in sysfs (the /sys filesystem)
+that we can write a number to and have that number set as the delay value in
+our hardware.</p>
+
+<p>So here is the code. We will go through it bit by bit in this post.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;linux/init.h&gt;</span>
+<span class="cp">#include &lt;linux/module.h&gt;</span>
+<span class="cp">#include &lt;linux/kernel.h&gt;</span>
+<span class="cp">#include &lt;linux/device.h&gt;</span>
+<span class="cp">#include &lt;linux/platform_device.h&gt;</span>
+<span class="cp">#include &lt;linux/uaccess.h&gt;</span>
+<span class="cp">#include &lt;linux/ioport.h&gt;</span>
+<span class="cp">#include &lt;linux/io.h&gt;</span>
+
+<span class="cp">#define BLINKER_BASE 0xff200000</span>
+<span class="cp">#define BLINKER_SIZE PAGE_SIZE</span>
+
+<span class="kt">void</span> <span class="o">*</span><span class="n">blink_mem</span><span class="p">;</span>
+
+<span class="k">static</span> <span class="k">struct</span> <span class="n">device_driver</span> <span class="n">blinker_driver</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;blinker&quot;</span><span class="p">,</span>
+	<span class="p">.</span><span class="n">bus</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">platform_bus_type</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="kt">ssize_t</span> <span class="nf">blinker_show</span><span class="p">(</span><span class="k">struct</span> <span class="n">device_driver</span> <span class="o">*</span><span class="n">drv</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">ssize_t</span> <span class="nf">blinker_store</span><span class="p">(</span><span class="k">struct</span> <span class="n">device_driver</span> <span class="o">*</span><span class="n">drv</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">count</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="n">u8</span> <span class="n">delay</span><span class="p">;</span>
+
+	<span class="k">if</span> <span class="p">(</span><span class="n">buf</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;Error, string must not be NULL</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+		<span class="k">return</span> <span class="o">-</span><span class="n">EINVAL</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="p">(</span><span class="n">kstrtou8</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">delay</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;Could not convert string to integer</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+		<span class="k">return</span> <span class="o">-</span><span class="n">EINVAL</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="p">(</span><span class="n">delay</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">||</span> <span class="n">delay</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;Invalid delay %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">delay</span><span class="p">);</span>
+		<span class="k">return</span> <span class="o">-</span><span class="n">EINVAL</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="n">iowrite8</span><span class="p">(</span><span class="n">delay</span><span class="p">,</span> <span class="n">blink_mem</span><span class="p">);</span>
+
+	<span class="k">return</span> <span class="n">count</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="nf">DRIVER_ATTR</span><span class="p">(</span><span class="n">blinker</span><span class="p">,</span> <span class="n">S_IWUSR</span><span class="p">,</span> <span class="n">blinker_show</span><span class="p">,</span> <span class="n">blinker_store</span><span class="p">);</span>
+
+<span class="n">MODULE_LICENSE</span><span class="p">(</span><span class="s">&quot;Dual BSD/GPL&quot;</span><span class="p">);</span>
+
+<span class="k">static</span> <span class="kt">int</span> <span class="n">__init</span> <span class="nf">blinker_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
+	<span class="k">struct</span> <span class="n">resource</span> <span class="o">*</span><span class="n">res</span><span class="p">;</span>
+
+	<span class="n">ret</span> <span class="o">=</span> <span class="n">driver_register</span><span class="p">(</span><span class="o">&amp;</span><span class="n">blinker_driver</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+		<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+
+	<span class="n">ret</span> <span class="o">=</span> <span class="n">driver_create_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">blinker_driver</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">driver_attr_blinker</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">driver_unregister</span><span class="p">(</span><span class="o">&amp;</span><span class="n">blinker_driver</span><span class="p">);</span>
+		<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="n">res</span> <span class="o">=</span> <span class="n">request_mem_region</span><span class="p">(</span><span class="n">BLINKER_BASE</span><span class="p">,</span> <span class="n">BLINKER_SIZE</span><span class="p">,</span> <span class="s">&quot;blinker&quot;</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">res</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">driver_remove_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">blinker_driver</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">driver_attr_blinker</span><span class="p">);</span>
+		<span class="n">driver_unregister</span><span class="p">(</span><span class="o">&amp;</span><span class="n">blinker_driver</span><span class="p">);</span>
+		<span class="k">return</span> <span class="o">-</span><span class="n">EBUSY</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="n">blink_mem</span> <span class="o">=</span> <span class="n">ioremap</span><span class="p">(</span><span class="n">BLINKER_BASE</span><span class="p">,</span> <span class="n">BLINKER_SIZE</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">blink_mem</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">driver_remove_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">blinker_driver</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">driver_attr_blinker</span><span class="p">);</span>
+		<span class="n">driver_unregister</span><span class="p">(</span><span class="o">&amp;</span><span class="n">blinker_driver</span><span class="p">);</span>
+		<span class="n">release_mem_region</span><span class="p">(</span><span class="n">BLINKER_BASE</span><span class="p">,</span> <span class="n">BLINKER_SIZE</span><span class="p">);</span>
+		<span class="k">return</span> <span class="o">-</span><span class="n">EFAULT</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="n">__exit</span> <span class="nf">blinker_exit</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="n">driver_remove_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">blinker_driver</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">driver_attr_blinker</span><span class="p">);</span>
+	<span class="n">driver_unregister</span><span class="p">(</span><span class="o">&amp;</span><span class="n">blinker_driver</span><span class="p">);</span>
+	<span class="n">release_mem_region</span><span class="p">(</span><span class="n">BLINKER_BASE</span><span class="p">,</span> <span class="n">BLINKER_SIZE</span><span class="p">);</span>
+	<span class="n">iounmap</span><span class="p">(</span><span class="n">blink_mem</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">module_init</span><span class="p">(</span><span class="n">blinker_init</span><span class="p">);</span>
+<span class="n">module_exit</span><span class="p">(</span><span class="n">blinker_exit</span><span class="p">);</span></code></pre></div>
+
+<p>You can find the module code and Makefile on <a href="https://github.com/zhemao/sockit_test/tree/master/software/blinker">Github</a>.
+This code was based off of material in <a href="http://www.makelinux.net/ldd3/">Linux Device Drivers, 3rd Edition</a>,
+specifically chapters 9 and 14. This is a really great book on writing Linux
+device drivers written by core kernel maintainers. I highly recommend looking
+at it if you’re interested in learning more.</p>
+
+<h2 id="setting-up-the-module">Setting up the Module</h2>
+
+<p>When creating a Linux kernel module, we first need to register init and exit
+functions, which are run when the module is loaded and unloaded, respectively.
+In our module, the functions are called <code>blinker_init</code> and <code>blinker_exit</code>.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;linux/init.h&gt;</span>
+<span class="cp">#include &lt;linux/module.h&gt;</span>
+<span class="cp">#include &lt;linux/kernel.h&gt;</span>
+
+<span class="n">MODULE_LICENSE</span><span class="p">(</span><span class="s">&quot;Dual BSD/GPL&quot;</span><span class="p">);</span>
+
+<span class="k">static</span> <span class="kt">int</span> <span class="n">__init</span> <span class="nf">blinker_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="cm">/* ... */</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="n">__exit</span> <span class="nf">blinker_exit</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="cm">/* ... */</span>
+<span class="p">}</span>
+
+<span class="n">module_init</span><span class="p">(</span><span class="n">blinker_init</span><span class="p">);</span>
+<span class="n">module_exit</span><span class="p">(</span><span class="n">blinker_exit</span><span class="p">);</span></code></pre></div>
+
+<p>We register the init and exit functions using the <code>module_init</code> and <code>module_exit</code>
+macros. We also need the <code>MODULE_LICENSE</code> module to tell the kernel what
+license we wish to put our module under.</p>
+
+<p>Just the above code would give you a valid kernel module, albeit one that does
+absolutely nothing. But how do we build a kernel module? We have to create
+a Makefile compatible with the Linux kernel’s build system. Such a Makefile,
+assuming you have named your file blinker.c as I have, looks like this.</p>
+
+<div class="highlight"><pre><code class="language-make" data-lang="make"><span class="nv">obj-m</span> <span class="o">:=</span> blinker.o</code></pre></div>
+
+<p>To compile it, you’d run something like</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">armmake -C ~/path/to/linux-socfpga <span class="nv">M</span><span class="o">=</span><span class="nv">$PWD</span> modules</code></pre></div>
+
+<p>You should replace the path after the “-C” flag with the path to which you
+cloned the Linux kernel sources. This will run make in the kernel source
+folder and tell it to build a module in your current directory.
+You can add a command to your Makefile to run this command for you.</p>
+
+<div class="highlight"><pre><code class="language-make" data-lang="make"><span class="nv">KERNEL_SRC_DIR</span><span class="o">=</span>/home/zhehao/programs/others/linux-socfpga
+<span class="nv">PWD</span><span class="o">=</span><span class="k">$(</span>shell <span class="nb">pwd</span><span class="k">)</span>
+
+<span class="nf">all</span><span class="o">:</span>
+	make <span class="nv">ARCH</span><span class="o">=</span>arm <span class="nv">CROSS_COMPILE</span><span class="o">=</span>arm-linux-gnueabihf- -C <span class="k">$(</span>KERNEL_SRC_DIR<span class="k">)</span> <span class="se">\</span>
+		<span class="nv">M</span><span class="o">=</span><span class="k">$(</span>PWD<span class="k">)</span> modules</code></pre></div>
+
+<p>The output of the build will be a “kernel object” file called “blinker.ko”.
+You can copy this over to your SD card and load it into the running kernel
+using the following command.</p>
+
+<pre><code>insmod blinker.ko
+</code></pre>
+
+<p>You can then unload it using</p>
+
+<pre><code>rmmod blinker
+</code></pre>
+
+<p>Now let’s add code to our module to make it do something useful.</p>
+
+<h2 id="exporting-sysfs-file">Exporting Sysfs File</h2>
+
+<p>Linux, being a UNIX-like operating system, subscribes to the philosophy of
+“everything is a file”. That is, the standard way for userspace to communicate
+with drivers is through file IO operations. For reading and writing small bits
+of configuration information to driver modules, the Linux kernel provides a
+filesystem called <a href="https://www.kernel.org/doc/Documentation/filesystems/sysfs.txt">Sysfs</a>,
+which is mounted at “/sys” in your filesystem tree.</p>
+
+<p>To get a driver entry in Sysfs, we need to declare and register a <code>device_driver</code>
+struct.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;linux/device.h&gt;</span>
+<span class="cp">#include &lt;linux/platform_device.h&gt;</span>
+
+<span class="k">static</span> <span class="k">struct</span> <span class="n">device_driver</span> <span class="n">blinker_driver</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;blinker&quot;</span><span class="p">,</span>
+	<span class="p">.</span><span class="n">bus</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">platform_bus_type</span><span class="p">,</span>
+<span class="p">};</span></code></pre></div>
+
+<p>Device drivers must have a name and a bus. The bus is what connects the device
+to the CPU. This could be PCI, USB, or some other method. Since our blinker
+module can be accessed directly from system memory, we will use the generic
+<a href="https://www.kernel.org/doc/Documentation/driver-model/platform.txt">platform</a>
+bus type.</p>
+
+<p>We will also need to declare a <code>driver_attribute</code> struct, which has function
+pointers to “show” and “store” functions that are run when userspace reads
+from or writes to the sysfs file, respectively.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">ssize_t</span> <span class="nf">blinker_show</span><span class="p">(</span><span class="k">struct</span> <span class="n">device_driver</span> <span class="o">*</span><span class="n">drv</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">ssize_t</span> <span class="nf">blinker_store</span><span class="p">(</span><span class="k">struct</span> <span class="n">device_driver</span> <span class="o">*</span><span class="n">drv</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">count</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="cm">/* ... */</span>
+    <span class="k">return</span> <span class="n">count</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="nf">DRIVER_ATTR</span><span class="p">(</span><span class="n">blinker</span><span class="p">,</span> <span class="n">S_IWUSR</span><span class="p">,</span> <span class="n">blinker_show</span><span class="p">,</span> <span class="n">blinker_store</span><span class="p">);</span></code></pre></div>
+
+<p>Since our blinker module is write-only, we don’t need to do anything in
+<code>blinker_show</code>. The <code>DRIVER_ATTR</code> macro helps us declare a <code>driver_attr</code> struct.
+The arguments to the macro are name, permissions mode, show function, and
+store function. This will declare a struct called <code>driver_attr_blinker</code>.
+The mode can be any combination of <code>S_IWUSR</code>, meaning the user has write
+access, and <code>S_IRUGO</code>, meaning everyone has read access. Again, we want our
+sysfs file to be write-only, so we only give <code>S_IWUSR</code>.</p>
+
+<p>We register our driver in the init function like so …</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">ret</span> <span class="o">=</span> <span class="n">driver_register</span><span class="p">(</span><span class="o">&amp;</span><span class="n">blinker_driver</span><span class="p">);</span>
+<span class="cm">/* error handling ... */</span>
+<span class="n">ret</span> <span class="o">=</span> <span class="n">driver_create_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">blinker_driver</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">driver_attr_blinker</span><span class="p">);</span>
+<span class="cm">/* error handling ... */</span></code></pre></div>
+
+<p>Later, in the module exit function, we will unregister the driver.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">driver_remove_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">blinker_driver</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">driver_attr_blinker</span><span class="p">);</span>
+<span class="n">driver_unregister</span><span class="p">(</span><span class="o">&amp;</span><span class="n">blinker_driver</span><span class="p">);</span></code></pre></div>
+
+<p>Now, when the kernel module is loaded, a file will be created at
+“/sys/bus/platform/drivers/blinker/blinker”.
+Writing to this file will trigger the <code>blinker_store</code> function.
+But how do we make this function do what we want it to?</p>
+
+<h2 id="accessing-io-memory">Accessing IO Memory</h2>
+
+<p>As in the previous post, we will set the delay by writing a byte to physical
+memory at address 0xff200000. However, this address is not yet mapped into the
+kernel’s address space, so we will have to that first. Fortunately, the kernel
+provides functions for properly mapping and accessing the memory space for
+peripherals, which is termed IO memory.</p>
+
+<p>First, we will need to request exclusive access to the memory region we want
+to write to.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#define BLINKER_BASE 0xff200000</span>
+<span class="cp">#define BLINKER_SIZE PAGE_SIZE</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">request_mem_region</span><span class="p">(</span><span class="n">BLINKER_BASE</span><span class="p">,</span> <span class="n">BLINKER_SIZE</span><span class="p">,</span> <span class="s">&quot;blinker&quot;</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">res</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* do some error handling */</span>
+<span class="p">}</span></code></pre></div>
+
+<p><code>BLINKER_BASE</code> is set to the base address we want, and <code>BLINKER_SIZE</code> is set
+to the page size. As with the <code>mmap</code> system call, we can only get memory a page
+at a time, so it makes sense to just request a whole page. Now that we know
+we have exclusive access, we need to map the address into virtual memory.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="o">*</span><span class="n">blink_mem</span><span class="p">;</span>
+
+<span class="n">blink_mem</span> <span class="o">=</span> <span class="n">ioremap</span><span class="p">(</span><span class="n">BLINKER_BASE</span><span class="p">,</span> <span class="n">BLINKER_SIZE</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">blink_mem</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="cm">/* error handling */</span>
+<span class="p">}</span></code></pre></div>
+
+<p>We can now write to <code>blink_mem</code> to set the hardware delay. Of course, it’s
+not considered proper to just do <code>*blink_mem = delay</code>. Instead, we should
+use the <code>iowrite*</code> functions. In our case, we are writing a single byte,
+so we use <code>iowrite8</code>.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">u8</span> <span class="n">delay</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">kstrtou8</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">delay</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* error handling if buf isn&#39;t a number */</span>
+<span class="p">}</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">delay</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">||</span> <span class="n">delay</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* error handling if delay out of bounds */</span>
+<span class="p">}</span>
+<span class="n">iowrite8</span><span class="p">(</span><span class="n">delay</span><span class="p">,</span> <span class="n">blink_mem</span><span class="p">);</span></code></pre></div>
+
+<p>Now with the full module, we can write a number between 1 and 15 to
+“/sys/bus/platform/drivers/blinker/blinker” and set the delay in the FPGA
+module.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>So now you know how to write a basic device driver. There are a lot more
+things that come into play when developing a driver, and I recommend reading
+<a href="http://www.makelinux.net/ldd3/">Linux Device Drivers</a> for reference on how
+to accomplish certain things.</p>
+
+<p>So far, we have been working with a rather trivial example of what the FPGA
+can do. If you’re interesting in FPGAs, you are probably more interested in
+getting them to do efficient parallel computation. In my next post, I will
+introduce a more complex hardware module that will perform such computation.</p>
+
+<p><a href="../27/sockit-3.html">&lt;- Part 3</a>
+<a href="../../../2014/01/03/sockit-5.html">Part 5 -&gt;</a></p>
+
+</div> <!--main-->
+
+</div> <!--container-->
+</body>
+</html>

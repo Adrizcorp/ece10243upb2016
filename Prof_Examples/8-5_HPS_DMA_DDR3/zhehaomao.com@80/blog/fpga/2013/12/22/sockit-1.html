@@ -1,0 +1,472 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+
+  Exploring the Arrow SoCKit Part I - Blinking LEDs
+
+</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../../css/main.css"/default.htm>
+<link rel="stylesheet" type="text/css" href="../../../../../css/syntax.css"/default.htm>
+<link href="../../../../../atom.xml" type="application/atom+xml" rel="alternate"/>
+
+</head>
+<body>
+<div id="container">
+
+<div id="header">
+<a id="toplink" href="../../../../../"/default.htm>Howard Mao</a>
+</div> <!--header-->
+
+<div id="main">
+  
+    <h1>Exploring the Arrow SoCKit Part I - Blinking LEDs</h1>
+  
+  <p>In September, I bought one of the new <a href="http://www.arrownac.com/solutions/sockit/">Arrow SoCKits</a>.
+They are development boards for the Altera Cyclone V, a system-on-chip with
+an ARM processor and FPGA. Now that I’m out of school, I finally have some
+time to play around with it. I’ve decided to document the things I do with
+the SoCKit as a series of tutorials. Figuring out how to work with FPGA boards
+can be confusing and requires poring through a bunch of vendor datasheets and
+example code, so hopefully someone finds these tutorials helpful.
+For these tutorials, I will assume that you have programmed before and have some
+rudimentary understanding of digital electronics. If you have never programmed
+before, there are literally tons of free resources online. To be honest, though,
+FPGA programming and embedded systems might be a bit too challenging for
+first-time programmers, so I’d recommend getting more programming experience
+before coming back to these articles. If you have never studied digital
+electronics, ASIC World has a pretty good <a href="http://www.asic-world.com/digital/tutorial.html">tutorial</a>.
+I will be using the Verilog and SystemVerilog hardware description languages
+for these tutorials. I don’t expect you to be familiar with either. I will
+explain the syntax as I go along. All of the hardware descriptions can be
+found on <a href="https://github.com/zhemao/sockit_test/tree/part1">Github</a>.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>The first thing to do when trying out a new FPGA dev board is to get the LEDs
+to blink back-and-forth, Knight Rider style. This is a pretty simple circuit
+to create and gets you familiar with using the design tools and programming
+the chip. To make things more interesting, let’s also design our circuit so
+that the speed at which the LEDs sweep back-and-forth can be controlled using
+the push-buttons on the board.</p>
+
+<h2 id="installing-the-software">Installing the Software</h2>
+
+<p>For programming the FPGA, you will need Altera’s <a href="http://www.altera.com/products/software/quartus-ii/web-edition/qts-we-index.html">Quartus II Web Edition</a>
+design software. There are versions for Windows and Linux. Altera officially
+supports only Red Hat Enterprise Linux with their Linux version, but you can
+install it on other distributions. If you are using Arch Linux like I am, there
+is a pretty good article on how to install it on the <a href="https://wiki.archlinux.org/index.php/Altera_Design_Software">Arch Wiki</a>.
+Those instructions may also be applicable to other distros.
+When downloading the files for installation, do not download the
+“Combined Files” package. It is 4.5 GB and contains some device families that
+you will not need. Instead, go to the “Individual Files” section and download
+“Quartus II Software”, “ModelSim-Altera Edition”, and “Cyclone V device support”.
+This should give you files named like “QuartusSetupWeb-<em>w.x.y.z</em>.run”,
+“ModelSimSetup-<em>w.x.y.z</em>.run”, and “cyclonev-<em>w.x.y.z</em>.qdz”. Change the .run
+files to be executable and then run the “QuartusSetupWeb-<em>w.x.y.z</em>.run” file.
+Follow the installation instructions given.</p>
+
+<h2 id="creating-the-project">Creating the Project</h2>
+
+<p>Start Quartus and click on the big button labeled “New Project Wizard”.
+On the first screen, enter the directory you’d like to put the project files
+in (you’ll probably want to create a new directory for this). Give your project
+a name (I called mine “sockit_test”). Skip page 2, as you have no files to add.
+On page 3, set the device family to Cyclone V and choose 5CSXFC6D6F31C8 as the
+specific device. On page 4, pick ModelSim-Altera as the Simulation tools and
+choose “SystemVerilog HDL” as the format. This is not important for this part,
+since you won’t be doing simulation just yet, but it will come in handy later.
+Once you get to page 5, you can press Finish.</p>
+
+<h2 id="top-level-file-and-pin-assignment">Top-Level File and Pin Assignment</h2>
+
+<p>Now that you’ve created the project, you can set up the top-level file and
+assign the pins you need to it. In Quartus, create a Verilog file by clicking
+“File” -&gt; “New” -&gt; “Verilog HDL file”. Save the file with the same name as your
+project (so if you called your project “sockit_test”, save it as “sockit_test.v”.
+I recommend putting your HDL files in a separate subdirectory in your project
+folder called “rtl”.</p>
+
+<p>Put the following Verilog code in “sockit_test.v”.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">sockit_test</span> <span class="p">(</span>
+    <span class="k">input</span> <span class="no">CLOCK_50</span><span class="p">,</span>
+    <span class="k">input</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="no">KEY</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="no">LED</span>
+<span class="p">);</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>If you’re not familiar with Verilog, a “module” is a hardware block. In this
+code, we are simply specifying what the inputs and outputs of the block are.
+For the top-level module, the inputs and outputs are the pins of the FPGA.
+For our example, we only need the 4 push button keys, 4 LEDs, and the 50 MHz
+clock. You can assign the pins on the FPGA to your inputs and outputs by going
+to “Assignments” -&gt; “Pin Planner” and entering in the following assignments.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Node Name</th>
+      <th>Location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CLOCK_50</td>
+      <td>PIN_K14</td>
+    </tr>
+    <tr>
+      <td>KEY[3]</td>
+      <td>PIN_AD11</td>
+    </tr>
+    <tr>
+      <td>KEY[2]</td>
+      <td>PIN_AD9</td>
+    </tr>
+    <tr>
+      <td>KEY[1]</td>
+      <td>PIN_AE12</td>
+    </tr>
+    <tr>
+      <td>KEY[0]</td>
+      <td>PIN_AE9</td>
+    </tr>
+    <tr>
+      <td>LED[3]</td>
+      <td>PIN_AD7</td>
+    </tr>
+    <tr>
+      <td>LED[2]</td>
+      <td>PIN_AE11</td>
+    </tr>
+    <tr>
+      <td>LED[1]</td>
+      <td>PIN_AD10</td>
+    </tr>
+    <tr>
+      <td>LED[0]</td>
+      <td>PIN_AF10</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="controlling-the-leds">Controlling the LEDs</h2>
+
+<p>Now that the pins have been assigned, you can start putting together the
+different modules to make the circuit work. The first module we will make
+is the one driving the LEDs. We will call it “blinker.v”.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">blinker</span> <span class="p">(</span>
+    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="k">input</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">delay</span><span class="p">,</span>
+    <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">led</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">reset</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">pause</span>
+<span class="p">);</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">23</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">count</span> <span class="o">=</span> <span class="mh">24</span><span class="mb">&#39;b0</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">pos</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b000</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">running</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="n">pos</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">case</span> <span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+        <span class="mh">3</span><span class="mb">&#39;b000</span><span class="o">:</span> <span class="n">led</span> <span class="o">&lt;=</span> <span class="mh">4</span><span class="mb">&#39;b0001</span><span class="p">;</span>
+        <span class="mh">3</span><span class="mb">&#39;b001</span><span class="o">:</span> <span class="n">led</span> <span class="o">&lt;=</span> <span class="mh">4</span><span class="mb">&#39;b0010</span><span class="p">;</span>
+        <span class="mh">3</span><span class="mb">&#39;b010</span><span class="o">:</span> <span class="n">led</span> <span class="o">&lt;=</span> <span class="mh">4</span><span class="mb">&#39;b0100</span><span class="p">;</span>
+        <span class="mh">3</span><span class="mb">&#39;b011</span><span class="o">:</span> <span class="n">led</span> <span class="o">&lt;=</span> <span class="mh">4</span><span class="mb">&#39;b1000</span><span class="p">;</span>
+        <span class="mh">3</span><span class="mb">&#39;b100</span><span class="o">:</span> <span class="n">led</span> <span class="o">&lt;=</span> <span class="mh">4</span><span class="mb">&#39;b0100</span><span class="p">;</span>
+        <span class="mh">3</span><span class="mb">&#39;b101</span><span class="o">:</span> <span class="n">led</span> <span class="o">&lt;=</span> <span class="mh">4</span><span class="mb">&#39;b0010</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span> <span class="n">led</span> <span class="o">&lt;=</span> <span class="mh">4</span><span class="mb">&#39;b0000</span><span class="p">;</span>
+    <span class="k">endcase</span>
+<span class="k">end</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">count</span> <span class="o">&lt;=</span> <span class="mh">24</span><span class="mb">&#39;b0</span><span class="p">;</span>
+        <span class="n">pos</span> <span class="o">&lt;=</span> <span class="mh">3</span><span class="mb">&#39;b000</span><span class="p">;</span>
+        <span class="n">running</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">pause</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">running</span> <span class="o">&lt;=</span> <span class="o">!</span><span class="n">running</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">running</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mh">24</span><span class="mb">&#39;b0</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="n">count</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">delay</span><span class="p">,</span> <span class="mh">20</span><span class="mb">&#39;b0</span><span class="p">};</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">pos</span> <span class="o">==</span> <span class="mh">3</span><span class="mb">&#39;b101</span><span class="p">)</span>
+                <span class="n">pos</span> <span class="o">&lt;=</span> <span class="mh">3</span><span class="mb">&#39;b000</span><span class="p">;</span>
+            <span class="k">else</span>
+                <span class="n">pos</span> <span class="o">&lt;=</span> <span class="n">pos</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+        <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+            <span class="n">count</span> <span class="o">&lt;=</span> <span class="n">count</span> <span class="o">-</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<div class="warning">
+<p><span class="alert">Warning!</span>
+To everyone reading this who is primarily a "software person" and does not
+have much experience with digital logic, take heed that though Verilog looks
+superficially like software code with its "case" and "if" statements, it is
+actually describing hardware blocks. One particular difference is that there
+is no concept of order in Verilog. Statements on subsequent lines are all
+"running" at the same time. To give an "ordering" to computation, you must
+explicitly design state machines as the previous code does. If you don't keep
+these things in mind, you might end up writing completely valid Verilog that
+is impossible to synthesize.</p>
+<p>And now back to our regularly scheduled blog post ...</p>
+</div>
+
+<p>The first part of this module should look familiar to you. I am stating that
+this module takes as input a clock <code>clk</code>, a four-bit <code>delay</code> signal
+(we treat it as a 4-bit unsigned integer), a <code>reset</code> signal, and a <code>pause</code>
+signal. The <code>reset</code> and <code>pause</code> signals correspond to two of the push buttons
+on the board. The output is the 4-bit led output. I have declared this as <code>reg</code>,
+which stands for register. Verilog requires you to declare as <code>reg</code> anything
+that could hold state. It turns out that the output won’t actually hold any
+state, but the Verilog compiler is not clever enough to figure this out.
+If this confuses you, don’t worry. It will make more sense once I explain
+the <code>always</code> blocks.</p>
+
+<p>The second part of the module are some internal registers <code>count</code>, <code>pos</code>, and
+<code>running</code>, which are initialized to 0, 0, and 1, respectively. These registers
+actually will hold state, unlike the output <code>led</code> register.</p>
+
+<p>The third part of the module are the <code>always</code> blocks. These constructs tell
+our hardware to perform some operation whenever the signals in the sensitivity
+list (the stuff inside the parenthesis after the <code>@</code> sign) change.
+In the first <code>always</code> block, the sensitivity list is the signal <code>pos</code>,
+so the operations inside the <code>always</code> block will occur whenever <code>pos</code> changes.
+Inside this <code>always</code> block is a <code>case</code> statement that maps certain values of
+pos to certain values of <code>led</code>. You will notice that in everything except the
+default case, exactly one bit in <code>led</code> is high, corresponding to a lit led.
+With increasing <code>pos</code>, the lit led goes to the left and then back to the right.
+Since every possible case of pos has been covered, this <code>always</code> block functions
+as a combinational circuit. If we had left out a case (say, by getting rid of
+the default case), the compiler would warn us about inferring a latch. That is,
+if <code>pos</code> happened to be in a case where the behavior was unspecified, the
+value of <code>led</code> would keeps its previous value. You can see now why <code>led</code> had
+to be declared a register even though it isn’t one.</p>
+
+<p>The second <code>always</code> block contains in its sensitivity list, <code>posedge clk</code>.
+This means that the <code>always</code> block is triggered by the rising edge of <code>clk</code>.
+Inside the <code>always</code> block is a large nested if statement. Here, we state what
+values each of the internal registers will take at each cycle. If <code>reset</code> is
+triggered, we change <code>count</code>, <code>pos</code>, and <code>running</code> back to their original values.
+If <code>pause</code> is triggered, we toggle the value of <code>running</code>. If we are running,
+then we are under normal operation, during which we want to regularly increment
+<code>pos</code> until it reaches 5, at which point we wrap around back to 0. However, we
+want the incrementing of <code>pos</code> to happen slowly at a controlled speed.
+We accomplish by initially setting the <code>count</code> variable to the value of <code>delay</code> 
+multiplied by 2<sup>20</sup>, decrementing until it reaches 0, and then
+resetting it. The value of <code>pos</code> is then only updated when <code>delay</code> is reset.
+There is no logic specified for when <code>running</code> is false, so in that case all</p>
+
+<h2 id="setting-the-delay">Setting the delay</h2>
+
+<p>So how do we set the <code>delay</code> variable that the <code>blinker</code> module needs?
+We’ll have to create a different module. Call it “delay_ctrl.v”.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">delay_ctrl</span> <span class="p">(</span>
+    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">faster</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">slower</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">delay</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">reset</span>
+<span class="p">);</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">delay_intern</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b1000</span><span class="p">;</span>
+
+<span class="k">assign</span> <span class="n">delay</span> <span class="o">=</span> <span class="n">delay_intern</span><span class="p">;</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span>
+        <span class="n">delay_intern</span> <span class="o">&lt;=</span> <span class="mh">4</span><span class="mb">&#39;b1000</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">faster</span> <span class="o">&amp;&amp;</span> <span class="n">delay_intern</span> <span class="o">!=</span> <span class="mh">4</span><span class="mb">&#39;b0001</span><span class="p">)</span>
+        <span class="n">delay_intern</span> <span class="o">&lt;=</span> <span class="n">delay_intern</span> <span class="o">-</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span> 
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">slower</span> <span class="o">&amp;&amp;</span> <span class="n">delay_intern</span> <span class="o">!=</span> <span class="mh">4</span><span class="mb">&#39;b1111</span><span class="p">)</span>
+        <span class="n">delay_intern</span> <span class="o">&lt;=</span> <span class="n">delay_intern</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>This module takes as input the clock, two control signals <code>faster</code> and <code>slower</code>,
+as well as a <code>reset</code> signal. The control signals correspond to push buttons.
+The output is the 4-bit <code>delay</code> which will feed into the blinker.
+We declare an internal register <code>delay_intern</code> and initialize it to 8,
+which is the halfway point. This internal register is then assigned to
+the <code>delay</code> output. In our positive-edge triggered <code>always</code> block, we first
+check to see if a reset is triggered, in which case we set <code>delay_intern</code> back
+to 8. If <code>faster</code> is pressed, we reduce the delay. If <code>slower</code> is pressed we
+increase it. If none of the control signals are high, we maintain state.</p>
+
+<h2 id="handling-the-buttons">Handling the Buttons</h2>
+
+<p>In our previous two modules, we assumed that our control signals would be high
+for exactly one cycle after the keys are pressed. Given the speed of the human
+finger, this would obviously be impossible if the control signals were tied
+directly to the keys. Therefore, we need a unit to detect when each key is
+pressed and set the corresponding control signal high for one cycle.
+We will call it “oneshot.v”.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">oneshot</span> <span class="p">(</span>
+    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="k">input</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">edge_sig</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">level_sig</span>
+<span class="p">);</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">cur_value</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">last_value</span><span class="p">;</span>
+
+<span class="k">assign</span> <span class="n">level_sig</span> <span class="o">=</span> <span class="o">~</span><span class="n">cur_value</span> <span class="o">&amp;</span> <span class="n">last_value</span><span class="p">;</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="n">cur_value</span> <span class="o">&lt;=</span> <span class="n">edge_sig</span><span class="p">;</span>
+    <span class="n">last_value</span> <span class="o">&lt;=</span> <span class="n">cur_value</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>Here, <code>edge_sig</code> is the input from our keys and <code>level_sig</code> is the output
+for our control signals. The trick here is that we keep two 4-bit registers
+<code>cur_value</code> and <code>last_value</code>. On each cycle, we read the values of the keys
+into <code>cur_value</code> and the previous value of <code>cur_value</code> into <code>last_value</code>.
+The signals from the keys are 0 when pressed and 1 when unpressed, so we
+want each bit of our output to be high when the current value is 0 and the
+last value was 1, which is what the <code>assign</code> statement is doing.
+You may think that I have mixed up the order of <code>cur_value</code> and <code>last_value</code>
+in the <code>always</code> block. But actually, order does not matter when using the
+non-blocking <code>&lt;=</code> assignment operator. When using <code>&lt;=</code>, the values being read
+will always be the values from the previous clock cycle.</p>
+
+<h2 id="tying-it-all-together">Tying it All Together</h2>
+
+<p>Finally, we must tie our three components together in our top-level module.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">sockit_test</span> <span class="p">(</span>
+    <span class="k">input</span> <span class="no">CLOCK_50</span><span class="p">,</span>
+    <span class="k">input</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="no">KEY</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="no">LED</span>
+<span class="p">);</span>
+
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">key_os</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">delay</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="n">main_clk</span> <span class="o">=</span> <span class="no">CLOCK_50</span><span class="p">;</span>
+
+<span class="n">oneshot</span> <span class="n">os</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">clk</span> <span class="p">(</span><span class="n">main_clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">edge_sig</span> <span class="p">(</span><span class="no">KEY</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">level_sig</span> <span class="p">(</span><span class="n">key_os</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="n">delay_ctrl</span> <span class="n">dc</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">clk</span> <span class="p">(</span><span class="n">main_clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">faster</span> <span class="p">(</span><span class="n">key_os</span><span class="p">[</span><span class="mh">1</span><span class="p">]),</span>
+    <span class="p">.</span><span class="n">slower</span> <span class="p">(</span><span class="n">key_os</span><span class="p">[</span><span class="mh">0</span><span class="p">]),</span>
+    <span class="p">.</span><span class="n">delay</span> <span class="p">(</span><span class="n">delay</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">reset</span> <span class="p">(</span><span class="n">key_os</span><span class="p">[</span><span class="mh">3</span><span class="p">])</span>
+<span class="p">);</span>
+
+<span class="n">blinker</span> <span class="n">b</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">clk</span> <span class="p">(</span><span class="n">main_clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">delay</span> <span class="p">(</span><span class="n">delay</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">led</span> <span class="p">(</span><span class="no">LED</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">reset</span> <span class="p">(</span><span class="n">key_os</span><span class="p">[</span><span class="mh">3</span><span class="p">]),</span>
+    <span class="p">.</span><span class="n">pause</span> <span class="p">(</span><span class="n">key_os</span><span class="p">[</span><span class="mh">2</span><span class="p">])</span>
+<span class="p">);</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>We’ve now expanded our original “sockit_test.v” to connect everything together.
+We have three internal signals, <code>key_os</code>, <code>delay</code>, and <code>main_clk</code>. These signals
+are marked <code>wire</code>, which is the opposite of <code>reg</code>. Our modules are tied to
+these signals using “port mappings”, which are statements of the following form.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="n">module_name</span> <span class="n">instance_name</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">internal_signal</span> <span class="p">(</span><span class="n">external_signal</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">internal_signal2</span> <span class="p">(</span><span class="n">external_signal2</span><span class="p">)</span>
+<span class="p">);</span></code></pre></div>
+
+<p>The <code>module_name</code> is the name we gave to the module, and <code>instance_name</code> is the
+name we give to this instance of the module. The instance name doesn’t really
+matter as long as they are unique within a module. The <code>internal_signal</code> name
+is just the input/output name given inside the port-mapped module.
+The <code>external_signal</code> name of the wire in the outer module.</p>
+
+<h2 id="compiling-and-programming">Compiling and Programming</h2>
+
+<p>Now that we’ve finished our circuit, we can compile our hardware description
+and program it onto the FPGA. First, though, let’s do a quick static check
+to make sure we didn’t screw up somewhere. Run “Analysis and Synthesis” by
+clicking on the icon with a purple triangle and blue check mark in the tool bar
+(third from left in below image).
+Wait for the action to complete. You can watch its progress in the “Tasks”
+window at the middle left. After it’s finished, inspect the log output in the
+“Messages” window at the bottom. Make sure it doesn’t have any errors or
+warnings beyond “Parallel compilation is not licensed and has been disabled”.
+If you do see warnings or errors, look back at your hardware descriptions and
+make sure there isn’t a typo. “Analysis and Synthesis” will be useful later on
+for catching syntax mistakes.</p>
+
+<p><img src="http://i.imgur.com/mdatABF.png" alt="Quartus Toolbar" /></p>
+
+<p>Now that you’ve checked the descriptions, you can run a full compilation by
+clicking the icon with the purple triangle (second from left in the image).
+Be prepared to wait a little while.
+Once the compilation is complete, a file called “sockit_test.sof” should be
+generated in the “output_files” subdirectory of your project folder.
+This file contains the configuration you will program into the FPGA.</p>
+
+<p>Before you try to program the FPGA, make sure that the USB Blaster drivers
+are installed correctly (check the Arch Wiki article at the top for Linux,
+or <a href="http://www.altera.com/download/drivers/usb-blaster/dri-usb-blaster-vista.html">this</a>
+article for Windows). Make sure you have the SoCKit connected to your computer
+correctly. The USB Blaster port is the microUSB port farthest to the right
+if the ports are facing toward you.</p>
+
+<div class="warning">
+<p><span class="alert">Careful!</span> Early versions of the SoCKit board
+had surface-mounted microUSB ports with no reinforcement. The microUSB ports
+on these boards are likely to break off if you push too hard when inserting
+the USB cable. Later versions of the board came with a reinforcing metal plate
+to fix this problem. If you have one of the earlier boards, be very careful
+when plugging in the microUSB cable.
+</p>
+</div>
+
+<p>Once you are sure the drivers are working,
+open up the programmer by double-clicking on “Program Device” in the “Tasks”
+window, by clicking on “Tools” -&gt; “Programmer” in the menu, or the Programmer
+button in the toolbar (second from right in the above image). In the new window,
+go to “Hardware Setup” and make sure “Currently selected hardware” is set to
+something like “CV SoCKit”. If you cannot find this selection in the dropdown
+menu, you may want to check that the board is on, the USB blaster is connected,
+and the drivers are installed properly. Once you’ve selected the correct
+hardware, press the “Auto Detect” button in the programmer window.
+It may ask you to choose your device. Choose “5CSXFC6D6”.</p>
+
+<p>You should now see two devices, 5CSXFC6D6F31 and SOCVHPS. The former is the
+FPGA, the latter is the ARM processor. Right click on the entry for the FPGA
+and select “Change File”. Pick the “sockit_test.sof” file that was generated
+during compilation. Now press start, and the .sof file will be programmed onto
+the FPGA. If you are successful, the SoCKit will look like the following.</p>
+
+<iframe width="560" height="315" src="../../../../..//www.youtube.com/embed/D-hVIapJg7I" frameborder="0" allowfullscreen="true">
+</iframe>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Congratulations, you just programmed an FPGA! In my next post, I will take a
+look at the ARM processor on the Cyclone V and how to install an operating
+system on it.</p>
+
+<p><a href="../24/sockit-2.html">Part 2 -&gt;</a></p>
+
+</div> <!--main-->
+
+</div> <!--container-->
+</body>
+</html>

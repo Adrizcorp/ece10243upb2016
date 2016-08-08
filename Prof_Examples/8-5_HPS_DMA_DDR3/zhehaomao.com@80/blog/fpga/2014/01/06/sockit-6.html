@@ -1,0 +1,387 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+
+  Exploring the Arrow SoCKit Part VI - Simulation in ModelSim
+
+</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../../css/main.css"/default.htm>
+<link rel="stylesheet" type="text/css" href="../../../../../css/syntax.css"/default.htm>
+<link href="../../../../../atom.xml" type="application/atom+xml" rel="alternate"/>
+
+</head>
+<body>
+<div id="container">
+
+<div id="header">
+<a id="toplink" href="../../../../../"/default.htm>Howard Mao</a>
+</div> <!--header-->
+
+<div id="main">
+  
+    <h1>Exploring the Arrow SoCKit Part VI - Simulation in ModelSim</h1>
+  
+  <p>In the last post, we created a unit that computes MD5 checksums. Before we
+program it onto the FPGA, we want to simulate it and verify that it is
+operating correctly. To do this, we use the ModelSim circuit simulator.</p>
+
+<p>To run ModelSim simulations, we create testbenches, which are programs written
+in an HDL that describe events that occur at different times. Here is an
+example of a testbench written in SystemVerilog.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">example</span> <span class="p">(</span>
+    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">a</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">b</span><span class="p">,</span>
+    <span class="k">output</span> <span class="kt">reg</span> <span class="n">o</span>
+<span class="p">);</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="n">o</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span>
+
+<span class="k">module</span> <span class="n">example_tb</span> <span class="p">();</span>
+
+<span class="kt">reg</span>  <span class="n">clk</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+<span class="kt">reg</span>  <span class="n">a</span><span class="p">;</span>
+<span class="kt">reg</span>  <span class="n">b</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="n">o</span><span class="p">;</span>
+
+<span class="n">example</span> <span class="n">ex</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">clk</span> <span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">a</span> <span class="p">(</span><span class="n">a</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">b</span> <span class="p">(</span><span class="n">b</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">o</span> <span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">always</span> <span class="k">begin</span>
+    <span class="p">#</span><span class="mh">10000</span> <span class="n">clk</span> <span class="o">=</span> <span class="o">!</span><span class="n">clk</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="k">initial</span> <span class="k">begin</span>
+    <span class="n">a</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+    <span class="n">b</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+    <span class="p">#</span><span class="mh">40000</span> <span class="n">assert</span><span class="p">(</span><span class="n">o</span> <span class="o">==</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">);</span>
+    <span class="n">a</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+    <span class="n">b</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+    <span class="p">#</span><span class="mh">40000</span> <span class="n">assert</span><span class="p">(</span><span class="n">o</span> <span class="o">==</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">);</span>
+    <span class="n">a</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+    <span class="n">b</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+    <span class="p">#</span><span class="mh">40000</span> <span class="n">assert</span><span class="p">(</span><span class="n">o</span> <span class="o">==</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">);</span>
+    <span class="n">a</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+    <span class="n">b</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+    <span class="p">#</span><span class="mh">40000</span> <span class="n">assert</span><span class="p">(</span><span class="n">o</span> <span class="o">==</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">);</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>SystemVerilog is a language based on Verilog with several extensions. We use
+it in the testbench mainly because of the <code>assert</code> statement.</p>
+
+<p>This testbench tests a clock-synchronized AND gate.
+In the <code>always</code> block, we toggle the value of the clock every 10 ns
+(to simulate a 50 MHz clock frequency). The <code>#delay</code> syntax causes a statement
+to occur a given number of picoseconds later in the simulation.
+In the <code>initial</code> block, we set the values of a and b, wait two cycles,
+and then assert that the output value is correct.</p>
+
+<p>You can add a testbench to your design by going to “Assignments” -&gt; “Settings” -&gt;
+“EDA Tool Settings” -&gt; “Simulation”. Click on “Test Benches” -&gt; “New” to add
+a new test bench. Make sure to set “Test Bench Name” and “Top Level Module”
+to the name of the module (in this case, <code>example_tb</code>) and to set the
+simulation period to a reasonable amount of time (180 ns would be sufficient
+for this example). You can then choose the newly created testbench in the
+dropdown menu.</p>
+
+<p>Before we run ModelSim, we will need to tell Quartus where to find the
+ModelSim binaries. The binaries can be found at “modelsim_ase/bin” from the
+root of your Altera installation. So, for instance, if you told the Altera
+installer to put everything in “/opt/altera/13.1”, the modelsim binaries
+will be in “/opt/altera/13.1/modelsim_ase/bin”. You can set the directory in
+“Tools” -&gt; “Options” -&gt; “EDA Tool Options” -&gt; “ModelSim-Altera”.
+Once the directory is set, you can run the simulation by clicking the
+“RTL simulation” button, which is the fifth from the right in our Quartus
+toolbar screenshot.</p>
+
+<p><img src="http://i.imgur.com/mdatABF.png" alt="Quartus Toolbar" /></p>
+
+<p>The simulation should open up a new window. If this does not happen, there
+may be something wrong with your ModelSim installation.
+You can check the <a href="https://wiki.archlinux.org/index.php/Altera_Design_Software#ModelSim">Arch Wiki</a>
+to make sure you have all the dependencies installed.</p>
+
+<p>Once the simulation finishes running, the testbench signals should appear in
+the main window. You can see the full simulation run by clicking on the
+filled-in magnifying glass with tool tip “Zoom Full” or by pressing Z on the
+keyboard. It should look something like the following.</p>
+
+<p><img src="http://i.imgur.com/lXkMIgf.png" alt="Example Testbench Run" /></p>
+
+<p>You should also see no assertion failures or errors in the command window at
+the bottom.</p>
+
+<h2 id="verifying-the-md5-unit">Verifying the MD5 Unit</h2>
+
+<p>To verify our MD5 unit, we will use a similar technique as above.
+We put in some input, run the computation, and then check that the output is
+correct. With more complicated computations like MD5, we can generate the
+input and output programmatically.</p>
+
+<p>To get our input, we will just create a random sequence of bytes. On Linux,
+we can do this using</p>
+
+<pre><code>head -c 42 /dev/urandom &gt; testsequence.bin
+</code></pre>
+
+<p>We can find the md5sum of this using</p>
+
+<pre><code>md5sum testsequence.bin
+</code></pre>
+
+<p>However, we can’t just copy and paste the bytes of testsequence.bin into our
+testbench because it hasn’t been appropriately padded. We can write a C
+program to pad the input.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">padbuffer</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">bytes</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">uint32_t</span> <span class="o">*</span><span class="n">words</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)</span> <span class="n">bytes</span><span class="p">;</span>
+
+	<span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">&gt;=</span> <span class="n">BUFSIZE</span><span class="p">)</span>
+		<span class="n">abort</span><span class="p">();</span>
+
+	<span class="n">bytes</span><span class="p">[</span><span class="n">len</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0x80</span><span class="p">;</span>
+
+	<span class="n">reverse_if_needed</span><span class="p">(</span><span class="n">bytes</span><span class="p">,</span> <span class="n">len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+
+	<span class="n">memset</span><span class="p">(</span><span class="n">bytes</span> <span class="o">+</span> <span class="n">len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">BUFSIZE</span> <span class="o">-</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">3</span><span class="p">);</span>
+
+        <span class="c1">// equivalent to len * 8 truncated to 32 bits</span>
+	<span class="n">words</span><span class="p">[</span><span class="n">NUMWORDS</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">len</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="c1">// equivalent to taking bits 63:32 of len * 8</span>
+	<span class="n">words</span><span class="p">[</span><span class="n">NUMWORDS</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">len</span> <span class="o">&gt;&gt;</span> <span class="mi">29</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>The <code>reverse_if_needed</code> function checks to see if the processor architecture
+on which the program is being run is big-endian and, if so, reverses the
+order of the bytes in each 32-bit word. This is necessary since we will be
+putting the input in a word at a time.</p>
+
+<p>You can see the full padding program on <a href="https://github.com/zhemao/md5cracker/tree/master/software">Github</a>.
+The code is split across the md5.c and padandprint.c files.</p>
+
+<p>Now that we have our input, we can write our testbench.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">md5unit_tb</span> <span class="p">();</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">testsequence</span> <span class="p">[</span><span class="mh">0</span><span class="o">:</span><span class="mh">15</span><span class="p">];</span>
+<span class="k">parameter</span> <span class="n">expected</span> <span class="o">=</span> <span class="mh">128&#39;hbaebddf861d3eb2714ba892c2ad26682</span><span class="p">;</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">writeaddr</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">writedata</span> <span class="o">=</span> <span class="n">testsequence</span><span class="p">[</span><span class="n">writeaddr</span><span class="p">];</span>
+<span class="kt">reg</span> <span class="n">write</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">clk</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">reset</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">start</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">127</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">digest0</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">127</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">digest1</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="n">done1</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="n">done0</span><span class="p">;</span>
+
+<span class="n">md5unit</span> <span class="n">md5</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">clk</span> <span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">reset</span> <span class="p">({</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">,</span> <span class="n">reset</span><span class="p">}),</span>
+    <span class="p">.</span><span class="n">start</span> <span class="p">({</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">,</span> <span class="n">start</span><span class="p">}),</span>
+    <span class="p">.</span><span class="n">write</span> <span class="p">(</span><span class="n">write</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">writedata</span> <span class="p">(</span><span class="n">writedata</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">writeaddr</span> <span class="p">({</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">,</span> <span class="n">writeaddr</span><span class="p">}),</span>
+    <span class="p">.</span><span class="n">digest0</span> <span class="p">(</span><span class="n">digest0</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">digest1</span> <span class="p">(</span><span class="n">digest1</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">done</span> <span class="p">({</span><span class="n">done1</span><span class="p">,</span> <span class="n">done0</span><span class="p">})</span>
+<span class="p">);</span>
+
+<span class="k">always</span> <span class="k">begin</span>
+    <span class="p">#</span><span class="mh">10000</span> <span class="n">clk</span> <span class="o">=</span> <span class="o">!</span><span class="n">clk</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="k">integer</span> <span class="n">i</span><span class="p">;</span>
+<span class="k">initial</span> <span class="k">begin</span>
+    <span class="n">testsequence</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">=</span> <span class="mh">32&#39;h01680208</span><span class="p">;</span>
+    <span class="n">testsequence</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">=</span> <span class="mh">32&#39;h13ab80bb</span><span class="p">;</span>
+    <span class="n">testsequence</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span> <span class="o">=</span> <span class="mh">32&#39;hcb8b2c30</span><span class="p">;</span>
+    <span class="n">testsequence</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span> <span class="o">=</span> <span class="mh">32&#39;hb9657582</span><span class="p">;</span>
+    <span class="n">testsequence</span><span class="p">[</span><span class="mh">4</span><span class="p">]</span> <span class="o">=</span> <span class="mh">32&#39;ha3793c48</span><span class="p">;</span>
+    <span class="n">testsequence</span><span class="p">[</span><span class="mh">5</span><span class="p">]</span> <span class="o">=</span> <span class="mh">32&#39;h103f26be</span><span class="p">;</span>
+    <span class="n">testsequence</span><span class="p">[</span><span class="mh">6</span><span class="p">]</span> <span class="o">=</span> <span class="mh">32&#39;h0b78dac4</span><span class="p">;</span>
+    <span class="n">testsequence</span><span class="p">[</span><span class="mh">7</span><span class="p">]</span> <span class="o">=</span> <span class="mh">32&#39;h5c433348</span><span class="p">;</span>
+    <span class="n">testsequence</span><span class="p">[</span><span class="mh">8</span><span class="p">]</span> <span class="o">=</span> <span class="mh">32&#39;h4de99287</span><span class="p">;</span>
+    <span class="n">testsequence</span><span class="p">[</span><span class="mh">9</span><span class="p">]</span> <span class="o">=</span> <span class="mh">32&#39;heff0be7c</span><span class="p">;</span>
+    <span class="n">testsequence</span><span class="p">[</span><span class="mh">10</span><span class="p">]</span> <span class="o">=</span> <span class="mh">32&#39;h00808533</span><span class="p">;</span>
+    <span class="n">testsequence</span><span class="p">[</span><span class="mh">11</span><span class="p">]</span> <span class="o">=</span> <span class="mh">32&#39;h00000000</span><span class="p">;</span>
+    <span class="n">testsequence</span><span class="p">[</span><span class="mh">12</span><span class="p">]</span> <span class="o">=</span> <span class="mh">32&#39;h00000000</span><span class="p">;</span>
+    <span class="n">testsequence</span><span class="p">[</span><span class="mh">13</span><span class="p">]</span> <span class="o">=</span> <span class="mh">32&#39;h00000000</span><span class="p">;</span>
+    <span class="n">testsequence</span><span class="p">[</span><span class="mh">14</span><span class="p">]</span> <span class="o">=</span> <span class="mh">32&#39;h00000150</span><span class="p">;</span>
+    <span class="n">testsequence</span><span class="p">[</span><span class="mh">15</span><span class="p">]</span> <span class="o">=</span> <span class="mh">32&#39;h00000000</span><span class="p">;</span>
+
+    <span class="n">reset</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+    <span class="n">write</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+    <span class="n">writeaddr</span> <span class="o">=</span> <span class="mh">4&#39;h0</span><span class="p">;</span>
+    <span class="p">#</span><span class="mh">20000</span> <span class="n">reset</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+    <span class="n">write</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mh">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mh">16</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="p">#</span><span class="mh">20000</span> <span class="n">writeaddr</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+    <span class="k">end</span>
+
+    <span class="p">#</span><span class="mh">20000</span> <span class="n">write</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+    <span class="p">#</span><span class="mh">20000</span> <span class="n">start</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+
+    <span class="p">#</span><span class="mh">5200000</span> <span class="n">assert</span><span class="p">(</span><span class="n">done0</span> <span class="o">==</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">digest0</span> <span class="o">==</span> <span class="n">expected</span><span class="p">);</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>The testbench resets the md5unit, writes the input to the memory, starts the
+computation, and checks the digest at the end.</p>
+
+<h2 id="debugging-in-simulation">Debugging in Simulation</h2>
+
+<p>The testbench should run without any assertion errors, but this is because
+I spent quite some time debugging and fixing small mistakes. In general, you
+will get assertion errors the first time you run your testbench. This is okay,
+since finding errors is the whole point of simulation. Here are a few
+strategies for using ModelSim to debug your hardware.</p>
+
+<h3 id="exposing-internal-signals">Exposing Internal Signals</h3>
+
+<p>By default, ModelSim will only show you the signals declared in the top-level
+testbench module. This is not very helpful in debugging, since the problem
+will most likely be in a signal internal to the unit you are testing.
+Fortunately, ModelSim provides a way of showing internal signals in the
+simulation window through the use of TCL scripts.</p>
+
+<p>The TCL script used in my design to set up the simulation looks like this.</p>
+
+<div class="highlight"><pre><code class="language-tcl" data-lang="tcl"><span class="nv">add</span> wave clk
+<span class="nv">add</span> wave reset
+<span class="nv">add</span> wave start
+<span class="nv">add</span> wave <span class="o">-</span>radix hexadecimal digest0
+<span class="nv">add</span> wave done0
+<span class="nv">add</span> wave <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>cc_sdata<span class="k">[</span><span class="nv">0</span><span class="k">]}</span>
+<span class="nv">add</span> wave <span class="o">-</span>radix hexadecimal <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>cc_kdata<span class="k">[</span><span class="nv">0</span><span class="k">]}</span>
+<span class="nv">add</span> wave <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>cc_iaddr<span class="k">[</span><span class="nv">0</span><span class="k">]}</span>
+<span class="nv">add</span> wave <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>cc_gaddr<span class="k">[</span><span class="nv">0</span><span class="k">]}</span>
+
+<span class="nv">add</span> wave <span class="o">-</span>radix hexadecimal <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>mccgen<span class="k">[</span><span class="nv">0</span><span class="k">]</span><span class="o">/</span>cc<span class="o">/</span>areg<span class="k">}</span>
+<span class="nv">add</span> wave <span class="o">-</span>radix hexadecimal <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>mccgen<span class="k">[</span><span class="nv">0</span><span class="k">]</span><span class="o">/</span>cc<span class="o">/</span>breg<span class="k">}</span>
+<span class="nv">add</span> wave <span class="o">-</span>radix hexadecimal <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>mccgen<span class="k">[</span><span class="nv">0</span><span class="k">]</span><span class="o">/</span>cc<span class="o">/</span>creg<span class="k">}</span>
+<span class="nv">add</span> wave <span class="o">-</span>radix hexadecimal <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>mccgen<span class="k">[</span><span class="nv">0</span><span class="k">]</span><span class="o">/</span>cc<span class="o">/</span>dreg<span class="k">}</span>
+<span class="nv">add</span> wave <span class="o">-</span>radix hexadecimal <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>mccgen<span class="k">[</span><span class="nv">0</span><span class="k">]</span><span class="o">/</span>cc<span class="o">/</span>adds<span class="k">}</span>
+<span class="nv">add</span> wave <span class="o">-</span>radix hexadecimal <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>mccgen<span class="k">[</span><span class="nv">0</span><span class="k">]</span><span class="o">/</span>cc<span class="o">/</span>rotated<span class="k">}</span>
+<span class="nv">add</span> wave <span class="o">-</span>radix hexadecimal <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>mccgen<span class="k">[</span><span class="nv">0</span><span class="k">]</span><span class="o">/</span>cc<span class="o">/</span>adda<span class="k">}</span>
+<span class="nv">add</span> wave <span class="o">-</span>radix hexadecimal <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>mccgen<span class="k">[</span><span class="nv">0</span><span class="k">]</span><span class="o">/</span>cc<span class="o">/</span>addb<span class="k">}</span>
+<span class="nv">add</span> wave <span class="o">-</span>radix hexadecimal <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>mccgen<span class="k">[</span><span class="nv">0</span><span class="k">]</span><span class="o">/</span>cc<span class="o">/</span>t0<span class="k">}</span>
+<span class="nv">add</span> wave <span class="o">-</span>radix hexadecimal <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>mccgen<span class="k">[</span><span class="nv">0</span><span class="k">]</span><span class="o">/</span>cc<span class="o">/</span>t1<span class="k">}</span>
+
+<span class="nv">add</span> wave <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>mccgen<span class="k">[</span><span class="nv">0</span><span class="k">]</span><span class="o">/</span>cc<span class="o">/</span>step<span class="k">}</span>
+<span class="nv">add</span> wave <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>mccgen<span class="k">[</span><span class="nv">0</span><span class="k">]</span><span class="o">/</span>cc<span class="o">/</span>stage<span class="k">}</span>
+<span class="nv">add</span> wave <span class="o">-</span>radix unsigned <span class="k">{</span><span class="nv">md5</span><span class="o">/</span>mccgen<span class="k">[</span><span class="nv">0</span><span class="k">]</span><span class="o">/</span>cc<span class="o">/</span>ireg<span class="k">}</span>
+
+<span class="nv">run</span> <span class="mi">5600</span> ns</code></pre></div>
+
+<p>You can tell ModelSim to use the script to set up the simulation by going
+to the Simulation settings in Quartus and filling in the “Use script to set
+up simulation” option.</p>
+
+<p>As you can see, <code>add wave</code> is the basic way of adding a signal to the
+viewer. You can add refer to internal signals using slashes.
+You can also refer to signals inside generate statements using square brackets.
+In this case, the signal name must be wrapped in curly braces to prevent the
+square brackets from being interpreted as command substitution.
+You can also use the <code>-radix</code> option to change the radix displayed for a
+multi-bit signal in the simulation window. The default is binary, but you can
+also choose <code>unsigned</code>, <code>decimal</code>, or <code>hexadecimal</code>.</p>
+
+<h3 id="checking-intermediate-results">Checking Intermediate Results</h3>
+
+<p>To debug, you will have to trace the data flow backwards or forwards until you
+find the point at which the signal value diverges from its expected value.
+Sometimes, it is difficult to know what the intermediate values should be.
+In this case, it is helpful to write a software simulation of the computation
+and print out what the expected values of registers are.
+For instance, in our case, it would be helpful to know the values of A, B, C,
+and D after each cycle of the computation. Therefore, we write a C function
+that computes the new register values for each cycle.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">compute_onec</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="n">registers</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">i</span><span class="p">,</span>
+		  <span class="k">const</span> <span class="kt">uint32_t</span> <span class="o">*</span><span class="n">k</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="k">const</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">s</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">uint32_t</span> <span class="n">a</span> <span class="o">=</span> <span class="n">registers</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+	<span class="kt">uint32_t</span> <span class="n">b</span> <span class="o">=</span> <span class="n">registers</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+	<span class="kt">uint32_t</span> <span class="n">c</span> <span class="o">=</span> <span class="n">registers</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+	<span class="kt">uint32_t</span> <span class="n">d</span> <span class="o">=</span> <span class="n">registers</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+	<span class="kt">uint32_t</span> <span class="n">f</span><span class="p">,</span> <span class="n">sum</span><span class="p">;</span>
+	<span class="kt">uint8_t</span> <span class="n">g</span><span class="p">;</span>
+
+	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">63</span><span class="p">)</span>
+		<span class="n">abort</span><span class="p">();</span>
+
+	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">&amp;</span> <span class="n">c</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="o">~</span><span class="n">b</span> <span class="o">&amp;</span> <span class="n">d</span><span class="p">);</span>
+		<span class="n">g</span> <span class="o">=</span> <span class="n">i</span> <span class="o">&amp;</span> <span class="mh">0x0f</span><span class="p">;</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">32</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span> <span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="o">~</span><span class="n">d</span> <span class="o">&amp;</span> <span class="n">c</span><span class="p">);</span>
+		<span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x0f</span><span class="p">;</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">48</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">f</span> <span class="o">=</span> <span class="n">b</span> <span class="o">^</span> <span class="n">c</span> <span class="o">^</span> <span class="n">d</span><span class="p">;</span>
+		<span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x0f</span><span class="p">;</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="n">f</span> <span class="o">=</span> <span class="n">c</span> <span class="o">^</span> <span class="p">(</span><span class="n">b</span> <span class="o">|</span> <span class="o">~</span><span class="n">d</span><span class="p">);</span>
+		<span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="mi">7</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x0f</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="n">sum</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">f</span> <span class="o">+</span> <span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="p">[</span><span class="n">g</span><span class="p">];</span>
+
+	<span class="n">registers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">;</span>
+	<span class="n">registers</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="n">left_rotate</span><span class="p">(</span><span class="n">sum</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+	<span class="n">registers</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+	<span class="n">registers</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Then we print them out as we go along.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">64</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">compute_onec</span><span class="p">(</span><span class="n">registers</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">words</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%c = %x, &quot;</span><span class="p">,</span> <span class="sc">&#39;a&#39;</span> <span class="o">+</span> <span class="n">j</span><span class="p">,</span> <span class="n">registers</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+        <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<p>You can find the full code in the same folder as “padandprint.c”. It’s called
+“reference.c”.</p>
+
+<p>By checking the output of the reference program against the signals exposed
+in your ModelSim view, you can track down the bug in your Verilog description.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>So now you know that the md5unit is working correctly. In the next post,
+we will create a Qsys system containing several copies of the MD5 unit,
+write software for the HPS to control the FPGA units, and take some
+measurements on how fast our system can compute checksums.</p>
+
+<p><a href="../03/sockit-5.html">&lt;- Part 5</a>
+<a href="../08/sockit-7.html">Part 7 -&gt;</a></p>
+
+</div> <!--main-->
+
+</div> <!--container-->
+</body>
+</html>

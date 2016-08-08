@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+
+  Kanto Audio Player
+
+</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../css/main.css"/default.htm>
+<link rel="stylesheet" type="text/css" href="../../../../css/syntax.css"/default.htm>
+<link href="../../../../atom.xml" type="application/atom+xml" rel="alternate"/>
+
+</head>
+<body>
+<div id="container">
+
+<div id="header">
+<a id="toplink" href="../../../../"/default.htm>Howard Mao</a>
+</div> <!--header-->
+
+<div id="main">
+  
+    <h1>Kanto Audio Player</h1>
+  
+  <p>Kanto was our group’s final project for Columbia’s CSEE 4840 Embedded Systems class.
+It is an audio player and visualizer implemented on an Altera DE2 FPGA
+development board. The player consists of a digital hardware design implemented 
+in VHDL and embedded microcontroller code implemented in C. </p>
+
+<p>Kanto will read raw CD-quality audio data off of an SD card and play it on
+the DE2’s audio codec. It will also take groups of samples, compute the FFT,
+and display the resulting frequency bins on a VGA monitor.</p>
+
+<p>The hardware takes care of time-sensitive tasks like reading from the SD card,
+computing the FFT, and driving the visualization.</p>
+
+<p>Software controls initialization and the user interface, which is a track
+menu at the top of the VGA display controlled by input from a PS/2 keyboard.</p>
+
+<p>My teammates on this project were Kavita Jain-Cocks, Amrita Mazumdar,
+Darien Nurse, and Jonathan Yu.</p>
+
+<p><iframe width="560" height="315" src="../../../..//www.youtube.com/embed/g-Gh5SFSpzw" frameborder="0" allowfullscreen="true">
+</iframe></p>
+
+<p>An early iteration of our design. There is no keyboard input at this stage.
+The only control is a single switch on the board, which causes the playback to 
+pause or continue. The audio starts playing from the beginning of the SD card
+as soon as the compiled HDL description is flashed and cannot be restarted,
+rewound, fast-forwarded, or controlled in any way other than play/pause.
+This first iteration is also notable for containing no software whatsoever.
+All of the control logic at this point was implemented in VHDL.</p>
+
+<p><iframe src="http://player.vimeo.com/video/68397395" width="500" height="281" frameborder="0" allowfullscreen="true">
+</iframe></p>
+
+<p>The final, polished version of our design, as recorded by our professor on
+demo day. We changed the visualization, displaying only the first 64 frequency
+bins (as that roughly corresponded to the range of human hearing), and added
+software to implement a fancier UI, which allowed track selection, fast-forward,
+and rewind using keyboard input. As you can see, I’m quite partial to the song
+“Moanin’” by Art Blakey and the Jazz Messengers, despite having listened to it
+over and over again in the lab while debugging the audio and SD card.</p>
+
+<p><a href="http://www.cs.columbia.edu/~sedwards/classes/2013/4840/reports/kanto.pdf">Final Report</a>
+<a href="https://github.com/kanto-player/kanto">Code</a></p>
+
+</div> <!--main-->
+
+</div> <!--container-->
+</body>
+</html>

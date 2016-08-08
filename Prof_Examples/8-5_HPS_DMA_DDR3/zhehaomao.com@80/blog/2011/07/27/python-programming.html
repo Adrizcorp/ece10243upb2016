@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+
+  Things Every Python Programmer Should Know but Generally Don't
+
+</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../css/main.css"/default.htm>
+<link rel="stylesheet" type="text/css" href="../../../../css/syntax.css"/default.htm>
+<link href="../../../../atom.xml" type="application/atom+xml" rel="alternate"/>
+
+</head>
+<body>
+<div id="container">
+
+<div id="header">
+<a id="toplink" href="../../../../"/default.htm>Howard Mao</a>
+</div> <!--header-->
+
+<div id="main">
+  
+    <h1>Things Every Python Programmer Should Know but Generally Don't</h1>
+  
+  <p>Python is a really great programming language, and one of the many reasons
+for its success is a simple, easy-to-understand syntax. That being said,
+there are some things that can trip up beginners (and which have tripped me
+up before). There are also a few little known features that turn out to be 
+rather useful. I am attempting to document some of the common pitfalls and
+esoteric-but-useful features here.</p>
+
+<h2 id="efficient-string-concatenation">Efficient String Concatenation</h2>
+
+<p>Because Python uses immutable strings, concatenating two strings involves a
+bit of overhead (as a new <code>str</code> object must be allocated each time), which
+means that performing concatenations using the most obvious method will lead
+to rather poor performance. For my example, let us assume we have a 
+generator method <code>genstr</code> which takes as input an integer n and yields a 
+random string on each iteration, stopping after n number of iterations. 
+How would one concatenate the results of <code>genstr</code>. The most obvious way 
+would be like so.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">mystr</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="k">for</span> <span class="n">randstr</span> <span class="ow">in</span> <span class="n">genstr</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">mystr</span> <span class="o">+=</span> <span class="n">randstr</span></code></pre></div>
+
+<p>But this is very inefficient for the reason that a new string has to be 
+created and assigned to mystr on each loop. What is the most efficient 
+method of concatenation? List comprehension.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">mystr</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">genstr</span><span class="p">(</span><span class="n">n</span><span class="p">)])</span>
+<span class="c"># or alternatively</span>
+<span class="n">mystr</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">genstr</span><span class="p">(</span><span class="n">n</span><span class="p">))</span></code></pre></div>
+
+<p>The second is actually a generator comprehension, not a list comprehension. 
+They are more memory efficient (as you don’t have to pre-allocate the entire
+list), but are slower than list comprehensions in Python 2.x (they have 
+comparable speed in Python 3). Of course, sometimes, performing a list 
+comprehension is not ideal, because your inner loop might be slightly more
+complicated than just returning the yielded value. In that case, the next
+best way is to use a StringIO object, like so.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">io</span>
+
+<span class="n">sio</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">randstr</span> <span class="ow">in</span> <span class="n">gen</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">sio</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">randstr</span><span class="p">)</span>
+
+<span class="n">mystr</span> <span class="o">=</span> <span class="n">sio</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span></code></pre></div>
+
+<p><em>Attribution</em> - this information was taken from an article written by 
+<a href="http://www.skymind.com/~ocrow/python_string/">Oliver Crow</a>.</p>
+
+<h2 id="class-attributes-and-default-parameters">Class Attributes and Default Parameters</h2>
+
+<p>Two sources of endless confusion and bugs in Python come from a 
+misunderstanding of the scope of class attributes and default parameters 
+for functions. A class attribute looks like the following.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="s">&#39;blah&#39;</span></code></pre></div>
+
+<p>A default parameter looks like this.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">something</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="s">&#39;blah&#39;</span><span class="p">):</span>
+    <span class="k">pass</span></code></pre></div>
+
+<p>Class attributes are bound when the class is created, and default parameters
+are bound when the function is created. Mutating the state of class 
+attributes will change the attribute in all instances of a class. Mutating 
+the state of a default parameter will cause that change to persist in all 
+future calls of the function. This means that both of the following should 
+be avoided.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">A</span><span class="p">()</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">A</span><span class="p">()</span>
+<span class="n">b</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;blah&#39;</span><span class="p">)</span>
+<span class="c"># now b.a and c.a are both [&#39;blah&#39;]</span>
+
+<span class="k">def</span> <span class="nf">something</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="p">[]):</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;blah&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a</span>
+
+<span class="c"># calling something without arguments 5 times will cause &#39;blah&#39; to show up</span>
+<span class="c"># 5 times in the returned list</span></code></pre></div>
+
+<p>Instead, do it like this. </p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;blah&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">something</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">a</span><span class="o">==</span><span class="bp">None</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;blah&#39;</span><span class="p">)</span></code></pre></div>
+
+<h2 id="multiline-strings">Multiline Strings</h2>
+
+<p>One of the nice features of Python is the ability to have multiline string 
+literals. The canonical way of doing this is the docstring, which looks like</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="sd">&#39;&#39;&#39;This is a string</span>
+<span class="sd">that spans two lines.&#39;&#39;&#39;</span></code></pre></div>
+
+<p>But I just learned recently that it can also be achieved like so.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">(</span><span class="s">&quot;This is another string &quot;</span>
+<span class="s">&quot;that is declared on two lines.&quot;</span><span class="p">)</span></code></pre></div>
+
+<p>So what is the difference? In a docstring, all newlines and whitespace are
+preserved, in the second declaration, only the parts inside the quotes are 
+rendered into the final string. Therefore, the first string when printed out
+looks like.</p>
+
+<pre><code>This is a string
+that spans two lines.
+</code></pre>
+
+<p>While the second will simply be</p>
+
+<pre><code>This is another string that is declared on two lines.
+</code></pre>
+
+<p>If you don’t want the newlines to show up as-is, the second type of 
+declaration could be very useful.</p>
+
+<h2 id="sets">Sets</h2>
+
+<p>The <code>list</code>, <code>dict</code>, and <code>tuple</code> builtin classes in Python are rather 
+well-known. The <code>set</code> and <code>frozenset</code> classes, not so much. A set in Python 
+represents the mathematical concept of a set. It is an unordered container 
+with unique elements. A frozenset has the same interface as a set, but is 
+immutable, like a tuple. A set and a frozenset are declared like the 
+following.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># A set</span>
+<span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;c&#39;</span><span class="p">}</span>
+<span class="c">#A frozenset</span>
+<span class="nb">frozenset</span><span class="p">({</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;c&#39;</span><span class="p">})</span> 
+<span class="c"># the argument to frozenset can be any iterable, including a list or tuple</span></code></pre></div>
+
+<p>What is the usefulness of a set? The main advantages of a set are that there
+are no duplicates, and that lookups can be done in constant time. For 
+example, let’s say that you have a very long string of words separated by 
+newlines, and you want to find out whether each word in a list of words was 
+contained in that string. How would you accomplish this? The first thing 
+you might try is.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">contained</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_list</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">long_string</span><span class="p">]</span></code></pre></div>
+
+<p>But this is not very efficient, because you have to go searching in the 
+string every single time. Now what if we first split the string into a list?</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">long_string_list</span> <span class="o">=</span> <span class="n">long_string</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">contained</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_list</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">long_string_list</span><span class="p">]</span></code></pre></div>
+
+<p>This is also not quite so efficient, because looking up an item in a list 
+still takes O(n) time. Now, what if we used a set?</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">long_string_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">long_string</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">contained</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_list</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">long_string_set</span><span class="p">]</span></code></pre></div>
+
+<p>Looking up a word in a set happens in constant time, so this method is very
+efficient. Now of course, splitting a string into a list and turning a list 
+into a set involve some processing cycles of their own, which is why the 
+third way will only be fastest for very large lists. For very small lists, 
+the first way is still faster.</p>
+
+<p><em>Update</em> - Even faster than using a list comprehension would be to turn both
+<code>word_list</code> and <code>long_string</code> into sets and then do a intersection.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">long_string_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">long_string</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">word_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">word_list</span><span class="p">)</span>
+<span class="n">contained</span> <span class="o">=</span> <span class="n">long_string_set</span> <span class="o">&amp;</span> <span class="n">word_set</span></code></pre></div>
+
+<p>Thanks to Kostis Karantias for pointing this out.</p>
+
+<h2 id="generators">Generators</h2>
+
+<p>Python’s generators are one of its most powerful features. A generator 
+function essentially looks like this.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">generator</span><span class="p">():</span>
+    <span class="k">yield</span> <span class="s">&quot;one&quot;</span>
+    <span class="k">yield</span> <span class="s">&quot;two&quot;</span>
+    <span class="k">yield</span> <span class="s">&quot;three&quot;</span></code></pre></div>
+
+<p>It can be used like so…</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">generator</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">num</span></code></pre></div>
+
+<p>The previous code sample would print the strings “one”, “two”, and “three”.
+Each call of the <code>yield</code> statement will send another value to the for loop.
+Of course, you don’t have to use it in a for loop. You could also do…</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">gen</span> <span class="o">=</span> <span class="n">generator</span><span class="p">()</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span> <span class="c"># &quot;one&quot;</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span> <span class="c"># &quot;two&quot;</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span> <span class="c"># &quot;three&quot;</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span> <span class="c"># Throws &#39;StopIteration&#39; exception</span></code></pre></div>
+
+<p>You can also send values into the generator. For instance…</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">generator</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="bp">True</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span>
+
+<span class="n">gen</span> <span class="o">=</span> <span class="n">generator</span><span class="p">()</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span> <span class="c"># yields 1</span>
+<span class="n">gen</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="c"># yields 4</span></code></pre></div>
+
+<p>This allows the generator to function as a coroutine. Its usefulness is 
+probably limited, but pretty cool nonetheless.</p>
+
+<p>But the real power of generators is that they allow you to write text 
+processing programs that can function in constant memory no matter the size
+of the file. How? It’s because the file object implements the same interface
+as a generator.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;something.txt&#39;</span><span class="p">):</span>
+    <span class="n">dosomething</span><span class="p">(</span><span class="n">line</span><span class="p">)</span></code></pre></div>
+
+<p>As you can tell, this program will read a file in line by line and do 
+something to each line. This way, you could potentially do processing on
+Gigabyte-sized files without needing a Gigabyte or so of memory.</p>
+
+</div> <!--main-->
+
+</div> <!--container-->
+</body>
+</html>

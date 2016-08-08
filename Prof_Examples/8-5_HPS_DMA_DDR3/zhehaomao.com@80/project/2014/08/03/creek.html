@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+
+  Creek Vector Co-processor
+
+</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../css/main.css"/default.htm>
+<link rel="stylesheet" type="text/css" href="../../../../css/syntax.css"/default.htm>
+<link href="../../../../atom.xml" type="application/atom+xml" rel="alternate"/>
+
+</head>
+<body>
+<div id="container">
+
+<div id="header">
+<a id="toplink" href="../../../../"/default.htm>Howard Mao</a>
+</div> <!--header-->
+
+<div id="main">
+  
+    <h1>Creek Vector Co-processor</h1>
+  
+  <p>Creek is a floating-point vector co-processor I developed in order to learn
+more about computer architecture and the <a href="https://chisel.eecs.berkeley.edu/">Chisel</a>
+hardware description language.</p>
+
+<p>The basic functional blocks of the co-processor are streaming floating-point
+adder and multiplier units. Each of these units have four pipelined vector
+lanes and operate on single-precision floating point numbers. These functional
+blocks, along with a memory controller, are connected by a crossbar switch
+to seven vector registers (effectively small sequential-access memories).</p>
+
+<p>Each vector register can support simultaneous reads and writes. This allows
+a higher degree of parallelism, but it becomes the programmer’s responsibility
+to schedule operations in such a way that a fast writer doesn’t overwrite the
+values a slow reader is trying to read (or, vice-versa, that a fast reader
+does not try to read values that a slow writer has not yet updated).</p>
+
+<p>The co-processor also does not have any control flow instructions.
+Instructions are issued one after another until a special instruction which
+pauses the co-processor. This instruction allows the host processor
+to take back control, copy data between its memory and co-processor memory,
+write new instructions, and restart the co-processor.</p>
+
+<p>The Chisel source code, Verilog FPGA glue code, and test software for this
+project is available on <a href="https://github.com/zhemao/creek">Github</a>.</p>
+
+</div> <!--main-->
+
+</div> <!--container-->
+</body>
+</html>

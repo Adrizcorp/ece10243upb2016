@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+
+  Playing Audio from the Arduino
+
+</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../css/main.css"/default.htm>
+<link rel="stylesheet" type="text/css" href="../../../../css/syntax.css"/default.htm>
+<link href="../../../../atom.xml" type="application/atom+xml" rel="alternate"/>
+
+</head>
+<body>
+<div id="container">
+
+<div id="header">
+<a id="toplink" href="../../../../"/default.htm>Howard Mao</a>
+</div> <!--header-->
+
+<div id="main">
+  
+    <h1>Playing Audio from the Arduino</h1>
+  
+  <p>Recently, I’ve been experimenting with playing audio from my Arduino.
+At first, I was using one of those crappy Radio Shack piezo buzzers.
+After a while, I got tired of their high-pitched squealing and decided to
+try playing the audio on a regular speaker.</p>
+
+<p>At this point, I encountered a problem. It’s not entirely obvious how you
+would hook up wires from the Arduino to the analog audio jack from a standard
+speaker. At first glance, the audio jack just looks like a single piece of
+metal. So where do you put the signal and where do you put ground?</p>
+
+<p>Turns out, the audio jack is actually three distinct pieces of metal separated
+by two black insulating bands. The piece of metal at the base is ground, the
+ring in the middle is the right channel audio, and the tip is the left
+channel audio (assuming you have a stereo speaker). </p>
+
+<p><img src="http://i.imgur.com/QqM9KlZ.png" alt="Audio Jack Diagram" /></p>
+
+<p>So, I hooked a wire from the base to ground, hooked a resistor from the tip to 
+pin 8, and then ran the <a href="http://arduino.cc/en/Tutorial/Tone">tone</a> example
+from the Arduino website. <a href="http://youtu.be/vuev2IG9LZ4">Here</a> is the result.</p>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/vuev2IG9LZ4" frameborder="0">Youtube Embedding Disabled</iframe>
+
+</div> <!--main-->
+
+</div> <!--container-->
+</body>
+</html>

@@ -1,0 +1,702 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+
+  Exploring the Arrow SoCKit Part IX - Real-time Audio Filters
+
+</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../../css/main.css"/default.htm>
+<link rel="stylesheet" type="text/css" href="../../../../../css/syntax.css"/default.htm>
+<link href="../../../../../atom.xml" type="application/atom+xml" rel="alternate"/>
+
+</head>
+<body>
+<div id="container">
+
+<div id="header">
+<a id="toplink" href="../../../../../"/default.htm>Howard Mao</a>
+</div> <!--header-->
+
+<div id="main">
+  
+    <h1>Exploring the Arrow SoCKit Part IX - Real-time Audio Filters</h1>
+  
+  <p>In the last post, we looked at how to interface with the audio codec on the
+Cyclone V. Now, we will use the audio codec to implement a real-time audio
+filter. This filter will take in samples from the ADC, transform them, and
+output the transformed samples on the DAC. All of the hardware descriptions
+and software tools for this part can be found in the
+<a href="https://github.com/zhemao/rtaudio_effects/tree/part9">part 9 branch</a>
+of the Github repo.</p>
+
+<p>To implement these filters we will use a finite impulse response (FIR) filter.
+The way an FIR filter works is that the output is the weighted sum of N
+previously recorded inputs. By choosing different weights, we can achieve
+different effects, such as low-pass filtering and high-pass filtering.
+If you’d like to learn more about FIR filters, I’ve written an
+<a href="http://nbviewer.ipython.org/github/zhemao/digital_filters/blob/master/Digital%20Filters.ipynb">IPython notebook</a>
+explaining the concept.</p>
+
+<h2 id="block-diagram">Block Diagram</h2>
+
+<p>Before we begin implementing our filter, it’s helpful to draw out a simple
+block diagram.</p>
+
+<object type="image/svg+xml" data="/svg/fir-filter-pipeline.svg">FIR</object>
+
+<p>Our audio samples will be written to a circular buffer of size N.
+The weights of the FIR filter will be held in a ROM also of size N (I call
+it the “Kernel ROM” because the set of weights is often referred to as a
+“kernel”). To compute the next output, we repeatedly fetch a sample from the
+audio buffer and a weight from the kernel ROM, multiply the two together, and
+then accumulate the products (through addition) into a register.</p>
+
+<p>Notice that, in this block diagram, there are registers between each
+computational block. This kind of architecture is called a pipelined
+architecture, and is fairly common in hardware design. The main benefit of
+this architecture is that the pipeline stages are operating concurrently.
+That is, on each cycle, the memories are fetching data, the multipliers
+are multiplying the data fetched one cycle ago, and the adder is adding the
+current accumulator value with the result of multiplying the data fetched
+two cycles ago. This means that, if our kernel has size N, the total number
+of cycles it takes to compute the result is <code>N + 3</code>.
+This is a lot faster than if we only performed one step of computation at a
+time, in which case it would take <code>3 * N</code> cycles.</p>
+
+<h2 id="counting-cycles">Counting Cycles</h2>
+
+<p>In order to implement this filter, we need to be able to compute outputs
+within a certain amount of time. An input is available when <code>sample_end</code>
+is asserted, and the corresponding output must be ready before the next time
+<code>sample_req</code> is asserted. If we can’t make this deadline, the system isn’t
+going to work. This is the “real-time” in “real-time audio effects”.
+We are subject to constraints on how long it can take to respond to an event.</p>
+
+<p>We’ve seen that the time it takes to compute an output depends on how large
+the filter kernel is. Since a larger kernel gives a better gain, it is
+important for us to figure out how big we can make the kernel without missing
+the deadline.</p>
+
+<p>With a sampling rate of 44.1 kHz, the sampling period is about 22.7
+microseconds. The input sample is available a quarter of the way through the
+cycle, and the output needs to be ready at the beginning of the next cycle.
+That means our computation must take less than about 17 microseconds.
+The main clock is 50 MHz, which gives us 20 nanoseconds per cycle. That gives
+us about <code>17000 / 20 = 850</code> cycles to perform our computation. So you could
+expand the kernel to around 840 words and still be able to meet the deadline.
+I chose to use a kernel with 101 words (you generally want the number to be odd).
+I chose this by writing a software FIR filter implementation (running on my
+laptop, not the Cyclone V) and testing different kernel sizes. You get pretty
+good quality at 101, and increasing past that point doesn’t seem to give
+much improvement.</p>
+
+<h2 id="circular-buffers">Circular Buffers</h2>
+
+<p>We need to store the N last inputs to the audio buffer as they come in from
+the ADC. In order to do this, we need a
+<a href="https://en.wikipedia.org/wiki/Circular_buffer">Circular Buffer</a>.
+This is a data structure which is basically an array that wraps back around on
+itself. Data is always written to the “head” of the buffer. The address of the
+“head” is incremented on each write. When the head is at the last address,
+it goes back to address 0 on the next write. In hardware, we can implement
+this using block RAM for the “array” and storing the “head” address in a
+register.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">ring_buffer</span> <span class="p">(</span>
+    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">reset</span><span class="p">,</span>
+
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">last_addr</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">cur_addr</span><span class="p">,</span>
+
+    <span class="k">input</span>  <span class="n">fifo_write</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">fifo_data</span><span class="p">,</span>
+
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">readaddr</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">readdata</span>
+<span class="p">);</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">cur_index</span> <span class="o">=</span> <span class="mh">7</span><span class="mi">&#39;d0</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">cur_addr</span> <span class="o">=</span> <span class="n">cur_index</span><span class="p">;</span>
+
+<span class="n">audio_ram</span> <span class="n">aram</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">clock</span> <span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">data</span> <span class="p">(</span><span class="n">fifo_data</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">rdaddress</span> <span class="p">(</span><span class="n">readaddr</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">wraddress</span> <span class="p">(</span><span class="n">cur_index</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">wren</span> <span class="p">(</span><span class="n">fifo_write</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">q</span> <span class="p">(</span><span class="n">readdata</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">cur_index</span> <span class="o">&lt;=</span> <span class="mh">7</span><span class="mi">&#39;d0</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">fifo_write</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">cur_index</span> <span class="o">==</span> <span class="n">last_addr</span><span class="p">)</span>
+            <span class="n">cur_index</span> <span class="o">&lt;=</span> <span class="mh">7</span><span class="mi">&#39;d0</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="n">cur_index</span> <span class="o">&lt;=</span> <span class="n">cur_index</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>The <code>audio_ram</code> component here was generated using the 2-port RAM megafunction
+in megawizard. To generate this yourself, give the RAM 128 16-bit words with
+no registers on the output.</p>
+
+<h2 id="multiplier">Multiplier</h2>
+
+<p>The best way to implement a 16 by 16 multiplier on the FPGA is to use the
+dedicated multiplier circuitry. To access the dedicated multipliers, we will
+need to use MegaWizard. The multiplier megafunction is under “Arithmetic”
+-&gt; “LPM_MULT”. In the “General” tab of the wizard, select 16 as the width of
+the “dataa” and “datab” inputs. In the “General2” tab, choose signed
+multiplication for “Multiplication type” and “Use the dedicated multiplier
+circuitry” for “Implementation”. In the “Pipelining tab”, choose no pipelining
+and default optimization. After you’ve made these selections, press “Finish”.</p>
+
+<h2 id="generating-rom-data">Generating ROM Data</h2>
+
+<p>The kernel ROM is just a 1-port ROM. This is easily generated from a
+megafunction. The hard part is figuring out what the ROM values should be.
+We want to use a low-pass <a href="http://www.dspguide.com/ch16.htm">windowed sinc filter</a>.
+The values for this filter can be generated using the following C code.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">lowpass</span><span class="p">(</span><span class="kt">float</span> <span class="n">critFreq</span><span class="p">,</span> <span class="kt">int</span> <span class="n">W</span><span class="p">,</span> <span class="kt">int</span> <span class="n">sampRate</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="n">result</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+	<span class="kt">float</span> <span class="n">t</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">sum</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">M</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">W</span><span class="p">;</span>
+
+	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">M</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="c1">// t is symmetric around the Y axis</span>
+		<span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">W</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span> <span class="n">sampRate</span><span class="p">;</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+			<span class="c1">// avoid discontinuity at t = 0</span>
+			<span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>
+			<span class="n">sum</span> <span class="o">+=</span> <span class="mf">1.0f</span><span class="p">;</span>
+		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+			<span class="c1">// sinc function</span>
+			<span class="n">h</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">M_PI</span> <span class="o">*</span> <span class="n">critFreq</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">M_PI</span> <span class="o">*</span> <span class="n">critFreq</span> <span class="o">*</span> <span class="n">t</span><span class="p">);</span>
+			<span class="c1">// hamming window</span>
+			<span class="n">h</span> <span class="o">*=</span> <span class="p">(</span><span class="mf">0.54</span> <span class="o">-</span> <span class="mf">0.46</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">M_PI</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="n">M</span><span class="p">));</span>
+			<span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">h</span><span class="p">;</span>
+			<span class="n">sum</span> <span class="o">+=</span> <span class="n">h</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="c1">// normalize so that DC gain is 1</span>
+	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">M</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/=</span> <span class="n">sum</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<p>There is one slight problem here though. These are floating point numbers,
+but we are using integer multipliers in our hardware design. 
+Since all of our weights are between 1 and -1, simply converting the floating
+point weights to integers and using those clearly won’t work.
+We could switch to using a floating-point pipeline, but that would complicate
+out hardware quite a bit. Fortunately, there is an easy way around this problem.
+We can simply use fixed point arithmetic. Basically, we want to scale all of
+our weights up, convert to integers, and then scale the result of the
+computation down by the same amount. So, if our original formula is</p>
+
+<pre><code>sum(kernel[i] * input[n - i]) for all i
+</code></pre>
+
+<p>With fixed point arithmetic that becomes</p>
+
+<pre><code>1/S * sum(to_int(S * kernel[i]) * input[n - i]) for all i
+</code></pre>
+
+<p>Where S is some constant. The results will be the same, except with a little
+loss of precision. Since our floating points numbers are all between 1 and -1
+and we want to convert to 16-bit integers, we can simply scale up by the
+largest signed 16-bit integer value.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">void</span> <span class="n">to_fixed_point</span><span class="p">(</span><span class="n">float</span> <span class="o">*</span><span class="n">f_data</span><span class="p">,</span> <span class="n">int16_t</span> <span class="o">*</span><span class="n">i_data</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+
+	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+		<span class="n">i_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="no">SHRT_MAX</span> <span class="o">*</span> <span class="n">f_data</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="p">}</span></code></pre></div>
+
+<p>You can find the tool I wrote for generating kernels in the
+<a href="https://github.com/zhemao/rtaudio_effects/tree/part9/software">software</a>
+directory of the git repo. The tool is called <code>lowpass</code> and takes two
+arguments, the critical frequency and the kernel width. The kernel is written
+out in big-endian binary format to standard output. I used a critical
+frequency of 880 Hz and a width of 50 (which gives a kernel size of 101).
+Once you have the binary, you will need to convert it into intel hex format
+for the ROM initialization. I used the
+<a href="http://srecord.sourceforge.net/">srecord</a> tool to do this.</p>
+
+<pre><code>srec_cat lowpassfilter.bin -binary -o lowpassfilter.hex -intel
+</code></pre>
+
+<h2 id="filter-pipeline">Filter Pipeline</h2>
+
+<p>Here is the implementation of the computational part of the FIR pipeline.
+It had read ports to the audio buffer and the kernel ROM. When reset, the
+audio address is started at the buffer “head” and the kernel address is
+started at 0. It then increments both addresses on each cycle, wrapping the
+audio address around once it reaches the end. The computation stops once
+the kernel address reaches the end. In this way, the audio samples are
+accessed from oldest to newest. If you’ve looked at the FIR filter formula
+given in the Wikipedia article, you will notice this is actually backwards.
+Fortunately, our low-pass filter kernel is symmetric, so it doesn’t matter
+which direction we go in. If you are trying to use an asymmetric filter (which
+is rather uncommon), you can simply reverse the order of the weights in the ROM.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">fir_filter</span> <span class="p">(</span>
+    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">reset</span><span class="p">,</span>
+
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">start_addr</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">last_addr</span><span class="p">,</span>
+
+    <span class="k">output</span> <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">audio_addr</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">audio_data</span><span class="p">,</span>
+
+    <span class="k">output</span> <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">kernel_addr</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">kernel_data</span><span class="p">,</span>
+
+    <span class="k">output</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">result</span><span class="p">,</span>
+    <span class="k">output</span> <span class="n">done</span>
+<span class="p">);</span>
+
+<span class="kt">reg</span> <span class="n">acc_en_0</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">acc_en_1</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">acc_en_2</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">accum_value</span><span class="p">;</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">audio_index</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">kernel_index</span><span class="p">;</span>
+
+<span class="k">assign</span> <span class="n">audio_addr</span> <span class="o">=</span> <span class="n">audio_index</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">kernel_addr</span> <span class="o">=</span> <span class="n">kernel_index</span><span class="p">;</span>
+
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">mult_result</span><span class="p">;</span>
+<span class="kt">reg</span>  <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">mult_reg</span><span class="p">;</span>
+
+<span class="n">mult16</span> <span class="n">mult</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">dataa</span> <span class="p">(</span><span class="n">audio_data</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">datab</span> <span class="p">(</span><span class="n">kernel_data</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">result</span> <span class="p">(</span><span class="n">mult_result</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="n">acc_en_2</span> <span class="o">&lt;=</span> <span class="n">acc_en_1</span><span class="p">;</span>
+    <span class="n">acc_en_1</span> <span class="o">&lt;=</span> <span class="n">acc_en_0</span><span class="p">;</span>
+    <span class="n">mult_reg</span> <span class="o">&lt;=</span> <span class="n">mult_result</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">acc_en_0</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+        <span class="n">audio_index</span> <span class="o">&lt;=</span> <span class="n">start_addr</span><span class="p">;</span>
+        <span class="n">kernel_index</span> <span class="o">&lt;=</span> <span class="mh">7</span><span class="mi">&#39;d0</span><span class="p">;</span>
+        <span class="n">accum_value</span> <span class="o">&lt;=</span> <span class="mh">32</span><span class="mi">&#39;d0</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">acc_en_0</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">audio_index</span> <span class="o">==</span> <span class="n">last_addr</span><span class="p">)</span>
+                <span class="n">audio_index</span> <span class="o">&lt;=</span> <span class="mh">7</span><span class="mi">&#39;d0</span><span class="p">;</span>
+            <span class="k">else</span>
+                <span class="n">audio_index</span> <span class="o">&lt;=</span> <span class="n">audio_index</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">kernel_index</span> <span class="o">==</span> <span class="n">last_addr</span><span class="p">)</span>
+                <span class="n">acc_en_0</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+            <span class="k">else</span>
+                <span class="n">kernel_index</span> <span class="o">&lt;=</span> <span class="n">kernel_index</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+        <span class="k">end</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">acc_en_2</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="n">accum_value</span> <span class="o">&lt;=</span> <span class="n">accum_value</span> <span class="o">+</span> <span class="n">mult_reg</span><span class="p">;</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">assign</span> <span class="n">done</span> <span class="o">=</span> <span class="o">!</span><span class="p">(</span><span class="n">acc_en_2</span> <span class="o">||</span> <span class="n">acc_en_0</span><span class="p">);</span>
+<span class="k">assign</span> <span class="n">result</span> <span class="o">=</span> <span class="n">accum_value</span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">16</span><span class="p">];</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>One thing to note here are the <code>acc_en_*</code> registers. The enable signal tells
+the accumulator when to add another multiplier result into the register and
+when to leave the register value the same. There are three registers here, each
+feeding in to the next on each cycle. This is to keep the signal synchronized
+along the pipeline stages. On <code>reset</code>, the first multiplier result has not
+yet been computed, so the accumulator should definitely not be enabled.
+Similarly, when <code>kernel_index</code> reaches the last address, there is still
+computation occurring in the later stages of the pipeline, so we don’t want to
+disable the accumulator yet. Therefore, we need
+to put a register for the enable signal between each stage of the pipeline
+up to the accumulator. The <code>acc_en_0</code> register is in the same stage as the
+<code>kernel_index</code> and <code>audio_index</code> registers. The <code>acc_en_1</code> register is in
+the same stage as the internal register of the memories. Finally, the <code>acc_en_2</code>
+register is in the same stage as <code>mult_reg</code> and is the enable input for the
+accumulator.</p>
+
+<h2 id="hooking-it-up">Hooking it Up</h2>
+
+<p>Now we need to connect the computational pipeline to the memory and add
+ports which can be connected to the audio codec.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">filter_ctrl</span> <span class="p">(</span>
+    <span class="k">input</span> <span class="n">audio_clk</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">main_clk</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">reset</span><span class="p">,</span>
+
+    <span class="k">input</span> <span class="n">sample_end</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">sample_req</span><span class="p">,</span>
+
+    <span class="k">input</span>      <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">audio_input</span><span class="p">,</span>
+    <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">audio_output</span><span class="p">,</span>
+
+    <span class="k">output</span> <span class="n">finish</span>
+<span class="p">);</span>
+
+<span class="k">parameter</span> <span class="no">LASTADDR</span> <span class="o">=</span> <span class="mh">7</span><span class="mi">&#39;d100</span><span class="p">;</span>
+
+<span class="kt">reg</span> <span class="n">cur_end</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">last_end</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+
+<span class="kt">reg</span>  <span class="n">rb_fifo_write</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">rb_cur_addr</span><span class="p">;</span>
+
+<span class="kt">reg</span>  <span class="n">fir_reset</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">fir_audio_addr</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">fir_audio_data</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">fir_kernel_addr</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">fir_kernel_data</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">fir_result</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="n">fir_done</span><span class="p">;</span>
+
+<span class="kt">reg</span> <span class="n">cur_done</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">last_done</span><span class="p">;</span>
+
+<span class="n">ring_buffer</span> <span class="n">rb</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">clk</span> <span class="p">(</span><span class="n">main_clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">reset</span> <span class="p">(</span><span class="n">reset</span><span class="p">),</span>
+
+    <span class="p">.</span><span class="n">last_addr</span><span class="p">(</span><span class="no">LASTADDR</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">cur_addr</span> <span class="p">(</span><span class="n">rb_cur_addr</span><span class="p">),</span>
+
+    <span class="p">.</span><span class="n">fifo_write</span> <span class="p">(</span><span class="n">rb_fifo_write</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">fifo_data</span> <span class="p">(</span><span class="n">audio_input</span><span class="p">),</span>
+
+    <span class="p">.</span><span class="n">readaddr</span> <span class="p">(</span><span class="n">fir_audio_addr</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">readdata</span> <span class="p">(</span><span class="n">fir_audio_data</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="n">fir_filter</span> <span class="n">fir</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">clk</span> <span class="p">(</span><span class="n">main_clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">reset</span> <span class="p">(</span><span class="n">fir_reset</span><span class="p">),</span>
+
+    <span class="p">.</span><span class="n">start_addr</span> <span class="p">(</span><span class="n">rb_cur_addr</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">last_addr</span> <span class="p">(</span><span class="no">LASTADDR</span><span class="p">),</span>
+
+    <span class="p">.</span><span class="n">audio_addr</span> <span class="p">(</span><span class="n">fir_audio_addr</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">audio_data</span> <span class="p">(</span><span class="n">fir_audio_data</span><span class="p">),</span>
+
+    <span class="p">.</span><span class="n">kernel_addr</span> <span class="p">(</span><span class="n">fir_kernel_addr</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">kernel_data</span> <span class="p">(</span><span class="n">fir_kernel_data</span><span class="p">),</span>
+
+    <span class="p">.</span><span class="n">result</span> <span class="p">(</span><span class="n">fir_result</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">done</span> <span class="p">(</span><span class="n">fir_done</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="n">kernel_rom</span> <span class="n">krom</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">address</span> <span class="p">(</span><span class="n">fir_kernel_addr</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">clock</span> <span class="p">(</span><span class="n">main_clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">q</span> <span class="p">(</span><span class="n">fir_kernel_data</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">audio_clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sample_req</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">audio_output</span> <span class="o">&lt;=</span> <span class="n">fir_result</span><span class="p">;</span>
+    <span class="k">end</span>
+
+    <span class="n">cur_done</span> <span class="o">&lt;=</span> <span class="n">fir_done</span><span class="p">;</span>
+    <span class="n">last_done</span> <span class="o">&lt;=</span> <span class="n">cur_done</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="k">assign</span> <span class="n">finish</span> <span class="o">=</span> <span class="n">cur_done</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">last_done</span><span class="p">;</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">main_clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="n">cur_end</span> <span class="o">&lt;=</span> <span class="n">sample_end</span><span class="p">;</span>
+    <span class="n">last_end</span> <span class="o">&lt;=</span> <span class="n">cur_end</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">cur_end</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">last_end</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">rb_fifo_write</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rb_fifo_write</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">rb_fifo_write</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+        <span class="n">fir_reset</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+        <span class="n">fir_reset</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>Notice that there are two clocks here. That is because the audio codec is
+synchronized to a 11.2896 MHz clock, but we want the FIR computation to be
+performed as fast as possible (i.e. 50 MHz). The problem is that the audio
+codec and FIR filter will need to send signals to each other to tell when the
+audio data is valid. We are thus left with the problem of crossing clock
+domains. The standard way of solving this is to have two flip flops
+back-to-back. Rising edges can then be detected by ANDing the first flip-flop
+with the complement of the second flip-flop (i.e. the level was high on the
+last cycle but low on the cycle before that). The <code>cur_end</code> and <code>last_end</code>
+registers perform this function for the <code>sample_end</code> input and the <code>cur_done</code>
+and <code>last_done</code> registers perform this function for the <code>done</code> output from
+the <code>fir_filter</code> module.</p>
+
+<h2 id="adding-delay">Adding Delay</h2>
+
+<p>Simply playing a low-pass filtered version of the input on the output won’t
+sound very interesting. Since you’ll still hear the input, and the output is
+simply the input with some frequencies attenuated, the input will drown out
+the output. What would be more interesting is if we added some delay to the
+output. This will create a sort of echo.</p>
+
+<p>To create a delay, you will need to save the output samples in a buffer and
+only start pulling then out after a certain number of samples have been
+written. Sound familiar? That’s right, we want a circular buffer again.
+This time it’s a bit simpler, since we only ever read the “oldest” value in
+the buffer. Therefore, we can make life easier for ourselves by using the FIFO
+megafunction. It’s under “Memory Compiler” -&gt; “FIFO” in MegaWizard.</p>
+
+<p>In the first tab, choose 16 bits for the width and some large number for the
+depth. There are 44100 samples in a second, so a FIFO that is <code>N</code> deep will
+give you a <code>N / 44100</code> second delay. I used 4096, which corresponds to about 93
+milliseconds. In the same tab, make sure reading and writing is synchronized
+to the same clock. In the SCFIFO tab, make sure only “empty” and “full” are
+selected. In the “Rdreq Option, Blk Type” tab, choose “Normal synchronous
+FIFO mode” and “M10K” for the block type. In the
+“Optimization, Circuitry Protection” tab, choose “No” for registering the
+output. You should also disable the overflow and underflow checking. We will
+add our own logic to make sure we don’t write to a full buffer or read from
+an empty one.</p>
+
+<h2 id="putting-it-all-together">Putting it all Together</h2>
+
+<p>Now that we have the filter and FIFO created, we can modify our <code>audio_effects</code>
+module from last time.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">audio_effects</span> <span class="p">(</span>
+    <span class="k">input</span>  <span class="n">audio_clk</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="n">main_clk</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="n">reset</span><span class="p">,</span>
+
+    <span class="k">input</span>  <span class="n">sample_end</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="n">sample_req</span><span class="p">,</span>
+
+    <span class="k">output</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">audio_output</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">audio_input</span><span class="p">,</span>
+
+    <span class="k">input</span>  <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">control</span>
+<span class="p">);</span>
+
+<span class="kt">reg</span>  <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">romdata</span> <span class="p">[</span><span class="mh">0</span><span class="o">:</span><span class="mh">99</span><span class="p">];</span>
+<span class="kt">reg</span>  <span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">index</span> <span class="o">=</span> <span class="mh">7</span><span class="mi">&#39;d0</span><span class="p">;</span>
+<span class="kt">reg</span>  <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">last_sample</span><span class="p">;</span>
+<span class="kt">reg</span>  <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dat</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">filter_output</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="n">filter_finish</span><span class="p">;</span>
+
+<span class="k">assign</span> <span class="n">audio_output</span> <span class="o">=</span> <span class="n">dat</span><span class="p">;</span>
+
+<span class="k">parameter</span> <span class="no">SINE</span>     <span class="o">=</span> <span class="mh">0</span><span class="p">;</span>
+<span class="k">parameter</span> <span class="no">FEEDBACK</span> <span class="o">=</span> <span class="mh">1</span><span class="p">;</span>
+<span class="k">parameter</span> <span class="no">FILTER</span>   <span class="o">=</span> <span class="mh">2</span><span class="p">;</span>
+
+<span class="k">parameter</span> <span class="no">SINE_LAST</span> <span class="o">=</span> <span class="mh">7</span><span class="mi">&#39;d99</span><span class="p">;</span>
+
+<span class="kt">reg</span>  <span class="n">fifo_read</span><span class="p">;</span>
+<span class="kt">reg</span>  <span class="n">fifo_write</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="n">fifo_empty</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="n">fifo_full</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">fifo_output</span><span class="p">;</span>
+
+<span class="n">audio_fifo</span> <span class="n">fifo</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">clock</span> <span class="p">(</span><span class="n">audio_clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">data</span>  <span class="p">(</span><span class="n">filter_output</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">rdreq</span> <span class="p">(</span><span class="n">fifo_read</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">wrreq</span> <span class="p">(</span><span class="n">fifo_write</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">empty</span> <span class="p">(</span><span class="n">fifo_empty</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">full</span>  <span class="p">(</span><span class="n">fifo_full</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">q</span>     <span class="p">(</span><span class="n">fifo_output</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">initial</span> <span class="k">begin</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h0000</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h0805</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h1002</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h17ee</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">4</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h1fc3</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">5</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h2777</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">6</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h2f04</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">7</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h3662</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">8</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h3d89</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">9</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h4472</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">10</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h4b16</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">11</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h516f</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">12</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h5776</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">13</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h5d25</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">14</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h6276</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">15</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h6764</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">16</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h6bea</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">17</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7004</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">18</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h73ad</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">19</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h76e1</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">20</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h799e</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">21</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7be1</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">22</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7da7</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">23</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7eef</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">24</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7fb7</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">25</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7fff</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">26</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7fc6</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">27</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7f0c</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">28</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7dd3</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">29</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7c1b</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">30</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h79e6</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">31</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7737</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">32</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7410</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">33</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h7074</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">34</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h6c67</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">35</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h67ed</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">36</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h630a</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">37</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h5dc4</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">38</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h5820</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">39</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h5222</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">40</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h4bd3</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">41</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h4537</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">42</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h3e55</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">43</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h3735</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">44</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h2fdd</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">45</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h2855</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">46</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h20a5</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">47</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h18d3</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">48</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h10e9</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">49</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h08ee</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">50</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h00e9</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">51</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hf8e4</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">52</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hf0e6</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">53</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;he8f7</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">54</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;he120</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">55</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hd967</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">56</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hd1d5</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">57</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hca72</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">58</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hc344</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">59</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hbc54</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">60</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hb5a7</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">61</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;haf46</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">62</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;ha935</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">63</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;ha37c</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">64</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h9e20</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">65</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h9926</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">66</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h9494</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">67</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h906e</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">68</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8cb8</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">69</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8976</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">70</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h86ab</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">71</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h845a</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">72</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8286</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">73</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8130</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">74</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8059</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">75</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8003</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">76</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h802d</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">77</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h80d8</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">78</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8203</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">79</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h83ad</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">80</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h85d3</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">81</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8875</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">82</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8b8f</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">83</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h8f1d</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">84</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h931e</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">85</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h978c</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">86</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;h9c63</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">87</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;ha19e</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">88</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;ha738</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">89</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;had2b</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">90</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hb372</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">91</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hba05</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">92</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hc0df</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">93</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hc7f9</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">94</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hcf4b</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">95</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hd6ce</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">96</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hde7a</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">97</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;he648</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">98</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hee30</span><span class="p">;</span>
+    <span class="n">romdata</span><span class="p">[</span><span class="mh">99</span><span class="p">]</span> <span class="o">=</span> <span class="mh">16&#39;hf629</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">control</span><span class="p">[</span><span class="no">FEEDBACK</span><span class="p">])</span>
+        <span class="n">dat</span> <span class="o">&lt;=</span> <span class="n">last_sample</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">control</span><span class="p">[</span><span class="no">SINE</span><span class="p">])</span>
+        <span class="n">dat</span> <span class="o">&lt;=</span> <span class="n">romdata</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">control</span><span class="p">[</span><span class="no">FILTER</span><span class="p">])</span>
+        <span class="n">dat</span> <span class="o">&lt;=</span> <span class="n">fifo_output</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="n">dat</span> <span class="o">&lt;=</span> <span class="mh">16</span><span class="mi">&#39;d0</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">audio_clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sample_end</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">last_sample</span> <span class="o">&lt;=</span> <span class="n">audio_input</span><span class="p">;</span>
+    <span class="k">end</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">sample_req</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">==</span> <span class="no">SINE_LAST</span><span class="p">)</span>
+            <span class="n">index</span> <span class="o">&lt;=</span> <span class="mh">7</span><span class="mi">&#39;d00</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="n">index</span> <span class="o">&lt;=</span> <span class="n">index</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">fifo_full</span><span class="p">)</span>
+            <span class="n">fifo_read</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span>
+        <span class="n">fifo_read</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">filter_finish</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">fifo_full</span><span class="p">)</span>
+        <span class="n">fifo_write</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="n">fifo_write</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="n">filter_ctrl</span> <span class="n">fc</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">audio_clk</span> <span class="p">(</span><span class="n">audio_clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">main_clk</span>  <span class="p">(</span><span class="n">main_clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">reset</span>     <span class="p">(</span><span class="n">reset</span><span class="p">),</span>
+
+    <span class="p">.</span><span class="n">sample_end</span> <span class="p">(</span><span class="n">sample_end</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">sample_req</span> <span class="p">(</span><span class="n">sample_req</span><span class="p">),</span>
+
+    <span class="p">.</span><span class="n">audio_input</span> <span class="p">(</span><span class="n">audio_input</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">audio_output</span> <span class="p">(</span><span class="n">filter_output</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">finish</span> <span class="p">(</span><span class="n">filter_finish</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>The key changes are that we added another setting to our multiplexer and some
+logic to read from the FIFO on <code>sample_req</code> and write to the FIFO when the
+FIR filter finishes. We only read when the FIFO is full, otherwise we wouldn’t
+have any delay.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>If you program this description onto the board, hook up a mic and speakers,
+and flip switch 2, you should get an interesting echo effect.
+Try playing around with the filter weights, filter size, and delay time to
+see how they affect your perception of the sound.</p>
+
+<p><a href="../15/sockit-8.html">&lt;- Part 8</a>
+<a href="../../05/24/sockit-10.html">Part 10 -&gt;</a></p>
+
+</div> <!--main-->
+
+</div> <!--container-->
+</body>
+</html>

@@ -8,18 +8,38 @@ z2
 !i10f 100
 cModel Technology
 dC:/altera/14.1
+vmax6675_decoder
+!s110 1467990054
+!i10b 1
+!s100 NJ6Y[4R8hNCB_KKCD484:2
+I_A9b2L7G2amf[7<U]e?b]3
+Z0 V`JN@9S9cnhjKRR_L]QIcM3
+Z1 dC:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion
+w1467989976
+8C:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion/max6675_decoder.v
+FC:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion/max6675_decoder.v
+L0 1
+Z2 OV;L;10.3c;59
+r1
+!s85 0
+31
+!s108 1467990053.928000
+!s107 C:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion/max6675_decoder.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion/max6675_decoder.v|
+!i113 1
+Z3 o-work work
 vwaveform_gen
 !s110 1466566221
 !i10b 1
 !s100 nC_Oh[oo[lXU:[VFc4DL63
 I2G[eQA6nS`^20BH_7hMom3
-V`JN@9S9cnhjKRR_L]QIcM3
-dC:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion
+R0
+R1
 w1466566196
 8C:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion/waveform_gen.v
 FC:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion/waveform_gen.v
 L0 1
-OV;L;10.3c;59
+R2
 r1
 !s85 0
 31
@@ -27,4 +47,4 @@ r1
 !s107 C:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion/waveform_gen.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/Holguer/Documents/GitHub/AdvancedDigitalDesign/ece10243upb2016/Estudiantes/guillermo/archivos_FIR/simulacion/waveform_gen.v|
 !i113 1
-o-work work
+R3

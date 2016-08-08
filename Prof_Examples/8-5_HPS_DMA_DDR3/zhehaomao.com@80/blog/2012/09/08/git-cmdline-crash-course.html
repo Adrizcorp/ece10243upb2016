@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+
+  A Crash Course in Git and the UNIX Command Line
+
+</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../css/main.css"/default.htm>
+<link rel="stylesheet" type="text/css" href="../../../../css/syntax.css"/default.htm>
+<link href="../../../../atom.xml" type="application/atom+xml" rel="alternate"/>
+
+</head>
+<body>
+<div id="container">
+
+<div id="header">
+<a id="toplink" href="../../../../"/default.htm>Howard Mao</a>
+</div> <!--header-->
+
+<div id="main">
+  
+    <h1>A Crash Course in Git and the UNIX Command Line</h1>
+  
+  <h2 id="installation">Installation</h2>
+
+<p>Download and install git. Mac and Windows users should download the 
+installer from <a href="http://git-scm.com/">http://git-scm.com/</a>. Linux users should 
+install through their distribution’s package management system.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>Open up your terminal. </p>
+
+<ul>
+  <li>Mac Users: Search for “terminal” in spotlight</li>
+  <li>Windows Users: Look for “git bash” in the start menu</li>
+  <li>Linux Users: Accessories -&gt; Terminal</li>
+</ul>
+
+<h2 id="command-line-basics">Command Line Basics</h2>
+
+<ul>
+  <li>pwd - print your current working directory</li>
+  <li>ls [dir] - list contents of directory, default is your current directory</li>
+  <li>ls -l [dir] - more detailed ls listing</li>
+  <li>cd [dir] - change your current working directory, default is home directory</li>
+  <li>cat [file] - print out contents of file</li>
+  <li>less [file] - display contents of file in a scrolling window</li>
+  <li>cp <em>src</em> <em>dest</em> - copy file from one place to another</li>
+  <li>mv <em>src</em> <em>dest</em> - move file from one place to another </li>
+  <li>rm <em>file</em> - remove a file</li>
+  <li>rm -rf <em>dir</em> - recursively remove a directory and all its contents</li>
+  <li>echo [text] - prints text supplied by command line arguments</li>
+  <li>grep <em>pattern</em> [file] - print lines containing the pattern from the file</li>
+</ul>
+
+<h2 id="setting-up-git">Setting up git:</h2>
+
+<pre><code>git config --global user.name "Your Name Here"
+git config --global user.email "Your Email Here"
+</code></pre>
+
+<h2 id="git-basics">Git Basics</h2>
+
+<ul>
+  <li>git init [dir] - creates a new git repo</li>
+  <li>git clone [url] - clone an existing repo</li>
+  <li>git add [file] - adds a file to the index</li>
+  <li>git commit -m <em>message</em> - commits changes in index </li>
+  <li>git log - see list of commits</li>
+  <li>git pull [remote] [branch] - pulls changes from remote repo to your repo</li>
+  <li>git push [remote] [branch] - pushes your changes to remote repo</li>
+  <li>git remote add <em>name</em> <em>url</em> - adds a new remote repo</li>
+</ul>
+
+<h2 id="branching">Branching</h2>
+
+<ul>
+  <li>git branch <em>name</em> - create a new branch</li>
+  <li>git checkout <em>branch</em> - check out a branch</li>
+  <li>git merge <em>branch</em> - merge changes from other branch into current one</li>
+</ul>
+
+<h2 id="learning-more">Learning More</h2>
+
+<ul>
+  <li><a href="http://gitref.org/">http://gitref.org/</a></li>
+  <li><a href="http://linuxcommand.org/">http://linuxcommand.org/</a></li>
+  <li><a href="http://git-scm.com/book">Pro Git</a></li>
+  <li><a href="http://en.flossmanuals.net/command-line/index/">Introduction to the Command Line</a></li>
+</ul>
+
+</div> <!--main-->
+
+</div> <!--container-->
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+
+  Exploring the Arrow SoCKit Part X - Sending and Handling Interrupts
+
+</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../../css/main.css"/default.htm>
+<link rel="stylesheet" type="text/css" href="../../../../../css/syntax.css"/default.htm>
+<link href="../../../../../atom.xml" type="application/atom+xml" rel="alternate"/>
+
+</head>
+<body>
+<div id="container">
+
+<div id="header">
+<a id="toplink" href="../../../../../"/default.htm>Howard Mao</a>
+</div> <!--header-->
+
+<div id="main">
+  
+    <h1>Exploring the Arrow SoCKit Part X - Sending and Handling Interrupts</h1>
+  
+  <p>Hi everyone! It’s been a long time, but here is another Cyclone V tutorial
+blog post. This time, we will look at how to send interrupts from the FPGA
+to the HPS and handle the interrupt in software on the HPS.
+All hardware descriptions and software programs can be found on
+<a href="https://github.com/zhemao/interrupt_example">Github</a>.</p>
+
+<h2 id="what-is-an-interrupt">What is an interrupt?</h2>
+
+<p>Until now, all of our communication between HPS and FPGA has been initiated
+by the HPS. In order to detect changes in the state of the FPGA peripherals,
+the HPS has had to continuously poll the FPGA over the bus. If the state
+changes infrequently, but we want software to get notified of the change
+quickly, polling can be rather inefficient. In this case, it would be better
+if the FPGA could asynchronously notify the HPS of a change.</p>
+
+<p>The way the FPGA can do this is through interrupt. Interrupts are essentially
+signals going from the FPGA to an interrupt controller on the HPS. The FPGA
+can make an interrupt request (IRQ) by asserting the interrupt signal high.
+When an IRQ reaches the HPS, it saves its current state and jumps to an
+interrupt service routine (ISR). The ISR should service the IRQ by reading
+or writing some data from the peripheral. Once the ISR has returned, the
+processor jumps back to its original state.</p>
+
+<h2 id="creating-an-avalon-interrupt-interface">Creating an Avalon Interrupt Interface</h2>
+
+<p>We will create an FPGA peripheral from which we can read the state of the
+keys and switches attached to the FPGA. The peripheral should send an IRQ
+when the state changes.</p>
+
+<p>As with other signals sent between FPGA and HPS on the Cyclone V, interrupt
+signals go through an Avalon interface. The interrupt interface is quite simple,
+only a single one-bit irq signal is required. However, we also put in a
+memory-mapped interface so that the state of the inputs can be read.</p>
+
+<div class="highlight"><pre><code class="language-verilog" data-lang="verilog"><span class="k">module</span> <span class="n">user_input_device</span> <span class="p">(</span>
+    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">reset</span><span class="p">,</span>
+    <span class="k">input</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">keys</span><span class="p">,</span>
+    <span class="k">input</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">switches</span><span class="p">,</span>
+
+    <span class="k">output</span> <span class="n">avl_irq</span><span class="p">,</span>
+    <span class="k">input</span>  <span class="n">avl_read</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">avl_readdata</span>
+<span class="p">);</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">cur_inputs</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">last_inputs</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">changed_inputs</span> <span class="o">=</span> <span class="n">cur_inputs</span> <span class="o">^</span> <span class="n">last_inputs</span><span class="p">;</span>
+
+<span class="kt">reg</span> <span class="n">irq</span><span class="p">;</span>
+
+<span class="k">assign</span> <span class="n">avl_irq</span> <span class="o">=</span> <span class="n">irq</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">avl_readdata</span> <span class="o">=</span> <span class="n">last_inputs</span><span class="p">;</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">cur_inputs</span> <span class="o">&lt;=</span> <span class="mh">8</span><span class="mi">&#39;d0</span><span class="p">;</span>
+        <span class="n">last_inputs</span> <span class="o">&lt;=</span> <span class="mh">8</span><span class="mi">&#39;d0</span><span class="p">;</span>
+        <span class="n">irq</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+        <span class="n">cur_inputs</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">keys</span><span class="p">,</span> <span class="n">switches</span><span class="p">};</span>
+        <span class="n">last_inputs</span> <span class="o">&lt;=</span> <span class="n">cur_inputs</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">changed_inputs</span> <span class="o">!=</span> <span class="mh">8</span><span class="mi">&#39;d0</span><span class="p">)</span>
+            <span class="n">irq</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">avl_read</span><span class="p">)</span>
+            <span class="n">irq</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span></code></pre></div>
+
+<p>We pull the state of the keys and switches through two stages of registers.
+If <code>cur_inputs</code> and <code>last_inputs</code> are different, we set the <code>avl_irq</code> signal
+to high. According to the Avalon interrupt interface specification. The IRQ
+signal should not be deasserted until the slave has determined that it has
+been serviced. In this case, we consider the IRQ serviced once the input
+state is read, so we set <code>avl_irq</code> back down to 0 if <code>avl_read</code> is asserted.</p>
+
+<p><img src="http://i.imgur.com/hI5LelR.png?1" alt="user\_input\_device component" /></p>
+
+<p>We can attach this peripheral to the HPS using Qsys. In Qsys, create a new
+component using the verilog module. Make sure to assign <code>avl_irq</code> to an
+“Interrupt Sender” interface and set the signal type to “irq”. Add this
+component to the system.</p>
+
+<p>When adding the HPS to the system, make sure to check
+“Enable FPGA-to-HPS interrupts” in the “Interrupts” section of the
+“FPGA Interfaces” tab. Connect the clock, reset, and avalon slave interfaces
+as usual. Then, connect the interrupt line by clicking on the path from
+FPGA peripheral to HPS in the “IRQ” column. Your final system should look
+something like the following.</p>
+
+<p><img src="http://i.imgur.com/xoGNs1U.png?1" alt="FPGA Interrupt SoC system" /></p>
+
+<p>Note the “0” on the interrupt line. This is the interrupt number assigned
+to this IRQ. It is important, as it determines what interrupt number on the
+HPS corresponds to this interrupt signal. On the Cyclone V, FPGA interrupts
+start at IRQ number 72, so our interrupt 0 corresponds to IRQ 72.</p>
+
+<p>At this point you should generate your Qsys system. You will see some warnings
+about not being able to connect clock or reset for “irq_mapper.sender”.
+Do not worry about these warnings. The interrupts will still work.</p>
+
+<h2 id="the-linux-kernel-module">The Linux Kernel Module</h2>
+
+<p>In order to be able to handle these interrupts in software, we need to write
+a linux kernel module which registers an ISR for our interrupt. A basic
+module would register an ISR that simply reads the input state and returns.
+Such a module would look something like this.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;linux/init.h&gt;</span>
+<span class="cp">#include &lt;linux/module.h&gt;</span>
+<span class="cp">#include &lt;linux/kernel.h&gt;</span>
+<span class="cp">#include &lt;linux/ioport.h&gt;</span>
+<span class="cp">#include &lt;linux/io.h&gt;</span>
+<span class="cp">#include &lt;linux/interrupt.h&gt;</span>
+
+<span class="kt">void</span> <span class="o">*</span><span class="n">fpga_uinput_mem</span><span class="p">;</span>
+<span class="k">static</span> <span class="kt">uint8_t</span> <span class="n">input_state</span><span class="p">;</span>
+
+<span class="k">static</span> <span class="kt">irqreturn_t</span> <span class="nf">fpga_uinput_interrupt</span><span class="p">(</span><span class="kt">int</span> <span class="n">irq</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">dev_id</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">irq</span> <span class="o">!=</span> <span class="n">UINPUT_INT_NUM</span><span class="p">)</span>
+		<span class="k">return</span> <span class="n">IRQ_NONE</span><span class="p">;</span>
+
+	<span class="n">input_state</span> <span class="o">=</span> <span class="n">ioread8</span><span class="p">(</span><span class="n">fpga_uinput_mem</span><span class="p">);</span>
+
+	<span class="k">return</span> <span class="n">IRQ_HANDLED</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">int</span> <span class="n">__init</span> <span class="nf">fpga_uinput_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
+	<span class="k">struct</span> <span class="n">resource</span> <span class="o">*</span><span class="n">res</span><span class="p">;</span>
+
+	<span class="n">res</span> <span class="o">=</span> <span class="n">request_mem_region</span><span class="p">(</span><span class="n">UINPUT_BASE</span><span class="p">,</span> <span class="n">UINPUT_SIZE</span><span class="p">,</span> <span class="s">&quot;fpga_uinput&quot;</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">res</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">ret</span> <span class="o">=</span> <span class="o">-</span><span class="n">EBUSY</span><span class="p">;</span>
+		<span class="k">goto</span> <span class="n">fail_request_mem</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="n">fpga_uinput_mem</span> <span class="o">=</span> <span class="n">ioremap</span><span class="p">(</span><span class="n">UINPUT_BASE</span><span class="p">,</span> <span class="n">UINPUT_SIZE</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">fpga_uinput_mem</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">ret</span> <span class="o">=</span> <span class="o">-</span><span class="n">EFAULT</span><span class="p">;</span>
+		<span class="k">goto</span> <span class="n">fail_ioremap</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="n">ret</span> <span class="o">=</span> <span class="n">request_irq</span><span class="p">(</span><span class="n">UINPUT_INT_NUM</span><span class="p">,</span> <span class="n">fpga_uinput_interrupt</span><span class="p">,</span>
+			<span class="mi">0</span><span class="p">,</span> <span class="s">&quot;fpga_uinput&quot;</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+		<span class="k">goto</span> <span class="n">fail_request_irq</span><span class="p">;</span>
+
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="nl">fail_request_irq</span><span class="p">:</span>
+	<span class="n">iounmap</span><span class="p">(</span><span class="n">fpga_uinput_mem</span><span class="p">);</span>
+<span class="nl">fail_ioremap</span><span class="p">:</span>
+	<span class="n">release_mem_region</span><span class="p">(</span><span class="n">UINPUT_BASE</span><span class="p">,</span> <span class="n">UINPUT_SIZE</span><span class="p">);</span>
+<span class="nl">fail_request_mem</span><span class="p">:</span>
+	<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="n">__exit</span> <span class="nf">fpga_uinput_exit</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="n">free_irq</span><span class="p">(</span><span class="n">UINPUT_INT_NUM</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+	<span class="n">iounmap</span><span class="p">(</span><span class="n">fpga_uinput_mem</span><span class="p">);</span>
+	<span class="n">release_mem_region</span><span class="p">(</span><span class="n">UINPUT_BASE</span><span class="p">,</span> <span class="n">UINPUT_SIZE</span><span class="p">);</span>
+	<span class="n">driver_remove_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fpga_uinput_driver</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">driver_attr_fpga_uinput</span><span class="p">);</span>
+	<span class="n">driver_unregister</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fpga_uinput_driver</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">MODULE_LICENSE</span><span class="p">(</span><span class="s">&quot;Dual BSD/GPL&quot;</span><span class="p">);</span>
+
+<span class="n">module_init</span><span class="p">(</span><span class="n">fpga_uinput_init</span><span class="p">);</span>
+<span class="n">module_exit</span><span class="p">(</span><span class="n">fpga_uinput_exit</span><span class="p">);</span></code></pre></div>
+
+<p>This isn’t particularly useful, since there is no way to notify userspace of
+the state changes. In order to do that, we’ll add a read-only sysfs device.
+Reads on the sysfs file will block until an interrupt occurs. Once this
+happens, the current state of the inputs is sent to the user.</p>
+
+<p>How do you block the read call? We use a data structure in the kernel called
+a wait queue. A wait queue can defined like so.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="nf">DECLARE_WAIT_QUEUE_HEAD</span><span class="p">(</span><span class="n">interrupt_wq</span><span class="p">);</span></code></pre></div>
+
+<p>In the “show” function for our sysfs device, we wait until a flag is set
+by the interrupt controller.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="kt">int</span> <span class="n">interrupt_flag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="k">static</span> <span class="kt">ssize_t</span> <span class="nf">fpga_uinput_show</span><span class="p">(</span><span class="k">struct</span> <span class="n">device_driver</span> <span class="o">*</span><span class="n">drv</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">wait_event_interruptible</span><span class="p">(</span><span class="n">interrupt_wq</span><span class="p">,</span> <span class="n">interrupt_flag</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">))</span> <span class="p">{</span>
+		<span class="n">ret</span> <span class="o">=</span> <span class="o">-</span><span class="n">ERESTART</span><span class="p">;</span>
+		<span class="k">goto</span> <span class="n">release_and_exit</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="n">interrupt_flag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+	<span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">input_state</span><span class="p">;</span>
+	<span class="n">ret</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="nl">release_and_exit</span><span class="p">:</span>
+	<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>The <code>wait_event_interruptible</code> call is what pauses execution of
+<code>fpga_uinput_show</code> until an interrupt occurs. If the wait is interrupted
+(not by the interrupt we want, but by something like a <code>SIGINT</code>), it returns
+a non-zero value, and we must therefore do some error handling.</p>
+
+<p>If the wait ends successfully, we unset the interrupt flag and copy the
+input state read from the peripheral to the user.</p>
+
+<p>In our ISR, we must add some code to set the interrupt flag and wake up the
+processes waiting on the wait queue.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">interrupt_flag</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">wake_up_interruptible</span><span class="p">(</span><span class="o">&amp;</span><span class="n">interrupt_wq</span><span class="p">);</span></code></pre></div>
+
+<p>You can find the full code for this kernel module in the
+<a href="https://github.com/zhemao/interrupt_example/blob/master/software/kernel/fpga_uinput.c">Github Repo</a>.</p>
+
+<h2 id="userspace-program">Userspace program</h2>
+
+<p>Our userspace program is then pretty simple. All it has to do repeatedly
+open and read the sysfs file.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#define SYSFS_FILE &quot;/sys/bus/platform/drivers/fpga_uinput/fpga_uinput&quot;</span>
+<span class="cp">#define NUM_SWITCHES 4</span>
+<span class="cp">#define NUM_KEYS 4</span>
+
+<span class="kt">void</span> <span class="nf">print_state_change</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">cur_state</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">last_state</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">uint8_t</span> <span class="n">changed</span> <span class="o">=</span> <span class="n">cur_state</span> <span class="o">^</span> <span class="n">last_state</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+
+	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_SWITCHES</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">((</span><span class="n">changed</span> <span class="o">&gt;&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">))</span>
+			<span class="k">continue</span><span class="p">;</span>
+		<span class="k">if</span> <span class="p">((</span><span class="n">cur_state</span> <span class="o">&gt;&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span>
+			<span class="n">printf</span><span class="p">(</span><span class="s">&quot;switch %d flipped up</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+		<span class="k">else</span>
+			<span class="n">printf</span><span class="p">(</span><span class="s">&quot;switch %d flipped down</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_KEYS</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kt">int</span> <span class="n">shift</span> <span class="o">=</span> <span class="n">NUM_SWITCHES</span> <span class="o">+</span> <span class="n">i</span><span class="p">;</span>
+
+		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">((</span><span class="n">changed</span> <span class="o">&gt;&gt;</span> <span class="n">shift</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">))</span>
+			<span class="k">continue</span><span class="p">;</span>
+		<span class="k">if</span> <span class="p">((</span><span class="n">cur_state</span> <span class="o">&gt;&gt;</span> <span class="n">shift</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span>
+			<span class="n">printf</span><span class="p">(</span><span class="s">&quot;key %d released</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+		<span class="k">else</span>
+			<span class="n">printf</span><span class="p">(</span><span class="s">&quot;key %d pushed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kt">FILE</span> <span class="o">*</span><span class="n">f</span><span class="p">;</span>
+	<span class="kt">uint8_t</span> <span class="n">last_state</span> <span class="o">=</span> <span class="mh">0xf0</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
+
+	<span class="k">for</span> <span class="p">(;;)</span> <span class="p">{</span>
+		<span class="kt">uint8_t</span> <span class="n">cur_state</span><span class="p">;</span>
+		<span class="n">f</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="n">SYSFS_FILE</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">);</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">f</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+			<span class="n">perror</span><span class="p">(</span><span class="s">&quot;fopen&quot;</span><span class="p">);</span>
+			<span class="k">return</span> <span class="n">EXIT_FAILURE</span><span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">ret</span> <span class="o">=</span> <span class="n">fread</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cur_state</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">f</span><span class="p">);</span>
+		<span class="n">fclose</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">errno</span> <span class="o">==</span> <span class="n">EAGAIN</span><span class="p">)</span>
+				<span class="k">continue</span><span class="p">;</span>
+			<span class="k">return</span> <span class="n">EXIT_FAILURE</span><span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">print_state_change</span><span class="p">(</span><span class="n">cur_state</span><span class="p">,</span> <span class="n">last_state</span><span class="p">);</span>
+		<span class="n">last_state</span> <span class="o">=</span> <span class="n">cur_state</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Once the userspace code reads the current state, it compares it to the
+previous state to determine which of the inputs has changed.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>So now you know how to handle FPGA interrupts. This will allow you to design
+much more efficient interfaces between your FPGA hardware peripherals and the
+CPU.</p>
+
+<p><a href="../../01/26/sockit-9.html">&lt;- Part 9</a></p>
+
+</div> <!--main-->
+
+</div> <!--container-->
+</body>
+</html>
