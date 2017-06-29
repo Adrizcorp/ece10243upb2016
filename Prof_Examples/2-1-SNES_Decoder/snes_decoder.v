@@ -1,3 +1,13 @@
+// --------------------------------------------------------------------
+// Copyright (c) 2017 by FPGALOVER 
+// --------------------------------------------------------------------
+//                     web: http://www.fpgalover.com
+//                     email: admin@fpgalover.com or hbecerra@ece.ubc.ca
+// --------------------------------------------------------------------
+//	Author: Holguer Andres Becerra Daza
+// Module: SNES Controller Interface
+// --------------------------------------------------------------------
+
 module snes_decoder(
 			input clk,
 			input data,
